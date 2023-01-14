@@ -1,0 +1,13 @@
+{
+  "name": "nexash-api",
+  "version": "23.1.14",
+  "description": "Manages the data API.",
+  "main": "index.js",
+  "repository": "https://github.com/avasdao/nexash",
+  "author": "Ava's DAO developers",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.2"
+  }
+}

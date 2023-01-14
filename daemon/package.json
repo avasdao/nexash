@@ -1,0 +1,16 @@
+{
+  "name": "nexash-daemon",
+  "version": "23.1.14",
+  "description": "Manages the server processes.",
+  "type": "module",
+  "main": "index.js",
+  "repository": "https://github.com/avasdao/nexash",
+  "author": "Ava's DAO developers",
+  "license": "MIT",
+  "dependencies": {
+    "@nexajs/rpc": "23.1.12",
+    "moment": "2.29.4",
+    "numeral": "2.0.6",
+    "uuid": "9.0.0"
+  }
+}

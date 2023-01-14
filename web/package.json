@@ -1,5 +1,8 @@
 {
-  "private": true,
+  "name": "nexash-web",
+  "version": "23.1.14",
+  "license": "MIT",
+  "description": "Nexa Shell data service.",
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev",

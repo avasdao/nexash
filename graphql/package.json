@@ -1,0 +1,9 @@
+{
+  "name": "nexahs-graphql",
+  "version": "23.1.14",
+  "description": "Manages GraphQL requests.",
+  "main": "index.js",
+  "repository": "https://github.com/avasdao/nexash",
+  "author": "Ava's DAO developers",
+  "license": "MIT"
+}
