@@ -1,6 +1,6 @@
 {
   "name": "nexash-web",
-  "version": "23.1.14",
+  "version": "23.1.23",
   "license": "MIT",
   "description": "Nexa Shell data service.",
   "scripts": {
@@ -10,7 +10,10 @@
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare"
   },
-  "devDependencies": {
+  "dependencies": {
     "nuxt": "3.0.0"
+  },
+  "devDependencies": {
+    "@nuxtjs/tailwindcss": "^6.2.0"
   }
 }
