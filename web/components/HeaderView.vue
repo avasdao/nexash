@@ -135,13 +135,13 @@ const isShowingSolutionsMenu = ref(false)
                         </div>
                     </div>
 
-                    <a href="javascript://" class="text-base font-medium text-gray-500 hover:text-gray-900">
+                    <NuxtLink to="/pricing" class="text-base font-medium text-gray-500 hover:text-gray-900">
                         Pricing
-                    </a>
+                    </NuxtLink>
 
-                    <a href="javascript://" class="text-base font-medium text-gray-500 hover:text-gray-900">
-                        Partners
-                    </a>
+                    <NuxtLink to="/transparency" class="text-base font-medium text-gray-500 hover:text-gray-900">
+                        Transparency
+                    </NuxtLink>
 
                     <a href="javascript://" class="text-base font-medium text-gray-500 hover:text-gray-900">
                         Company

@@ -5,10 +5,10 @@
         <div class="mx-auto max-w-7xl px-6 pb-8 pt-16 sm:pt-24 lg:px-8 lg:pt-32">
             <div class="xl:grid xl:grid-cols-3 xl:gap-8">
                 <div class="space-y-8">
-                    <img class="h-12" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="Company name" />
+                    <img class="h-16" src="~/assets/icon.png" alt="Nexa Shell Logo" />
 
                     <p class="text-base leading-6 text-gray-300">
-                        Providing enterprise data solutions to Nexa Builders since 2022.
+                        Proud to be providing the most reliable, cloud data solutions to Nexa Builders since 2022.
                     </p>
 
                     <div class="flex space-x-6">
@@ -66,87 +66,135 @@
                         </a>
                     </div>
                 </div>
+
                 <div class="mt-16 grid grid-cols-2 gap-8 xl:col-span-2 xl:mt-0">
                     <div class="md:grid md:grid-cols-2 md:gap-8">
                         <div>
-                            <h3 class="text-base font-semibold leading-6 text-gray-400">Solutions</h3>
+                            <h3 class="text-base font-semibold leading-6 text-gray-400">
+                                Solutions
+                            </h3>
+
                             <ul role="list" class="mt-6 space-y-4">
                                 <li>
-                                    <a href="javascript://" class="text-base leading-6 text-gray-200 hover:text-gray-400">Marketing</a>
+                                    <a href="javascript://" class="text-base leading-6 text-gray-200 hover:text-gray-400">
+                                        Block Explorer
+                                    </a>
                                 </li>
 
                                 <li>
-                                    <a href="javascript://" class="text-base leading-6 text-gray-200 hover:text-gray-400">Analytics</a>
+                                    <a href="javascript://" class="text-base leading-6 text-gray-200 hover:text-gray-400">
+                                        REST API
+                                    </a>
                                 </li>
 
                                 <li>
-                                    <a href="javascript://" class="text-base leading-6 text-gray-200 hover:text-gray-400">Commerce</a>
+                                    <a href="javascript://" class="text-base leading-6 text-gray-200 hover:text-gray-400">
+                                        GraphQL Queries
+                                    </a>
                                 </li>
 
                                 <li>
-                                    <a href="javascript://" class="text-base leading-6 text-gray-200 hover:text-gray-400">Insights</a>
+                                    <a href="javascript://" class="text-base leading-6 text-gray-200 hover:text-gray-400">
+                                        Asset Repository &amp; CDN
+                                    </a>
                                 </li>
                             </ul>
                         </div>
+
                         <div class="mt-10 md:mt-0">
-                            <h3 class="text-base font-semibold leading-6 text-gray-400">Support</h3>
+                            <h3 class="text-base font-semibold leading-6 text-gray-400">
+                                Knowledge
+                            </h3>
+
                             <ul role="list" class="mt-6 space-y-4">
                                 <li>
-                                    <a href="javascript://" class="text-base leading-6 text-gray-200 hover:text-gray-400">Pricing</a>
+                                    <a href="javascript://" class="text-base leading-6 text-gray-200 hover:text-gray-400">
+                                        Documentation
+                                    </a>
                                 </li>
 
                                 <li>
-                                    <a href="javascript://" class="text-base leading-6 text-gray-200 hover:text-gray-400">Documentation</a>
+                                    <a href="javascript://" class="text-base leading-6 text-gray-200 hover:text-gray-400">
+                                        Tutorials
+                                    </a>
                                 </li>
 
                                 <li>
-                                    <a href="javascript://" class="text-base leading-6 text-gray-200 hover:text-gray-400">Guides</a>
+                                    <a href="javascript://" class="text-base leading-6 text-gray-200 hover:text-gray-400">
+                                        Guides
+                                    </a>
                                 </li>
 
                                 <li>
-                                    <a href="javascript://" class="text-base leading-6 text-gray-200 hover:text-gray-400">API Status</a>
+                                    <a href="javascript://" class="text-base leading-6 text-gray-200 hover:text-gray-400">
+                                        API Status
+                                    </a>
                                 </li>
                             </ul>
                         </div>
                     </div>
+
                     <div class="md:grid md:grid-cols-2 md:gap-8">
                         <div>
-                            <h3 class="text-base font-semibold leading-6 text-gray-400">Company</h3>
+                            <h3 class="text-base font-semibold leading-6 text-gray-400">
+                                Platform
+                            </h3>
+
                             <ul role="list" class="mt-6 space-y-4">
                                 <li>
-                                    <a href="javascript://" class="text-base leading-6 text-gray-200 hover:text-gray-400">About</a>
+                                    <a href="javascript://" class="text-base leading-6 text-gray-200 hover:text-gray-400">
+                                        About
+                                    </a>
                                 </li>
 
                                 <li>
-                                    <a href="javascript://" class="text-base leading-6 text-gray-200 hover:text-gray-400">Blog</a>
+                                    <a href="javascript://" class="text-base leading-6 text-gray-200 hover:text-gray-400">
+                                        Blog
+                                    </a>
                                 </li>
 
                                 <li>
-                                    <a href="javascript://" class="text-base leading-6 text-gray-200 hover:text-gray-400">Jobs</a>
+                                    <a href="javascript://" class="text-base leading-6 text-gray-200 hover:text-gray-400">
+                                        Bounties
+                                    </a>
                                 </li>
 
                                 <li>
-                                    <a href="javascript://" class="text-base leading-6 text-gray-200 hover:text-gray-400">Press</a>
+                                    <a href="javascript://" class="text-base leading-6 text-gray-200 hover:text-gray-400">
+                                        Press
+                                    </a>
                                 </li>
 
                                 <li>
-                                    <a href="javascript://" class="text-base leading-6 text-gray-200 hover:text-gray-400">Partners</a>
+                                    <a href="javascript://" class="text-base leading-6 text-gray-200 hover:text-gray-400">
+                                        Partners
+                                    </a>
                                 </li>
                             </ul>
                         </div>
+
                         <div class="mt-10 md:mt-0">
-                            <h3 class="text-base font-semibold leading-6 text-gray-400">Legal</h3>
+                            <h3 class="text-base font-semibold leading-6 text-gray-400">
+                                Resources
+                            </h3>
+
                             <ul role="list" class="mt-6 space-y-4">
                                 <li>
-                                    <a href="javascript://" class="text-base leading-6 text-gray-200 hover:text-gray-400">Claim</a>
+                                    <a href="https://github.com/avasdao/nexash" target="_blank" class="text-base leading-6 text-gray-200 hover:text-gray-400">
+                                        View the Source
+                                    </a>
                                 </li>
 
                                 <li>
-                                    <a href="javascript://" class="text-base leading-6 text-gray-200 hover:text-gray-400">Privacy</a>
+                                    <a href="javascript://" class="text-base leading-6 text-gray-200 hover:text-gray-400">
+                                        Privacy
+                                    </a>
                                 </li>
 
                                 <li>
-                                    <a href="javascript://" class="text-base leading-6 text-gray-200 hover:text-gray-400">Terms</a>
+                                    <a href="javascript://" class="text-base leading-6 text-gray-200 hover:text-gray-400">
+                                        Terms
+                                    </a>
                                 </li>
                             </ul>
                         </div>
