@@ -63,6 +63,7 @@ const isShowingSolutionsMenu = ref(false)
                         <div v-if="isShowingSolutionsMenu" class="absolute z-10 -ml-4 mt-3 w-screen max-w-md transform lg:left-1/2 lg:ml-0 lg:max-w-2xl lg:-translate-x-1/2">
                             <div class="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
                                 <div class="relative grid gap-6 bg-white px-5 py-6 sm:gap-8 sm:p-8 lg:grid-cols-2">
+
                                     <a href="javascript://" class="-m-3 flex items-start rounded-lg p-3 hover:bg-gray-50">
                                         <div class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-md bg-gradient-to-r from-purple-600 to-indigo-600 text-white sm:h-12 sm:w-12">
                                             <!-- Heroicon name: outline/inbox -->
@@ -74,9 +75,15 @@ const isShowingSolutionsMenu = ref(false)
                                                 />
                                             </svg>
                                         </div>
+
                                         <div class="ml-4">
-                                            <p class="text-base font-medium text-gray-900">Inbox</p>
-                                            <p class="mt-1 text-sm text-gray-500">Get a better understanding of where your traffic is coming from.</p>
+                                            <p class="text-base font-medium text-gray-900">
+                                                Block Explorer
+                                            </p>
+
+                                            <p class="mt-1 text-sm text-gray-500">
+                                                Get a better understanding of where your traffic is coming from.
+                                            </p>
                                         </div>
                                     </a>
 
@@ -91,9 +98,15 @@ const isShowingSolutionsMenu = ref(false)
                                                 />
                                             </svg>
                                         </div>
+
                                         <div class="ml-4">
-                                            <p class="text-base font-medium text-gray-900">Messaging</p>
-                                            <p class="mt-1 text-sm text-gray-500">Speak directly to your customers in a more meaningful way.</p>
+                                            <p class="text-base font-medium text-gray-900">
+                                                REST API
+                                            </p>
+
+                                            <p class="mt-1 text-sm text-gray-500">
+                                                Speak directly to your customers in a more meaningful way.
+                                            </p>
                                         </div>
                                     </a>
 
@@ -108,9 +121,15 @@ const isShowingSolutionsMenu = ref(false)
                                                 />
                                             </svg>
                                         </div>
+
                                         <div class="ml-4">
-                                            <p class="text-base font-medium text-gray-900">Live Chat</p>
-                                            <p class="mt-1 text-sm text-gray-500">Your customers&#039; data will be safe and secure.</p>
+                                            <p class="text-base font-medium text-gray-900">
+                                                GraphQL Queries
+                                            </p>
+
+                                            <p class="mt-1 text-sm text-gray-500">
+                                                Your customers&#039; data will be safe and secure.
+                                            </p>
                                         </div>
                                     </a>
 
@@ -125,9 +144,15 @@ const isShowingSolutionsMenu = ref(false)
                                                 />
                                             </svg>
                                         </div>
+
                                         <div class="ml-4">
-                                            <p class="text-base font-medium text-gray-900">Knowledge Base</p>
-                                            <p class="mt-1 text-sm text-gray-500">Connect with third-party tools that you&#039;re already using.</p>
+                                            <p class="text-base font-medium text-gray-900">
+                                                Assets Repo / CDN
+                                            </p>
+
+                                            <p class="mt-1 text-sm text-gray-500">
+                                                Connect with third-party tools that you&#039;re already using.
+                                            </p>
                                         </div>
                                     </a>
                                 </div>

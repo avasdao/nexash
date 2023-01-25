@@ -8,7 +8,7 @@
                     <img class="h-16" src="~/assets/icon.png" alt="Nexa Shell Logo" />
 
                     <p class="text-base leading-6 text-gray-300">
-                        Proud to be providing the most reliable, cloud data solutions to Nexa Builders since 2022.
+                        Proud to be delivering the fastest and most reliable, cloud data solutions to Nexa Builders since 2022.
                     </p>
 
                     <div class="flex space-x-6">
@@ -95,7 +95,7 @@
 
                                 <li>
                                     <a href="javascript://" class="text-base leading-6 text-gray-200 hover:text-gray-400">
-                                        Asset Repository &amp; CDN
+                                        Assets Repo / CDN
                                     </a>
                                 </li>
                             </ul>
@@ -204,7 +204,7 @@
 
             <div class="mt-16 border-t border-gray-900/10 pt-8 sm:mt-20 lg:mt-24">
                 <p class="text-base leading-5 text-gray-500">
-                    &copy; 2023 Nexa Shell DAO. All rights reserved.
+                    &copy; 2022-2023 Nexa Shell DAO. All rights reserved.
                 </p>
             </div>
         </div>
