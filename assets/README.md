@@ -1,12 +1,8 @@
 # Assets Repository / Content Delivery Network (CDN)
 
-### https://assets.nexa.sh
+### https://assets.nexa.sh | https://cdn.nexa.sh | https://ipfs.nexa.sh
 
-### https://cdn.nexa.sh
-
-### https://ipfs.nexa.sh
-
-You can easily replace the Nexa Shell CDN with ANY IPFS-compatible CDN that you choose.
+The purpose of this repository is to help Builder decentralize the assets of their Nexa applications. You can easily replace the Nexa Shell CDN with ANY IPFS-compatible CDN that you choose.
 
 e.g. the Tailwind CSS library
 
