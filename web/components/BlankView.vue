@@ -1,11 +1,5 @@
 <template>
     <main class="">
-        <HeaderView />
-
-        <main>
-            Blank
-        </main>
-
-        <FooterView />
+        Blank
     </main>
 </template>
