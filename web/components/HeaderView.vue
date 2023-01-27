@@ -1,9 +1,32 @@
 <script setup>
 /* Import modules. */
+import numeral from 'numeral'
 import { ref } from 'vue'
 
 const isShowingSolutionsMenu = ref(false)
 const isShowingMobileMenu = ref(false)
+
+const TICKER_UPDATE_INTERVAL = 30000 // default: 30 seconds
+
+/* Initialize NEX/USD holder. */
+const nexUsd = ref(null)
+
+const ENDPOINT = 'https://www.exbitron.com/api/v2/peatio/public/markets/nexausdt/tickers'
+
+const updateTicker = async () => {
+    const response = await $fetch(ENDPOINT)
+        .catch(err => console.error)
+
+    const ticker = response.ticker
+
+    const last = ticker.last * 1000000.0
+
+    nexUsd.value = numeral(last).format('$0,0.00[00]')
+}
+
+updateTicker()
+
+setInterval(updateTicker, TICKER_UPDATE_INTERVAL)
 </script>
 
 <template>
@@ -176,9 +199,12 @@ const isShowingMobileMenu = ref(false)
                 </nav>
 
                 <div class="hidden items-center justify-end md:flex md:flex-1 lg:w-0">
-                    <a href="javascript://" class="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900">
+                    <!-- <a href="javascript://" class="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900">
                         Price
-                    </a>
+                    </a> -->
+                    <NuxtLink to="/buy" class="text-lg font-medium text-gray-500 hover:text-gray-900">
+                        1M NEX/USD <span class="text-2xl text-indigo-600 hover:text-indigo-500">{{nexUsd}}</span>
+                    </NuxtLink>
 
                     <a
                         href="javascript://"
