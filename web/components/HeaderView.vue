@@ -3,6 +3,7 @@
 import { ref } from 'vue'
 
 const isShowingSolutionsMenu = ref(false)
+const isShowingMobileMenu = ref(false)
 </script>
 
 <template>
@@ -10,14 +11,15 @@ const isShowingSolutionsMenu = ref(false)
         <div class="relative bg-white">
             <div class="mx-auto flex max-w-7xl items-center justify-between p-6 md:justify-start md:space-x-10 lg:px-8">
                 <div class="flex justify-start lg:w-0 lg:flex-1">
-                    <a href="javascript://">
+                    <NuxtLink to="/">
                         <span class="sr-only">Nexa Shell</span>
                         <img class="h-12 w-auto sm:h-16" src="~/assets/icon.png" alt="" />
-                    </a>
+                    </NuxtLink>
                 </div>
 
                 <div class="-my-2 -mr-2 md:hidden">
                     <button
+                        @click="isShowingMobileMenu = true"
                         type="button"
                         class="inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
                         aria-expanded="false"
@@ -197,7 +199,7 @@ const isShowingSolutionsMenu = ref(false)
         From: "opacity-100 scale-100"
         To: "opacity-0 scale-95"
     -->
-            <div class="absolute inset-x-0 top-0 z-30 origin-top-right transform p-2 transition md:hidden">
+            <div v-if="isShowingMobileMenu" class="absolute inset-x-0 top-0 z-30 origin-top-right transform p-2 transition md:hidden">
                 <div class="divide-y-2 divide-gray-50 rounded-lg bg-white shadow-lg ring-1 ring-black ring-opacity-5">
                     <div class="px-5 pt-5 pb-6">
                         <div class="flex items-center justify-between">
@@ -206,6 +208,7 @@ const isShowingSolutionsMenu = ref(false)
                             </div>
                             <div class="-mr-2">
                                 <button
+                                    @click="isShowingMobileMenu = false"
                                     type="button"
                                     class="inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
                                 >
@@ -247,7 +250,7 @@ const isShowingSolutionsMenu = ref(false)
                                     <div class="ml-4 text-base font-medium text-gray-900">Messaging</div>
                                 </a>
 
-                                <a href="javascript://" class="-m-3 flex items-center rounded-lg p-3 hover:bg-gray-50">
+                                <NuxtLink to="/transparency" class="-m-3 flex items-center rounded-lg p-3 hover:bg-gray-50">
                                     <div class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-md bg-gradient-to-r from-purple-600 to-indigo-600 text-white">
                                         <!-- Heroicon name: outline/chat-bubble-left-right -->
                                         <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
@@ -258,8 +261,11 @@ const isShowingSolutionsMenu = ref(false)
                                             />
                                         </svg>
                                     </div>
-                                    <div class="ml-4 text-base font-medium text-gray-900">Live Chat</div>
-                                </a>
+
+                                    <div class="ml-4 text-base font-medium text-gray-900">
+                                        Transparency
+                                    </div>
+                                </NuxtLink>
 
                                 <a href="javascript://" class="-m-3 flex items-center rounded-lg p-3 hover:bg-gray-50">
                                     <div class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-md bg-gradient-to-r from-purple-600 to-indigo-600 text-white">

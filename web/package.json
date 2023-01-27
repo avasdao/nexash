@@ -1,8 +1,8 @@
 {
   "name": "nexash-web",
-  "version": "23.1.23",
+  "version": "23.1.27",
   "license": "MIT",
-  "description": "Nexa Shell data service.",
+  "description": "Nexa Shell offers enterprise-class data delivery services for the Nexa blockchain.",
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev",
@@ -11,9 +11,12 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
-    "nuxt": "3.0.0"
+    "moment": "2.29.4",
+    "numeral": "2.0.6",
+    "nuxt": "3.0.0",
+    "uuid": "9.0.0"
   },
   "devDependencies": {
-    "@nuxtjs/tailwindcss": "^6.2.0"
+    "@nuxtjs/tailwindcss": "6.2.0"
   }
 }

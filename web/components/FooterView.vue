@@ -1,3 +1,12 @@
+<script setup>
+/* Import modules. */
+import moment from 'moment'
+
+/* Set current year. */
+const curYear = moment().format('YYYY')
+
+</script>
+
 <template>
     <footer class="bg-gray-900" aria-labelledby="footer-heading">
         <h2 id="footer-heading" class="sr-only">Footer</h2>
@@ -203,8 +212,9 @@
             </div>
 
             <div class="mt-16 border-t border-gray-900/10 pt-8 sm:mt-20 lg:mt-24">
-                <p class="text-base leading-5 text-gray-500">
-                    &copy; 2022-2023 Nexa Shell DAO. All rights reserved.
+                <p class="text-base leading-5 text-gray-500 text-center sm:text-left">
+                    &copy; 2022-{{curYear}} Nexa Shell DAO.
+                    <br class="sm:hidden" />All rights reserved.
                 </p>
             </div>
         </div>
