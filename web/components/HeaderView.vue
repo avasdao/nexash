@@ -202,7 +202,7 @@ setInterval(updateTicker, TICKER_UPDATE_INTERVAL)
                     <!-- <a href="javascript://" class="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900">
                         Price
                     </a> -->
-                    <NuxtLink to="/buy" class="text-lg font-medium text-gray-500 hover:text-gray-900">
+                    <NuxtLink to="/price" class="text-lg font-medium text-gray-500 hover:text-gray-900">
                         1M NEX/USD <span class="text-2xl text-indigo-600 hover:text-indigo-500">{{nexUsd}}</span>
                     </NuxtLink>
 
