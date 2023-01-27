@@ -12,7 +12,7 @@ const isShowingSolutionsMenu = ref(false)
                 <div class="flex justify-start lg:w-0 lg:flex-1">
                     <a href="javascript://">
                         <span class="sr-only">Nexa Shell</span>
-                        <img class="h-10 w-auto sm:h-14" src="https://tailwindui.com/img/logos/mark.svg?from-color=purple&from-shade=600&to-color=indigo&to-shade=600&toShade=600" alt="" />
+                        <img class="h-12 w-auto sm:h-16" src="~/assets/icon.png" alt="" />
                     </a>
                 </div>
 
@@ -202,7 +202,7 @@ const isShowingSolutionsMenu = ref(false)
                     <div class="px-5 pt-5 pb-6">
                         <div class="flex items-center justify-between">
                             <div>
-                                <img class="h-8 w-auto" src="https://tailwindui.com/img/logos/mark.svg?from-color=purple&from-shade=600&to-color=indigo&to-shade=600&toShade=600" alt="Nexa Shell" />
+                                <img class="h-12 w-auto" src="~/assets/icon.png" alt="Nexa Shell" />
                             </div>
                             <div class="-mr-2">
                                 <button

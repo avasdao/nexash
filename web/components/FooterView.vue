@@ -8,7 +8,7 @@
                     <img class="h-16" src="~/assets/icon.png" alt="Nexa Shell Logo" />
 
                     <p class="text-base leading-6 text-gray-300">
-                        Proud to be delivering the fastest and most reliable, cloud data solutions to Nexa Builders since 2022.
+                        Reliably delivering the fastest and most affordable cloud data solutions to Nexicans since 2022.
                     </p>
 
                     <div class="flex space-x-6">
@@ -71,7 +71,7 @@
                     <div class="md:grid md:grid-cols-2 md:gap-8">
                         <div>
                             <h3 class="text-base font-semibold leading-6 text-gray-400">
-                                Solutions
+                                Data Solutions
                             </h3>
 
                             <ul role="list" class="mt-6 space-y-4">
@@ -127,7 +127,7 @@
 
                                 <li>
                                     <a href="javascript://" class="text-base leading-6 text-gray-200 hover:text-gray-400">
-                                        API Status
+                                        Courses
                                     </a>
                                 </li>
                             </ul>
@@ -137,37 +137,31 @@
                     <div class="md:grid md:grid-cols-2 md:gap-8">
                         <div>
                             <h3 class="text-base font-semibold leading-6 text-gray-400">
-                                Platform
+                                Shell DAO
                             </h3>
 
                             <ul role="list" class="mt-6 space-y-4">
                                 <li>
                                     <a href="javascript://" class="text-base leading-6 text-gray-200 hover:text-gray-400">
-                                        About
+                                        Governance
                                     </a>
                                 </li>
 
                                 <li>
                                     <a href="javascript://" class="text-base leading-6 text-gray-200 hover:text-gray-400">
-                                        Blog
+                                        $SHELL
                                     </a>
                                 </li>
 
                                 <li>
-                                    <a href="javascript://" class="text-base leading-6 text-gray-200 hover:text-gray-400">
-                                        Bounties
-                                    </a>
+                                    <NuxtLink to="/transparency" class="text-base leading-6 text-gray-200 hover:text-gray-400">
+                                        Transparency
+                                    </NuxtLink>
                                 </li>
 
                                 <li>
                                     <a href="javascript://" class="text-base leading-6 text-gray-200 hover:text-gray-400">
-                                        Press
-                                    </a>
-                                </li>
-
-                                <li>
-                                    <a href="javascript://" class="text-base leading-6 text-gray-200 hover:text-gray-400">
-                                        Partners
+                                        Code of Conduct
                                     </a>
                                 </li>
                             </ul>
@@ -182,6 +176,12 @@
                                 <li>
                                     <a href="https://github.com/avasdao/nexash" target="_blank" class="text-base leading-6 text-gray-200 hover:text-gray-400">
                                         View the Source
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="javascript://" class="text-base leading-6 text-gray-200 hover:text-gray-400">
+                                        News
                                     </a>
                                 </li>
 
