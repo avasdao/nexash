@@ -1,33 +1,34 @@
 <script setup>
 useHead({
-    title: 'Universal Handler - Nexa Shell',
+    title: 'Nexa Shell...',
     meta: [{
         name: 'description',
-        content: 'Universal Handler'
+        content: 'Nexa Shell is redirecting, please wait...'
     }]
 })
 
+/* Initialize router. */
 const route = useRoute()
 
-console.log('ROUTE PARAMS', route.params)
-
+/* Set slug. */
 const slug = route.params.slug
+console.log('SLUG', slug)
+
+/* Validate for transaction. */
+if (slug.length == 64) {
+    /* Set transaction id. */
+    const txid = slug[0]
+    console.log('TXID', txid)
+
+    // TODO: Validate transaction.
+
+    /* Redirect to transaction page. */
+    await navigateTo({ path: '/tx/' + txid })
+}
 </script>
 
 <template>
-    <main class="">
-        <HeaderView />
-
-        <main class="max-w-7xl mx-auto">
-            <h1 class="text-4xl font-medium">
-                Universal Handler
-            </h1>
-
-            <span class="block text-lg font-medium">
-                SLUG -> {{ slug }}
-            </span>
-        </main>
-
-        <FooterView />
+    <main class="p-32">
+        Nexa Shell is redirecting, please wait...
     </main>
 </template>
