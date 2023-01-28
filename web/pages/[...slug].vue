@@ -15,7 +15,7 @@ const slug = route.params.slug
 console.log('SLUG', slug)
 
 /* Validate for transaction. */
-if (slug.length == 64) {
+if (slug && typeof slug[0] !== 'undefined' && slug[0].length === 64) {
     /* Set transaction id. */
     const txid = slug[0]
     console.log('TXID', txid)
