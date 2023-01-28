@@ -26,6 +26,16 @@ useHead({
                             Account plans unlock additional features.
                         </p>
 
+                        <section class="px-5 py-2 bg-indigo-100 border-4 border-indigo-500 rounded-lg shadow">
+                            <h1 class="text-3xl font-medium">
+                                100% FREE To Get Started!
+                            </h1>
+
+                            <h3>- up to 25,000 requests in a month</h3>
+                            <h3>- up to 3 requests per second</h3>
+                            <h3>- 100 MB FREE cloud data storage</h3>
+                        </section>
+
                         <div class="relative mt-6 flex self-center rounded-lg bg-gray-100 p-0.5 sm:mt-8">
                             <button
                                 type="button"
@@ -59,7 +69,7 @@ useHead({
                                 </p>
 
                                 <a href="javascript://" class="mt-8 block w-full rounded-md border border-transparent bg-purple-600 py-2 text-center text-sm font-semibold text-white hover:bg-purple-700">
-                                    Request a FOSS Key
+                                    Apply for a FOSS Key
                                 </a>
                             </div>
 
@@ -78,63 +88,74 @@ useHead({
                             </div>
                         </div>
 
-                        <div class="divide-y divide-gray-200 rounded-lg border border-gray-200 shadow-sm">
-                            <div class="p-6">
-                                <h2 class="text-lg font-medium leading-6 text-gray-900">
-                                    Startup
-                                </h2>
+                        <div class="flex flex-col justify-between rounded-lg border border-gray-200 shadow-sm">
+                            <div class="divide-y divide-gray-200">
+                                <div class="p-6">
+                                    <h2 class="text-lg font-medium leading-6 text-gray-900">
+                                        Startup
+                                    </h2>
 
-                                <p class="mt-4 text-sm text-gray-500">
-                                    This package includes everything your team will need to build and launch your first Nexa MVP.
-                                </p>
+                                    <p class="mt-4 text-sm text-gray-500">
+                                        This package includes everything your team will need to build and launch your first Nexa MVP.
+                                    </p>
 
-                                <p class="mt-8">
-                                    <span class="text-4xl font-bold tracking-tight text-gray-900">$5</span>
-                                    <span class="text-base font-medium text-gray-500">/mo</span>
-                                </p>
+                                    <p class="mt-8">
+                                        <span class="text-4xl font-bold tracking-tight text-gray-900">$5</span>
+                                        <span class="text-base font-medium text-gray-500">/mo</span>
+                                    </p>
 
-                                <a href="javascript://" class="mt-8 block w-full rounded-md border border-transparent bg-purple-600 py-2 text-center text-sm font-semibold text-white hover:bg-purple-700">
-                                    Buy Startup Keys
-                                </a>
+                                    <a href="javascript://" class="mt-8 block w-full rounded-md border border-transparent bg-purple-600 py-2 text-center text-sm font-semibold text-white hover:bg-purple-700">
+                                        Buy Startup Keys
+                                    </a>
+                                </div>
+
+                                <div class="px-6 pt-6 pb-8">
+                                    <h3 class="text-sm font-medium text-gray-900">What's included</h3>
+                                    <ul role="list" class="mt-6 space-y-4">
+                                        <li class="flex space-x-3">
+                                            <!-- Heroicon name: mini/check -->
+                                            <svg class="h-5 w-5 flex-shrink-0 text-green-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                                <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
+                                            </svg>
+
+                                            <span class="text-sm text-gray-500">
+                                                100,000<sup>*</sup> REST requests
+                                            </span>
+                                        </li>
+
+                                        <li class="flex space-x-3">
+                                            <!-- Heroicon name: mini/check -->
+                                            <svg class="h-5 w-5 flex-shrink-0 text-green-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                                <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
+                                            </svg>
+
+                                            <span class="text-sm text-gray-500">
+                                                100,000<sup>*</sup> GraphQL queries
+                                            </span>
+                                        </li>
+
+                                        <li class="flex space-x-3">
+                                            <!-- Heroicon name: mini/check -->
+                                            <svg class="h-5 w-5 flex-shrink-0 text-green-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                                <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
+                                            </svg>
+                                            <span class="text-sm text-gray-500">100<sup>**</sup> build minutes</span>
+                                        </li>
+
+                                        <li class="flex space-x-3">
+                                            <!-- Heroicon name: mini/check -->
+                                            <svg class="h-5 w-5 flex-shrink-0 text-green-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                                <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
+                                            </svg>
+                                            <span class="text-sm text-gray-500">5GB data storage</span>
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
 
-                            <div class="px-6 pt-6 pb-8">
-                                <h3 class="text-sm font-medium text-gray-900">What's included</h3>
-                                <ul role="list" class="mt-6 space-y-4">
-                                    <li class="flex space-x-3">
-                                        <!-- Heroicon name: mini/check -->
-                                        <svg class="h-5 w-5 flex-shrink-0 text-green-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                            <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
-                                        </svg>
-                                        <span class="text-sm text-gray-500">
-                                            100,000 REST requests
-                                        </span>
-                                    </li>
-
-                                    <li class="flex space-x-3">
-                                        <!-- Heroicon name: mini/check -->
-                                        <svg class="h-5 w-5 flex-shrink-0 text-green-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                            <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
-                                        </svg>
-                                        <span class="text-sm text-gray-500">100,000 GraphQL queries</span>
-                                    </li>
-
-                                    <li class="flex space-x-3">
-                                        <!-- Heroicon name: mini/check -->
-                                        <svg class="h-5 w-5 flex-shrink-0 text-green-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                            <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
-                                        </svg>
-                                        <span class="text-sm text-gray-500">100 build minutes</span>
-                                    </li>
-
-                                    <li class="flex space-x-3">
-                                        <!-- Heroicon name: mini/check -->
-                                        <svg class="h-5 w-5 flex-shrink-0 text-green-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                            <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
-                                        </svg>
-                                        <span class="text-sm text-gray-500">5GB data storage</span>
-                                    </li>
-                                </ul>
+                            <div class="p-3 text-xs text-right text-gray-500 italic">
+                                <span class="block">* up to 10 requests per second</span>
+                                <span class="block">** up to 1 running VM at a time</span>
                             </div>
                         </div>
 
@@ -282,6 +303,16 @@ useHead({
                             </div>
                         </div>
                     </div>
+
+                    <section class="mt-10 px-5 py-2 bg-indigo-100 border-4 border-indigo-500 rounded-lg shadow">
+                        <h1 class="text-3xl font-medium">
+                            Get a Quote for our Enterprise Solutions
+                        </h1>
+
+                        <h3>- Unlimited requests in a month</h3>
+                        <h3>- Unlimited requests per second</h3>
+                        <h3>- Unlimited cloud data storage</h3>
+                    </section>
                 </div>
 
                 <!-- Feature list -->
