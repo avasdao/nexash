@@ -1,0 +1,13 @@
+version: '3.3'
+
+services:
+  web-app:
+    image: nexa-shell
+    build: .
+    ports:
+      - '127.0.0.1:3000:3000'
+    # volumes:
+    #   - './:/webapp/'
+    environment:
+      HOST: 0.0.0.0
+      PORT: 3000
