@@ -5,9 +5,12 @@ ENV PORT='3000'
 
 WORKDIR /webapp
 
-COPY . .
+COPY package*.json ./
 
 RUN yarn
+
+COPY . .
+
 RUN yarn build
 
 EXPOSE 3000

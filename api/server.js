@@ -4,8 +4,8 @@ const express = require('express')
 const cors = require('cors')
 
 /* Set constants. */
-const HOST = '127.0.0.1'
-const PORT = process.env.PORT || 3000
+const HOST = '0.0.0.0'
+const PORT = process.env.PORT || 4000
 
 /* Initialize application. */
 const app = express()
