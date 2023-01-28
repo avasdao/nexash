@@ -21,19 +21,39 @@ useHead({
                             Pricing Plans
                         </h1>
 
-                        <p class="mt-5 text-xl text-gray-500 sm:text-center">
+                        <!-- <p class="mt-5 text-xl text-gray-500 sm:text-center">
                             Start building for free, then add a site plan to go live.
                             Account plans unlock additional features.
-                        </p>
+                        </p> -->
 
-                        <section class="px-5 py-2 bg-indigo-100 border-4 border-indigo-500 rounded-lg shadow">
-                            <h1 class="text-3xl font-medium">
-                                100% FREE To Get Started!
-                            </h1>
+                        <section class="relative mx-auto mt-8 max-w-7xl px-6 lg:px-8">
+                            <div class="mx-auto max-w-md lg:max-w-4xl">
+                                <div class="bg-yellow-100 border-2 border-yellow-300 flex flex-col gap-6 rounded-3xl p-8 ring-1 ring-gray-900/10 sm:p-10 lg:flex-row lg:items-center lg:gap-8">
+                                    <div class="lg:min-w-0 lg:flex-1">
+                                        <h3 class="text-4xl font-semibold leading-8 tracking-tight text-indigo-600">
+                                            100% <span class="text-5xl">FREE</span> For BUIDLers, <span class="text-5xl">FOREVER!</span>
+                                        </h3>
 
-                            <h3>- up to 25,000 requests in a month</h3>
-                            <h3>- up to 3 requests per second</h3>
-                            <h3>- 100 MB FREE cloud data storage</h3>
+                                        <div class="mt-2 text-base leading-7 text-gray-600">
+                                            Just point your application to our one of our <a href="https://docs.nexa.sh" target="_blank" class="text-blue-500 font-medium hover:underline">Endpoints</a> and you're good-to-go!
+                                        </div>
+
+                                        <ul class="ml-10 mt-3">
+                                            <li>— up to <strong>25,000 REST</strong> requests per month</li>
+                                            <li>— up to <strong>25,000 GraphQL</strong> queries per month</li>
+                                            <li>— up to <strong>3</strong> requests per second</li>
+                                            <li>— <strong>100 MB</strong> FREE cloud data storage</li>
+                                            <li>— Real-time Data Analytics</li>
+                                        </ul>
+                                    </div>
+
+                                    <div>
+                                        <a href="https://docs.nexa.sh" target="_blank" class="inline-block rounded-lg border-2 border-indigo-300 bg-indigo-50 px-4 py-2.5 text-center text-xl font-semibold leading-5 text-indigo-700 hover:bg-indigo-100">
+                                            Read the Docs <span aria-hidden="true">&rarr;</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
                         </section>
 
                         <div class="relative mt-6 flex self-center rounded-lg bg-gray-100 p-0.5 sm:mt-8">
@@ -56,7 +76,7 @@ useHead({
                     <div class="mt-12 space-y-4 sm:mt-16 sm:grid sm:grid-cols-2 sm:gap-6 sm:space-y-0 lg:mx-auto lg:max-w-4xl xl:mx-0 xl:max-w-none xl:grid-cols-4">
                         <div class="divide-y divide-gray-200 rounded-lg border border-gray-200 shadow-sm">
                             <div class="p-6">
-                                <h2 class="text-lg font-medium leading-6 text-gray-900">
+                                <h2 class="text-3xl font-medium leading-6 text-gray-900">
                                     FOSS
                                 </h2>
 
@@ -68,7 +88,7 @@ useHead({
                                     <span class="text-4xl font-bold tracking-tight text-gray-900">FREE</span>
                                 </p>
 
-                                <a href="javascript://" class="mt-8 block w-full rounded-md border border-transparent bg-purple-600 py-2 text-center text-sm font-semibold text-white hover:bg-purple-700">
+                                <a href="javascript://" class="mt-8 block w-full rounded-md border border-transparent bg-purple-600 py-2 text-center text-lg font-semibold text-white hover:bg-purple-700">
                                     Apply for a FOSS Key
                                 </a>
                             </div>
@@ -91,90 +111,100 @@ useHead({
                         <div class="flex flex-col justify-between rounded-lg border border-gray-200 shadow-sm">
                             <div class="divide-y divide-gray-200">
                                 <div class="p-6">
-                                    <h2 class="text-lg font-medium leading-6 text-gray-900">
-                                        Startup
+                                    <h2 class="text-3xl font-medium leading-6 text-gray-900">
+                                        dApp
                                     </h2>
 
                                     <p class="mt-4 text-sm text-gray-500">
-                                        This package includes everything your team will need to build and launch your first Nexa MVP.
+                                        Everything your team will need to launch and support the MVP of your first Nexa dApp.
                                     </p>
 
-                                    <p class="mt-8">
+                                    <p class="mt-8 flex items-end gap-2">
                                         <span class="text-4xl font-bold tracking-tight text-gray-900">$5</span>
-                                        <span class="text-base font-medium text-gray-500">/mo</span>
+                                        <span class="text-base font-medium text-gray-500">for 30 days</span>
                                     </p>
 
-                                    <a href="javascript://" class="mt-8 block w-full rounded-md border border-transparent bg-purple-600 py-2 text-center text-sm font-semibold text-white hover:bg-purple-700">
+                                    <a href="javascript://" class="mt-8 block w-full rounded-md border border-transparent bg-purple-600 py-2 text-center text-lg font-semibold text-white hover:bg-purple-700">
                                         Buy Startup Keys
                                     </a>
                                 </div>
 
                                 <div class="px-6 pt-6 pb-8">
-                                    <h3 class="text-sm font-medium text-gray-900">What's included</h3>
+                                    <h3 class="text-lg font-medium text-gray-900">
+                                        What's included
+                                    </h3>
+
                                     <ul role="list" class="mt-6 space-y-4">
                                         <li class="flex space-x-3">
-                                            <!-- Heroicon name: mini/check -->
                                             <svg class="h-5 w-5 flex-shrink-0 text-green-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                                 <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
                                             </svg>
-
                                             <span class="text-sm text-gray-500">
-                                                100,000<sup>*</sup> REST requests
+                                                <strong>100,000<sup>*</sup></strong> REST requests
                                             </span>
                                         </li>
 
                                         <li class="flex space-x-3">
-                                            <!-- Heroicon name: mini/check -->
                                             <svg class="h-5 w-5 flex-shrink-0 text-green-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                                 <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
                                             </svg>
-
                                             <span class="text-sm text-gray-500">
-                                                100,000<sup>*</sup> GraphQL queries
+                                                <strong>100,000<sup>*</sup></strong> GraphQL queries
                                             </span>
                                         </li>
 
                                         <li class="flex space-x-3">
-                                            <!-- Heroicon name: mini/check -->
                                             <svg class="h-5 w-5 flex-shrink-0 text-green-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                                 <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
                                             </svg>
-                                            <span class="text-sm text-gray-500">100<sup>**</sup> build minutes</span>
+                                            <span class="text-sm text-gray-500">
+                                                <strong>100<sup>**</sup></strong> build minutes
+                                            </span>
                                         </li>
 
                                         <li class="flex space-x-3">
-                                            <!-- Heroicon name: mini/check -->
                                             <svg class="h-5 w-5 flex-shrink-0 text-green-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                                 <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
                                             </svg>
-                                            <span class="text-sm text-gray-500">5GB data storage</span>
+                                            <span class="text-sm text-gray-500">
+                                                <strong>5GB</strong> data storage
+                                            </span>
+                                        </li>
+
+                                        <li class="flex space-x-3">
+                                            <svg class="h-5 w-5 flex-shrink-0 text-green-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                                <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
+                                            </svg>
+                                            <span class="text-sm text-gray-500">
+                                                Real-time monitoring &amp; reporting for <strong>1</strong> dApp
+                                            </span>
                                         </li>
                                     </ul>
                                 </div>
                             </div>
 
                             <div class="p-3 text-xs text-right text-gray-500 italic">
-                                <span class="block">* up to 10 requests per second</span>
-                                <span class="block">** up to 1 running VM at a time</span>
+                                <span class="block">* up to <strong>10</strong> requests per second</span>
+                                <span class="block">** up to <strong>1</strong> running VM at a time</span>
                             </div>
                         </div>
 
                         <div class="divide-y divide-gray-200 rounded-lg border border-gray-200 shadow-sm">
                             <div class="p-6">
-                                <h2 class="text-lg font-medium leading-6 text-gray-900">
-                                    Growth
+                                <h2 class="text-3xl font-medium leading-6 text-gray-900">
+                                    Platform
                                 </h2>
 
                                 <p class="mt-4 text-sm text-gray-500">
                                     When it's time to scale, we've got your covered 100% with elastic resources at your disposal.
                                 </p>
 
-                                <p class="mt-8">
+                                <p class="mt-8 flex items-end gap-2">
                                     <span class="text-4xl font-bold tracking-tight text-gray-900">$20</span>
-                                    <span class="text-base font-medium text-gray-500">/mo</span>
+                                    <span class="text-base font-medium text-gray-500">for 30 days</span>
                                 </p>
 
-                                <a href="javascript://" class="mt-8 block w-full rounded-md border border-transparent bg-purple-600 py-2 text-center text-sm font-semibold text-white hover:bg-purple-700">
+                                <a href="javascript://" class="mt-8 block w-full rounded-md border border-transparent bg-purple-600 py-2 text-center text-lg font-semibold text-white hover:bg-purple-700">
                                     Buy Growth Keys
                                 </a>
                             </div>
@@ -221,21 +251,22 @@ useHead({
 
                         <div class="divide-y divide-gray-200 rounded-lg border border-gray-200 shadow-sm">
                             <div class="p-6">
-                                <h2 class="text-lg font-medium leading-6 text-gray-900">
-                                    Viral
+                                <h2 class="text-3xl font-medium leading-6 text-gray-900">
+                                    Enterprise
                                 </h2>
 
                                 <p class="mt-4 text-sm text-gray-500">
                                     When your application becomes the next BIG sensation, we're ready to deliver the bandwidth you'll need.
                                 </p>
 
-                                <p class="mt-8">
-                                    <span class="text-4xl font-bold tracking-tight text-gray-900">$200</span>
-                                    <span class="text-base font-medium text-gray-500">/mo</span>
+                                <p class="mt-8 flex items-end gap-2">
+                                    <span class="text-4xl font-bold tracking-tight text-gray-900">
+                                        Custom
+                                    </span>
                                 </p>
 
-                                <a href="javascript://" class="mt-8 block w-full rounded-md border border-transparent bg-purple-600 py-2 text-center text-sm font-semibold text-white hover:bg-purple-700">
-                                    Buy Viral Keys
+                                <a href="javascript://" class="mt-8 block w-full rounded-md border border-transparent bg-purple-600 py-2 text-center text-lg font-semibold text-white hover:bg-purple-700">
+                                    Request a Quote
                                 </a>
                             </div>
 
@@ -248,7 +279,7 @@ useHead({
                                             <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
                                         </svg>
                                         <span class="text-sm text-gray-500">
-                                            1,000,000 REST requests
+                                            <strong>Unlimited</strong> REST requests
                                         </span>
                                     </li>
 
@@ -304,14 +335,30 @@ useHead({
                         </div>
                     </div>
 
-                    <section class="mt-10 px-5 py-2 bg-indigo-100 border-4 border-indigo-500 rounded-lg shadow">
-                        <h1 class="text-3xl font-medium">
-                            Get a Quote for our Enterprise Solutions
-                        </h1>
+                    <section class="relative mx-auto mt-8 max-w-7xl px-6 lg:px-8">
+                        <div class="mx-auto max-w-md lg:max-w-4xl">
+                            <div class="flex flex-col gap-6 rounded-3xl p-8 ring-1 ring-gray-900/10 sm:p-10 lg:flex-row lg:items-center lg:gap-8">
+                                <div class="lg:min-w-0 lg:flex-1">
+                                    <h3 class="text-lg font-semibold leading-8 tracking-tight text-indigo-600">
+                                        Get a Quote for our Enterprise Solutions
+                                    </h3>
 
-                        <h3>- Unlimited requests in a month</h3>
-                        <h3>- Unlimited requests per second</h3>
-                        <h3>- Unlimited cloud data storage</h3>
+                                    <div class="mt-2 text-base leading-7 text-gray-600">
+                                        Get full access to all of standard license features for solo projects that make less than $20k gross revenue for <span class="font-semibold text-gray-900">$29</span>.
+                                    </div>
+
+                                    <h3>- Unlimited requests in a month</h3>
+                                    <h3>- Unlimited requests per second</h3>
+                                    <h3>- Unlimited cloud data storage</h3>
+                                </div>
+
+                                <div>
+                                    <a href="javascript://" class="inline-block rounded-lg bg-indigo-50 px-4 py-2.5 text-center text-sm font-semibold leading-5 text-indigo-700 hover:bg-indigo-100">
+                                        Buy discounted license <span aria-hidden="true">&rarr;</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
                     </section>
                 </div>
 
