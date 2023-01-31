@@ -1,9 +1,9 @@
 <script setup>
 useHead({
-    title: 'Ads - Nexa Shell',
+    title: 'Platform Advertising - Nexa Shell',
     meta: [{
         name: 'description',
-        content: 'Ads'
+        content: 'Platform Advertising'
     }]
 })
 </script>
@@ -14,13 +14,26 @@ useHead({
 
         <main class="max-w-7xl mx-auto">
             <h1 class="text-4xl font-medium">
-                Ads
+                Platform Advertising
             </h1>
 
             <p>
-                The TOP 10 Ads (weekly bidding) are rotated on the homepage.
+                Each week (starting on Monday @ 00:00 UTC), the TOP 10 "approved" advertisements (by bid price) begin rotation on the homepage and platform footer.
+            </p>
+
+            <p>
+                Bidders pay the lowest (10th bidder) price for their ads to run for the week.
             </p>
         </main>
+
+        <section>
+            <h2>Requirements</h2>
+
+            <ul>
+                <li>No profanity</li>
+                <li>Non competitive</li>
+            </ul>
+        </section>
 
         <FooterView />
     </main>
