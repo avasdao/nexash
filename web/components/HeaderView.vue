@@ -31,17 +31,48 @@ setInterval(updateTicker, TICKER_UPDATE_INTERVAL)
 
 <template>
     <header>
-        <div class="bg-gradient-to-r from-rose-400 to-rose-600">
-            Nexa Shell
-        </div>
+        <section class="bg-gradient-to-r from-rose-400 to-rose-600">
+            <div class="max-w-7xl mx-auto">
+                <h1 class="text-xl text-gray-100 font-bold uppercase">
+                    Nexa Shell
+                </h1>
+            </div>
+        </section>
 
-        <div>
-            Dashboard
-        </div>
+        <section class="bg-white">
+            <div class="px-20 py-5 max-w-7xl mx-auto flex justify-between">
+                <button>
+                    Dashboard
+                </button>
 
-        <div>
-            $ Price: $9.4825
-        </div>
+                <button>
+                    Blocks
+                </button>
+
+                <button>
+                    Transactions
+                </button>
+
+                <button>
+                    Assets
+                </button>
+
+                <button>
+                    DeFi
+                </button>
+
+                <button>
+                    Contracts
+                </button>
+            </div>
+
+        </section>
+
+        <section class="bg-gradient-to-r from-gray-100 to-gray-200">
+            <div class="py-1 max-w-7xl mx-auto flex justify-end">
+                <h3 class="text-sm">$ Price: $9.4825</h3>
+            </div>
+        </section>
     </header>
 
     <header>

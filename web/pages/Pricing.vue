@@ -138,7 +138,7 @@ useHead({
                                                 <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
                                             </svg>
                                             <span class="text-sm text-gray-500">
-                                                <strong>50,000<sup>*</sup></strong> REST requests/day
+                                                <strong class="text-rose-500">50,000<sup>*</sup></strong> REST requests/day
                                             </span>
                                         </li>
 
@@ -147,7 +147,7 @@ useHead({
                                                 <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
                                             </svg>
                                             <span class="text-sm text-gray-500">
-                                                <strong>50,000<sup>*</sup></strong> GraphQL queries/day
+                                                <strong class="text-rose-500">50,000<sup>*</sup></strong> GraphQL queries/day
                                             </span>
                                         </li>
 
@@ -156,7 +156,7 @@ useHead({
                                                 <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
                                             </svg>
                                             <span class="text-sm text-gray-500">
-                                                <strong>60<sup>**</sup></strong> build minutes/month
+                                                <strong class="text-rose-500">60<sup>**</sup></strong> build minutes/month
                                             </span>
                                         </li>
 
@@ -165,7 +165,7 @@ useHead({
                                                 <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
                                             </svg>
                                             <span class="text-sm text-gray-500">
-                                                <strong>5GB</strong> data storage
+                                                <strong class="text-rose-500">5GB</strong> data storage
                                             </span>
                                         </li>
 
@@ -174,7 +174,16 @@ useHead({
                                                 <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
                                             </svg>
                                             <span class="text-sm text-gray-500">
-                                                Real-time monitoring &amp; reporting for <strong>1</strong> dApp
+                                                Real-time Monitoring and Reporting for <strong class="text-rose-500">1</strong> dApp
+                                            </span>
+                                        </li>
+
+                                        <li class="flex space-x-3">
+                                            <svg class="h-5 w-5 flex-shrink-0 text-green-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                                <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
+                                            </svg>
+                                            <span class="text-sm text-gray-500">
+                                                Customer Support response within <strong class="text-rose-500">24</strong> hours
                                             </span>
                                         </li>
                                     </ul>
@@ -182,8 +191,8 @@ useHead({
                             </div>
 
                             <div class="p-3 text-xs text-right text-gray-500 italic">
-                                <span class="block">* up to <strong>10</strong> requests per second</span>
-                                <span class="block">** up to <strong>1</strong> running VM at a time</span>
+                                <span class="block">* up to <strong class="text-rose-500">10</strong> requests per second</span>
+                                <span class="block">** up to <strong class="text-rose-500">1</strong> running VM at a time</span>
                             </div>
                         </div>
 
@@ -220,7 +229,7 @@ useHead({
                                                 <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
                                             </svg>
                                             <span class="text-sm text-gray-500">
-                                                <strong>200,000<sup>*</sup></strong> REST requests/day
+                                                <strong class="text-rose-500">200,000<sup>*</sup></strong> REST requests/day
                                             </span>
                                         </li>
 
@@ -252,8 +261,8 @@ useHead({
                             </div>
 
                             <div class="p-3 text-xs text-right text-gray-500 italic">
-                                <span class="block">* up to <strong>10</strong> requests per second</span>
-                                <span class="block">** up to <strong>1</strong> running VM at a time</span>
+                                <span class="block">* up to <strong class="text-rose-500">50</strong> requests per second</span>
+                                <span class="block">** up to <strong class="text-rose-500">3</strong> running VMs at a time</span>
                             </div>
                         </div>
 
@@ -291,7 +300,7 @@ useHead({
                                                 <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
                                             </svg>
                                             <span class="text-sm text-gray-500">
-                                                <strong>Unlimited</strong> REST requests
+                                                <strong class="text-rose-500">Unlimited</strong> REST requests
                                             </span>
                                         </li>
 
@@ -347,8 +356,8 @@ useHead({
                             </div>
 
                             <div class="p-3 text-xs text-right text-gray-500 italic">
-                                <span class="block">* up to <strong>10</strong> requests per second</span>
-                                <span class="block">** up to <strong>1</strong> running VM at a time</span>
+                                <span class="block"><strong class="text-rose-500">unlimited</strong> requests per second</span>
+                                <span class="block"><strong class="text-rose-500">unlimited</strong> running VMs at a time</span>
                             </div>
                         </div>
                     </div>
