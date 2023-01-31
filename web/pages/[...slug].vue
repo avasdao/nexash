@@ -26,9 +26,3 @@ if (slug && typeof slug[0] !== 'undefined' && slug[0].length === 64) {
     await navigateTo({ path: '/tx/' + txid })
 }
 </script>
-
-<template>
-    <main class="p-32">
-        Nexa Shell is redirecting, please wait...
-    </main>
-</template>

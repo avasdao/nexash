@@ -158,7 +158,7 @@ const curYear = moment().format('YYYY')
 
                                 <li>
                                     <a href="javascript://" class="text-base leading-6 text-gray-200 hover:text-gray-400">
-                                        $SHELL
+                                        SHELL Token
                                     </a>
                                 </li>
 
@@ -170,7 +170,7 @@ const curYear = moment().format('YYYY')
 
                                 <li>
                                     <a href="javascript://" class="text-base leading-6 text-gray-200 hover:text-gray-400">
-                                        Code of Conduct
+                                        Voting
                                     </a>
                                 </li>
                             </ul>
@@ -190,12 +190,6 @@ const curYear = moment().format('YYYY')
 
                                 <li>
                                     <a href="javascript://" class="text-base leading-6 text-gray-200 hover:text-gray-400">
-                                        News
-                                    </a>
-                                </li>
-
-                                <li>
-                                    <a href="javascript://" class="text-base leading-6 text-gray-200 hover:text-gray-400">
                                         Privacy
                                     </a>
                                 </li>
@@ -203,6 +197,12 @@ const curYear = moment().format('YYYY')
                                 <li>
                                     <a href="javascript://" class="text-base leading-6 text-gray-200 hover:text-gray-400">
                                         Terms
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="javascript://" class="text-base leading-6 text-gray-200 hover:text-gray-400">
+                                        Code of Conduct
                                     </a>
                                 </li>
                             </ul>
