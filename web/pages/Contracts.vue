@@ -10,9 +10,7 @@ useHead({
 
 <template>
     <main class="">
-        <HeaderView />
-
-        <main class="max-w-7xl mx-auto">
+        <section class="max-w-7xl mx-auto">
             <h1 class="text-4xl font-medium">
                 Contracts
             </h1>
@@ -20,8 +18,6 @@ useHead({
             <p>
                 A dashboard of the most popular Smart Contracts.
             </p>
-        </main>
-
-        <FooterView />
+        </section>
     </main>
 </template>

@@ -10,12 +10,8 @@ useHead({
 
 <template>
     <main class="">
-        <HeaderView />
-
-        <main>
+        <section>
             Blocks
-        </main>
-
-        <FooterView />
+        </section>
     </main>
 </template>

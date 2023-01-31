@@ -10,12 +10,8 @@ useHead({
 
 <template>
     <main class="bg-white">
-        <HeaderView />
-
-        <main>
+        <section>
             Transparency
-        </main>
-
-        <FooterView />
+        </section>
     </main>
 </template>

@@ -11,7 +11,21 @@ const curYear = moment().format('YYYY')
     <footer class="bg-gray-900" aria-labelledby="footer-heading">
         <h2 id="footer-heading" class="sr-only">Footer</h2>
 
-        <div class="mx-auto max-w-7xl px-6 pb-8 pt-16 sm:pt-24 lg:px-8 lg:pt-32">
+        <section class="mx-auto max-w-7xl px-8 py-5">
+            <div class="p-3 bg-gray-800 rounded border-2 border-gray-700">
+                <h1 class="text-2xl text-gray-100 font-medium">
+                    Our Sponsors
+                </h1>
+
+                <div class="flex justify-end">
+                    <NuxtLink to="/sponsors" class="text-xs text-gray-300 hover:underline hover:text-gray-200">
+                        Become our Sponsor?
+                    </NuxtLink>
+                </div>
+            </div>
+        </section>
+
+        <div class="mx-auto max-w-7xl px-6 pb-8 pt-8 sm:pt-12 lg:px-8 lg:pt-16">
             <div class="xl:grid xl:grid-cols-3 xl:gap-8">
                 <div class="space-y-8">
                     <img class="h-16" src="~/assets/icon.png" alt="Nexa Shell Logo" />

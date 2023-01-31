@@ -10,12 +10,8 @@ useHead({
 
 <template>
     <main class="">
-        <HeaderView />
-
-        <main>
+        <section>
             Market Price Dashboard
-        </main>
-
-        <FooterView />
+        </section>
     </main>
 </template>

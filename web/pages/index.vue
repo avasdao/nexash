@@ -10,8 +10,6 @@ useHead({
 
 <template>
     <main class="bg-white">
-        <HeaderView />
-
         <main class="max-w-7xl mx-auto">
             <SearchView />
 
@@ -254,7 +252,5 @@ useHead({
                 </div>
             </div>
         </main>
-
-        <FooterView />
     </main>
 </template>

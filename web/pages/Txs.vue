@@ -10,9 +10,7 @@ useHead({
 
 <template>
     <main class="">
-        <HeaderView />
-
-        <main class="max-w-7xl mx-auto">
+        <section class="max-w-7xl mx-auto">
             <h1 class="text-4xl font-medium">
                 Transactions
             </h1>
@@ -20,8 +18,6 @@ useHead({
             <p>
                 Watch a real-time feed of the Nexa memory pool.
             </p>
-        </main>
-
-        <FooterView />
+        </section>
     </main>
 </template>

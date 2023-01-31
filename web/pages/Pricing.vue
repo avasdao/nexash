@@ -10,9 +10,7 @@ useHead({
 
 <template>
     <main class="bg-white">
-        <HeaderView />
-
-        <main class="bg-white">
+        <section class="bg-white">
             <!-- Pricing with four tiers and toggle -->
             <div class="bg-gradient-to-b from-white to-gray-50">
                 <div class="mx-auto max-w-7xl px-6 pt-24 lg:px-8">
@@ -424,8 +422,6 @@ useHead({
                     </div>
                 </div>
             </div>
-        </main>
-
-        <FooterView />
+        </section>
     </main>
 </template>

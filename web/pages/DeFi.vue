@@ -10,9 +10,7 @@ useHead({
 
 <template>
     <main class="">
-        <HeaderView />
-
-        <main class="max-w-7xl mx-auto">
+        <section class="max-w-7xl mx-auto">
             <h1 class="text-4xl font-medium">
                 DeFi
             </h1>
@@ -20,8 +18,6 @@ useHead({
             <p>
                 Highlighting the DeFi activity being recorded on-chain.
             </p>
-        </main>
-
-        <FooterView />
+        </section>
     </main>
 </template>
