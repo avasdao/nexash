@@ -31,11 +31,20 @@ setInterval(updateTicker, TICKER_UPDATE_INTERVAL)
 
 <template>
     <header>
-        <section class="bg-gradient-to-r from-rose-400 to-rose-600">
-            <div class="max-w-7xl mx-auto">
-                <h1 class="text-xl text-gray-100 font-bold uppercase">
-                    Nexa Shell
-                </h1>
+        <section class="py-1 bg-gradient-to-r from-rose-400 to-rose-600">
+            <div class="max-w-7xl mx-auto flex justify-between">
+                <div class="flex gap-4 items-center">
+                    <img class="h-6 w-auto sm:h-8" src="~/assets/icon.png" alt="" />
+
+                    <h1 class="text-2xl text-gray-100 font-bold uppercase">
+                        Nexa Shell
+                    </h1>
+                </div>
+
+                <input
+                    type="text"
+                    class="w-1/3 bg-rose-700 border-2 border-rose-200 rounded"
+                />
             </div>
         </section>
 
@@ -70,7 +79,7 @@ setInterval(updateTicker, TICKER_UPDATE_INTERVAL)
 
         <section class="bg-gradient-to-r from-gray-100 to-gray-200">
             <div class="py-1 max-w-7xl mx-auto flex justify-end">
-                <h3 class="text-sm">$ Price: $9.4825</h3>
+                <h3 class="text-sm">$ Price: {{nexUsd}}</h3>
             </div>
         </section>
     </header>

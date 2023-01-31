@@ -99,9 +99,9 @@ const curYear = moment().format('YYYY')
 
                             <ul role="list" class="mt-6 space-y-4">
                                 <li>
-                                    <a href="javascript://" class="text-base leading-6 text-gray-200 hover:text-gray-400">
+                                    <NuxtLink to="/explorer" class="text-base leading-6 text-gray-200 hover:text-gray-400">
                                         Block Explorer
-                                    </a>
+                                    </NuxtLink>
                                 </li>
 
                                 <li>
@@ -120,6 +120,12 @@ const curYear = moment().format('YYYY')
                                     <a href="javascript://" class="text-base leading-6 text-gray-200 hover:text-gray-400">
                                         Assets Repo / CDN
                                     </a>
+                                </li>
+
+                                <li>
+                                    <NuxtLink to="/pricing" class="text-base leading-6 text-gray-200 hover:text-gray-400">
+                                        Pricing
+                                    </NuxtLink>
                                 </li>
                             </ul>
                         </div>
