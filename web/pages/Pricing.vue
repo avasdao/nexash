@@ -33,15 +33,15 @@ useHead({
                                         </h3>
 
                                         <div class="mt-2 text-base leading-7 text-gray-600">
-                                            Just point your application to our one of our <a href="https://docs.nexa.sh" target="_blank" class="text-blue-500 font-medium hover:underline">Endpoints</a> and you're good-to-go!
+                                            Just point your dApp to one of our <a href="https://docs.nexa.sh" target="_blank" class="text-blue-500 font-medium hover:underline">Endpoints</a> and you're all set!
                                         </div>
 
                                         <ul class="ml-10 mt-3">
-                                            <li>— up to <strong>25,000 REST</strong> requests per month</li>
-                                            <li>— up to <strong>25,000 GraphQL</strong> queries per month</li>
+                                            <li>— up to <strong>10,000 REST</strong> requests per day</li>
+                                            <li>— up to <strong>10,000 GraphQL</strong> queries per day</li>
                                             <li>— up to <strong>3</strong> requests per second</li>
-                                            <li>— <strong>100 MB</strong> FREE cloud data storage</li>
-                                            <li>— Real-time Data Analytics</li>
+                                            <li>— <strong>50 MB</strong> FREE cloud media &amp; data storage</li>
+                                            <li>— Real-time data analytics</li>
                                         </ul>
                                     </div>
 
@@ -57,14 +57,14 @@ useHead({
                         <div class="relative mt-6 flex self-center rounded-lg bg-gray-100 p-0.5 sm:mt-8">
                             <button
                                 type="button"
-                                class="relative w-1/2 whitespace-nowrap rounded-md border-gray-200 bg-white py-2 text-sm font-medium text-gray-900 shadow-sm focus:z-10 focus:outline-none focus:ring-2 focus:ring-purple-500 sm:w-auto sm:px-8"
+                                class="relative w-1/2 whitespace-nowrap rounded-md border-gray-200 bg-white py-2 text-lg font-medium text-gray-900 shadow-sm focus:z-10 focus:outline-none focus:ring-2 focus:ring-purple-500 sm:w-auto sm:px-8"
                             >
                                 Monthly Packages
                             </button>
 
                             <button
                                 type="button"
-                                class="relative ml-0.5 w-1/2 whitespace-nowrap rounded-md border border-transparent py-2 text-sm font-medium text-gray-700 focus:z-10 focus:outline-none focus:ring-2 focus:ring-purple-500 sm:w-auto sm:px-8"
+                                class="relative ml-0.5 w-1/2 whitespace-nowrap rounded-md border border-transparent py-2 text-lg font-medium text-gray-700 focus:z-10 focus:outline-none focus:ring-2 focus:ring-purple-500 sm:w-auto sm:px-8"
                             >
                                 Pay As You Go
                             </button>
@@ -92,7 +92,9 @@ useHead({
                             </div>
 
                             <div class="px-6 pt-6 pb-8">
-                                <h3 class="text-sm font-medium text-gray-900">What's included</h3>
+                                <h3 class="text-lg font-medium text-gray-900">
+                                    What's included
+                                </h3>
 
                                 <ul role="list" class="mt-6 space-y-4">
                                     <li class="flex space-x-3">
@@ -100,7 +102,9 @@ useHead({
                                         <svg class="h-5 w-5 flex-shrink-0 text-green-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                             <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
                                         </svg>
-                                        <span class="text-sm text-gray-500">All resources available with a Viral key are included here</span>
+                                        <span class="text-sm text-gray-500">
+                                            All resources provided to <strong>Enterprise</strong> key holders are provided in this exclusive package for qualified <strong>FOSS</strong> projects.
+                                        </span>
                                     </li>
                                 </ul>
                             </div>
@@ -123,7 +127,7 @@ useHead({
                                     </p>
 
                                     <a href="javascript://" class="mt-8 block w-full rounded-md border border-transparent bg-purple-600 py-2 text-center text-lg font-semibold text-white hover:bg-purple-700">
-                                        Buy Startup Keys
+                                        Buy dApp Keys
                                     </a>
                                 </div>
 
@@ -213,7 +217,7 @@ useHead({
                                     </p>
 
                                     <a href="javascript://" class="mt-8 block w-full rounded-md border border-transparent bg-purple-600 py-2 text-center text-lg font-semibold text-white hover:bg-purple-700">
-                                        Buy Growth Keys
+                                        Buy Platform Keys
                                     </a>
                                 </div>
 
@@ -229,7 +233,7 @@ useHead({
                                                 <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
                                             </svg>
                                             <span class="text-sm text-gray-500">
-                                                <strong class="text-rose-500">200,000<sup>*</sup></strong> REST requests/day
+                                                <strong class="text-rose-500">500,000<sup>*</sup></strong> REST requests/day
                                             </span>
                                         </li>
 

@@ -41,9 +41,9 @@ setInterval(updateTicker, TICKER_UPDATE_INTERVAL)
 
         <section class="bg-white">
             <div class="px-20 py-5 max-w-7xl mx-auto flex justify-between">
-                <button>
+                <NuxtLink to="/" class="hover:underline">
                     Dashboard
-                </button>
+                </NuxtLink>
 
                 <button>
                     Blocks

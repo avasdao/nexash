@@ -1,9 +1,11 @@
 <template>
-    <main>
+    <main class="flex flex-col h-screen">
         <HeaderView />
 
-        <slot />
+        <section class="flex-1 overflow-y-auto">
+            <slot />
 
-        <FooterView />
+            <FooterView />
+        </section>
     </main>
 </template>
