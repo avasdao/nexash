@@ -177,8 +177,6 @@ initRostrum()
 
 <template>
     <main class="">
-        <HeaderView />
-
         <main class="max-w-7xl mx-auto">
             <h1 class="text-4xl font-medium">
                 Transaction
@@ -198,7 +196,5 @@ initRostrum()
                 </div>
             </section>
         </main>
-
-        <FooterView />
     </main>
 </template>

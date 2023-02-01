@@ -16,8 +16,6 @@ const txid = route.params.txid
 
 <template>
     <main class="">
-        <HeaderView />
-
         <main class="max-w-7xl mx-auto">
             <h1 class="text-4xl font-medium">
                 Privacy Report
@@ -27,7 +25,5 @@ const txid = route.params.txid
                 {{ txid }}
             </span>
         </main>
-
-        <FooterView />
     </main>
 </template>

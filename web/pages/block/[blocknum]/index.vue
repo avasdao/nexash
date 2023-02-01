@@ -16,8 +16,6 @@ const blocknum = route.params.blocknum
 
 <template>
     <main class="">
-        <HeaderView />
-
         <main class="max-w-7xl mx-auto">
             <h1 class="text-4xl font-medium">
                 Block
@@ -27,7 +25,5 @@ const blocknum = route.params.blocknum
                 {{blocknum}}
             </p>
         </main>
-
-        <FooterView />
     </main>
 </template>
