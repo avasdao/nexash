@@ -1,6 +1,6 @@
 <script setup>
 useHead({
-    title: 'Address - Nexa Shell',
+    title: 'Address - NexaShell',
     meta: [{
         name: 'description',
         content: 'Address'

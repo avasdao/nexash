@@ -1,6 +1,6 @@
 <script setup>
 useHead({
-    title: 'Marketplaces - Nexa Shell',
+    title: 'Marketplaces - NexaShell',
     meta: [{
         name: 'description',
         content: 'Marketplaces'

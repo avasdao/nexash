@@ -1,9 +1,9 @@
 <script setup>
 useHead({
-    title: 'Nexa Shell...',
+    title: 'NexaShell...',
     meta: [{
         name: 'description',
-        content: 'Nexa Shell is redirecting, please wait...'
+        content: 'NexaShell is redirecting, please wait...'
     }]
 })
 

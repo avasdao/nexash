@@ -5,7 +5,7 @@ import { ref } from 'vue'
 import WebSocket from 'isomorphic-ws'
 
 useHead({
-    title: 'Transaction - Nexa Shell',
+    title: 'Transaction - NexaShell',
     meta: [{
         name: 'description',
         content: 'Transaction'

@@ -1,6 +1,6 @@
 <script setup>
 useHead({
-    title: 'Pricing - Nexa Shell',
+    title: 'Pricing - NexaShell',
     meta: [{
         name: 'description',
         content: 'Pricing for all services.'

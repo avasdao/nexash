@@ -1,6 +1,6 @@
 <script setup>
 useHead({
-    title: 'DeFi - Nexa Shell',
+    title: 'DeFi - NexaShell',
     meta: [{
         name: 'description',
         content: 'DeFi'

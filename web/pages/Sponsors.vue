@@ -1,6 +1,6 @@
 <script setup>
 useHead({
-    title: 'Sponsors - Nexa Shell',
+    title: 'Sponsors - NexaShell',
     meta: [{
         name: 'description',
         content: 'Sponsors'

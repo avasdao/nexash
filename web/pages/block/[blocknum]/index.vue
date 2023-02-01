@@ -1,6 +1,6 @@
 <script setup>
 useHead({
-    title: 'Block - Nexa Shell',
+    title: 'Block - NexaShell',
     meta: [{
         name: 'description',
         content: 'Block'

@@ -1,6 +1,6 @@
 <script setup>
 useHead({
-    title: 'Market Price Dashboard - Nexa Shell',
+    title: 'Market Price Dashboard - NexaShell',
     meta: [{
         name: 'description',
         content: 'Blank'

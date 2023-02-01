@@ -1,6 +1,6 @@
 <script setup>
 useHead({
-    title: 'Nexa Shell - Data Query',
+    title: 'NexaShell - Data Query',
     meta: [{
         name: 'description',
         content: 'Direct access to ALL the Nexa data that you need.'

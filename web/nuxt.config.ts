@@ -4,7 +4,7 @@ export default defineNuxtConfig({
         head: {
             // charset: 'utf-16',
             // viewport: 'width=500, initial-scale=1',
-            title: 'Nexa Shell — Default Title',
+            title: 'NexaShell — Data Query & Reporting Engine',
             meta: [
                 { charset: 'utf-8' },
                 { name: 'viewport', content: 'width=device-width, initial-scale=1' },

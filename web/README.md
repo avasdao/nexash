@@ -1,3 +1,3 @@
-# Nexa Shell
+# NexaShell
 
 ### https://nexa.sh

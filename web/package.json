@@ -2,7 +2,7 @@
   "name": "nexash-web",
   "version": "23.1.27",
   "license": "MIT",
-  "description": "Nexa Shell offers enterprise-class data delivery services for the Nexa blockchain.",
+  "description": "NexaShell offers enterprise-class data delivery services for the Nexa blockchain.",
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev",

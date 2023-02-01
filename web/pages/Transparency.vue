@@ -1,6 +1,6 @@
 <script setup>
 useHead({
-    title: 'Transparency - Nexa Shell',
+    title: 'Transparency - NexaShell',
     meta: [{
         name: 'description',
         content: 'Transparency'

@@ -37,7 +37,7 @@ setInterval(updateTicker, TICKER_UPDATE_INTERVAL)
                     <img class="h-6 w-auto sm:h-8" src="~/assets/icon.png" alt="" />
 
                     <h1 class="text-2xl text-gray-100 font-bold uppercase">
-                        Nexa Shell
+                        NexaShell
                     </h1>
                 </div>
 
@@ -89,7 +89,7 @@ setInterval(updateTicker, TICKER_UPDATE_INTERVAL)
             <div class="mx-auto flex max-w-7xl items-center justify-between p-6 md:justify-start md:space-x-10 lg:px-8">
                 <div class="flex justify-start lg:w-0 lg:flex-1">
                     <NuxtLink to="/">
-                        <span class="sr-only">Nexa Shell</span>
+                        <span class="sr-only">NexaShell</span>
                         <img class="h-12 w-auto sm:h-16" src="~/assets/icon.png" alt="" />
                     </NuxtLink>
                 </div>
@@ -284,7 +284,7 @@ setInterval(updateTicker, TICKER_UPDATE_INTERVAL)
                     <div class="px-5 pt-5 pb-6">
                         <div class="flex items-center justify-between">
                             <div>
-                                <img class="h-12 w-auto" src="~/assets/icon.png" alt="Nexa Shell" />
+                                <img class="h-12 w-auto" src="~/assets/icon.png" alt="NexaShell" />
                             </div>
                             <div class="-mr-2">
                                 <button

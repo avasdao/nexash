@@ -1,6 +1,6 @@
 <script setup>
 useHead({
-    title: 'Mining - Nexa Shell',
+    title: 'Mining - NexaShell',
     meta: [{
         name: 'description',
         content: 'Mining'
