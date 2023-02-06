@@ -30,7 +30,8 @@ setInterval(updateTicker, TICKER_UPDATE_INTERVAL)
 </script>
 
 <template>
-    <header class="hidden md:flex flex-col">
+    <!-- <header class="hidden md:flex flex-col"> -->
+    <header class="hidden md:flex flex-col sticky top-0 z-50 opacity-[.99]">
         <section class="py-1 bg-gradient-to-r from-rose-400 to-rose-600">
             <div class="max-w-7xl mx-auto flex justify-between">
                 <NuxtLink to="/" class="flex gap-4 items-center">
@@ -91,7 +92,7 @@ setInterval(updateTicker, TICKER_UPDATE_INTERVAL)
         </section>
     </header>
 
-    <header class="md:hidden">
+    <header class="md:hidden sticky top-0 z-50 opacity-[.99]">
         <div class="relative bg-white">
             <div class="mx-auto flex max-w-7xl items-center justify-between p-6 md:justify-start md:space-x-10 lg:px-8">
                 <div class="flex justify-start lg:w-0 lg:flex-1">
