@@ -4,13 +4,13 @@
   "description": "Nexa Shell API",
   "author": "Ava's DAO <support@avasdao.org>",
   "main": "server.js",
+  "type": "module",
   "scripts": {
     "start": "node server.js",
     "build": "cd slate && bundle exec middleman build --build-dir ../public",
     "public": "cd slate && bundle exec middleman serve"
   },
   "dependencies": {
-    "@magic-sdk/admin": "1.4.1",
     "bitcoin-core": "4.1.0",
     "cors": "2.8.5",
     "csv-parser": "3.0.0",
