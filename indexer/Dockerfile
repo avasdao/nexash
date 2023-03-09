@@ -1,14 +1,16 @@
-FROM node:16-alpine
+FROM node:16
 
 RUN mkdir /usr/src/app
 WORKDIR /usr/src/app
 ENV PATH /usr/src/app/node_modules/.bin:$PATH
 
 COPY package.json /usr/src/app/package.json
-RUN yarn install --silent
+RUN apt update -y
+RUN apt upgrade -y
+RUN apt install clang cmake build-essential -y
 
 COPY . /usr/src/app
-#RUN yarn run build
+RUN yarn run build
 
 #EXPOSE 3000
 
