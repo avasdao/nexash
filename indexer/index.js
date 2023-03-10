@@ -76,6 +76,14 @@ console.info('\n  Starting Nexa Shell (Indexer) daemon...\n')
         if (topic === 'rawtx') {
             const decoded = await decodeRawTransaction(msg)
             console.log('DECODED', decoded)
+
+            txsDb.put({
+                _id: decoded.txidem,
+                ...decoded
+            })
+            .catch(err => {
+                console.error(err)
+            })
         }
     }
 
