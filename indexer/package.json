@@ -1,6 +1,6 @@
 {
   "name": "nexash-indexer",
-  "version": "23.3.9",
+  "version": "23.3.10",
   "description": "Manages all indexing functions for the suite of Nexa Shell services.",
   "main": "index.js",
   "type": "module",
@@ -11,6 +11,7 @@
     "@nexajs/rpc": "23.1.12",
     "moment": "2.29.4",
     "numeral": "2.0.6",
+    "pouchdb": "8.0.1",
     "uuid": "9.0.0",
     "zeromq": "6.0.0-beta.16"
   }
