@@ -32,6 +32,29 @@ const decodeRawTransaction = async (_rawTx) => {
     return response
 }
 
+const getBlock = async (_blockHash) => {
+    /* Set method. */
+    const method = 'getblock'
+
+    /* Set parameters. */
+    const params = [_blockHash]
+
+    /* Set node options. */
+    const options = {
+        username: 'user', // required
+        password: 'password', // required
+        host: '127.0.0.1', // (optional) default is localhost (127.0.0.1)
+        port: '7227', // (optional) default is 7227
+    }
+
+    /* Execute JSON-RPC request. */
+    const response = await call(method, params, options)
+    console.log('\nJSON-RPC response:\n%s', response)
+
+    /* Return response. */
+    return response
+}
+
 const getBlockchainInfo = async () => {
     /* Set method. */
     const method = 'getblockchaininfo'
@@ -72,6 +95,19 @@ console.info('\n  Starting Nexa Shell (Indexer) daemon...\n')
         const msg = Buffer.from(_msg).toString('hex')
 
         console.log('received a message related to:', topic, 'containing message:', msg, '\n')
+
+        if (topic === 'hashblock') {
+            const decoded = await getBlock(msg)
+            console.log('DECODED', decoded)
+
+            blocksDb.put({
+                _id: decoded.hash,
+                ...decoded
+            })
+            .catch(err => {
+                console.error(err)
+            })
+        }
 
         if (topic === 'rawtx') {
             const decoded = await decodeRawTransaction(msg)
