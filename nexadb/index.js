@@ -38,7 +38,7 @@ const app = express()
 app.use(cors())
 
 /* Initialize data stream endpoint. */
-app.get('/stream', esse.init)
+app.get('/stream', sse.init)
 
 /* Handle default endpoint. */
 app.get('/', (req, res) => {
