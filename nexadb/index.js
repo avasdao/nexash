@@ -104,6 +104,10 @@ server.listen(5000, '127.0.0.1', function () {
  * Sends a server-side event to every connect client.
  */
 const broadcast = (_event) => {
+    /* Broadcast via Express. */
+    esse.send(_event)
+
+    /* Broadcast via SSE pool. */
     Object.keys(sseClients).forEach(_client => {
         /* Set client. */
         const client = sseClients[_client]
