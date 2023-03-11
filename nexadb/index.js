@@ -21,7 +21,10 @@ const RPC_OPTIONS = {
     port: '7227', // (optional) default is 7227
 }
 
-const ESSE_PORT = 6000
+/* Set constants. */
+const LOCAL_HOST = '127.0.0.1'
+const SSE_PORT = process.env.SSE_PORT || 5000
+const ESSE_PORT = process.env.ESSE_PORT || 6000
 
 /* Initialize server. */
 const server = http.createServer(function (req, res) {
@@ -42,12 +45,12 @@ app.get('/', (req, res) => {
     res.send('Hi Nexican!')
 })
 
-app.listen(ESSE_PORT, () => {
+app.listen(ESSE_PORT, LOCAL_HOST, () => {
     console.log(`Express SSE listening on port ${ESSE_PORT}`)
 })
 
 /* Handle server requests. */
-server.listen(5000, '127.0.0.1', function () {
+server.listen(SSE_PORT, LOCAL_HOST, function () {
     /* Initialize server-side event server. */
     const sse = new SSE(server)
 
