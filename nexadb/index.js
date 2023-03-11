@@ -90,8 +90,11 @@ const broadcast = (_event) => {
         /* Set client. */
         const client = sseClients[_client]
 
-        /* Send event to client. */
-        client.send(_event)
+        /* Validate client. */
+        if (client) {
+            /* Send event to client. */
+            client.send(JSON.stringify(_event))
+        }
     })
 }
 
