@@ -36,9 +36,11 @@ server.listen(5000, '127.0.0.1', function () {
     /* Handle server connection. */
     sse.on('connection', function (_client) {
         // console.log('CLIENT', _client)
-        console.log('CLIENT (headers)', _client?.req?.headers)
+        console.log('CLIENT CONNECTION (headers)', _client?.req?.headers)
+
+        const clientid = _client?.req?.headers['cf-ray']
         /* Assign client to global holder. */
-        // sseClient = _client
+        sseClients[clientid] = _client
 
         /* Write entry to DB logs. */
         logsDb.put({
@@ -52,6 +54,29 @@ server.listen(5000, '127.0.0.1', function () {
 
         /* Send (server) greeting. */
         _client.send('hi there!')
+    })
+
+    /* Handle server disconnection. */
+    sse.on('disconnect', function (_client) {
+        console.log('CLIENT DISCONNECT (headers)', _client?.req?.headers)
+
+        const clientid = _client?.req?.headers['cf-ray']
+
+        /* Assign client to global holder. */
+        sseClients[clientid] = null
+
+        /* Write entry to DB logs. */
+        logsDb.put({
+            _id: uuidv4(),
+            source: 'mempool.nexa.sh',
+            headers: _client?.req?.headers,
+        })
+        .catch(err => {
+            console.error(err)
+        })
+
+        /* Send (server) greeting. */
+        _client.send('see ya!')
     })
 })
 
