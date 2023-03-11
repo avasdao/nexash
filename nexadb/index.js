@@ -3,7 +3,21 @@ import { call } from '@nexajs/rpc'
 import http from 'http'
 import PouchDB from 'pouchdb'
 import SSE from 'sse'
+import { v4 as uuidv4 } from 'uuid'
 import zmq from 'zeromq'
+
+/* Initialize databases. */
+const logsDb = new PouchDB(`http://${process.env.COUCHDB_USER}:${process.env.COUCHDB_PASSWORD}@127.0.0.1:5984/logs`)
+const blocksDb = new PouchDB(`http://${process.env.COUCHDB_USER}:${process.env.COUCHDB_PASSWORD}@127.0.0.1:5984/blocks`)
+const txsDb = new PouchDB(`http://${process.env.COUCHDB_USER}:${process.env.COUCHDB_PASSWORD}@127.0.0.1:5984/txs`)
+
+/* Set node options. */
+const RPC_OPTIONS = {
+    username: 'user', // required
+    password: 'password', // required
+    host: '127.0.0.1', // (optional) default is localhost (127.0.0.1)
+    port: '7227', // (optional) default is 7227
+}
 
 /* Initialize server. */
 const server = http.createServer(function (req, res) {
@@ -23,31 +37,23 @@ server.listen(5000, '127.0.0.1', function () {
     sse.on('connection', function (_client) {
         // console.log('CLIENT', _client)
         console.log('CLIENT (headers)', _client?.req?.headers)
-        console.log('CLIENT (rawHeaders)', _client?.req?.rawHeaders)
         /* Assign client to global holder. */
         // sseClient = _client
 
-        // logsDb.put({
-        //     _id:
-        // })
+        /* Write entry to DB logs. */
+        logsDb.put({
+            _id: uuidv4(),
+            source: 'mempool.nexa.sh',
+            headers: _client?.req?.headers,
+        })
+        .catch(err => {
+            console.error(err)
+        })
 
         /* Send (server) greeting. */
         _client.send('hi there!')
     })
 })
-
-/* Initialize databases. */
-const logsDb = new PouchDB(`http://${process.env.COUCHDB_USER}:${process.env.COUCHDB_PASSWORD}@127.0.0.1:5984/logs`)
-const blocksDb = new PouchDB(`http://${process.env.COUCHDB_USER}:${process.env.COUCHDB_PASSWORD}@127.0.0.1:5984/blocks`)
-const txsDb = new PouchDB(`http://${process.env.COUCHDB_USER}:${process.env.COUCHDB_PASSWORD}@127.0.0.1:5984/txs`)
-
-/* Set node options. */
-const RPC_OPTIONS = {
-    username: 'user', // required
-    password: 'password', // required
-    host: '127.0.0.1', // (optional) default is localhost (127.0.0.1)
-    port: '7227', // (optional) default is 7227
-}
 
 /**
  * Broadcast
@@ -56,8 +62,10 @@ const RPC_OPTIONS = {
  */
 const broadcast = (_event) => {
     Object.keys(sseClients).forEach(_client => {
+        /* Set client. */
         const client = sseClients[_client]
 
+        /* Send event to client. */
         client.send(_event)
     })
 }
