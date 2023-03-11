@@ -3,8 +3,8 @@ version: '3.7'
 services:
   daemon:
     build: .
-    image: indexer
-    container_name: indexer
+    image: nexadb
+    container_name: nexadb
     restart: always
     network_mode: 'host'
     # ports:
