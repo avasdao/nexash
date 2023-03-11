@@ -2,10 +2,9 @@
 import { call } from '@nexajs/rpc'
 import cors from 'cors'
 import express from 'express'
-import ESSE from 'express-sse'
 import http from 'http'
 import PouchDB from 'pouchdb'
-import SSE from 'sse'
+import SSE from 'express-sse'
 import { v4 as uuidv4 } from 'uuid'
 import zmq from 'zeromq'
 
@@ -25,18 +24,10 @@ const RPC_OPTIONS = {
 /* Set constants. */
 const LOCAL_HOST = '127.0.0.1'
 const SSE_PORT = process.env.SSE_PORT || 5000
-const ESSE_PORT = process.env.ESSE_PORT || 6000
 
-/* Initialize server. */
-const server = http.createServer(function (req, res) {
-    res.writeHead(200, {'Content-Type': 'text/plain'})
-    res.end('okay')
-})
+const welcomeMsg = 'Nexa memory pool firehose!'
 
-/* Initialize client holder. */
-let sseClients = {}
-
-const esse = new ESSE([ 'hi there!' ])
+const sse = new SSE([ welcomeMsg ])
 
 const app = express()
 
@@ -48,67 +39,12 @@ app.get('/stream', esse.init)
 
 /* Handle default endpoint. */
 app.get('/', (req, res) => {
-    res.send('Hi Nexican!')
+    res.send(welcomeMsg)
 })
 
 /* Start listening. */
-app.listen(ESSE_PORT, LOCAL_HOST, () => {
-    console.log(`Express SSE listening on port ${ESSE_PORT}`)
-})
-
-/* Enable CORS. */
-server.use(cors())
-
-/* Handle server requests. */
-server.listen(SSE_PORT, LOCAL_HOST, function () {
-    /* Initialize server-side event server. */
-    const sse = new SSE(server)
-
-    /* Handle server connection. */
-    sse.on('connection', function (_client) {
-        // console.log('CLIENT', _client)
-        console.log('CLIENT CONNECTION (headers)', _client?.req?.headers)
-
-        const clientid = _client?.req?.headers['cf-ray']
-        /* Assign client to global holder. */
-        sseClients[clientid] = _client
-
-        /* Write entry to DB logs. */
-        logsDb.put({
-            _id: uuidv4(),
-            source: 'mempool.nexa.sh',
-            headers: _client?.req?.headers,
-        })
-        .catch(err => {
-            console.error(err)
-        })
-
-        /* Send (server) greeting. */
-        _client.send('hi there!')
-    })
-
-    /* Handle server disconnection. */
-    sse.on('disconnect', function (_client) {
-        console.log('CLIENT DISCONNECT (headers)', _client?.req?.headers)
-
-        const clientid = _client?.req?.headers['cf-ray']
-
-        /* Assign client to global holder. */
-        sseClients[clientid] = null
-
-        /* Write entry to DB logs. */
-        logsDb.put({
-            _id: uuidv4(),
-            source: 'mempool.nexa.sh',
-            headers: _client?.req?.headers,
-        })
-        .catch(err => {
-            console.error(err)
-        })
-
-        /* Send (server) greeting. */
-        _client.send('see ya!')
-    })
+app.listen(SSE_PORT, LOCAL_HOST, () => {
+    console.log(`Express SSE listening on port ${SSE_PORT}`)
 })
 
 /**
@@ -117,8 +53,6 @@ server.listen(SSE_PORT, LOCAL_HOST, function () {
  * Sends a server-side event to every connect client.
  */
 const broadcast = (_event) => {
-    /* Broadcast via Express. */
-    esse.send(_event)
 
     /* Broadcast via SSE pool. */
     Object.keys(sseClients).forEach(_client => {
@@ -225,7 +159,7 @@ console.info('\n  Starting Nexa Shell (Indexer) daemon...\n')
             })
 
             /* Broadcast event. */
-            broadcast(decoded)
+            sse.send(decoded)
         }
 
         if (topic === 'rawtx') {
