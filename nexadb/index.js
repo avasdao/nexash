@@ -1,5 +1,6 @@
 /* Import modules. */
 import { call } from '@nexajs/rpc'
+import cors from 'cors'
 import express from 'express'
 import ESSE from 'express-sse'
 import http from 'http'
