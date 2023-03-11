@@ -39,15 +39,24 @@ const esse = new ESSE([ 'hi there!' ])
 
 const app = express()
 
+/* Enable CORS. */
+app.use(cors())
+
+/* Initialize data stream endpoint. */
 app.get('/stream', esse.init)
 
+/* Handle default endpoint. */
 app.get('/', (req, res) => {
     res.send('Hi Nexican!')
 })
 
+/* Start listening. */
 app.listen(ESSE_PORT, LOCAL_HOST, () => {
     console.log(`Express SSE listening on port ${ESSE_PORT}`)
 })
+
+/* Enable CORS. */
+server.use(cors())
 
 /* Handle server requests. */
 server.listen(SSE_PORT, LOCAL_HOST, function () {
