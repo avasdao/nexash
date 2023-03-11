@@ -29,7 +29,7 @@ const SSE_PORT = process.env.SSE_PORT || 5000
 const welcomeMsg = 'Nexa memory pool firehose!'
 
 /* Initialize server-side event handler. */
-const sse = new SSE()
+const sse = new SSE([ welcomeMsg ])
 
 /* Initialize Express app. */
 const app = express()
@@ -127,10 +127,17 @@ console.info('\n  Starting Nexa Shell (Indexer) daemon...\n')
         const topic = Buffer.from(_topic).toString()
         const msg = Buffer.from(_msg).toString('hex')
 
-        console.log('received a message related to:', topic, 'containing message:', msg, '\n')
+        console.log('received a message related to:',
+            topic,
+            'containing message:',
+            msg,
+            '\n')
 
         if (topic === 'hashblock') {
             const decoded = await getBlock(msg)
+                .catch(err => {
+                    console.error(err)
+                })
             console.log('DECODED', decoded)
 
             blocksDb.put({
@@ -141,12 +148,19 @@ console.info('\n  Starting Nexa Shell (Indexer) daemon...\n')
                 console.error(err)
             })
 
-            /* Broadcast event. */
-            sse.send(JSON.stringify(decoded))
+            try {
+                /* Broadcast event. */
+                sse.send(decoded)
+            } catch (err) {
+                console.error(err)
+            }
         }
 
         if (topic === 'rawtx') {
             const decoded = await decodeRawTransaction(msg)
+                .catch(err => {
+                    console.error(err)
+                })
             console.log('DECODED', decoded)
 
             txsDb.put({
@@ -156,9 +170,12 @@ console.info('\n  Starting Nexa Shell (Indexer) daemon...\n')
             .catch(err => {
                 console.error(err)
             })
-
-            /* Broadcast event. */
-            sse.send(JSON.stringify(decoded))
+            try {
+                /* Broadcast event. */
+                sse.send(decoded)
+            } catch (err) {
+                console.error(err)
+            }
         }
     }
 
