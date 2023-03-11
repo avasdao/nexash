@@ -1,5 +1,7 @@
 /* Import modules. */
 import { call } from '@nexajs/rpc'
+import express from 'express'
+import ESSE from 'express-sse'
 import http from 'http'
 import PouchDB from 'pouchdb'
 import SSE from 'sse'
@@ -19,6 +21,8 @@ const RPC_OPTIONS = {
     port: '7227', // (optional) default is 7227
 }
 
+const ESSE_PORT = 6000
+
 /* Initialize server. */
 const server = http.createServer(function (req, res) {
     res.writeHead(200, {'Content-Type': 'text/plain'})
@@ -27,6 +31,20 @@ const server = http.createServer(function (req, res) {
 
 /* Initialize client holder. */
 let sseClients = {}
+
+const esse = new ESSE([ 'hi there!' ])
+
+const app = express()
+
+app.get('/stream', esse.init)
+
+app.get('/', (req, res) => {
+    res.send('Hi Nexican!')
+})
+
+app.listen(ESSE_PORT, () => {
+    console.log(`Express SSE listening on port ${ESSE_PORT}`)
+})
 
 /* Handle server requests. */
 server.listen(5000, '127.0.0.1', function () {

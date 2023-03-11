@@ -9,6 +9,8 @@
   "license": "MIT",
   "dependencies": {
     "@nexajs/rpc": "23.1.12",
+    "express": "4.18.2",
+    "express-sse": "0.5.3",
     "moment": "2.29.4",
     "numeral": "2.0.6",
     "pouchdb": "8.0.1",
