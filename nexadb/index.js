@@ -21,9 +21,9 @@ server.listen(5000, '127.0.0.1', function () {
 
     /* Handle server connection. */
     sse.on('connection', function (_client) {
-        console.log('CLIENT', _client)
-        console.log('CLIENT (headers)', _client.headers)
-        console.log('CLIENT (rawHeaders)', _client.rawHeaders)
+        // console.log('CLIENT', _client)
+        console.log('CLIENT (headers)', _client?.req?.headers)
+        console.log('CLIENT (rawHeaders)', _client?.req?.rawHeaders)
         /* Assign client to global holder. */
         // sseClient = _client
 
