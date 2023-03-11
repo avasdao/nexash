@@ -4,10 +4,17 @@ import PouchDB from 'pouchdb'
 import zmq from 'zeromq'
 
 /* Initialize databases. */
-// const logsDb = new PouchDB(`http://${process.env.COUCHDB_USER}:${process.env.COUCHDB_PASSWORD}@127.0.0.1:5984/logs`)
+const logsDb = new PouchDB(`http://${process.env.COUCHDB_USER}:${process.env.COUCHDB_PASSWORD}@127.0.0.1:5984/logs`)
 const blocksDb = new PouchDB(`http://${process.env.COUCHDB_USER}:${process.env.COUCHDB_PASSWORD}@127.0.0.1:5984/blocks`)
 const txsDb = new PouchDB(`http://${process.env.COUCHDB_USER}:${process.env.COUCHDB_PASSWORD}@127.0.0.1:5984/txs`)
 
+/* Set node options. */
+const RPC_OPTIONS = {
+    username: 'user', // required
+    password: 'password', // required
+    host: '127.0.0.1', // (optional) default is localhost (127.0.0.1)
+    port: '7227', // (optional) default is 7227
+}
 
 const decodeRawTransaction = async (_rawTx) => {
     /* Set method. */
@@ -16,16 +23,8 @@ const decodeRawTransaction = async (_rawTx) => {
     /* Set parameters. */
     const params = [_rawTx]
 
-    /* Set node options. */
-    const options = {
-        username: 'user', // required
-        password: 'password', // required
-        host: '127.0.0.1', // (optional) default is localhost (127.0.0.1)
-        port: '7227', // (optional) default is 7227
-    }
-
     /* Execute JSON-RPC request. */
-    const response = await call(method, params, options)
+    const response = await call(method, params, RPC_OPTIONS)
     console.log('\nJSON-RPC response:\n%s', response)
 
     /* Return response. */
@@ -48,7 +47,7 @@ const getBlock = async (_blockHash) => {
     }
 
     /* Execute JSON-RPC request. */
-    const response = await call(method, params, options)
+    const response = await call(method, params, RPC_OPTIONS)
     console.log('\nJSON-RPC response:\n%s', response)
 
     /* Return response. */
@@ -71,7 +70,7 @@ const getBlockchainInfo = async () => {
     }
 
     /* Execute JSON-RPC request. */
-    const response = await call(method, params, options)
+    const response = await call(method, params, RPC_OPTIONS)
     console.log('\nJSON-RPC response:\n%s', response)
 
     /* Return response. */
@@ -101,8 +100,8 @@ console.info('\n  Starting Nexa Shell (Indexer) daemon...\n')
             console.log('DECODED', decoded)
 
             blocksDb.put({
-                _id: decoded.hash,
-                ...decoded
+                _id: decoded.height.toString(),
+                ...decoded,
             })
             .catch(err => {
                 console.error(err)

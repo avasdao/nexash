@@ -1,5 +1,5 @@
 {
-  "name": "nexash-indexer",
+  "name": "nexadb",
   "version": "23.3.10",
   "description": "Manages all indexing functions for the suite of Nexa Shell services.",
   "main": "index.js",
