@@ -3,6 +3,22 @@ import { call } from '@nexajs/rpc'
 import PouchDB from 'pouchdb'
 import zmq from 'zeromq'
 
+import SSE from 'sse'
+import http from 'http'
+
+const server = http.createServer(function (req, res) {
+    res.writeHead(200, {'Content-Type': 'text/plain'})
+    res.end('okay')
+})
+
+server.listen(5000, '127.0.0.1', function () {
+    const sse = new SSE(server)
+
+    sse.on('connection', function (client) {
+        client.send('hi there!')
+    })
+})
+
 /* Initialize databases. */
 const logsDb = new PouchDB(`http://${process.env.COUCHDB_USER}:${process.env.COUCHDB_PASSWORD}@127.0.0.1:5984/logs`)
 const blocksDb = new PouchDB(`http://${process.env.COUCHDB_USER}:${process.env.COUCHDB_PASSWORD}@127.0.0.1:5984/blocks`)
