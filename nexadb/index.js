@@ -25,10 +25,13 @@ const RPC_OPTIONS = {
 const LOCAL_HOST = '127.0.0.1'
 const SSE_PORT = process.env.SSE_PORT || 5000
 
+/* Set welcome message. */
 const welcomeMsg = 'Nexa memory pool firehose!'
 
+/* Initialize server-side event handler. */
 const sse = new SSE([ welcomeMsg ])
 
+/* Initialize Express app. */
 const app = express()
 
 /* Enable CORS. */
@@ -46,26 +49,6 @@ app.get('/', (req, res) => {
 app.listen(SSE_PORT, LOCAL_HOST, () => {
     console.log(`Express SSE listening on port ${SSE_PORT}`)
 })
-
-/**
- * Broadcast
- *
- * Sends a server-side event to every connect client.
- */
-const broadcast = (_event) => {
-
-    /* Broadcast via SSE pool. */
-    Object.keys(sseClients).forEach(_client => {
-        /* Set client. */
-        const client = sseClients[_client]
-
-        /* Validate client. */
-        if (client) {
-            /* Send event to client. */
-            client.send(JSON.stringify(_event))
-        }
-    })
-}
 
 const decodeRawTransaction = async (_rawTx) => {
     /* Set method. */
@@ -175,7 +158,7 @@ console.info('\n  Starting Nexa Shell (Indexer) daemon...\n')
             })
 
             /* Broadcast event. */
-            broadcast(decoded)
+            sse.send(decoded)
         }
     }
 
