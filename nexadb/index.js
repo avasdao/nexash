@@ -12,7 +12,7 @@ const server = http.createServer(function (req, res) {
 })
 
 /* Initialize client holder. */
-let sseClient
+let sseClients = {}
 
 /* Handle server requests. */
 server.listen(5000, '127.0.0.1', function () {
@@ -21,8 +21,13 @@ server.listen(5000, '127.0.0.1', function () {
 
     /* Handle server connection. */
     sse.on('connection', function (_client) {
+        console.log('CLIENT', _client)
         /* Assign client to global holder. */
-        sseClient = _client
+        // sseClient = _client
+
+        // logsDb.put({
+        //     _id:
+        // })
 
         /* Send (server) greeting. */
         _client.send('hi there!')
@@ -40,6 +45,19 @@ const RPC_OPTIONS = {
     password: 'password', // required
     host: '127.0.0.1', // (optional) default is localhost (127.0.0.1)
     port: '7227', // (optional) default is 7227
+}
+
+/**
+ * Broadcast
+ *
+ * Sends a server-side event to every connect client.
+ */
+const broadcast = (_event) => {
+    Object.get(sseClients).forEach(_client => {
+        const client = sseClients[_client]
+
+        client.send(_event)
+    })
 }
 
 const decodeRawTransaction = async (_rawTx) => {
@@ -134,7 +152,7 @@ console.info('\n  Starting Nexa Shell (Indexer) daemon...\n')
             })
 
             /* Broadcast event. */
-            sseClient.send(decoded)
+            broadcast(decoded)
         }
 
         if (topic === 'rawtx') {
@@ -150,7 +168,7 @@ console.info('\n  Starting Nexa Shell (Indexer) daemon...\n')
             })
 
             /* Broadcast event. */
-            sseClient.send(decoded)
+            broadcast(decoded)
         }
     }
 
