@@ -1,21 +1,31 @@
 /* Import modules. */
 import { call } from '@nexajs/rpc'
+import http from 'http'
 import PouchDB from 'pouchdb'
+import SSE from 'sse'
 import zmq from 'zeromq'
 
-import SSE from 'sse'
-import http from 'http'
-
+/* Initialize server. */
 const server = http.createServer(function (req, res) {
     res.writeHead(200, {'Content-Type': 'text/plain'})
     res.end('okay')
 })
 
+/* Initialize client holder. */
+let sseClient
+
+/* Handle server requests. */
 server.listen(5000, '127.0.0.1', function () {
+    /* Initialize server-side event server. */
     const sse = new SSE(server)
 
-    sse.on('connection', function (client) {
-        client.send('hi there!')
+    /* Handle server connection. */
+    sse.on('connection', function (_client) {
+        /* Assign client to global holder. */
+        sseClient = _client
+
+        /* Send (server) greeting. */
+        _client.send('hi there!')
     })
 })
 
@@ -122,6 +132,9 @@ console.info('\n  Starting Nexa Shell (Indexer) daemon...\n')
             .catch(err => {
                 console.error(err)
             })
+
+            /* Broadcast event. */
+            sseClient.send(decoded)
         }
 
         if (topic === 'rawtx') {
@@ -135,6 +148,9 @@ console.info('\n  Starting Nexa Shell (Indexer) daemon...\n')
             .catch(err => {
                 console.error(err)
             })
+
+            /* Broadcast event. */
+            sseClient.send(decoded)
         }
     }
 
