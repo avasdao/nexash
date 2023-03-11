@@ -29,7 +29,7 @@ const SSE_PORT = process.env.SSE_PORT || 5000
 const welcomeMsg = 'Nexa memory pool firehose!'
 
 /* Initialize server-side event handler. */
-const sse = new SSE([ welcomeMsg ])
+const sse = new SSE()
 
 /* Initialize Express app. */
 const app = express()
@@ -142,7 +142,7 @@ console.info('\n  Starting Nexa Shell (Indexer) daemon...\n')
             })
 
             /* Broadcast event. */
-            sse.send(decoded)
+            sse.send(JSON.stringify(decoded))
         }
 
         if (topic === 'rawtx') {
@@ -158,7 +158,7 @@ console.info('\n  Starting Nexa Shell (Indexer) daemon...\n')
             })
 
             /* Broadcast event. */
-            sse.send(decoded)
+            sse.send(JSON.stringify(decoded))
         }
     }
 
