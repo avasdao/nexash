@@ -12,8 +12,6 @@ RUN yarn
 
 COPY . .
 
-RUN yarn build
-
 EXPOSE 3000
 
 CMD ["node", "/app/server.js"]
