@@ -1,9 +1,15 @@
 {
-  "name": "nexahs-graphql",
-  "version": "23.1.14",
+  "name": "nexash-graphql",
+  "version": "23.3.12",
   "description": "Manages GraphQL requests.",
   "main": "index.js",
+  "type": "module",
   "repository": "https://github.com/avasdao/nexash",
   "author": "Ava's DAO developers",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "express": "4.18.2",
+    "express-graphql": "0.12.0",
+    "graphql": "16.6.0"
+  }
 }
