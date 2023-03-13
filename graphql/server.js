@@ -8,10 +8,6 @@ const PORT = 3000
 
 // NOTE: Construct a schema, using GraphQL schema language.
 const schema = buildSchema(`
-  type Query {
-    hello(chain: String): String
-  }
-
   type Transaction {
     hash: String
     amount: Int
@@ -23,6 +19,11 @@ const schema = buildSchema(`
     txs: [Transaction]
   }
 
+  type Query {
+    hello(chain: String): String
+    blocks(height: Int, hash: String): Block
+    txs(hash: String): Transaction
+  }
 `)
 
 // NOTE: The root provides a resolver function for each API endpoint.
