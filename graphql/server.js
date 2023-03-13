@@ -204,19 +204,34 @@ const rootValue = {
     },
 
     block: async (_args) => {
+        /* Initialize blocks. */
+        const blocks = []
+
         /* Set heights. */
-        const height = _args?.height || [227570]
+        const height = _args?.height
 
-        /* Request block data. */
-        const block = await blocksDb
-            .get(height[0])
-            .catch(err => {
-                console.error(err)
-                // TODO: Handle (logging) errors.
-            })
-        // console.log('BLOCK', block)
+        /* Validate heights. */
+        if (!height) {
+            return blocks
+        }
 
-        return [block] || []
+        /* Handle each height. */
+        height.forEach(_height => {
+            /* Request block data. */
+            const block = await blocksDb
+                .get(_height)
+                .catch(err => {
+                    console.error(err)
+                    // TODO: Handle (logging) errors.
+                })
+            // console.log('BLOCK', block)
+
+            /* Add block to list. */
+            blocks.push(block)
+        })
+
+        /* Return blocks. */
+        return blocks
     },
 
     meta: async (_args) => {

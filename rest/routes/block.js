@@ -56,19 +56,19 @@ export default async (req, res) => {
         // console.log('Request parameters', params)
 
         /* Validate params. */
-        if (!params) {
+        if (!params?.height) {
             /* Set status. */
             res.status(400)
 
             /* Return error. */
             return res.json({
-                error: 'Missing block parameters.'
+                error: 'Missing block (height) parameter.'
             })
         }
 
         const query = `
 {
-  block(height: ${params?.height}) {
+  block(height: ${params.height}) {
     height
     hash
     size
@@ -80,6 +80,8 @@ export default async (req, res) => {
     difficulty
     utxoCommitment
     minerData
+    txid
+    txidem
   }
 }`
 
