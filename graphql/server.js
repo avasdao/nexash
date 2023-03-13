@@ -36,13 +36,13 @@ const rootValue = {
         return `Hello ${chain} world!`
     },
 
-    block: (_args) => {
+    blocks: (_args) => {
         return [{
             hash: 'my-new-hash',
         }]
     },
 
-    transaction: (_args) => {
+    txs: (_args) => {
         return [{
             txid: 'my-tx-id',
             txidem: 'my-tx-idem',
