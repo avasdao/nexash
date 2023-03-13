@@ -216,10 +216,10 @@ const rootValue = {
         }
 
         /* Handle each height. */
-        height.forEach(_height => {
+        for (let i = 0; i < height.length; i++) {
             /* Request block data. */
             const block = await blocksDb
-                .get(_height)
+                .get(height[i])
                 .catch(err => {
                     console.error(err)
                     // TODO: Handle (logging) errors.
@@ -228,7 +228,7 @@ const rootValue = {
 
             /* Add block to list. */
             blocks.push(block)
-        })
+        }
 
         /* Return blocks. */
         return blocks
