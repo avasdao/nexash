@@ -67,10 +67,11 @@ export default async (req, res) => {
         }
 
         // FIXME Add better error-handling.
-
+console.log('params.height-1', params.height)
         if (params.height.includes(',')) {
-            params.height = params.height.join(',')
+            params.height = params.height.split(',')
         }
+console.log('params.height-2', params.height)
 
         const query = `
 {
