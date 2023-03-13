@@ -5,7 +5,7 @@ import PouchDB from 'pouchdb'
 import { buildSchema } from 'graphql'
 
 /* Set port. */
-const PORT = 3000
+const PORT = 6000
 
 /* Initialize databases. */
 const logsDb = new PouchDB(`http://${process.env.COUCHDB_USER}:${process.env.COUCHDB_PASSWORD}@127.0.0.1:5984/logs`)
