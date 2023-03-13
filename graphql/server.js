@@ -213,18 +213,13 @@ const graphiql = {
     hash
     size
     txcount
-    feePoolAmt
-    merkleroot
     time
     mediantime
     nonce
     bits
     difficulty
-    chainwork
     utxoCommitment
     minerData
-    onMainChain
-    ancestorhash
   }
 
   # Sample token query
