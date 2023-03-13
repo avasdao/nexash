@@ -16,7 +16,12 @@ const txsDb = new PouchDB(`http://${process.env.COUCHDB_USER}:${process.env.COUC
 // NOTE: Construct a schema, using GraphQL schema language.
 const schema = buildSchema(`
   type Query {
-    "Address METHODS contain address information"
+    """
+    Provides information about on-chain Addresses:
+      - balance
+      - first seen
+      - # of transactions
+    """
     addrs(
         "Provide a base58 (nexa:) address."
         base58: [String],
@@ -25,14 +30,29 @@ const schema = buildSchema(`
         script: [String],
     ): [Address]
 
+    """
+    Retreive Block information, including:
+      - hash
+      - # of transactions
+    """
     blocks(height: [Int], hash: [String]): [Block]
 
+    """
+    Retreive Token information, including:
+      - id
+      - imageUrl
+    """
     tokens(id: [String], owner: [String]): [Token]
 
+    """
+    Retreive Transaction information, including:
+      - txid
+      - txidem
+      - blocknum
+    """
     txs(txid: [String], txidem: [String]): [Transaction]
   }
 
-  "Address TYPES contain address information"
   type Address {
     """
     Base58 encoded address.
@@ -53,7 +73,6 @@ const schema = buildSchema(`
     type: String
   }
 
-  "Block TYPES contain block information"
   type Block {
     "Height of the block."
     height: Int
@@ -82,28 +101,24 @@ const schema = buildSchema(`
     txs: [Transaction]
   }
 
-  "Group TYPES contain group information"
   type Group {
     id: String
     owner: String
     tokens: [Token]
   }
 
-  "Owner TYPES contain owner information"
   type Owner {
     id: String
     tokens: [Token]
     txs: [Transaction]
   }
 
-  "Token TYPES contain token information"
   type Token {
     id: String
     owner: String
     groups: [Group]
   }
 
-  "Transaction TYPES contain transaction information"
   type Transaction {
     txid: String
     txidem: String
@@ -165,9 +180,9 @@ const rootValue = {
 
 /* Set interactive flag. */
 const graphiql = {
-    defaultQuery: `################################################################################
+    defaultQuery: `######################################################################
 #
-# Welcome to NexaShell GraphiQL
+# Welcome to the NexaShell GraphiQL
 #
 # Application builders can make great use of this tool for:
 #   - writing queries
@@ -179,14 +194,15 @@ const graphiql = {
 #     Addresses: (addrs)    Request transaction histories
 #                           and full balance details.
 #
-#        Blocks: (blocks)   Request confirmation and transaction details.
+#        Blocks: (blocks)   Request confirmation and transaction
+#                           details.
 #
-#        Tokens: (tokens)   Request asset registration/genesis information
-#                           and activity details.
+#        Tokens: (tokens)   Request asset registration/genesis
+#                           information and activity details.
 #
 #  Transactions: (txs)      Request activity details.
 #
-################################################################################
+######################################################################
 
 {
   # Sample address query
