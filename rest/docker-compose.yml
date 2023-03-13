@@ -4,11 +4,12 @@ services:
   nexash-api:
     image: nexash-api
     build: .
+    network_mode: 'host'
     ports:
-      - '127.0.0.1:4000:4000'
-      - '127.0.0.1:7227:7227'
+      # - '127.0.0.1:4000:4000'
+      # - '127.0.0.1:7227:7227'
     # volumes:
     #   - './:/webapp/'
     environment:
-      HOST: 0.0.0.0
+      HOST: 127.0.0.1
       PORT: 4000

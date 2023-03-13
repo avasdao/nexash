@@ -1,9 +1,9 @@
 ---
-title: API Reference
+title: NexaShell REST API
 
 language_tabs: # must be one of https://git.io/vQNgJ
-  - python
   - javascript
+  - python
   - rust
   - php
   - java
@@ -24,12 +24,12 @@ code_clipboard: true
 
 meta:
   - name: description
-    content: Documentation for the Kittn API
+    content: Documentation for the NexaShell API
 ---
 
 # Introduction
 
-Welcome to the Nexa Shell API You can use our API to access Nexa Shell API endpoints, which can get information on various coins, tokens, and assets in our database.
+Welcome to the NexaShell API You can use our API to access NexaShell API endpoints, which can get information on various coins, tokens, and assets in our database.
 
 We have language bindings in JavaScript, Python, PHP and Rust! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
 
@@ -42,11 +42,11 @@ This example API documentation page was created with [Slate](https://github.com/
 ```ruby
 require 'kittn'
 
-api = Kittn::APIClient.authorize!('meowmeowmeow')
+api = NexaShell::APIClient.authorize!('meowmeowmeow')
 ```
 
 ```python
-import kittn
+import pynexa
 
 api = kittn.authorize('meowmeowmeow')
 ```
@@ -58,16 +58,16 @@ curl "api_endpoint_here" \
 ```
 
 ```javascript
-const kittn = require('kittn');
+import Nexa as 'nexajs'
 
-let api = kittn.authorize('meowmeowmeow');
+let token = Nexa.getToken('meowmeowmeow')
 ```
 
 > Make sure to replace `meowmeowmeow` with your API key.
 
-Kittn uses API keys to allow access to the API. You can register a new Kittn API key at our [developer portal](http://example.com/developers).
+NexaShell uses API keys to allow access to the API. You can register a new NexaShell API key at our [developer portal](http://example.com/developers).
 
-Kittn expects for the API key to be included in all API requests to the server in a header that looks like the following:
+NexaShell expects for the API key to be included in all API requests to the server in a header that looks like the following:
 
 `Authorization: meowmeowmeow`
 
@@ -82,7 +82,7 @@ You must replace <code>meowmeowmeow</code> with your personal API key.
 ```ruby
 require 'kittn'
 
-api = Kittn::APIClient.authorize!('meowmeowmeow')
+api = NexaShell::APIClient.authorize!('meowmeowmeow')
 api.kittens.get
 ```
 
@@ -148,7 +148,7 @@ Remember — a happy kitten is an authenticated kitten!
 ```ruby
 require 'kittn'
 
-api = Kittn::APIClient.authorize!('meowmeowmeow')
+api = NexaShell::APIClient.authorize!('meowmeowmeow')
 api.kittens.get(2)
 ```
 
@@ -202,7 +202,7 @@ ID | The ID of the kitten to retrieve
 ```ruby
 require 'kittn'
 
-api = Kittn::APIClient.authorize!('meowmeowmeow')
+api = NexaShell::APIClient.authorize!('meowmeowmeow')
 api.kittens.delete(2)
 ```
 

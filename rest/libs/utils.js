@@ -1,9 +1,5 @@
-function sleep(_ms) {
+export const sleep = (_ms) {
     return new Promise((resolve) => {
         setTimeout(resolve, _ms)
     })
-}
-
-module.exports = {
-    sleep,
 }

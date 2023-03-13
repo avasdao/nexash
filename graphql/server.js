@@ -13,6 +13,23 @@ const logsDb = new PouchDB(`http://${process.env.COUCHDB_USER}:${process.env.COU
 const blocksDb = new PouchDB(`http://${process.env.COUCHDB_USER}:${process.env.COUCHDB_PASSWORD}@127.0.0.1:5984/blocks`)
 const txsDb = new PouchDB(`http://${process.env.COUCHDB_USER}:${process.env.COUCHDB_PASSWORD}@127.0.0.1:5984/txs`)
 
+/* Initialize application. */
+const app = express()
+
+/* Enable CORS. */
+app.use(cors())
+
+/* Set rate limits. */
+const limiter = rateLimit({
+	windowMs: 2 * 60 * 1000, // NOTE: Default is 2 minutes.
+	max: 250, // NOTE: We limit each IP to 250 requests per 2 minute window.
+	standardHeaders: true, // NOTE: Return rate limit info in the `RateLimit-*` headers.
+	legacyHeaders: false, // NOTE: Disable the `X-RateLimit-*` headers.
+})
+
+/* Apply the rate limiting middleware to all requests. */
+app.use(limiter)
+
 // NOTE: Construct a schema, using GraphQL schema language.
 const schema = buildSchema(`
   type Query {
@@ -243,23 +260,6 @@ const graphqlOptions = {
     rootValue,
     graphiql,
 }
-
-/* Initialize application. */
-const app = express()
-
-/* Enable CORS. */
-app.use(cors())
-
-/* Set rate limits. */
-const limiter = rateLimit({
-	windowMs: 2 * 60 * 1000, // 2 minutes
-	max: 10, // Limit each IP to 100 requests per `window` (here, per 15 minutes)
-	standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
-	legacyHeaders: false, // Disable the `X-RateLimit-*` headers
-})
-
-// Apply the rate limiting middleware to all requests
-app.use(limiter)
 
 /* Setup GraphQL endpoint. */
 app.use('/graphql', graphqlHTTP(graphqlOptions))
