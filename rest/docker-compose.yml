@@ -1,11 +1,11 @@
 version: '3.3'
 
 services:
-  nexash-api:
-    image: nexash-api
+  rest:
+    image: rest
     build: .
     network_mode: 'host'
-    ports:
+    # ports:
       # - '127.0.0.1:4000:4000'
       # - '127.0.0.1:7227:7227'
     # volumes:
