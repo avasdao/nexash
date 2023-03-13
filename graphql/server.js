@@ -30,7 +30,7 @@ const limiter = rateLimit({
 /* Apply the rate limiting middleware to all requests. */
 app.use(limiter)
 
-app.set('trust proxy', 2) // NOTE: 0 is localhost, 1 is Cloudflare
+app.set('trust proxy', 3) // NOTE: 0 is localhost, 1,2 are Cloudflare
 app.get('/ip', (request, response) => response.send(request.ip))
 
 // NOTE: Construct a schema, using GraphQL schema language.
