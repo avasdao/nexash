@@ -22,9 +22,29 @@ const schema = buildSchema(`
     txs(txid: [String], txidem: [String]): [Transaction]
   }
 
+  """
+  Provides information about on-chain addresses:
+    - balance
+    - first seen
+    - # of transactions
+  """
   type Address {
+    """
+    Base58 encoded address
+    Check out our [Address Docs](https://docs.nexa.sh/address) for more information.
+    """
     base58: String
+
+    """
+    Raw encoded address
+    Check out our [Address Docs](https://docs.nexa.sh/address) for more information.
+    """
     script: String
+
+    """
+    Address type
+    Check out our [Address Docs](https://docs.nexa.sh/address) for more information.
+    """
     type: String
   }
 
@@ -123,6 +143,14 @@ const rootValue = {
 /* Set interactive flag. */
 const graphiql = {
     defaultQuery: `
+/*******************************************************************************
+ *
+ * Welcome to NexaShell GraphQL Server
+ *
+ * Quick start queries are show below.
+ * Visit https://docs.nexa.sh for more information.
+ */
+
 {
   blocks(height: 227570) {
     height
@@ -144,14 +172,13 @@ const graphiql = {
   }
 }
     `,
-    headerEditorEnabled: true,
 }
 
 /* Set options. */
 const graphqlOptions = {
     schema,
     rootValue,
-    graphiql,
+    graphiql: true,
 }
 
 /* Initialize application. */
