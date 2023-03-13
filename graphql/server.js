@@ -22,7 +22,7 @@ app.use(cors())
 /* Set rate limits. */
 const limiter = rateLimit({
 	windowMs: 2 * 60 * 1000, // NOTE: Default is 2 minutes.
-	max: 250, // NOTE: We limit each IP to 250 requests per 2 minute window.
+	max: 25, // NOTE: We limit each IP to 250 requests per 2 minute window.
 	standardHeaders: true, // NOTE: Return rate limit info in the `RateLimit-*` headers.
 	legacyHeaders: false, // NOTE: Disable the `X-RateLimit-*` headers.
 })
