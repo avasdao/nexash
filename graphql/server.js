@@ -1,10 +1,16 @@
 import cors from 'cors'
 import express from 'express'
 import { graphqlHTTP } from 'express-graphql'
+import PouchDB from 'pouchdb'
 import { buildSchema } from 'graphql'
 
 /* Set port. */
 const PORT = 3000
+
+/* Initialize databases. */
+const logsDb = new PouchDB(`http://${process.env.COUCHDB_USER}:${process.env.COUCHDB_PASSWORD}@127.0.0.1:5984/logs`)
+const blocksDb = new PouchDB(`http://${process.env.COUCHDB_USER}:${process.env.COUCHDB_PASSWORD}@127.0.0.1:5984/blocks`)
+const txsDb = new PouchDB(`http://${process.env.COUCHDB_USER}:${process.env.COUCHDB_PASSWORD}@127.0.0.1:5984/txs`)
 
 // NOTE: Construct a schema, using GraphQL schema language.
 const schema = buildSchema(`
@@ -70,17 +76,24 @@ const rootValue = {
     },
 
     block: (_args) => {
+        const errors = []
+
         /* Set height. */
         const height = _args?.height || 201337
 
+        /* Request block data. */
+        const block = await blocksDb
+            .get(height)
+            .catch(err => {
+                console.error(err)
+                errors.push(err)
+            })
+        console.log('BLOCK', block)
+
+        /* Return (block) data response. */
         return {
-            height,
-            hash: 'my-leet-hash',
-            txs: [{
-                txid: 'my-leet-txid',
-                txidem: 'my-leet-txidem',
-                amount: 1337.00
-            }],
+            errors,
+            ...block,
         }
     },
 
