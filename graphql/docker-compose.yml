@@ -4,8 +4,9 @@ services:
   graphql:
     image: graphql
     build: .
-    ports:
-      - '127.0.0.1:6000:3000'
+    network_mode: 'host'
+    # ports:
+    #   - '127.0.0.1:6000:3000'
     # volumes:
     #   - './:/webapp/'
     environment:
