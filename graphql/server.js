@@ -143,15 +143,39 @@ const rootValue = {
 /* Set interactive flag. */
 const graphiql = {
     defaultQuery: `
-/*******************************************************************************
- *
- * Welcome to NexaShell GraphQL Server
- *
- * Quick start queries are show below.
- * Visit https://docs.nexa.sh for more information.
- */
+################################################################################
+#
+# Welcome to NexaShell GraphiQL
+#
+# Use this tool for writing, validating, and testing queries.
+#
+# Keyboard shortcuts:
+#
+#  Prettify Query:  Shift-Ctrl-P (or press the prettify button above)
+#
+#     Merge Query:  Shift-Ctrl-M (or press the merge button above)
+#
+#       Run Query:  Ctrl-Enter (or press the play button above)
+#
+#   Auto Complete:  Ctrl-Space (or just start typing)
+#
+# Sample queries are available in each of the 4 data categories:
+#   1. Addresses (addrs)
+#   2. Blocks (blocks)
+#   3. Tokens (tokens)
+#   4. Transactions (txs)
+#
+################################################################################
 
 {
+  # Sample address query
+  addrs(base58: "nexa:...") {
+    base58
+    script
+    type
+  }
+
+  # Sample block query
   blocks(height: 227570) {
     height
     hash
@@ -170,6 +194,18 @@ const graphiql = {
     onMainChain
     ancestorhash
   }
+
+  # Sample token query
+  token(id: "sample") {
+    id
+  }
+
+  # Sample transaction query
+  txs(txid: "sample") {
+    txid
+    txidem
+    amount
+  }
 }
     `,
 }
@@ -178,7 +214,7 @@ const graphiql = {
 const graphqlOptions = {
     schema,
     rootValue,
-    graphiql: true,
+    graphiql,
 }
 
 /* Initialize application. */
