@@ -8,12 +8,12 @@ import { buildSchema } from 'graphql'
 // NOTE: For websocket
 import { WebSocketServer } from 'ws'
 import { useServer } from 'graphql-ws/lib/use/ws'
-import { schema } from './src/schema.js'
+import { schema as _schema } from './src/schema.js'
 const server = new WebSocketServer({
   	port: 7000,
   	path: '/socket',
 })
-useServer({ schema }, server)
+useServer({ schema: _schema }, server)
 console.log('GraphQL WS listening to port 7000')
 
 
