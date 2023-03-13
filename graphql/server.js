@@ -8,10 +8,26 @@ const PORT = 3000
 
 // NOTE: Construct a schema, using GraphQL schema language.
 const schema = buildSchema(`
-  type Transaction {
-    txid: String
-    txidem: String
-    amount: Int
+  type Query {
+    hello(chain: String): String
+
+    addr(base58: String, script: String): Address
+    addrs(base58: [String], script: [String]): [Address]
+
+    block(height: Int, hash: String): Block
+    blocks(height: [Int], hash: [String]): [Block]
+
+    token(id: String, owner: String): Token
+    tokens(id: [String], owner: [String]): [Token]
+
+    tx(txid: String, txidem: String): Transaction
+    txs(txid: [String], txidem: [String]): [Transaction]
+  }
+
+  type Address {
+    base58: String
+    script: String
+    type: String
   }
 
   type Block {
@@ -20,12 +36,21 @@ const schema = buildSchema(`
     txs: [Transaction]
   }
 
-  type Query {
-    hello(chain: String): String
-    blocks(height: Int, hash: String): Block
-    txs(txid: String, txidem: String): Transaction
+  type Token {
+    id: String
+  }
+
+  type Transaction {
+    txid: String
+    txidem: String
+    amount: Int
   }
 `)
+
+const SAMPLE_TOKEN = {
+    txid: 'my-leet-tokenid',
+    amount: 888.00
+}
 
 const SAMPLE_TX = {
     txid: 'my-leet-txid',
@@ -43,18 +68,53 @@ const rootValue = {
         return `Hello ${chain} world!`
     },
 
+    addr: (_args) => {
+        return {
+            base58: 'nexa:my-awesome-address',
+            script: '001840888777666555444333222111',
+            type: 'template',
+        }
+    },
+
+    addrs: (_args) => {
+        return [{
+            base58: 'nexa:my-awesome-address',
+            script: '001840888777666555444333222111',
+            type: 'template',
+        }]
+    },
+
+    block: (_args) => {
+        return {
+            height: 1337,
+            hash: 'my-leet-hash',
+            txs: [SAMPLE_TX],
+        }
+    },
+
     blocks: (_args) => {
         return [{
             height: 1337,
             hash: 'my-leet-hash',
-            txs: [SAMPLE_TX]
+            txs: [SAMPLE_TX],
         }]
     },
 
-    txs: (_args) => {
+    token: (_args) => {
+        return SAMPLE_TOKEN
+    },
+
+    tokens: (_args) => {
+        return [SAMPLE_TOKEN]
+    },
+
+    tx: (_args) => {
         return SAMPLE_TX
     },
 
+    txs: (_args) => {
+        return [SAMPLE_TX]
+    },
 }
 
 /* Set interactive flag. */
