@@ -32,7 +32,9 @@ app.use(limiter)
 
 // NOTE: Construct a schema, using GraphQL schema language.
 const schema = buildSchema(`
+  "Welcome to the NexaShell GraphQL online query manager for Builders."
   type Query {
+
     "Provides information about on-chain address: balance, first seen, # of transactions and more."
     address(
         "Accepts a base58-formatted (nexa:) address."
@@ -62,29 +64,34 @@ const schema = buildSchema(`
 
 		txidem: [String],
 	): [Transaction]
+
   }
 
   "This is an ADDRESS type for the Docs."
   type Address {
-    "Base58 encoded address."
+    "A Base58 encoded address."
     base58: String
 
-    "Raw encoded address."
+    "A raw encoded address."
     script: String
 
-    "Address type."
+    "The address type."
     type: String
   }
 
   type Block {
-    "Height of the block."
+    "Height at which the block was confirmed by the network."
     height: Int
 
-    "Hash of the block."
+    "Immutable hash of the block data."
     hash: String
 
+	"Size (in bytes) of the block."
     size: Int
+
+	"Number of transactions processed within this block."
     txcount: Int
+
     feePoolAmt: Int
     merkleroot: String
     time: Int
@@ -104,24 +111,28 @@ const schema = buildSchema(`
     txs: [Transaction]
   }
 
+  "Group type."
   type Group {
     id: String
     owner: String
     tokens: [Token]
   }
 
+  "Owner type."
   type Owner {
     id: String
     tokens: [Token]
     txs: [Transaction]
   }
 
+  "Token type."
   type Token {
     id: String
     owner: String
     groups: [Group]
   }
 
+  "Transaction type."
   type Transaction {
     txid: String
     txidem: String
