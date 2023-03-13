@@ -115,38 +115,38 @@ const rootValue = {
     },
 
     blocks: async (_args) => {
-        /* Set height. */
-        const height = _args?.height || 227570
+        /* Set heights. */
+        const height = _args?.height || [227570]
 
         /* Request block data. */
         const block = await blocksDb
-            .get(height)
+            .get(height[0])
             .catch(err => {
                 console.error(err)
                 // TODO: Handle (logging) errors.
             })
-        console.log('BLOCK', block)
+        // console.log('BLOCK', block)
 
         return [block] || []
     },
 
     tokens: async (_args) => {
         /* Set tokenid. */
-        const id = _args?.id || 'my-leet-tokenid'
+        const id = _args?.id || ['my-leet-tokenid']
 
         return [{
-            id,
+            id: id[0],
             owner: 'nexa:satoshione',
         }]
     },
 
     txs: async (_args) => {
         /* Set txidem. */
-        const txidem = _args?.txidem || 'my-leet-txidem'
+        const txidem = _args?.txidem || ['my-leet-txidem']
 
         return [{
             txid: 'my-leet-txid',
-            txidem,
+            txidem: txidem[0],
             amount: 1337.00
         }]
     },
