@@ -76,7 +76,11 @@ const rootValue = {
         return {
             height,
             hash: 'my-leet-hash',
-            txs: [SAMPLE_TX],
+            txs: [{
+                txid: 'my-leet-txid',
+                txidem: 'my-leet-txidem',
+                amount: 1337.00
+            }],
         }
     },
 
@@ -87,7 +91,11 @@ const rootValue = {
         return [{
             height,
             hash: 'my-leet-hash',
-            txs: [SAMPLE_TX],
+            txs: [{
+                txid: 'my-leet-txid',
+                txidem: 'my-leet-txidem',
+                amount: 1337.00
+            }],
         }]
     },
 
