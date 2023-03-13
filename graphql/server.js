@@ -67,6 +67,11 @@ const schema = buildSchema(`
 		hash: [String],
 	): [Block]
 
+    "Retreive Owner information, including: tokens and transactions."
+    owner(
+		id: [String],
+	): [Owner]
+
     "Retreive Script information from OP_RETURN."
     script(
         "A string to match when searching."
@@ -206,6 +211,32 @@ const rootValue = {
         return [block] || []
     },
 
+    owner: async (_args) => {
+        /* Initialize locals. */
+        let id
+
+        /* Set owner id. */
+        id = _args?.id
+
+        /* Validate array. */
+        if (!Array.isArray(id)) {
+            id = [id]
+        }
+
+        // TODO Add queries.
+
+        return [{
+            id: id[0],
+            tokens: [{
+                id: 'awesome-token',
+                name: 'Awesome Token',
+            }, {
+                id: 'super-token',
+                name: 'Super Token',
+            }],
+        }]
+    },
+
     script: async (_args) => {
         /* Initialize locals. */
         let id
@@ -279,13 +310,16 @@ const graphiql = {
 #    - validating queries
 #    - and testing queries
 #
-#  Sample queries from each (of 5) data categories shown below:
+#  Sample queries from each (of 6) data categories shown below:
 #
 #        Address:   Request transaction histories
 #                   and full balance details.
 #
 #          Block:   Request confirmation and transaction
 #                   details.
+#
+#          Owner:   Request all available on-chain details for
+#                   a specific Owner ID.
 #
 #         Script:   Request on-chain metadata details stored
 #                   in a transaction's 'OP_RETURN' script area.
@@ -319,6 +353,11 @@ const graphiql = {
     difficulty
     utxoCommitment
     minerData
+  }
+
+  # Sample owner query
+  owner(id: "nexa:someone-with-too-many-nfts") {
+    id
   }
 
   # Request specific data match based on OP_RETURN
