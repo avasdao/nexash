@@ -46,8 +46,20 @@ app.post('/v1/core', coreRoute)
 
 /* Set Oops! */
 const OOPS = `
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Oops!</title>
+</head>
+
+<body>
+
 <h3>Oops! I don't think that's going to work here.</h3>
 <a href="https://nexa.sh/v1">API Documenation Home</a>
+
+</body>
+</html>
 `
 // TODO: Offer help.
 app.get('*', (req, res) => {
