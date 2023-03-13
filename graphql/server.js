@@ -67,6 +67,15 @@ const schema = buildSchema(`
 		hash: [String],
 	): [Block]
 
+    "Retreive Script information from OP_RETURN."
+    script(
+        "A string to match when searching."
+		id: String,
+
+        "Length of the search string."
+		size: Int,
+	): [Script]
+
     "Retreive Token information, including: id, imageUrl."
     token(
 		id: [String],
@@ -135,11 +144,20 @@ const schema = buildSchema(`
     tokens: [Token]
   }
 
-  "This is an OWNER type for the Docs."
+  "Owner is a convenient class for retrieving ALL on-chain details for a specific Owner ID."
   type Owner {
     id: String
+    address: String
+    pubkey: String
     tokens: [Token]
     txs: [Transaction]
+  }
+
+  "This is an SCRIPT type for the Docs."
+  type Script {
+    id: String
+    size: Int
+    owner: Owner
   }
 
   "This is an TOKEN type for the Docs."
@@ -186,6 +204,26 @@ const rootValue = {
         // console.log('BLOCK', block)
 
         return [block] || []
+    },
+
+    script: async (_args) => {
+        /* Initialize locals. */
+        let id
+
+        /* Set script id. */
+        id = _args?.id
+
+        /* Validate array. */
+        if (!Array.isArray(id)) {
+            id = [id]
+        }
+
+        // TODO Add queries.
+
+        return [{
+            id: id[0],
+            owner: 'nexa:SatoshiOne',
+        }]
     },
 
     token: async (_args) => {
@@ -241,13 +279,16 @@ const graphiql = {
 #    - validating queries
 #    - and testing queries
 #
-#  Sample queries in each (of 4) data categories:
+#  Sample queries from each (of 5) data categories shown below:
 #
 #        Address:   Request transaction histories
 #                   and full balance details.
 #
 #          Block:   Request confirmation and transaction
 #                   details.
+#
+#         Script:   Request on-chain metadata details stored
+#                   in a transaction's 'OP_RETURN' script area.
 #
 #          Token:   Request asset registration/genesis information
 #                   and activity details.
@@ -278,6 +319,15 @@ const graphiql = {
     difficulty
     utxoCommitment
     minerData
+  }
+
+  # Request specific data match based on OP_RETURN
+  # data stored on-chain.
+  # NOTE: 'FUZ' is the datacode for a CashFusion transaction.
+  script(id: "FUZ") {
+    id
+    owner
+    txidem
   }
 
   # Sample token query
