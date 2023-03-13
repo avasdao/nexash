@@ -68,7 +68,7 @@ const schema = buildSchema(`
 	): [Block]
 
     "Retreive Metadata stored on-chain."
-    owner(
+    meta(
 		id: [String],
 	): [Meta]
 
