@@ -37,6 +37,8 @@ const schema = buildSchema(`
   type Block {
     height: Int
     hash: String
+    size: Int
+    txcount: Int
     txs: [Transaction]
   }
 
@@ -76,40 +78,29 @@ const rootValue = {
     },
 
     block: async (_args) => {
-        const errors = []
-
         /* Set height. */
         const height = _args?.height || 201337
 
         /* Request block data. */
-        const block = await blocksDb
+        return await blocksDb
             .get(height)
             .catch(err => {
                 console.error(err)
-                errors.push(err)
+                // TODO: Handle (logging) errors.
             })
-        console.log('BLOCK', block)
-
-        /* Return (block) data response. */
-        return {
-            errors,
-            ...block,
-        }
     },
 
     blocks: (_args) => {
-        /* Set height. */
-        const height = _args?.height || 201337
+        /* Set heights. */
+        const heights = _args?.heights || [201337]
 
-        return [{
-            height,
-            hash: 'my-leet-hash',
-            txs: [{
-                txid: 'my-leet-txid',
-                txidem: 'my-leet-txidem',
-                amount: 1337.00
-            }],
-        }]
+        /* Request block data. */
+        return await blocksDb
+            .get(heights[0])
+            .catch(err => {
+                console.error(err)
+                // TODO: Handle (logging) errors.
+            })
     },
 
     token: (_args) => {
