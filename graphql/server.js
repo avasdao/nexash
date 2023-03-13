@@ -83,15 +83,18 @@ const rootValue = {
 
     block: async (_args) => {
         /* Set height. */
-        const height = _args?.height || 201337
+        const height = _args?.height || 227570
 
         /* Request block data. */
-        return await blocksDb
+        const block = await blocksDb
             .get(height)
             .catch(err => {
                 console.error(err)
                 // TODO: Handle (logging) errors.
             })
+        console.log('BLOCK', block)
+
+        return block || null
     },
 
     token: async (_args) => {
