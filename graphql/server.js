@@ -11,6 +11,18 @@ const schema = buildSchema(`
   type Query {
     hello(chain: String): String
   }
+
+  type Transaction {
+    hash: String
+    amount: Int
+  }
+
+  type Block {
+    height: Int
+    hash: String
+    txs: [Transaction]
+  }
+
 `)
 
 // NOTE: The root provides a resolver function for each API endpoint.
@@ -22,6 +34,20 @@ const rootValue = {
         /* Return greeting. */
         return `Hello ${chain} world!`
     },
+
+    block: (_args) => {
+        return [{
+            hash: 'my-new-hash',
+        }]
+    },
+
+    transaction: (_args) => {
+        return [{
+            txid: 'my-tx-id',
+            txidem: 'my-tx-idem',
+        }]
+    },
+
 }
 
 /* Set interactive flag. */

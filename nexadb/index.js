@@ -111,7 +111,7 @@ const getBlockchainInfo = async () => {
     return response
 }
 
-console.info('\n  Starting Nexa Shell (Indexer) daemon...\n')
+console.info('\n  Starting Nexa Database daemon...\n')
 
 ;(async () => {
     await getBlockchainInfo()
