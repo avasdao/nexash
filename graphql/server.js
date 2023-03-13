@@ -74,11 +74,11 @@ const rootValue = {
         /* Set base58. */
         const base58 = _args?.base58 || 'nexa:my-awesome-address'
 
-        return {
+        return [{
             base58,
             script: '001840888777666555444333222111',
             type: 'template',
-        }
+        }]
     },
 
     blocks: async (_args) => {
@@ -101,21 +101,21 @@ const rootValue = {
         /* Set tokenid. */
         const tokenid = _args?.tokenid || 'my-leet-tokenid'
 
-        return {
+        return [{
             tokenid,
             amount: 888.00
-        }
+        }]
     },
 
     txs: async (_args) => {
         /* Set txidem. */
         const txidem = _args?.txidem || 'my-leet-txidem'
 
-        return {
+        return [{
             txid: 'my-leet-txid',
             txidem,
             amount: 1337.00
-        }
+        }]
     },
 }
 
