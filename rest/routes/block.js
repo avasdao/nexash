@@ -66,6 +66,10 @@ export default async (req, res) => {
             })
         }
 
+        if (params.height.includes(',')) {
+            params.height = params.height.split(',')
+        }
+
         const query = `
 {
   block(height: ${params.height}) {
@@ -91,8 +95,10 @@ export default async (req, res) => {
     txidem
   }
 }`
+console.log('QUERY', query)
 
         const response = await run(query)
+        console.log('RESPONSE', response)
 
         return res.json(response?.data?.block)
     } catch (err) {
