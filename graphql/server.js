@@ -104,10 +104,11 @@ const schema = buildSchema(`
 const rootValue = {
     addrs: async (_args) => {
         /* Set base58. */
-        const base58 = _args?.base58 || 'nexa:my-awesome-address'
+        // NOTE: Array of addresses.
+        const base58 = _args?.base58 || ['nexa:my-awesome-address']
 
         return [{
-            base58,
+            base58: base58[0],
             script: '001840888777666555444333222111',
             type: 'template',
         }]
