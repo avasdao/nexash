@@ -73,13 +73,20 @@ export default async (req, res) => {
     hash
     size
     txcount
+    feePoolAmt
+    merkleroot
     time
     mediantime
     nonce
     bits
     difficulty
+    chainwork
     utxoCommitment
     minerData
+    status
+    onMainChain
+    previousblockhash
+    ancestorhash
     txid
     txidem
   }
