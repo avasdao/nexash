@@ -2,6 +2,7 @@
 import Client from 'bitcoin-core'
 import ethers from 'ethers'
 import moment from 'moment'
+import { callNode } from 'nexajs'
 import superagent from 'superagent'
 import { v4 as uuidv4 } from 'uuid'
 
@@ -12,72 +13,6 @@ const client = new Client({
     username: process.env.NEXA_RPC_USER || 'user',
     password: process.env.NEXA_RPC_PASS || 'password',
 })
-
-/**
- * Remote Procedure Call (RPC)
- *
- * @param {String} _method
- * @param {Object} _params
- * @returns
- */
-const rpc = async (_method, _params) => {
-    let endpoint
-    let error
-    let response
-
-    try {
-        /* Set endpoint. */
-        endpoint = `http://user:password@127.0.0.1:7227`
-
-        /* Build package. */
-        const pkg = {
-            "jsonrpc": "2.0",
-            "id": "core",
-            "method": _method,
-            "params": _params,
-        }
-
-        /* Request Elasticsearch query. */
-        response = await superagent
-            .post(endpoint)
-            .set('accept', 'json')
-            .send(pkg)
-            .catch(_err => {
-                console.error(_err)
-
-                if (_err && _err.response && _err.response.text) {
-                    error = JSON.parse(_err.response.text)
-                } else if (_err && _err.response) {
-                    error = _err.response
-                } else {
-                    error = _err
-                }
-            })
-
-        /* Validate error. */
-        if (error) {
-            return error
-        }
-
-        /* Validate response. */
-        if (!response) {
-            return null
-        }
-        // console.log('\nRPC CALL (response):', response)
-
-        /* Validate response. */
-        if (response.body && response.body.result) {
-            return response.body.result
-        } else if (response.text) {
-            return response.text
-        } else {
-            return null
-        }
-
-    } catch (err) {
-        return err
-    }
-}
 
 /**
  * Core (Node) Module
@@ -103,6 +38,11 @@ export default async (req, res) => {
         address = body.address
         params = body.params
 
+        const options = {
+            username: 'user',
+            password: 'password',
+        }
+
         /* Validate body. */
         if (!body) {
             /* Set status. */
@@ -127,7 +67,7 @@ export default async (req, res) => {
         /* Handle mining candidate. */
         if (action === 'getminingcandidate') {
             /* Make core request. */
-            response = await rpc(action, params)
+            response = await callNode(action, params, options)
             // console.log('RPC RESPONSE', response)
 
             /* Return response. */
@@ -135,14 +75,14 @@ export default async (req, res) => {
         }
 
         if (action === 'getmininginfo') {
-            const miningInfo = await rpc(action, params)
+            const miningInfo = await callNode(action, params, options)
             // console.log('MINING INFO', miningInfo)
 
             return res.json(miningInfo)
         }
 
         if (action === 'validateaddress') {
-            const validateAddress = await rpc(action, params)
+            const validateAddress = await callNode(action, params, options)
             // console.log('VALIDATE ADDRESS', validateAddress)
 
             return res.json(validateAddress)

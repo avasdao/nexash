@@ -3,6 +3,7 @@ import express from 'express'
 import rateLimit from 'express-rate-limit'
 
 import adminRoute from './routes/admin.js'
+import blockRoute from './routes/block.js'
 import coreRoute from './routes/core.js'
 
 /* Set constants. */
@@ -40,6 +41,10 @@ app.use('/v1', express.static('public'))
 
 /* Initialize Administration route. */
 app.post('/v1/admin', adminRoute)
+
+/* Initialize Block route. */
+app.get('/v1/block', blockRoute)
+app.get('/v1/block/:height', blockRoute)
 
 /* Initialize Core (Node) route. */
 app.post('/v1/core', coreRoute)
