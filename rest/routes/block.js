@@ -56,6 +56,7 @@ export default async (req, res) => {
         // console.log('Request parameters', params)
 
         /* Validate params. */
+        // FIXME Add better error-handling.
         if (!params?.height) {
             /* Set status. */
             res.status(400)
@@ -66,16 +67,15 @@ export default async (req, res) => {
             })
         }
 
-        // FIXME Add better error-handling.
-console.log('params.height-1', params.height)
-        if (params.height.includes(',')) {
-            params.height = params.height.split(',')
-        }
-console.log('params.height-2', params.height)
+// console.log('params.height-1', params.height)
+//         if (params.height.includes(',')) {
+//             params.height = params.height.split(',')
+//         }
+// console.log('params.height-2', params.height)
 
         const query = `
 {
-  block(height: ${params.height}) {
+  block(height: [${params.height}]) {
     height
     hash
     size
