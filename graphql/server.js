@@ -35,23 +35,36 @@ const schema = buildSchema(`
   type Query {
     "Provides information about on-chain address: balance, first seen, # of transactions and more."
     address(
-        "Input a base58-formatted (nexa:) address."
+        "Accepts a base58-formatted (nexa:) address."
         base58: [String],
 
-        "Input a raw Script-formatted address."
+        "Accepts a raw Script-formatted address."
         script: [String],
     ): [Address]
 
     "Retreive Block information, including: hash, # of txs, etc."
-    block(height: [Int], hash: [String]): [Block]
+    block(
+		height: [Int],
+
+		hash: [String],
+	): [Block]
 
     "Retreive Token information, including: id, imageUrl."
-    token(id: [String], owner: [String]): [Token]
+    token(
+		id: [String],
+
+		owner: [String],
+	): [Token]
 
     "Retreive Transaction information, including: txid, txidem, blocknum."
-    transaction(txid: [String], txidem: [String]): [Transaction]
+    transaction(
+		txid: [String],
+
+		txidem: [String],
+	): [Transaction]
   }
 
+  "This is an ADDRESS type for the Docs."
   type Address {
     "Base58 encoded address."
     base58: String
