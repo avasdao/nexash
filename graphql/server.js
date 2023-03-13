@@ -386,6 +386,11 @@ const graphiql = {
     minerData
   }
 
+  # Sample meta query
+  meta(id: "txidem-for-some-nft-pfp") {
+    id
+  }
+
   # Sample owner query
   owner(id: "nexa:someone-with-too-many-nfts") {
     id
@@ -397,7 +402,9 @@ const graphiql = {
   script(id: "FUZ") {
     id
     txidem
-    owner
+    owner {
+      id
+    }
   }
 
   # Sample token query
