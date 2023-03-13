@@ -6,22 +6,28 @@ import { buildSchema } from 'graphql'
 /* Set port. */
 const PORT = 3000
 
-// Construct a schema, using GraphQL schema language
+// NOTE: Construct a schema, using GraphQL schema language.
 const schema = buildSchema(`
   type Query {
     hello(chain: String): String
   }
 `)
 
-// The root provides a resolver function for each API endpoint
+// NOTE: The root provides a resolver function for each API endpoint.
 const rootValue = {
-    hello: (_chain) => {
-        return `Hello ${_chain} world!`
+    hello: (_args) => {
+        /* Set chain. */
+        const chain = _args?.chain || 'Crypto'
+
+        /* Return greeting. */
+        return `Hello ${chain} world!`
     },
 }
 
+/* Set interactive flag. */
 const graphiql = true
 
+/* Set options. */
 const graphqlOptions = {
     schema,
     rootValue,
