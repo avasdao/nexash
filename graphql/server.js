@@ -5,6 +5,18 @@ import rateLimit from 'express-rate-limit'
 import PouchDB from 'pouchdb'
 import { buildSchema } from 'graphql'
 
+// NOTE: For websocket
+import { WebSocketServer } from 'ws'
+import { useServer } from 'graphql-ws/lib/use/ws'
+import { schema } from './src/schema.js'
+const server = new WebSocketServer({
+  	port: 7000,
+  	path: '/socket',
+})
+useServer({ schema }, server)
+console.log('GraphQL WS listening to port 7000')
+
+
 /* Set port. */
 const PORT = 6000
 
