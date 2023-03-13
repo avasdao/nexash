@@ -21,7 +21,7 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
 /* Initialize public folder. */
-app.use(express.static('public'))
+app.use('/v1', express.static('public'))
 
 /* Initialize Administration route. */
 app.post('/v1/admin', adminRoute)
@@ -30,7 +30,7 @@ app.post('/v1/admin', adminRoute)
 app.post('/v1/core', coreRoute)
 
 // TODO: Offer help.
-app.get('/v1', (req, res) => {
+app.get('*', (req, res) => {
     res.end('Oops! I think you forgot something.')
 })
 
