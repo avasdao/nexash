@@ -15,10 +15,10 @@ const txsDb = new PouchDB(`http://${process.env.COUCHDB_USER}:${process.env.COUC
 // NOTE: Construct a schema, using GraphQL schema language.
 const schema = buildSchema(`
   type Query {
-    addr(base58: [String], script: [String]): [Address]
-    block(height: [Int], hash: [String]): [Block]
-    token(id: [String], owner: [String]): [Token]
-    tx(txid: [String], txidem: [String]): [Transaction]
+    addrs(base58: [String], script: [String]): [Address]
+    blocks(height: [Int], hash: [String]): [Block]
+    tokens(id: [String], owner: [String]): [Token]
+    txs(txid: [String], txidem: [String]): [Transaction]
   }
 
   type Address {
@@ -70,7 +70,7 @@ const schema = buildSchema(`
 
 // NOTE: The root provides a resolver function for each API endpoint.
 const rootValue = {
-    addr: async (_args) => {
+    addrs: async (_args) => {
         /* Set base58. */
         const base58 = _args?.base58 || 'nexa:my-awesome-address'
 
@@ -81,7 +81,7 @@ const rootValue = {
         }
     },
 
-    block: async (_args) => {
+    blocks: async (_args) => {
         /* Set height. */
         const height = _args?.height || 227570
 
@@ -97,7 +97,7 @@ const rootValue = {
         return [block] || []
     },
 
-    token: async (_args) => {
+    tokens: async (_args) => {
         /* Set tokenid. */
         const tokenid = _args?.tokenid || 'my-leet-tokenid'
 
@@ -107,7 +107,7 @@ const rootValue = {
         }
     },
 
-    tx: async (_args) => {
+    txs: async (_args) => {
         /* Set txidem. */
         const txidem = _args?.txidem || 'my-leet-txidem'
 
