@@ -16,12 +16,7 @@ const txsDb = new PouchDB(`http://${process.env.COUCHDB_USER}:${process.env.COUC
 // NOTE: Construct a schema, using GraphQL schema language.
 const schema = buildSchema(`
   type Query {
-    """
-    Provides information about on-chain Addresses:
-      - balance
-      - first seen
-      - # of transactions
-    """
+    "Provides information about on-chain addresses: balance, first seen, # of transactions."
     addrs(
         "Provide a base58 (nexa:) address."
         base58: [String],
@@ -30,46 +25,24 @@ const schema = buildSchema(`
         script: [String],
     ): [Address]
 
-    """
-    Retreive Block information, including:
-      - hash
-      - # of transactions
-    """
+    "Retreive Block information, including: hash, # of txs, etc."
     blocks(height: [Int], hash: [String]): [Block]
 
-    """
-    Retreive Token information, including:
-      - id
-      - imageUrl
-    """
+    "Retreive Token information, including: id, imageUrl."
     tokens(id: [String], owner: [String]): [Token]
 
-    """
-    Retreive Transaction information, including:
-      - txid
-      - txidem
-      - blocknum
-    """
+    "Retreive Transaction information, including: txid, txidem, blocknum."
     txs(txid: [String], txidem: [String]): [Transaction]
   }
 
   type Address {
-    """
-    Base58 encoded address.
-    Check out our [Address Docs](https://docs.nexa.sh/address) for more information.
-    """
+    "Base58 encoded address."
     base58: String
 
-    """
-    Raw encoded address.
-    Check out our [Address Docs](https://docs.nexa.sh/address) for more information.
-    """
+    "Raw encoded address."
     script: String
 
-    """
-    Address type.
-    Check out our [Address Docs](https://docs.nexa.sh/address) for more information.
-    """
+    "Address type."
     type: String
   }
 
@@ -206,14 +179,14 @@ const graphiql = {
 
 {
   # Sample address query
-  addrs(base58: "nexa:...") {
+  addrs(base58: ["nexa:..."]) {
     base58
     script
     type
   }
 
   # Sample block query
-  blocks(height: 227570) {
+  blocks(height: [227570]) {
     height
     hash
     size
@@ -233,12 +206,12 @@ const graphiql = {
   }
 
   # Sample token query
-  tokens(id: "sample") {
+  tokens(id: ["sample"]) {
     id
   }
 
   # Sample transaction query
-  txs(txid: "sample") {
+  txs(txid: ["sample"]) {
     txid
     txidem
     amount
