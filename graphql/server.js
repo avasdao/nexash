@@ -16,23 +16,23 @@ const txsDb = new PouchDB(`http://${process.env.COUCHDB_USER}:${process.env.COUC
 // NOTE: Construct a schema, using GraphQL schema language.
 const schema = buildSchema(`
   type Query {
-    "Provides information about on-chain addresses: balance, first seen, # of transactions."
-    addrs(
-        "Provide a base58 (nexa:) address."
+    "Provides information about on-chain address: balance, first seen, # of transactions and more."
+    address(
+        "Input a base58-formatted (nexa:) address."
         base58: [String],
 
-        "Provide a Script address."
+        "Input a raw Script-formatted address."
         script: [String],
     ): [Address]
 
     "Retreive Block information, including: hash, # of txs, etc."
-    blocks(height: [Int], hash: [String]): [Block]
+    block(height: [Int], hash: [String]): [Block]
 
     "Retreive Token information, including: id, imageUrl."
-    tokens(id: [String], owner: [String]): [Token]
+    token(id: [String], owner: [String]): [Token]
 
     "Retreive Transaction information, including: txid, txidem, blocknum."
-    txs(txid: [String], txidem: [String]): [Transaction]
+    transaction(txid: [String], txidem: [String]): [Transaction]
   }
 
   type Address {
@@ -102,7 +102,7 @@ const schema = buildSchema(`
 
 // NOTE: The root provides a resolver function for each API endpoint.
 const rootValue = {
-    addrs: async (_args) => {
+    address: async (_args) => {
         /* Set base58. */
         // NOTE: Array of addresses.
         const base58 = _args?.base58 || ['nexa:my-awesome-address']
@@ -114,7 +114,7 @@ const rootValue = {
         }]
     },
 
-    blocks: async (_args) => {
+    block: async (_args) => {
         /* Set heights. */
         const height = _args?.height || [227570]
 
@@ -130,19 +130,39 @@ const rootValue = {
         return [block] || []
     },
 
-    tokens: async (_args) => {
-        /* Set tokenid. */
-        const id = _args?.id || ['my-leet-tokenid']
+    token: async (_args) => {
+        /* Initialize locals. */
+        let id
+
+        /* Set token id. */
+        id = _args?.id
+
+        /* Validate array. */
+        if (!Array.isArray(id)) {
+            id = [id]
+        }
+
+        // TODO Add queries.
 
         return [{
             id: id[0],
-            owner: 'nexa:satoshione',
+            owner: 'nexa:SatoshiOne',
         }]
     },
 
-    txs: async (_args) => {
-        /* Set txidem. */
-        const txidem = _args?.txidem || ['my-leet-txidem']
+    transaction: async (_args) => {
+        /* Initialize locals. */
+        let txidem
+
+        /* Set tx idem. */
+        txidem = _args?.txidem || ['my-leet-txidem']
+
+        /* Validate array. */
+        if (!Array.isArray(txidem)) {
+            txidem = [txidem]
+        }
+
+        // TODO Add queries.
 
         return [{
             txid: 'my-leet-txid',
@@ -165,29 +185,30 @@ const graphiql = {
 #
 # Sample queries in each (of 4) data categories:
 #
-#     Addresses: (addrs)    Request transaction histories
-#                           and full balance details.
+#     Address:      Request transaction histories
+#                   and full balance details.
 #
-#        Blocks: (blocks)   Request confirmation and transaction
-#                           details.
+#        Block:     Request confirmation and transaction
+#                   details.
 #
-#        Tokens: (tokens)   Request asset registration/genesis
-#                           information and activity details.
+#        Token:     Request asset registration/genesis information
+#                   and activity details.
 #
-#  Transactions: (txs)      Request activity details.
+#  Transaction:     Request full on-chain activity details,
+#                   including block confirmation.
 #
 ######################################################################
 
 {
   # Sample address query
-  addrs(base58: ["nexa:..."]) {
+  addrs(base58: "nexa:...") {
     base58
     script
     type
   }
 
   # Sample block query
-  blocks(height: [227570]) {
+  blocks(height: [227570, 227571, 227572]) {
     height
     hash
     size
@@ -207,12 +228,12 @@ const graphiql = {
   }
 
   # Sample token query
-  tokens(id: ["sample"]) {
+  tokens(id: "a-very-cool-tokenid") {
     id
   }
 
   # Sample transaction query
-  txs(txid: ["sample"]) {
+  txs(txid: "my-super-expensive-txid") {
     txid
     txidem
     amount
