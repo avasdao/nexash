@@ -66,17 +66,6 @@ const rootValue = {
         }
     },
 
-    addrs: async (_args) => {
-        /* Set base58. */
-        const base58 = _args?.base58 || 'nexa:my-awesome-address'
-
-        return [{
-            base58,
-            script: '001840888777666555444333222111',
-            type: 'template',
-        }]
-    },
-
     block: async (_args) => {
         /* Set height. */
         const height = _args?.height || 201337
@@ -84,19 +73,6 @@ const rootValue = {
         /* Request block data. */
         return await blocksDb
             .get(height)
-            .catch(err => {
-                console.error(err)
-                // TODO: Handle (logging) errors.
-            })
-    },
-
-    blocks: async (_args) => {
-        /* Set heights. */
-        const heights = _args?.heights || [201337]
-
-        /* Request block data. */
-        return await blocksDb
-            .get(heights[0])
             .catch(err => {
                 console.error(err)
                 // TODO: Handle (logging) errors.
@@ -113,16 +89,6 @@ const rootValue = {
         }
     },
 
-    tokens: async (_args) => {
-        /* Set tokenid. */
-        const tokenid = _args?.tokenid || 'my-leet-tokenid'
-
-        return [{
-            tokenid,
-            amount: 888.00
-        }]
-    },
-
     tx: async (_args) => {
         /* Set txidem. */
         const txidem = _args?.txidem || 'my-leet-txidem'
@@ -132,17 +98,6 @@ const rootValue = {
             txidem,
             amount: 1337.00
         }
-    },
-
-    txs: async (_args) => {
-        /* Set txidem. */
-        const txidem = _args?.txidem || 'my-leet-txidem'
-
-        return [{
-            txid: 'my-leet-txid',
-            txidem,
-            amount: 1337.00
-        }]
     },
 }
 
