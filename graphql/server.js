@@ -53,7 +53,7 @@ const schema = buildSchema(`
 
 // NOTE: The root provides a resolver function for each API endpoint.
 const rootValue = {
-    addr: (_args) => {
+    addr: async (_args) => {
         /* Set base58. */
         const base58 = _args?.base58 || 'nexa:my-awesome-address'
 
@@ -75,7 +75,7 @@ const rootValue = {
         }]
     },
 
-    block: (_args) => {
+    block: async (_args) => {
         const errors = []
 
         /* Set height. */
