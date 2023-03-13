@@ -55,8 +55,9 @@ const OOPS = `
 
 <body>
 
-<h3>Oops! I don't think that's going to work here.</h3>
-<a href="https://nexa.sh/v1">API Documenation Home</a>
+<h3>Oops! I think you made a wrong turn.</h3>
+
+<a href="https://nexa.sh/v1"><h3>Go to API documentation</h3></a>
 
 </body>
 </html>
