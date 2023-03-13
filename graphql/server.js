@@ -94,7 +94,7 @@ const rootValue = {
             })
         console.log('BLOCK', block)
 
-        return block || null
+        return [block] || []
     },
 
     token: async (_args) => {
