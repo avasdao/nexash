@@ -79,6 +79,7 @@ const schema = buildSchema(`
     type: String
   }
 
+  "This is an BLOCK type for the Docs."
   type Block {
     "Height at which the block was confirmed by the network."
     height: Int
@@ -111,28 +112,28 @@ const schema = buildSchema(`
     txs: [Transaction]
   }
 
-  "Group type."
+  "This is an GROUP type for the Docs."
   type Group {
     id: String
     owner: String
     tokens: [Token]
   }
 
-  "Owner type."
+  "This is an OWNER type for the Docs."
   type Owner {
     id: String
     tokens: [Token]
     txs: [Transaction]
   }
 
-  "Token type."
+  "This is an TOKEN type for the Docs."
   type Token {
     id: String
     owner: String
     groups: [Group]
   }
 
-  "Transaction type."
+  "This is an TRANSACTION type for the Docs."
   type Transaction {
     txid: String
     txidem: String
