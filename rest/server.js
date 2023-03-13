@@ -1,5 +1,8 @@
-const express = require('express')
-const cors = require('cors')
+import express from 'express'
+import cors from 'cors'
+
+import adminRoute from './routes/admin.js'
+import coreRoute from './routes/core.js'
 
 /* Set constants. */
 const HOST = '127.0.0.1'
@@ -21,10 +24,10 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.static('public'))
 
 /* Initialize Administration route. */
-app.post('/v1/admin', require('./routes/admin'))
+app.post('/v1/admin', adminRoute)
 
 /* Initialize Core (Node) route. */
-app.post('/v1/core', require('./routes/core'))
+app.post('/v1/core', coreRoute)
 
 // TODO: Offer help.
 app.get('/v1', (req, res) => {

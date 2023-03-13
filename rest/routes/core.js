@@ -1,9 +1,9 @@
 /* Import modules. */
-const Client = require('bitcoin-core')
-const ethers = require('ethers')
-const moment = require('moment')
-const superagent = require('superagent')
-const { v4: uuidv4 } = require('uuid')
+import Client from 'bitcoin-core'
+import ethers from 'ethers'
+import moment from 'moment'
+import superagent from 'superagent'
+import { v4 as uuidv4 } from 'uuid'
 
 /* Initialize new Bitcoin client. */
 const client = new Client({
@@ -86,7 +86,7 @@ const rpc = async (_method, _params) => {
  * @param {Object} res
  * @returns
  */
-const core = async function (req, res) {
+export default async (req, res) => {
     let action
     let address
     let body
@@ -166,6 +166,3 @@ const core = async function (req, res) {
         return res.json(err)
     }
 }
-
-/* Export module. */
-module.exports = core

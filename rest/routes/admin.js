@@ -1,13 +1,9 @@
 /* Import modules. */
-const moment = require('moment')
-const PouchDB = require('pouchdb')
-const superagent = require('superagent')
-const util = require('util')
-const { v4: uuidv4 } = require('uuid')
-
-const { Magic } = require('@magic-sdk/admin')
-
-const magicAdmin = new Magic(process.env.MAGIC_LINK_KEY)
+import moment from 'moment'
+import PouchDB from 'pouchdb'
+import superagent from 'superagent'
+import util from 'util'
+import { v4 as uuidv4 } from 'uuid'
 
 /* Initialize databases. */
 const logsDb = new PouchDB(`http://${process.env.COUCHDB_AUTH}@localhost:5984/logs`)
@@ -18,7 +14,7 @@ const serversDb = new PouchDB(`http://${process.env.COUCHDB_AUTH}@localhost:5984
 /**
  * Administration Module
  */
-const admin = async function (req, res) {
+export default async (req, res) => {
     let account
     let action
     let body
@@ -324,6 +320,3 @@ const admin = async function (req, res) {
         return res.json(err)
     }
 }
-
-/* Export module. */
-module.exports = admin
