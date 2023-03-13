@@ -15,17 +15,10 @@ const txsDb = new PouchDB(`http://${process.env.COUCHDB_USER}:${process.env.COUC
 // NOTE: Construct a schema, using GraphQL schema language.
 const schema = buildSchema(`
   type Query {
-    addr(base58: String, script: String): Address
-    addrs(base58: [String], script: [String]): [Address]
-
-    block(height: Int, hash: String): Block
-    blocks(height: [Int], hash: [String]): [Block]
-
-    token(id: String, owner: String): Token
-    tokens(id: [String], owner: [String]): [Token]
-
-    tx(txid: String, txidem: String): Transaction
-    txs(txid: [String], txidem: [String]): [Transaction]
+    addr(base58: [String], script: [String]): [Address]
+    block(height: [Int], hash: [String]): [Block]
+    token(id: [String], owner: [String]): [Token]
+    tx(txid: [String], txidem: [String]): [Transaction]
   }
 
   type Address {
@@ -39,11 +32,33 @@ const schema = buildSchema(`
     hash: String
     size: Int
     txcount: Int
+    feePoolAmt: Int
+    merkleroot: String
+    time: Int
+    mediantime: Int
+    nonce: String
+    bits: String
+    difficulty: Float
+    chainwork: String
+    utxoCommitment: String
+    minerData: String
+    status: String
+    onMainChain: Boolean
+    previousblockhash: String
+    ancestorhash: String
+    txid: [String]
+    txidem: [String]
     txs: [Transaction]
+  }
+
+  type Group {
+    id: String
+    tokens: [Token]
   }
 
   type Token {
     id: String
+    groups: [Group]
   }
 
   type Transaction {
