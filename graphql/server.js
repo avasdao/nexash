@@ -29,6 +29,7 @@ const limiter = rateLimit({
 
 /* Apply the rate limiting middleware to all requests. */
 app.use(limiter)
+app.get('/ip', (request, response) => response.send(request.ip))
 
 // NOTE: Construct a schema, using GraphQL schema language.
 const schema = buildSchema(`
