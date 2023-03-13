@@ -9,14 +9,14 @@ const PORT = 3000
 // Construct a schema, using GraphQL schema language
 const schema = buildSchema(`
   type Query {
-    hello: String
+    hello(chain: String): String
   }
 `)
 
 // The root provides a resolver function for each API endpoint
 const rootValue = {
-    hello: () => {
-        return 'Hello world!'
+    hello: (_chain) => {
+        return `Hello ${_chain} world!`
     },
 }
 
