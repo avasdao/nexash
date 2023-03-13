@@ -176,39 +176,39 @@ const rootValue = {
 const graphiql = {
     defaultQuery: `######################################################################
 #
-# Welcome to the NexaShell GraphiQL
+#  Welcome to the NexaShell GraphiQL
 #
-# Application builders can make great use of this tool for:
-#   - writing queries
-#   - validating queries
-#   - and testing queries
+#  Application builders can make great use of this tool for:
+#    - writing queries
+#    - validating queries
+#    - and testing queries
 #
-# Sample queries in each (of 4) data categories:
+#  Sample queries in each (of 4) data categories:
 #
-#     Address:      Request transaction histories
+#        Address:   Request transaction histories
 #                   and full balance details.
 #
-#        Block:     Request confirmation and transaction
+#          Block:   Request confirmation and transaction
 #                   details.
 #
-#        Token:     Request asset registration/genesis information
+#          Token:   Request asset registration/genesis information
 #                   and activity details.
 #
-#  Transaction:     Request full on-chain activity details,
+#    Transaction:   Request full on-chain activity details,
 #                   including block confirmation.
 #
 ######################################################################
 
 {
   # Sample address query
-  addrs(base58: "nexa:...") {
+  address(base58: "nexa:...") {
     base58
     script
     type
   }
 
   # Sample block query
-  blocks(height: [227570, 227571, 227572]) {
+  block(height: [227570, 227571, 227572]) {
     height
     hash
     size
@@ -228,12 +228,12 @@ const graphiql = {
   }
 
   # Sample token query
-  tokens(id: "a-very-cool-tokenid") {
+  token(id: "a-very-cool-tokenid") {
     id
   }
 
   # Sample transaction query
-  txs(txid: "my-super-expensive-txid") {
+  transaction(txid: "my-super-expensive-txid") {
     txid
     txidem
     amount
