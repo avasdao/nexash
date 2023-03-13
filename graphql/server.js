@@ -66,7 +66,7 @@ const rootValue = {
         }
     },
 
-    addrs: (_args) => {
+    addrs: async (_args) => {
         /* Set base58. */
         const base58 = _args?.base58 || 'nexa:my-awesome-address'
 
@@ -90,7 +90,7 @@ const rootValue = {
             })
     },
 
-    blocks: (_args) => {
+    blocks: async (_args) => {
         /* Set heights. */
         const heights = _args?.heights || [201337]
 
@@ -103,7 +103,7 @@ const rootValue = {
             })
     },
 
-    token: (_args) => {
+    token: async (_args) => {
         /* Set tokenid. */
         const tokenid = _args?.tokenid || 'my-leet-tokenid'
 
@@ -113,7 +113,7 @@ const rootValue = {
         }
     },
 
-    tokens: (_args) => {
+    tokens: async (_args) => {
         /* Set tokenid. */
         const tokenid = _args?.tokenid || 'my-leet-tokenid'
 
@@ -123,7 +123,7 @@ const rootValue = {
         }]
     },
 
-    tx: (_args) => {
+    tx: async (_args) => {
         /* Set txidem. */
         const txidem = _args?.txidem || 'my-leet-txidem'
 
@@ -134,7 +134,7 @@ const rootValue = {
         }
     },
 
-    txs: (_args) => {
+    txs: async (_args) => {
         /* Set txidem. */
         const txidem = _args?.txidem || 'my-leet-txidem'
 
