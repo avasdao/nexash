@@ -9,7 +9,8 @@ const PORT = 3000
 // NOTE: Construct a schema, using GraphQL schema language.
 const schema = buildSchema(`
   type Transaction {
-    hash: String
+    txid: String
+    txidem: String
     amount: Int
   }
 
@@ -22,9 +23,15 @@ const schema = buildSchema(`
   type Query {
     hello(chain: String): String
     blocks(height: Int, hash: String): Block
-    txs(hash: String): Transaction
+    txs(txid: String, txidem: String): Transaction
   }
 `)
+
+const SAMPLE_TX = {
+    txid: 'my-leet-txid',
+    txidem: 'my-leet-txidem',
+    amount: 1337.00
+}
 
 // NOTE: The root provides a resolver function for each API endpoint.
 const rootValue = {
@@ -38,15 +45,14 @@ const rootValue = {
 
     blocks: (_args) => {
         return [{
-            hash: 'my-new-hash',
+            height: 1337,
+            hash: 'my-leet-hash',
+            txs: [SAMPLE_TX]
         }]
     },
 
     txs: (_args) => {
-        return [{
-            txid: 'my-tx-id',
-            txidem: 'my-tx-idem',
-        }]
+        return SAMPLE_TX
     },
 
 }
