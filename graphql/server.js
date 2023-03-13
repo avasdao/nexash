@@ -67,6 +67,11 @@ const schema = buildSchema(`
 		hash: [String],
 	): [Block]
 
+    "Retreive Metadata stored on-chain."
+    owner(
+		id: [String],
+	): [Meta]
+
     "Retreive Owner information, including: tokens and transactions."
     owner(
 		id: [String],
@@ -76,9 +81,6 @@ const schema = buildSchema(`
     script(
         "A string to match when searching."
 		id: String,
-
-        "Length of the search string."
-		size: Int,
 	): [Script]
 
     "Retreive Token information, including: id, imageUrl."
@@ -145,8 +147,14 @@ const schema = buildSchema(`
   "This is an GROUP type for the Docs."
   type Group {
     id: String
-    owner: String
+    owner: Owner
     tokens: [Token]
+  }
+
+  "This is an META type for the Docs."
+  type Meta {
+    id: String
+    data: String
   }
 
   "Owner is a convenient class for retrieving ALL on-chain details for a specific Owner ID."
@@ -161,7 +169,7 @@ const schema = buildSchema(`
   "This is an SCRIPT type for the Docs."
   type Script {
     id: String
-    size: Int
+    txidem: String
     owner: Owner
   }
 
@@ -176,7 +184,7 @@ const schema = buildSchema(`
   type Transaction {
     txid: String
     txidem: String
-    owner: String
+    owner: Owner
     amount: Int
   }
 `)
@@ -209,6 +217,26 @@ const rootValue = {
         // console.log('BLOCK', block)
 
         return [block] || []
+    },
+
+    meta: async (_args) => {
+        /* Initialize locals. */
+        let id
+
+        /* Set meta id. */
+        id = _args?.id
+
+        /* Validate array. */
+        if (!Array.isArray(id)) {
+            id = [id]
+        }
+
+        // TODO Add queries.
+
+        return [{
+            id: id[0],
+            owner: 'nexa:SatoshiOne',
+        }]
     },
 
     owner: async (_args) => {
@@ -310,13 +338,16 @@ const graphiql = {
 #    - validating queries
 #    - and testing queries
 #
-#  Sample queries from each (of 6) data categories shown below:
+#  Sample queries from each (of 7) data categories shown below:
 #
 #        Address:   Request transaction histories
 #                   and full balance details.
 #
 #          Block:   Request confirmation and transaction
 #                   details.
+#
+#           Meta:   Request information from Meta (extended)
+#                   on-chain data.
 #
 #          Owner:   Request all available on-chain details for
 #                   a specific Owner ID.
@@ -365,8 +396,8 @@ const graphiql = {
   # NOTE: 'FUZ' is the datacode for a CashFusion transaction.
   script(id: "FUZ") {
     id
-    owner
     txidem
+    owner
   }
 
   # Sample token query
