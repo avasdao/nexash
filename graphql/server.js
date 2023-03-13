@@ -16,41 +16,51 @@ const txsDb = new PouchDB(`http://${process.env.COUCHDB_USER}:${process.env.COUC
 // NOTE: Construct a schema, using GraphQL schema language.
 const schema = buildSchema(`
   type Query {
-    addrs(base58: [String], script: [String]): [Address]
+    "Address METHODS contain address information"
+    addrs(
+        "Provide a base58 (nexa:) address."
+        base58: [String],
+
+        "Provide a Script address."
+        script: [String],
+    ): [Address]
+
     blocks(height: [Int], hash: [String]): [Block]
+
     tokens(id: [String], owner: [String]): [Token]
+
     txs(txid: [String], txidem: [String]): [Transaction]
   }
 
-  """
-  Provides information about on-chain addresses:
-    - balance
-    - first seen
-    - # of transactions
-  """
+  "Address TYPES contain address information"
   type Address {
     """
-    Base58 encoded address
+    Base58 encoded address.
     Check out our [Address Docs](https://docs.nexa.sh/address) for more information.
     """
     base58: String
 
     """
-    Raw encoded address
+    Raw encoded address.
     Check out our [Address Docs](https://docs.nexa.sh/address) for more information.
     """
     script: String
 
     """
-    Address type
+    Address type.
     Check out our [Address Docs](https://docs.nexa.sh/address) for more information.
     """
     type: String
   }
 
+  "Block TYPES contain block information"
   type Block {
+    "Height of the block."
     height: Int
+
+    "Hash of the block."
     hash: String
+
     size: Int
     txcount: Int
     feePoolAmt: Int
@@ -72,19 +82,32 @@ const schema = buildSchema(`
     txs: [Transaction]
   }
 
+  "Group TYPES contain group information"
   type Group {
     id: String
+    owner: String
     tokens: [Token]
   }
 
+  "Owner TYPES contain owner information"
+  type Owner {
+    id: String
+    tokens: [Token]
+    txs: [Transaction]
+  }
+
+  "Token TYPES contain token information"
   type Token {
     id: String
+    owner: String
     groups: [Group]
   }
 
+  "Transaction TYPES contain transaction information"
   type Transaction {
     txid: String
     txidem: String
+    owner: String
     amount: Int
   }
 `)
@@ -120,11 +143,11 @@ const rootValue = {
 
     tokens: async (_args) => {
         /* Set tokenid. */
-        const tokenid = _args?.tokenid || 'my-leet-tokenid'
+        const id = _args?.id || 'my-leet-tokenid'
 
         return [{
-            tokenid,
-            amount: 888.00
+            id,
+            owner: 'nexa:satoshione',
         }]
     },
 
@@ -142,28 +165,26 @@ const rootValue = {
 
 /* Set interactive flag. */
 const graphiql = {
-    defaultQuery: `
-################################################################################
+    defaultQuery: `################################################################################
 #
 # Welcome to NexaShell GraphiQL
 #
-# Use this tool for writing, validating, and testing queries.
+# Application builders can make great use of this tool for:
+#   - writing queries
+#   - validating queries
+#   - and testing queries
 #
-# Keyboard shortcuts:
+# Sample queries in each (of 4) data categories:
 #
-#  Prettify Query:  Shift-Ctrl-P (or press the prettify button above)
+#     Addresses: (addrs)    Request transaction histories
+#                           and full balance details.
 #
-#     Merge Query:  Shift-Ctrl-M (or press the merge button above)
+#        Blocks: (blocks)   Request confirmation and transaction details.
 #
-#       Run Query:  Ctrl-Enter (or press the play button above)
+#        Tokens: (tokens)   Request asset registration/genesis information
+#                           and activity details.
 #
-#   Auto Complete:  Ctrl-Space (or just start typing)
-#
-# Sample queries are available in each of the 4 data categories:
-#   1. Addresses (addrs)
-#   2. Blocks (blocks)
-#   3. Tokens (tokens)
-#   4. Transactions (txs)
+#  Transactions: (txs)      Request activity details.
 #
 ################################################################################
 
@@ -196,7 +217,7 @@ const graphiql = {
   }
 
   # Sample token query
-  token(id: "sample") {
+  tokens(id: "sample") {
     id
   }
 
