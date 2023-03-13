@@ -29,9 +29,14 @@ app.post('/v1/admin', adminRoute)
 /* Initialize Core (Node) route. */
 app.post('/v1/core', coreRoute)
 
+const oops = `
+<h3>Oops! I don't think that's going to work here.</h3>
+<a href="https://nexa.sh/v1">API Documenation Home</a>
+`
+
 // TODO: Offer help.
 app.get('*', (req, res) => {
-    res.end('Oops! I think you forgot something.')
+    res.end()
 })
 
 /* Start listening for connections. */
