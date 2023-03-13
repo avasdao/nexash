@@ -1,5 +1,6 @@
-import express from 'express'
 import cors from 'cors'
+import express from 'express'
+import rateLimit from 'express-rate-limit'
 
 import adminRoute from './routes/admin.js'
 import coreRoute from './routes/core.js'
@@ -13,6 +14,20 @@ const app = express()
 
 /* Initialize CORS. */
 app.use(cors())
+
+/* Set rate limits. */
+const limiter = rateLimit({
+	windowMs: 2 * 60 * 1000, // NOTE: Default is 2 minutes.
+	max: 250, // NOTE: We limit each IP to 250 requests per 2 minute window.
+	standardHeaders: true, // NOTE: Return rate limit info in the `RateLimit-*` headers.
+	legacyHeaders: false, // NOTE: Disable the `X-RateLimit-*` headers.
+})
+
+/* Apply the rate limiting middleware to all requests. */
+app.use(limiter)
+
+app.set('trust proxy', 3) // NOTE: 0 is localhost, 1,2 are Cloudflare
+app.get('/v1/ip', (request, response) => response.send(request.ip))
 
 /* Initialize JSON parser. */
 app.use(express.json())
