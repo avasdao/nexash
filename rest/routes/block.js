@@ -3,8 +3,8 @@ import moment from 'moment'
 import fetch from 'node-fetch'
 import { v4 as uuidv4 } from 'uuid'
 
-/* Set Nexa GraphQL endpoint. */
-const ENDPOINT = 'https://nexa.sh/graphql'
+/* Set (local) GraphQL endpoint. */
+const ENDPOINT = 'http://127.0.0.1/graphql'
 
 /**
  * Run Demo
