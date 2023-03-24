@@ -1,36 +1,31 @@
+import bodyParser from 'body-parser'
 import cors from 'cors'
 import express from 'express'
-import { graphqlHTTP } from 'express-graphql'
 import rateLimit from 'express-rate-limit'
 import PouchDB from 'pouchdb'
-import { buildSchema } from 'graphql'
-
-
-// NOTE: For WebSocket connections.
 import { WebSocketServer } from 'ws'
+
+import { createHandler } from 'graphql-http/lib/use/express'
+import { createServer } from 'http'
 import { useServer } from 'graphql-ws/lib/use/ws'
-import { schema as _schema } from './src/schema.js'
-const server = new WebSocketServer({
-  	port: 7000,
-  	path: '/socket',
-})
-useServer({ schema: _schema }, server)
-console.log('GraphQL WS listening to port 7000')
 
+import { ApolloServer } from '@apollo/server'
+import { expressMiddleware } from '@apollo/server/express4'
+import { ApolloServerPluginDrainHttpServer } from '@apollo/server/plugin/drainHttpServer'
 
-/* Set port. */
+/* Import Schema. */
+import schema from './src/schema.js'
+
+/* Set (GraphQL) port. */
 const PORT = 6000
 
 /* Initialize databases. */
 const logsDb = new PouchDB(`http://${process.env.COUCHDB_USER}:${process.env.COUCHDB_PASSWORD}@127.0.0.1:5984/logs`)
-const blocksDb = new PouchDB(`http://${process.env.COUCHDB_USER}:${process.env.COUCHDB_PASSWORD}@127.0.0.1:5984/blocks`)
-const txsDb = new PouchDB(`http://${process.env.COUCHDB_USER}:${process.env.COUCHDB_PASSWORD}@127.0.0.1:5984/txs`)
+// const blocksDb = new PouchDB(`http://${process.env.COUCHDB_USER}:${process.env.COUCHDB_PASSWORD}@127.0.0.1:5984/blocks`)
+// const txsDb = new PouchDB(`http://${process.env.COUCHDB_USER}:${process.env.COUCHDB_PASSWORD}@127.0.0.1:5984/txs`)
 
-/* Initialize application. */
+/* Initialize Express application. */
 const app = express()
-
-/* Enable CORS. */
-app.use(cors())
 
 /* Set rate limits. */
 const limiter = rateLimit({
@@ -46,406 +41,49 @@ app.use(limiter)
 app.set('trust proxy', 3) // NOTE: 0 is localhost, 1,2 are Cloudflare
 app.get('/ip', (request, response) => response.send(request.ip))
 
-// NOTE: Construct a schema, using GraphQL schema language.
-const schema = buildSchema(`
-  "Welcome to the NexaShell GraphQL online query manager for Builders."
-  type Query {
-
-    "Provides information about on-chain address: balance, first seen, # of transactions and more."
-    address(
-        "Accepts a base58-formatted (nexa:) address."
-        base58: [String],
-
-        "Accepts a raw Script-formatted address."
-        script: [String],
-    ): [Address]
-
-    "Retreive Block information, including: hash, # of txs, etc."
-    block(
-		height: [Int],
-
-		hash: [String],
-	): [Block]
-
-    "Retreive Metadata stored on-chain."
-    meta(
-		id: [String],
-	): [Meta]
-
-    "Retreive Owner information, including: tokens and transactions."
-    owner(
-		id: [String],
-	): [Owner]
-
-    "Retreive Script information from OP_RETURN."
-    script(
-        "A string to match when searching."
-		id: String,
-	): [Script]
-
-    "Retreive Token information, including: id, imageUrl."
-    token(
-		id: [String],
-
-		owner: [String],
-	): [Token]
-
-    "Retreive Transaction information, including: txid, txidem, blocknum."
-    transaction(
-		txid: [String],
-
-		txidem: [String],
-	): [Transaction]
-
-  }
-
-  "This is an ADDRESS type for the Docs."
-  type Address {
-    "A Base58 encoded address."
-    base58: String
-
-    "A raw encoded address."
-    script: String
-
-    "The address type."
-    type: String
-  }
-
-  "This is an BLOCK type for the Docs."
-  type Block {
-    "Height at which the block was confirmed by the network."
-    height: Int
-
-    "Immutable hash of the block data."
-    hash: String
-
-	"Size (in bytes) of the block."
-    size: Int
-
-	"Number of transactions processed within this block."
-    txcount: Int
-
-    feePoolAmt: Int
-    merkleroot: String
-    time: Int
-    mediantime: Int
-    nonce: String
-    bits: String
-    difficulty: Float
-    chainwork: String
-    utxoCommitment: String
-    minerData: String
-    status: String
-    onMainChain: Boolean
-    previousblockhash: String
-    ancestorhash: String
-    txid: [String]
-    txidem: [String]
-    txs: [Transaction]
-  }
-
-  "This is an GROUP type for the Docs."
-  type Group {
-    id: String
-    owner: Owner
-    tokens: [Token]
-  }
-
-  "This is an META type for the Docs."
-  type Meta {
-    id: String
-    data: String
-  }
-
-  "Owner is a convenient class for retrieving ALL on-chain details for a specific Owner ID."
-  type Owner {
-    id: String
-    address: String
-    pubkey: String
-    tokens: [Token]
-    txs: [Transaction]
-  }
-
-  "This is an SCRIPT type for the Docs."
-  type Script {
-    id: String
-    txidem: String
-    owner: Owner
-  }
-
-  "This is an TOKEN type for the Docs."
-  type Token {
-    id: String
-    owner: String
-    groups: [Group]
-  }
-
-  "This is an TRANSACTION type for the Docs."
-  type Transaction {
-    txid: String
-    txidem: String
-    owner: Owner
-    amount: Int
-  }
-`)
-
-// NOTE: The root provides a resolver function for each API endpoint.
-const rootValue = {
-    address: async (_args) => {
-        /* Set base58. */
-        // NOTE: Array of addresses.
-        const base58 = _args?.base58 || ['nexa:my-awesome-address']
-
-        return [{
-            base58: base58[0],
-            script: '001840888777666555444333222111',
-            type: 'template',
-        }]
-    },
-
-    block: async (_args) => {
-        /* Initialize blocks. */
-        const blocks = []
-
-        /* Set heights. */
-        const height = _args?.height
-
-        /* Validate heights. */
-        if (!height) {
-            return blocks
-        }
-
-        /* Handle each height. */
-        for (let i = 0; i < height.length; i++) {
-            /* Request block data. */
-            const block = await blocksDb
-                .get(height[i])
-                .catch(err => {
-                    console.error(err)
-                    // TODO: Handle (logging) errors.
-                })
-            // console.log('BLOCK', block)
-
-            /* Add block to list. */
-            blocks.push(block)
-        }
-
-        /* Return blocks. */
-        return blocks
-    },
-
-    meta: async (_args) => {
-        /* Initialize locals. */
-        let id
-
-        /* Set meta id. */
-        id = _args?.id
-
-        /* Validate array. */
-        if (!Array.isArray(id)) {
-            id = [id]
-        }
-
-        // TODO Add queries.
-
-        return [{
-            id: id[0],
-            owner: 'nexa:SatoshiOne',
-        }]
-    },
-
-    owner: async (_args) => {
-        /* Initialize locals. */
-        let id
-
-        /* Set owner id. */
-        id = _args?.id
-
-        /* Validate array. */
-        if (!Array.isArray(id)) {
-            id = [id]
-        }
-
-        // TODO Add queries.
-
-        return [{
-            id: id[0],
-            tokens: [{
-                id: 'awesome-token',
-                name: 'Awesome Token',
-            }, {
-                id: 'super-token',
-                name: 'Super Token',
-            }],
-        }]
-    },
-
-    script: async (_args) => {
-        /* Initialize locals. */
-        let id
-
-        /* Set script id. */
-        id = _args?.id
-
-        /* Validate array. */
-        if (!Array.isArray(id)) {
-            id = [id]
-        }
-
-        // TODO Add queries.
-
-        return [{
-            id: id[0],
-            owner: 'nexa:SatoshiOne',
-        }]
-    },
-
-    token: async (_args) => {
-        /* Initialize locals. */
-        let id
-
-        /* Set token id. */
-        id = _args?.id
-
-        /* Validate array. */
-        if (!Array.isArray(id)) {
-            id = [id]
-        }
-
-        // TODO Add queries.
-
-        return [{
-            id: id[0],
-            owner: 'nexa:SatoshiOne',
-        }]
-    },
-
-    transaction: async (_args) => {
-        /* Initialize locals. */
-        let txidem
-
-        /* Set tx idem. */
-        txidem = _args?.txidem || ['my-leet-txidem']
-
-        /* Validate array. */
-        if (!Array.isArray(txidem)) {
-            txidem = [txidem]
-        }
-
-        // TODO Add queries.
-
-        return [{
-            txid: 'my-leet-txid',
-            txidem: txidem[0],
-            amount: 1337.00
-        }]
-    },
-}
-
-/* Set interactive flag. */
-const graphiql = {
-    defaultQuery: `######################################################################
-#
-#  Welcome to the NexaShell GraphiQL
-#
-#  Application builders can make great use of this tool for:
-#    - writing queries
-#    - validating queries
-#    - and testing queries
-#
-#  Sample queries from each (of 7) data categories shown below:
-#
-#        Address:   Request transaction histories
-#                   and full balance details.
-#
-#          Block:   Request confirmation and transaction
-#                   details.
-#
-#           Meta:   Request information from Meta (extended)
-#                   on-chain data.
-#
-#          Owner:   Request all available on-chain details for
-#                   a specific Owner ID.
-#
-#         Script:   Request on-chain metadata details stored
-#                   in a transaction's 'OP_RETURN' script area.
-#
-#          Token:   Request asset registration/genesis information
-#                   and activity details.
-#
-#    Transaction:   Request full on-chain activity details,
-#                   including block confirmation.
-#
-######################################################################
-
-{
-  # Sample address query
-  address(base58: "nexa:...") {
-    base58
-    script
-    type
-  }
-
-  # Sample block query
-  block(height: [227570, 227571, 227572]) {
-    height
-    hash
-    size
-    txcount
-    time
-    mediantime
-    nonce
-    bits
-    difficulty
-    utxoCommitment
-    minerData
-  }
-
-  # Sample meta query
-  meta(id: "txidem-for-some-nft-pfp") {
-    id
-  }
-
-  # Sample owner query
-  owner(id: "nexa:someone-with-too-many-nfts") {
-    id
-  }
-
-  # Request specific data match based on OP_RETURN
-  # data stored on-chain.
-  # NOTE: 'FUZ' is the datacode for a CashFusion transaction.
-  script(id: "FUZ") {
-    id
-    txidem
-    owner {
-      id
-    }
-  }
-
-  # Sample token query
-  token(id: "a-very-cool-tokenid") {
-    id
-  }
-
-  # Sample transaction query
-  transaction(txid: "my-super-expensive-txid") {
-    txid
-    txidem
-    amount
-  }
-}
-    `,
-}
-
-/* Set options. */
-const graphqlOptions = {
+/* Initialize HTTP server. */
+const httpServer = createServer(app)
+
+/* Create WebSocket server. */
+const wsServer = new WebSocketServer({
+    // NOTE: This is the `httpServer` we created in a previous step.
+    server: httpServer,
+
+    // NOTE: Serves expressMiddleware at a this path.
+    path: '/graphql',
+})
+
+// Hand in the schema we just created and have the
+// WebSocketServer start listening.
+const serverCleanup = useServer({ schema }, wsServer)
+
+/* Initialize Apollo Server. */
+const server = new ApolloServer({
     schema,
-    rootValue,
-    graphiql,
-}
+    plugins: [
+        // Proper shutdown for the HTTP server.
+        ApolloServerPluginDrainHttpServer({ httpServer }),
 
-/* Setup GraphQL endpoint. */
-app.use('/graphql', graphqlHTTP(graphqlOptions))
+        // Proper shutdown for the WebSocket server.
+        {
+            async serverWillStart() {
+                return {
+                    async drainServer() {
+                        await serverCleanup.dispose()
+                    },
+                }
+            },
+        },
+    ],
+})
 
-app.listen(PORT)
-console.log(`Running a GraphQL API server at http://localhost:${PORT}/graphql`)
+/* Start Apollo Server. */
+await server.start()
+
+/* Initialize Express middleware. */
+app.use('/graphql', cors(), bodyParser.json(), expressMiddleware(server))
+
+// Now that our HTTP server is fully set up, we can listen to it.
+httpServer.listen(PORT, () => {
+    console.log(`Server is now running on http://localhost:${PORT}/graphql`);
+})

@@ -1,45 +1,23 @@
-import {
-    GraphQLSchema,
-    GraphQLObjectType,
-    GraphQLString
-} from 'graphql'
+/* Import modules. */
+import { GraphQLSchema } from 'graphql'
+
+/* Import (Schema) objects. */
+import mutation from './mutation.js'
+import query from './query.js'
+import subscription from './subscription.js'
 
 /**
- * Construct a GraphQL schema and define the necessary resolvers.
+ * GraphQL Schema
  *
- * type Query {
- *   hello: String
- * }
- * type Subscription {
- *   greetings: String
- * }
+ * Construct a GraphQL schema and define the necessary resolvers.
  */
-export const schema = new GraphQLSchema({
-
+export default new GraphQLSchema({
     /* Query */
-    query: new GraphQLObjectType({
-        name: 'Query',
-        fields: {
-            hello: {
-                type: GraphQLString,
-                resolve: () => 'world',
-            },
-        },
-    }),
+    query,
+
+    /* Mutation */
+    mutation,
 
     /* Subscription */
-    subscription: new GraphQLObjectType({
-        name: 'Subscription',
-        fields: {
-            greetings: {
-                type: GraphQLString,
-                subscribe: async function* () {
-                    for (const hi of ['Hi', 'Bonjour', 'Hola', 'Ciao', 'Zdravo']) {
-                        yield { greetings: hi };
-                    }
-                },
-            },
-        },
-    }),
-
+    subscription,
 })
