@@ -12,6 +12,11 @@ import { useServer } from 'graphql-ws/lib/use/ws'
 import { ApolloServer } from '@apollo/server'
 import { expressMiddleware } from '@apollo/server/express4'
 import { ApolloServerPluginDrainHttpServer } from '@apollo/server/plugin/drainHttpServer'
+import {
+    ApolloServerPluginLandingPageLocalDefault,
+    ApolloServerPluginLandingPageProductionDefault,
+} from '@apollo/server/plugin/landingPage/default'
+
 
 /* Import Schema. */
 import schema from './src/schema.js'
@@ -74,6 +79,16 @@ const server = new ApolloServer({
                 }
             },
         },
+
+        // Install a landing page plugin based on NODE_ENV
+        process.env.NODE_ENV === 'production'
+            ? ApolloServerPluginLandingPageProductionDefault({
+                graphRef: 'my-graph-id@my-graph-variant',
+                footer: false,
+            })
+            : ApolloServerPluginLandingPageLocalDefault({
+                footer: false
+            }),
     ],
 })
 
