@@ -1,28 +1,34 @@
 export default `######################################################################
 #
-#  Welcome to the Nexa Exchange GraphiQL
+#  Welcome to the NexaShell GraphiQL
 #
-#  Nexa Investors & Traders should make great use of this tool for:
-#    ✔ Comprehensive market analysis
+#  Application builders can make great use of this tool for:
+#    - writing queries
 #    - validating queries
 #    - and testing queries
 #
-#  Sample queries from each (of 5) data categories shown below:
+#  Sample queries from each (of 7) data categories shown below:
 #
-#     Assets:   Request transaction histories
-#               and full balance details.
+#        Address:   Request transaction histories
+#                   and full balance details.
 #
-#    Markets:   Request confirmation and transaction
-#               details.
+#          Block:   Request confirmation and transaction
+#                   details.
 #
-#     Orders:   Request information from Meta (extended)
-#               on-chain data.
+#           Meta:   Request information from Meta (extended)
+#                   on-chain data.
 #
-#    Reports:   Request all available on-chain details for
-#               a specific Owner ID.
+#          Owner:   Request all available on-chain details for
+#                   a specific Owner ID.
 #
-#       Swap:   Request on-chain metadata details stored
-#               in a transaction's 'OP_RETURN' script area.
+#         Script:   Request on-chain metadata details stored
+#                   in a transaction's 'OP_RETURN' script area.
+#
+#          Token:   Request asset registration/genesis information
+#                   and activity details.
+#
+#    Transaction:   Request full on-chain activity details,
+#                   including block confirmation.
 #
 ######################################################################
 
