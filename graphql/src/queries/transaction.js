@@ -3,7 +3,7 @@ import PouchDB from 'pouchdb'
 
 /* Initialize databases. */
 const logsDb = new PouchDB(`http://${process.env.COUCHDB_USER}:${process.env.COUCHDB_PASSWORD}@127.0.0.1:5984/logs`)
-const txsDb = new PouchDB(`http://${process.env.COUCHDB_USER}:${process.env.COUCHDB_PASSWORD}@127.0.0.1:5984/txs`)
+const transactionsDb = new PouchDB(`http://${process.env.COUCHDB_USER}:${process.env.COUCHDB_PASSWORD}@127.0.0.1:5984/transactions`)
 
 /* Import types. */
 import TransactionType from '../types/Transaction.js'
@@ -34,7 +34,7 @@ export default {
 
         /* Validate transaction id. */
         // if (!transaction && args?.txid) {
-        //     transaction = await txsDb
+        //     transaction = await transactionsDb
         //         .query('api/byHash', {
         //             key: args.txidem[0],
         //         })
@@ -45,7 +45,7 @@ export default {
         /* Validate transaction height. */
         if (!transaction && args?.txidem) {
             // NOTE: We MUST convert height (Int) to a (String).
-            transaction = await txsDb.get(args.txidem[0])
+            transaction = await transactionsDb.get(args.txidem[0])
                 .catch(err => console.error(err))
             console.log('TRANSACTION (by idem):', transaction)
         }
