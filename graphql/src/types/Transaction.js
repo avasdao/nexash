@@ -1,3 +1,7 @@
+/* Import types. */
+import TransactionInputType from './TransactionInput.js'
+import TransactionOutputType from './TransactionOutput.js'
+
 import {
     GraphQLBoolean,
     GraphQLFloat,
@@ -5,7 +9,6 @@ import {
     GraphQLNonNull,
     GraphQLObjectType,
     GraphQLInt,
-    GraphQLSchema,
     GraphQLString,
 } from 'graphql'
 
@@ -59,12 +62,12 @@ export default new GraphQLObjectType({
         },
 
         vin: {
-            type: new GraphQLNonNull(new GraphQLList(TransactionInput)),
+            type: new GraphQLNonNull(new GraphQLList(TransactionInputType)),
             description: `TBD`
         },
 
         vout: {
-            type: new GraphQLNonNull(new GraphQLList(TransactionOutput)),
+            type: new GraphQLNonNull(new GraphQLList(TransactionOutputType)),
             description: `TBD`
         },
 
@@ -94,5 +97,5 @@ export default new GraphQLObjectType({
         },
 
     }),
-    description: `A __Block__ contains the full details for a miner-submitted pool of Transaction(s) to be confirmed by the Network.`,
+    description: `A __Transaction__ contains the full details for a user-submitted Asset transfer to be confirmed by the Network.`,
 })
