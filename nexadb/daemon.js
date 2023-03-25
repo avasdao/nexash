@@ -9,8 +9,9 @@ import { v4 as uuidv4 } from 'uuid'
 import zmq from 'zeromq'
 
 /* Initialize databases. */
-const logsDb = new PouchDB(`http://${process.env.COUCHDB_USER}:${process.env.COUCHDB_PASSWORD}@127.0.0.1:5984/logs`)
 const blocksDb = new PouchDB(`http://${process.env.COUCHDB_USER}:${process.env.COUCHDB_PASSWORD}@127.0.0.1:5984/blocks`)
+const logsDb = new PouchDB(`http://${process.env.COUCHDB_USER}:${process.env.COUCHDB_PASSWORD}@127.0.0.1:5984/logs`)
+const statusDb = new PouchDB(`http://${process.env.COUCHDB_USER}:${process.env.COUCHDB_PASSWORD}@127.0.0.1:5984/status`)
 const txsDb = new PouchDB(`http://${process.env.COUCHDB_USER}:${process.env.COUCHDB_PASSWORD}@127.0.0.1:5984/txs`)
 
 /* Set node options. */
@@ -112,6 +113,15 @@ const getBlockchainInfo = async () => {
 
 console.info('\n  Starting Nexa Database daemon...\n')
 
+const updateSync = async () => {
+    console.info('\n  Updating database sync...\n')
+
+    const system = await statusDb.get('system')
+        .catch(err => console.error(err))
+
+    console.log('SYSTEM', system)
+}
+
 ;(async () => {
     let response
 
@@ -183,3 +193,5 @@ console.info('\n  Starting Nexa Database daemon...\n')
     }
 
 })()
+
+updateSync()
