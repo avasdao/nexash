@@ -4,7 +4,7 @@ import { PubSub } from 'graphql-subscriptions'
 
 /* Import subscriptions. */
 import block from './subscriptions/block.js'
-import greetings from './subscriptions/greetings.js'
+import transaction from './subscriptions/transaction.js'
 
 /* Initialize PubSub. */
 const pubsub = new PubSub()
@@ -31,7 +31,7 @@ const name = 'Subscription'
 /* Set (Mutation) fields. */
 const fields = {
     block: block(pubsub),
-    greetings,
+    transaction: transaction(pubsub),
 }
 
 /* Set (Mutation) description. */

@@ -14,6 +14,12 @@ import {
 
 export default (_pubsub) => ({
     type: BlockType,
+    // args: {
+    //     fieldName: {
+    //         type: GraphQLString,
+    //         description: `Field description goes here.`,
+    //     },
+    // },
     subscribe: () => _pubsub.asyncIterator(['NEW_BLOCK']),
-    description: `A Block subscription will report every new block that appears on the blockchain.`,
+    description: `This subscription will report __every new block__ that appears on the blockchain.`,
 })
