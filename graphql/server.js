@@ -17,11 +17,10 @@ import {
     ApolloServerPluginLandingPageProductionDefault,
 } from '@apollo/server/plugin/landingPage/default'
 
-
 /* Import Schema. */
 import schema from './src/schema.js'
 
-/* Import Schema. */
+/* Import default query. */
 import defaultQuery from './src/defaultQuery.js'
 
 /* Set (GraphQL) port. */

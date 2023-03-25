@@ -2,10 +2,10 @@ export default `################################################################
 #
 #  Welcome to the NexaShell GraphiQL
 #
-#  Application builders can make great use of this tool for:
-#    - writing queries
-#    - validating queries
-#    - and testing queries
+#  Application Builders should make great use of this tool for:
+#    ✔ Running on-chain Nexa data queries
+#    ✔ Publishing transactions to the Nexa blockchain
+#    ✔ Accessing data from Meta (extended) networks
 #
 #  Sample queries from each (of 7) data categories shown below:
 #
