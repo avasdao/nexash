@@ -18,8 +18,8 @@ const fields = {
 
 /* Set (Mutation) description. */
 const description = `
-Make requests for Exchange data directly from the Nexa blockchain and our high-speed storage.
-\nVisit our [Documenation](https://docs.nexa.exchange) for more info.
+Make requests for data directly from the [__Nexa__](https://nexa.org) blockchain and our high-speed storage.
+\nVisit our [__Documentation__](https://docs.nexa.exchange) for more info.
 `.trim()
 
 /**
