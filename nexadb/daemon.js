@@ -149,37 +149,48 @@ const checkDbSync = async () => {
     if (blockchainInfo?.blocks > system?.idxHeight) {
         console.log('\n\n  Starting database sycn...\n')
 
-        const block = await getBlock(0)
-            .catch(err => {
-                console.error(err)
-            })
-        console.log('BLOCK #0', block)
+        for (let i = system.idxHeight; i <= blockchainInfo.blocks; i++) {
+            if (i > 1) break
 
-        blocksDb.put({
-            _id: block.height.toString(),
-            ...block,
-        })
-        .catch(err => {
-            console.error(err)
-        })
-
-        if (block?.txidem) {
-            for (let i = 0; i < block?.txidem.length; i++) {
-                const txidem = block?.txidem[i]
-                const tx = await getTransaction(txidem)
-                    .catch(err => {
-                        console.error(err)
-                    })
-                // console.log(`TRANSACTION [${txidem}]`, tx)
-
-                txsDb.put({
-                    _id: tx.txidem,
-                    ...tx
-                })
+            /* Request block at height. */
+            const block = await getBlock(i)
                 .catch(err => {
                     console.error(err)
                 })
+            console.log(`BLOCK #${i}`, block)
+
+            blocksDb.put({
+                _id: block.height.toString(),
+                ...block,
+            })
+            .catch(err => {
+                console.error(err)
+            })
+
+            // NOTE: Block MUST contain at least the Coinbase transaction.
+            if (block?.txidem) {
+                for (let j = 0; j < block.txidem.length; j++) {
+                    /* Set transaction idem. */
+                    const txidem = block.txidem[j]
+
+                    /* Request transaction details. */
+                    const tx = await getTransaction(txidem)
+                        .catch(err => {
+                            console.error(err)
+                        })
+                    // console.log(`TRANSACTION [${txidem}]`, tx)
+
+                    /* Save to storage. */
+                    txsDb.put({
+                        _id: tx.txidem,
+                        ...tx
+                    })
+                    .catch(err => {
+                        console.error(err)
+                    })
+                }
             }
+
         }
     }
 }
