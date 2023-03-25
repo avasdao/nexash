@@ -28,7 +28,7 @@ const fields = {
 /* Set (Mutation) description. */
 const description = `
 Subscribe to a feed of authenticated data directly from the Nexa blockchain.
-\nSee the [Docs](https://docs.nexa.exchange) for more info.
+\nVisit our [Documenation](https://docs.nexa.exchange) for more info.
 `.trim()
 
 /**
