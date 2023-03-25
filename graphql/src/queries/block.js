@@ -39,12 +39,14 @@ export default {
                 })
                 .catch(err => console.error(err))
         }
+        console.log('BLOCK (by hash):', block)
 
         /* Validate block height. */
         if (!block && args?.height) {
             block = await blocksDb.get(args.height)
                 .catch(err => console.error(err))
         }
+        console.log('BLOCK (by height):', block)
 
         /* Validate block. */
         if (!block) {
