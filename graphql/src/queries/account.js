@@ -14,6 +14,12 @@ import {
 
 export default {
     type: AccountType,
+    args: {
+        address: {
+            type: GraphQLString,
+            description: `Enter an __Account Address__ to limit your search.`,
+        },
+    },
     resolve: (_root, args, ctx) => {
         console.log('ACCOUNT ARGS:', args)
         return {
@@ -22,5 +28,5 @@ export default {
             field3: 888,
         }
     },
-    description: `Discover all the __Accounts__ supported by Nexa Exchange and our partners.`,
+    description: `Query details on every __Account__ supported by NexaShell and our partners.`,
 }
