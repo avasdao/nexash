@@ -17,10 +17,27 @@ import {
 export default new GraphQLObjectType({
     name: 'TransactionInput',
     fields: () => ({
-        outpoint: { type: new GraphQLNonNull(GraphQLString) },
-        amount: { type: new GraphQLNonNull(GraphQLFloat) },
-        scriptSig: { type: new GraphQLNonNull(ScriptSigType) },
-        sequence: { type: BitInt },
+
+        outpoint: {
+            type: new GraphQLNonNull(GraphQLString),
+            description: `TBD`,
+        },
+
+        amount: {
+            type: new GraphQLNonNull(GraphQLFloat),
+            description: `TBD`,
+        },
+
+        scriptSig: { 
+            type: new GraphQLNonNull(ScriptSigType),
+            description: `TBD`,
+        },
+
+        sequence: {
+            type: BitInt,
+            description: `TBD`,
+        },
+
     }),
     description: `A __Transaction Input__ authorizes UTXOs to be spent.`,
 })
