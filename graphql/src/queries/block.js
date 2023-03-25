@@ -59,6 +59,8 @@ export default {
             hash: block.hash,
             confirmations: block.confirmations,
             height: block.height,
+            size: block.size,
+            txcount: block.txcount,
         }
     },
     description: `Request full __Block__ details by _hash_ or _height_.`,
