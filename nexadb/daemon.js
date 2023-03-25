@@ -26,6 +26,10 @@ const RPC_OPTIONS = {
 const LOCAL_HOST = '127.0.0.1'
 const SSE_PORT = process.env.SSE_PORT || 5000
 
+/* Initialize locals. */
+let blockchainInfo
+let response
+
 /* Set welcome message. */
 const welcomeMsg = 'Nexa memory pool firehose!'
 
@@ -113,20 +117,35 @@ const getBlockchainInfo = async () => {
 
 console.info('\n  Starting Nexa Database daemon...\n')
 
-const updateSync = async () => {
-    console.info('\n  Updating database sync...\n')
+
+/**
+ * Check Database Syncronization
+ *
+ * Performs a check to make sure we have indexed up to the
+ * latest block height.
+ */
+const checkDbSync = async () => {
+    console.info('\n  Checking database sync...\n')
 
     const system = await statusDb.get('system')
         .catch(err => console.error(err))
-
     console.log('SYSTEM', system)
+
+    if (blockchainInfo?.blocks > system?.idxHeight) {
+        console.log('\n\n  Starting database sycn...\n')
+
+        const block = await getBlock(0)
+            .catch(err => {
+                console.error(err)
+            })
+        console.log('BLOCK #0', block)
+    }
 }
 
 ;(async () => {
-    let response
 
-    response = await getBlockchainInfo()
-    console.log('\n\n  Blockchain info:\n', response)
+    blockchainInfo = await getBlockchainInfo()
+    console.log('\n\n  Blockchain info:\n', blockchainInfo)
 
     const sock = new zmq.Subscriber
 
@@ -194,4 +213,4 @@ const updateSync = async () => {
 
 })()
 
-updateSync()
+checkDbSync()
