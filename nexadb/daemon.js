@@ -59,7 +59,7 @@ const decodeRawTransaction = async (_rawTx) => {
 
     /* Execute JSON-RPC request. */
     const response = await callNode(method, params, RPC_OPTIONS)
-    console.log('\nJSON-RPC response:\n%s', response)
+    // console.log('\nJSON-RPC response:\n%s', response)
 
     /* Return response. */
     return response
@@ -82,7 +82,7 @@ const getBlock = async (_blockHash) => {
 
     /* Execute JSON-RPC request. */
     const response = await callNode(method, params, RPC_OPTIONS)
-    console.log('\nJSON-RPC response:\n%s', response)
+    // console.log('\nJSON-RPC response:\n%s', response)
 
     /* Return response. */
     return response
@@ -105,7 +105,6 @@ const getBlockchainInfo = async () => {
 
     /* Execute JSON-RPC request. */
     const response = await callNode(method, params, RPC_OPTIONS)
-    console.log('\nJSON-RPC response:\n%s', response)
 
     /* Return response. */
     return response
@@ -114,7 +113,10 @@ const getBlockchainInfo = async () => {
 console.info('\n  Starting Nexa Database daemon...\n')
 
 ;(async () => {
-    await getBlockchainInfo()
+    let response
+
+    response = await getBlockchainInfo()
+    console.log('\n\n  Blockchain info:\n', response)
 
     const sock = new zmq.Subscriber
 
@@ -170,6 +172,7 @@ console.info('\n  Starting Nexa Database daemon...\n')
             .catch(err => {
                 console.error(err)
             })
+
             try {
                 /* Broadcast event. */
                 sse.send(decoded)
