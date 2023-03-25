@@ -14,12 +14,12 @@ export default new GraphQLObjectType({
     fields: () => ({
 
         txidem: {
-            type: GraphQLString,
+            type: new GraphQLNonNull(GraphQLString),
             description: `The transaction idem.`
         },
 
         txid: {
-            type: GraphQLString,
+            type: new GraphQLNonNull(GraphQLString),
             description: `The transaction id.`
         },
 
@@ -51,7 +51,7 @@ export default new GraphQLObjectType({
         },
 
         hex: {
-            type: GraphQLString,
+            type: new GraphQLNonNull(GraphQLString),
             description: `The serialized, hex-encoded data for 'txid'.`
         },
 
