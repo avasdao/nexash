@@ -1,3 +1,6 @@
+/* Import types. */
+// import Type from '../types/Type.js'
+
 import {
     GraphQLBoolean,
     GraphQLFloat,
@@ -5,7 +8,6 @@ import {
     GraphQLNonNull,
     GraphQLObjectType,
     GraphQLInt,
-    GraphQLSchema,
     GraphQLString,
 } from 'graphql'
 
