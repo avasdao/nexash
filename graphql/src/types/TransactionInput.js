@@ -12,7 +12,7 @@ import {
 } from 'graphql'
 
 export default new GraphQLObjectType({
-    name: 'TransactionInput',
+    name: 'Transaction Input',
     fields: () => ({
         outpoint: { type: new GraphQLNonNull(GraphQLString) },
         amount: { type: new GraphQLNonNull(GraphQLInt) },
