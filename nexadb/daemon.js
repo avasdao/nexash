@@ -142,7 +142,10 @@ console.info('\n  Starting Nexa Database daemon...\n')
 const checkDbSync = async () => {
     console.info('\n  Checking database sync...\n')
 
-    const system = await statusDb.get('system')
+    let system
+
+    system = await statusDb
+        .get('system')
         .catch(err => console.error(err))
     console.log('SYSTEM', system)
 
@@ -151,7 +154,7 @@ const checkDbSync = async () => {
 
         for (let i = system.idxHeight; i <= blockchainInfo.blocks; i++) {
 // FOR DEV PURPOSES ONLY
-if (i > 2) break
+if (i > 3) break
 
             /* Request block at height. */
             const block = await getBlock(i)
@@ -192,8 +195,10 @@ if (i > 2) break
                 }
             }
 
-            /* Set updated (cloned) system. */
-            const updatedSystem = { ...system }
+            const updatedSystem = await statusDb
+                .get('system')
+                .catch(err => console.error(err))
+            console.log('UPDATED SYSTEM', system)
 
             /* Set new indexed height. */
             updatedSystem.idxHeight = i
