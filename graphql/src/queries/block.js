@@ -62,6 +62,8 @@ export default {
             height: block.height,
             size: block.size,
             txcount: block.txcount,
+            txid: block.txid,
+            txidem: block.txidem,
         }]
     },
     description: `Request full __Block__ details by _hash_ or _height_.`,

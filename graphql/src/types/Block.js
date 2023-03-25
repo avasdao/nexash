@@ -38,6 +38,18 @@ export default new GraphQLObjectType({
             description: `The number of transactions in the block.`
         },
 
+        // ...
+
+        txid: {
+            type: new GraphQLList(GraphQLString),
+            description: `The transaction ids.`
+        },
+
+        txidem: {
+            type: new GraphQLList(GraphQLString),
+            description: `The transaction idems.`
+        },
+
         /*{
           : 370,
           : 1,
@@ -55,12 +67,6 @@ export default new GraphQLObjectType({
           onMainChain: true,
           ancestorhash: '0000000000000000000000000000000000000000000000000000000000000000',
           nextblockhash: '9bd9f36759a53aa3dd5d979bd587b6a6808230b4b079e30d93e5da637f2fe59d',
-          txid: [
-            '9173ec5d14df32ea30470ef85770aeaab8faf046e58e8c61944b1fe422b5afcd'
-          ],
-          txidem: [
-            '17c6bd3bbf76c3225482a370f4eda4c63f894e0ed00a75b223f7b91875f292e1'
-          ]
       }*/
 
     }),
