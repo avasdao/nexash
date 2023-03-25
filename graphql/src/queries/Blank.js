@@ -1,5 +1,5 @@
 /* Import types. */
-// import Type from '../types/Type.js'
+import BlockType from '../types/Block.js'
 
 import {
     GraphQLBoolean,
@@ -14,8 +14,14 @@ import {
 
 export default {
     type: GraphQLString,
+    // args: {
+    //     fieldName: {
+    //         type: GraphQLString,
+    //         description: `Field description goes here.`,
+    //     },
+    // },
     resolve: (parent, args, params) => {
-        console.log('BLANK PARAMS:', params)
+        console.log('Blank (args):', args)
         return 'Blank created successfully!'
     },
     description: `Blank description goes here.`,

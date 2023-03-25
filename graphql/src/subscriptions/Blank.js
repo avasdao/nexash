@@ -14,6 +14,12 @@ import {
 
 export default {
     type: GraphQLString,
+    // args: {
+    //     fieldName: {
+    //         type: GraphQLString,
+    //         description: `Field description goes here.`,
+    //     },
+    // },
     resolve: (parent, args, params) => {
         console.log('BLANK PARAMS:', params)
         return 'Blank created successfully!'

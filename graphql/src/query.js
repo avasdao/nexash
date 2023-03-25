@@ -3,7 +3,7 @@ import { GraphQLObjectType } from 'graphql'
 
 /* Import mutations. */
 import asset from './queries/asset.js'
-import hello from './queries/hello.js'
+import block from './queries/block.js'
 
 /* Set name. */
 const name = 'Query'
@@ -11,7 +11,7 @@ const name = 'Query'
 /* Set (Mutation) fields. */
 const fields = {
     asset,
-    hello,
+    block,
 }
 
 /* Set (Mutation) description. */
