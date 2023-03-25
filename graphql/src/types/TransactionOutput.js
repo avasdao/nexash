@@ -13,7 +13,7 @@ import {
 } from 'graphql'
 
 export default new GraphQLObjectType({
-    name: 'Transaction Output',
+    name: 'TransactionOutput',
     fields: () => ({
         value: { type: new GraphQLNonNull(GraphQLFloat) },
         type: { type: GraphQLInt },

@@ -9,7 +9,7 @@ import {
 } from 'graphql'
 
 export default new GraphQLObjectType({
-    name: 'Script Public Key',
+    name: 'ScriptPubKey',
     fields: () => ({
         asm: { type: new GraphQLNonNull(GraphQLString) },
         hex: { type: new GraphQLNonNull(GraphQLString) },
