@@ -1,9 +1,11 @@
-version: '3.3'
+version: '3.7'
 
 services:
   rest:
-    image: rest
     build: .
+    image: rest
+    container_name: rest
+    restart: always
     network_mode: 'host'
     # ports:
       # - '127.0.0.1:4000:4000'
