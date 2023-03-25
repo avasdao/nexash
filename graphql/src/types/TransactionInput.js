@@ -1,3 +1,6 @@
+/* Import modules. */
+import BitInt from 'graphql-bigint'
+
 /* Import types. */
 import ScriptSigType from './ScriptSig.js'
 
@@ -17,7 +20,7 @@ export default new GraphQLObjectType({
         outpoint: { type: new GraphQLNonNull(GraphQLString) },
         amount: { type: new GraphQLNonNull(GraphQLFloat) },
         scriptSig: { type: new GraphQLNonNull(ScriptSigType) },
-        sequence: { type: GraphQLInt },
+        sequence: { type: BitInt },
     }),
     description: `A __Transaction Input__ authorizes UTXOs to be spent.`,
 })
