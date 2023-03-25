@@ -38,7 +38,75 @@ export default new GraphQLObjectType({
             description: `The number of transactions in the block.`
         },
 
-        // ...
+        feePoolAmt: {
+            type: GraphQLInt,
+            description: `TBD`
+        },
+
+        merkleroot: {
+            type: GraphQLString,
+            description: `TBD`
+        },
+
+        time: {
+            type: GraphQLInt,
+            description: `TBD`
+        },
+
+        mediantime: {
+            type: GraphQLInt,
+            description: `TBD`
+        },
+
+        nonce: {
+            type: GraphQLString,
+            description: `TBD`
+        },
+
+        bits: {
+            type: GraphQLString,
+            description: `TBD`
+        },
+
+        difficulty: {
+            type: GraphQLFloat,
+            description: `TBD`
+        },
+
+        chainwork: {
+            type: GraphQLString,
+            description: `TBD`
+        },
+
+        utxoCommitment: {
+            type: GraphQLString,
+            description: `TBD`
+        },
+
+        minerData: {
+            type: GraphQLString,
+            description: `TBD`
+        },
+
+        status: {
+            type: GraphQLString,
+            description: `TBD`
+        },
+
+        onMainChain: {
+            type: GraphQLBoolean,
+            description: `TBD`
+        },
+
+        ancestorhash: {
+            type: GraphQLString,
+            description: `TBD`
+        },
+
+        nextblockhash: {
+            type: GraphQLString,
+            description: `TBD`
+        },
 
         txid: {
             type: new GraphQLNonNull(new GraphQLList(GraphQLString)),
@@ -49,26 +117,6 @@ export default new GraphQLObjectType({
             type: new GraphQLNonNull(new GraphQLList(GraphQLString)),
             description: `The transaction idems.`
         },
-
-        /*{
-          : 370,
-          : 1,
-          feePoolAmt: 0,
-          merkleroot: '9173ec5d14df32ea30470ef85770aeaab8faf046e58e8c61944b1fe422b5afcd',
-          time: 1655812800,
-          mediantime: 1655812800,
-          nonce: '03001700',
-          bits: '1e010000',
-          difficulty: 0.003906190395355225,
-          chainwork: '0000000000000000000000000000000000000000000000000000000000ffffff',
-          utxoCommitment: '',
-          minerData: '',
-          status: 'valid header, tree, and transactions; has data; processed, linked',
-          onMainChain: true,
-          ancestorhash: '0000000000000000000000000000000000000000000000000000000000000000',
-          nextblockhash: '9bd9f36759a53aa3dd5d979bd587b6a6808230b4b079e30d93e5da637f2fe59d',
-      }*/
-
     }),
     description: `A __Block__ contains the full details for a miner-submitted pool of Transaction(s) to be confirmed by the Network.`,
 })

@@ -42,13 +42,16 @@ export default new GraphQLObjectType({
     description,
 })
 
+// TODO We MUST periodically check the database connections
+//      and re-connect if/when necessary.
+
 /* Subscribe to Block changes. */
 blocksDb.changes({
     since: 'now',
     live: true,
     include_docs: true
 }).on('change', function (change) {
-    console.log('CHANGES (blocksDb):', change)
+    // console.log('CHANGES (blocksDb):', change)
 
     /* Set block (doc) data. */
     const block = change?.doc
@@ -67,7 +70,7 @@ transactionsDb.changes({
     live: true,
     include_docs: true
 }).on('change', function (change) {
-    console.log('CHANGES (transactionsDb):', change)
+    // console.log('CHANGES (transactionsDb):', change)
 
     /* Set transaction (doc) data. */
     const transaction = change?.doc
