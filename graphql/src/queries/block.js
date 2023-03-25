@@ -38,15 +38,15 @@ export default {
                     key: args.hash,
                 })
                 .catch(err => console.error(err))
+            console.log('BLOCK (by hash):', block)
         }
-        console.log('BLOCK (by hash):', block)
 
         /* Validate block height. */
         if (!block && args?.height) {
             block = await blocksDb.get(args.height.toString())
                 .catch(err => console.error(err))
+            console.log('BLOCK (by height):', block)
         }
-        console.log('BLOCK (by height):', block)
 
         /* Validate block. */
         if (!block) {
