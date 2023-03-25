@@ -152,9 +152,9 @@ const checkDbSync = async () => {
     if (blockchainInfo?.blocks > system?.idxHeight) {
         console.log('\n\n  Starting database sycn...\n')
 
-        for (let i = system.idxHeight; i <= blockchainInfo.blocks; i++) {
+        for (let i = system.idxHeight + 1; i <= blockchainInfo.blocks; i++) {
 // FOR DEV PURPOSES ONLY
-if (i > 3) break
+if (i > 10) break
 
             /* Request block at height. */
             const block = await getBlock(i)
