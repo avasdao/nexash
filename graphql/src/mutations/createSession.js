@@ -17,7 +17,7 @@ import {
 
 export default {
     type: SessionType,
-    resolve: (parent, args, params) => {
+    resolve: (_root, args, ctx) => {
         console.log('SESSION PARAMS:', params)
 
         /* Initialize holders. */

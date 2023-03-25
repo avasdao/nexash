@@ -26,7 +26,7 @@ const TEST_AFFILIATE = {
 
 export default {
     type: AffiliateType,
-    resolve: (parent, args, params) => {
+    resolve: (_root, args, ctx) => {
         console.log('AFFILIATE PARAMS:', params)
         return TEST_AFFILIATE
     },

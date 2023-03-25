@@ -1,5 +1,5 @@
 /* Import types. */
-import BlockType from '../types/Block.js'
+import BlankType from '../types/Blank.js'
 
 import {
     GraphQLBoolean,
@@ -19,9 +19,14 @@ export default {
     //         description: `Field description goes here.`,
     //     },
     // },
-    resolve: (parent, args, params) => {
+    resolve: (_root, args, ctx) => {
         console.log('Blank (args):', args)
-        return 'Blank created successfully!'
+
+        return {
+            field1: 'This is a BLANK asset!',
+            field2: 1337,
+            field3: 888,
+        }
     },
     description: `Blank description goes here.`,
 }
