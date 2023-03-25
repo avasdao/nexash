@@ -154,7 +154,7 @@ const checkDbSync = async () => {
 
         for (let i = system.idxHeight + 1; i <= blockchainInfo.blocks; i++) {
 // FOR DEV PURPOSES ONLY
-if (i > 500) break
+if (i > 10000) break
 
             /* Request block at height. */
             const block = await getBlock(i)
@@ -198,13 +198,13 @@ if (i > 500) break
             const updatedSystem = await statusDb
                 .get('system')
                 .catch(err => console.error(err))
-            console.log('UPDATED SYSTEM', system)
+            // console.log('UPDATED SYSTEM', system)
 
             /* Set new indexed height. */
             updatedSystem.idxHeight = i
 
             // UPDATE SYSTEM STATUS
-            statusDb
+            await statusDb
                 .put(updatedSystem)
                 .catch(err => console.error(err))
         }
