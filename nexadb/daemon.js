@@ -93,6 +93,21 @@ const getBlock = async (_blockHash) => {
     return response
 }
 
+const getTransaction = async (_txidem) => {
+    /* Set method. */
+    const method = 'getrawtransaction'
+
+    /* Set parameters. */
+    const params = [_txidem, true]
+
+    /* Execute JSON-RPC request. */
+    const response = await callNode(method, params, RPC_OPTIONS)
+    // console.log('\nJSON-RPC response:\n%s', response)
+
+    /* Return response. */
+    return response
+}
+
 const getBlockchainInfo = async () => {
     /* Set method. */
     const method = 'getblockchaininfo'
@@ -139,6 +154,17 @@ const checkDbSync = async () => {
                 console.error(err)
             })
         console.log('BLOCK #0', block)
+
+        if (block?.txidem) {
+            for (let i = 0; i < block?.txidem.length; i++) {
+                const txidem = block?.txidem[i]
+                const tx = await getTransaction(txidem)
+                    .catch(err => {
+                        console.error(err)
+                    })
+                console.log(`TRANSACTION [${txidem}]`, tx)
+            }
+        }
     }
 }
 
