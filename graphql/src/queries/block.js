@@ -10,18 +10,19 @@ import BlockType from '../types/Block.js'
 
 import {
     GraphQLInt,
+    GraphQLList,
     GraphQLString,
 } from 'graphql'
 
 export default {
-    type: BlockType,
+    type: new GraphQLList(BlockType),
     args: {
         hash: {
-            type: GraphQLString,
+            type: new GraphQLList(GraphQLString),
             description: `Provide a __Block__ hash.`,
         },
         height: {
-            type: GraphQLInt,
+            type: new GraphQLList(GraphQLInt),
             description: `Provide a __Block__ height.`,
         },
     },
@@ -35,33 +36,33 @@ export default {
         if (!block && args?.hash) {
             block = await blocksDb
                 .query('api/byHash', {
-                    key: args.hash,
+                    key: args.hash[0],
                 })
                 .catch(err => console.error(err))
             console.log('BLOCK (by hash):', block)
         }
 
         /* Validate block height. */
-        if (!block && args?.height >= 0) {
+        if (!block && args?.height.length) {
             // NOTE: We MUST convert height (Int) to a (String).
-            block = await blocksDb.get(args.height.toString())
+            block = await blocksDb.get(args.height[0].toString())
                 .catch(err => console.error(err))
             console.log('BLOCK (by height):', block)
         }
 
         /* Validate block. */
         if (!block) {
-            return {}
+            return []
         }
 
         /* Return block details. */
-        return {
+        return [{
             hash: block.hash,
             confirmations: block.confirmations,
             height: block.height,
             size: block.size,
             txcount: block.txcount,
-        }
+        }]
     },
     description: `Request full __Block__ details by _hash_ or _height_.`,
 }
