@@ -14,7 +14,7 @@ export default new GraphQLObjectType({
     fields: () => ({
 
         hash: {
-            type: GraphQLString,
+            type: new GraphQLNonNull(GraphQLString),
             description: `The block hash. [ a 32-btye hex value ]`
         },
 
@@ -41,12 +41,12 @@ export default new GraphQLObjectType({
         // ...
 
         txid: {
-            type: new GraphQLList(GraphQLString),
+            type: new GraphQLNonNull(new GraphQLList(GraphQLString)),
             description: `The transaction ids.`
         },
 
         txidem: {
-            type: new GraphQLList(GraphQLString),
+            type: new GraphQLNonNull(new GraphQLList(GraphQLString)),
             description: `The transaction idems.`
         },
 
