@@ -12,7 +12,7 @@ import zmq from 'zeromq'
 const blocksDb = new PouchDB(`http://${process.env.COUCHDB_USER}:${process.env.COUCHDB_PASSWORD}@127.0.0.1:5984/blocks`)
 const logsDb = new PouchDB(`http://${process.env.COUCHDB_USER}:${process.env.COUCHDB_PASSWORD}@127.0.0.1:5984/logs`)
 const statusDb = new PouchDB(`http://${process.env.COUCHDB_USER}:${process.env.COUCHDB_PASSWORD}@127.0.0.1:5984/status`)
-const txsDb = new PouchDB(`http://${process.env.COUCHDB_USER}:${process.env.COUCHDB_PASSWORD}@127.0.0.1:5984/txs`)
+const transactionsDb = new PouchDB(`http://${process.env.COUCHDB_USER}:${process.env.COUCHDB_PASSWORD}@127.0.0.1:5984/transactions`)
 
 /* Set node options. */
 const RPC_OPTIONS = {
@@ -185,7 +185,7 @@ if (i > 100000) break
                     // console.log(`TRANSACTION [${txidem}]`, tx)
 
                     /* Save to storage. */
-                    txsDb.put({
+                    transactionsDb.put({
                         _id: tx.txidem,
                         ...tx
                     })
@@ -263,7 +263,7 @@ if (i > 100000) break
                 })
             console.log('DECODED', decoded)
 
-            txsDb.put({
+            transactionsDb.put({
                 _id: decoded.txidem,
                 ...decoded
             })
