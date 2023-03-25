@@ -48,7 +48,7 @@ blocksDb.changes({
     live: true,
     include_docs: true
 }).on('change', function (change) {
-    // console.log('CHANGES (change):', change)
+    console.log('CHANGES (blocksDb):', change)
 
     /* Set block (doc) data. */
     const block = change?.doc
@@ -67,7 +67,7 @@ transactionsDb.changes({
     live: true,
     include_docs: true
 }).on('change', function (change) {
-    // console.log('CHANGES (change):', change)
+    console.log('CHANGES (transactionsDb):', change)
 
     /* Set transaction (doc) data. */
     const transaction = change?.doc
