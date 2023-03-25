@@ -5,7 +5,7 @@ import {
 } from 'graphql'
 
 export default new GraphQLObjectType({
-    name: 'ScriptSig',
+    name: 'Script Signature',
     fields: () => ({
         asm: { type: new GraphQLNonNull(GraphQLString) },
         hex: { type: new GraphQLNonNull(GraphQLString) },
