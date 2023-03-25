@@ -154,14 +154,14 @@ const checkDbSync = async () => {
 
         for (let i = system.idxHeight + 1; i <= blockchainInfo.blocks; i++) {
 // FOR DEV PURPOSES ONLY
-if (i > 10) break
+if (i > 100) break
 
             /* Request block at height. */
             const block = await getBlock(i)
                 .catch(err => {
                     console.error(err)
                 })
-            console.log(`BLOCK #${i}`, block)
+            // console.log(`BLOCK #${i}`, block)
 
             blocksDb.put({
                 _id: block.height.toString(),

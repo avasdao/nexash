@@ -33,15 +33,15 @@ export default `################################################################
 ######################################################################
 
 {
-  # Sample address query
+  # Example Address query
   address(base58: "nexa:...") {
     base58
     script
     type
   }
 
-  # Sample block query
-  block(height: [227570, 227571, 227572]) {
+  # Example Block query
+  block(height: [0, 1337, 227572]) {
     height
     hash
     size
@@ -55,12 +55,12 @@ export default `################################################################
     minerData
   }
 
-  # Sample meta query
+  # Example Meta query
   meta(id: "txidem-for-some-nft-pfp") {
     id
   }
 
-  # Sample owner query
+  # Example Owner query
   owner(id: "nexa:someone-with-too-many-nfts") {
     id
   }
@@ -76,12 +76,12 @@ export default `################################################################
     }
   }
 
-  # Sample token query
+  # Example Token query
   token(id: "a-very-cool-tokenid") {
     id
   }
 
-  # Sample transaction query
+  # Example Transaction query
   transaction(txid: "my-super-expensive-txid") {
     txid
     txidem
