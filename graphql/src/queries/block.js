@@ -43,7 +43,7 @@ export default {
 
         /* Validate block height. */
         if (!block && args?.height) {
-            block = await blocksDb.get(args.height)
+            block = await blocksDb.get(args.height.toString())
                 .catch(err => console.error(err))
         }
         console.log('BLOCK (by height):', block)
