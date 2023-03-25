@@ -6,6 +6,7 @@ import PouchDB from 'pouchdb'
 /* Initialize databases. */
 const blocksDb = new PouchDB(`http://${process.env.COUCHDB_USER}:${process.env.COUCHDB_PASSWORD}@127.0.0.1:5984/blocks`)
 const logsDb = new PouchDB(`http://${process.env.COUCHDB_USER}:${process.env.COUCHDB_PASSWORD}@127.0.0.1:5984/logs`)
+const transactionsDb = new PouchDB(`http://${process.env.COUCHDB_USER}:${process.env.COUCHDB_PASSWORD}@127.0.0.1:5984/transactions`)
 
 
 /* Import subscriptions. */
@@ -47,26 +48,34 @@ blocksDb.changes({
     live: true,
     include_docs: true
 }).on('change', function (change) {
-    console.log('CHANGES (change):', change)
+    // console.log('CHANGES (change):', change)
+
+    /* Set block (doc) data. */
+    const block = change?.doc
+
+    /* Publish new block. */
+    pubsub.publish('NEW_BLOCK', { block })
 }).on('complete', function (info) {
-    console.log('CHANGES (complete):', change)
+    // console.log('CHANGES (complete):', change)
 }).on('error', function (err) {
     console.log(err)
 })
 
+/* Subscribe to Transaction changes. */
+transactionsDb.changes({
+    since: 'now',
+    live: true,
+    include_docs: true
+}).on('change', function (change) {
+    // console.log('CHANGES (change):', change)
 
-// FOR DEV PURPOSES ONLY
-let counter = 1337
-const SAMPLE_BLOCK = {
-  "hash": "78ee2c10c94e377a56c2d25e6478d75b3168043dec6a4bfaabc73421a03df8aa",
-  "confirmations": 1,
-  "height": 0,
-}
+    /* Set transaction (doc) data. */
+    const transaction = change?.doc
 
-// FOR DEV PURPOSES ONLY
-setInterval(() => {
-    pubsub.publish('NEW_BLOCK', { block: {
-        ...SAMPLE_BLOCK,
-        height: counter++,
-    } })
-}, 5000)
+    /* Publish new transaction. */
+    pubsub.publish('NEW_TRANSACTION', { transaction })
+}).on('complete', function (info) {
+    // console.log('CHANGES (complete):', change)
+}).on('error', function (err) {
+    console.log(err)
+})
