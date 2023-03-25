@@ -154,7 +154,7 @@ const checkDbSync = async () => {
 
         for (let i = system.idxHeight + 1; i <= blockchainInfo.blocks; i++) {
 // FOR DEV PURPOSES ONLY
-if (i > 10000) break
+if (i > 100000) break
 
             /* Request block at height. */
             const block = await getBlock(i)
