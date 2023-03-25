@@ -1,5 +1,5 @@
 /* Import modules. */
-import { call } from '@nexajs/rpc'
+import { callNode } from '@nexajs/rpc'
 import cors from 'cors'
 import express from 'express'
 import http from 'http'
@@ -58,7 +58,7 @@ const decodeRawTransaction = async (_rawTx) => {
     const params = [_rawTx]
 
     /* Execute JSON-RPC request. */
-    const response = await call(method, params, RPC_OPTIONS)
+    const response = await callNode(method, params, RPC_OPTIONS)
     console.log('\nJSON-RPC response:\n%s', response)
 
     /* Return response. */
@@ -81,7 +81,7 @@ const getBlock = async (_blockHash) => {
     }
 
     /* Execute JSON-RPC request. */
-    const response = await call(method, params, RPC_OPTIONS)
+    const response = await callNode(method, params, RPC_OPTIONS)
     console.log('\nJSON-RPC response:\n%s', response)
 
     /* Return response. */
@@ -104,7 +104,7 @@ const getBlockchainInfo = async () => {
     }
 
     /* Execute JSON-RPC request. */
-    const response = await call(method, params, RPC_OPTIONS)
+    const response = await callNode(method, params, RPC_OPTIONS)
     console.log('\nJSON-RPC response:\n%s', response)
 
     /* Return response. */
