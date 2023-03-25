@@ -155,6 +155,14 @@ const checkDbSync = async () => {
             })
         console.log('BLOCK #0', block)
 
+        blocksDb.put({
+            _id: block.height.toString(),
+            ...block,
+        })
+        .catch(err => {
+            console.error(err)
+        })
+
         if (block?.txidem) {
             for (let i = 0; i < block?.txidem.length; i++) {
                 const txidem = block?.txidem[i]
@@ -162,7 +170,15 @@ const checkDbSync = async () => {
                     .catch(err => {
                         console.error(err)
                     })
-                console.log(`TRANSACTION [${txidem}]`, tx)
+                // console.log(`TRANSACTION [${txidem}]`, tx)
+
+                txsDb.put({
+                    _id: tx.txidem,
+                    ...tx
+                })
+                .catch(err => {
+                    console.error(err)
+                })
             }
         }
     }
