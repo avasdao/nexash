@@ -16,7 +16,7 @@ export default {
     type: AccountType,
     args: {
         address: {
-            type: GraphQLString,
+            type: new GraphQLList(GraphQLString),
             description: `Enter an __Account Address__ to limit your search.`,
         },
     },

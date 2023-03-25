@@ -15,7 +15,7 @@ export default {
     type: GraphQLString,
     // args: {
     //     fieldName: {
-    //         type: GraphQLString,
+    //         type: new GraphQLList(GraphQLString),
     //         description: `Field description goes here.`,
     //     },
     // },
