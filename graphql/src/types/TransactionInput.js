@@ -15,7 +15,7 @@ export default new GraphQLObjectType({
     name: 'TransactionInput',
     fields: () => ({
         outpoint: { type: new GraphQLNonNull(GraphQLString) },
-        amount: { type: new GraphQLNonNull(GraphQLInt) },
+        amount: { type: new GraphQLNonNull(GraphQLFloat) },
         scriptSig: { type: new GraphQLNonNull(ScriptSigType) },
         sequence: { type: GraphQLInt },
     }),
