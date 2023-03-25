@@ -3,6 +3,7 @@ import { callNode } from '@nexajs/rpc'
 import cors from 'cors'
 import express from 'express'
 import http from 'http'
+import moment from 'moment'
 import PouchDB from 'pouchdb'
 import SSE from 'express-sse'
 import { v4 as uuidv4 } from 'uuid'
@@ -202,6 +203,7 @@ if (i > 100000) break
 
             /* Set new indexed height. */
             updatedSystem.idxHeight = i
+            updatedSystem.updatedAt = moment().unix()
 
             // UPDATE SYSTEM STATUS
             await statusDb
