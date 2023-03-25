@@ -153,10 +153,8 @@ const checkDbSync = async () => {
     if (blockchainInfo?.blocks > system?.idxHeight) {
         console.log('\n\n  Starting database sycn...\n')
 
+        /* Handle new blocks. */
         for (let i = system.idxHeight + 1; i <= blockchainInfo.blocks; i++) {
-// FOR DEV PURPOSES ONLY
-if (i > 100000) break
-
             /* Request block at height. */
             const block = await getBlock(i)
                 .catch(err => {
@@ -164,6 +162,7 @@ if (i > 100000) break
                 })
             // console.log(`BLOCK #${i}`, block)
 
+            /* Save block to storage. */
             blocksDb.put({
                 _id: block.height.toString(),
                 ...block,
@@ -185,7 +184,7 @@ if (i > 100000) break
                         })
                     // console.log(`TRANSACTION [${txidem}]`, tx)
 
-                    /* Save to storage. */
+                    /* Save transaction to storage. */
                     transactionsDb.put({
                         _id: tx.txidem,
                         ...tx
@@ -196,6 +195,7 @@ if (i > 100000) break
                 }
             }
 
+            /* Retrieve (latest) System status. */
             const updatedSystem = await statusDb
                 .get('system')
                 .catch(err => console.error(err))
@@ -205,7 +205,7 @@ if (i > 100000) break
             updatedSystem.idxHeight = i
             updatedSystem.updatedAt = moment().unix()
 
-            // UPDATE SYSTEM STATUS
+            /* Save (updated) System status to storage. */
             await statusDb
                 .put(updatedSystem)
                 .catch(err => console.error(err))
@@ -214,17 +214,21 @@ if (i > 100000) break
 }
 
 ;(async () => {
-
+    /* Request Blockchain information. */
     blockchainInfo = await getBlockchainInfo()
     console.log('\n\n  Blockchain info:\n', blockchainInfo)
 
+    /* Initialize Zero Message Queue (ZMQ) socket. */
     const sock = new zmq.Subscriber
 
+    /* Connect to local node. */
     sock.connect('tcp://127.0.0.1:28332')
 
+    /* Subscribe to messages. */
     sock.subscribe()
     console.log(`Subscriber connected to port 28332`)
 
+    /* Handle incoming messages. */
     for await (const [ _topic, _msg ] of sock) {
         const topic = Buffer.from(_topic).toString()
         const msg = Buffer.from(_msg).toString('hex')
@@ -235,6 +239,7 @@ if (i > 100000) break
             msg,
             '\n')
 
+        /* Handle hash block. */
         if (topic === 'hashblock') {
             const decoded = await getBlock(msg)
                 .catch(err => {
@@ -258,6 +263,7 @@ if (i > 100000) break
             }
         }
 
+        /* Handle raw transaction. */
         if (topic === 'rawtx') {
             const decoded = await decodeRawTransaction(msg)
                 .catch(err => {
