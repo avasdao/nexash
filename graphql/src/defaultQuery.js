@@ -7,7 +7,10 @@ export default `################################################################
 #    ✔ Publishing transactions to the Nexa blockchain
 #    ✔ Accessing data from Meta (extended) networks
 #
-#  Sample queries from each (of 7) data categories shown below:
+#  Sample queries from each (of 8) data categories shown below:
+#
+#        Account:   Request transaction histories
+#                   and full balance details.
 #
 #        Address:   Request transaction histories
 #                   and full balance details.

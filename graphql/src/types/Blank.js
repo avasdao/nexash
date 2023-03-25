@@ -1,5 +1,5 @@
 /* Import types. */
-// import Type from '../types/Type.js'
+// import BlankType from './Blank.js'
 
 import {
     GraphQLBoolean,
@@ -14,9 +14,22 @@ import {
 export default new GraphQLObjectType({
     name: 'Blank',
     fields: () => ({
-        field1: { type: GraphQLString },
-        field2: { type: GraphQLInt },
-        field3: { type: GraphQLInt },
+
+        field1: {
+            type: GraphQLString,
+            description: `TBD`,
+        },
+
+        field2: {
+            type: GraphQLInt,
+            description: `TBD`,
+        },
+
+        field3: {
+            type: GraphQLInt,
+            description: `TBD`,
+        },
+
     }),
     description: `A __Blank__ description goes here.`,
 })

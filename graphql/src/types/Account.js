@@ -1,3 +1,6 @@
+/* Import types. */
+// import BlankType from './Blank.js'
+
 import {
     GraphQLBoolean,
     GraphQLFloat,
@@ -5,34 +8,28 @@ import {
     GraphQLNonNull,
     GraphQLObjectType,
     GraphQLInt,
-    GraphQLSchema,
     GraphQLString,
 } from 'graphql'
 
 export default new GraphQLObjectType({
-    name: 'Reward',
+    name: 'Account',
     fields: () => ({
 
-        rewardid: {
+        field1: {
             type: GraphQLString,
             description: `TBD`,
         },
 
-        affiliateid: {
-            type: GraphQLString,
-            description: `TBD`,
-        },
-
-        amount: {
+        field2: {
             type: GraphQLInt,
             description: `TBD`,
         },
 
-        dateCreated: {
+        field3: {
             type: GraphQLInt,
             description: `TBD`,
         },
-        
+
     }),
-    description: `A __Reward__ is earned from the effort(s) of an Affiliate.`,
+    description: `An __Address__ provides a target (or destination) for receiving assets.`,
 })

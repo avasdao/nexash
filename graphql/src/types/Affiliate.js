@@ -15,10 +15,27 @@ import {
 export default new GraphQLObjectType({
     name: 'Affiliate',
     fields: () => ({
-        affiliateid: { type: GraphQLString },
-        shortid: { type: GraphQLString },
-        rewards: { type: RewardType },
-        dateAdded: { type: GraphQLInt },
+
+        affiliateid: {
+            type: GraphQLString,
+            description: `TBD`,
+        },
+
+        shortid: {
+            type: GraphQLString,
+            description: `TBD`,
+        },
+
+        rewards: {
+            type: RewardType,
+            description: `TBD`,
+        },
+
+        dateAdded: {
+            type: GraphQLInt,
+            description: `TBD`,
+        },
+        
     }),
     description: `An __Affiliate__ receives Rewards for their supportive efforts.`,
 })
