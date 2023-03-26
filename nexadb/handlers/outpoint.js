@@ -26,7 +26,7 @@ export default async (_transaction) => {
 
         if (saved) {
             const txs = saved.txs
-            saved.txs[_transaction.txidem] = _transaction
+            txs[_transaction.txidem] = _transaction
 
             newOutpoint = {
                 ...saved,
@@ -34,7 +34,7 @@ export default async (_transaction) => {
             }
         } else {
             const txs = {}
-            saved.txs[_transaction.txidem] = _transaction
+            txs[_transaction.txidem] = _transaction
 
             newOutpoint = {
                 _id: outpoint,
