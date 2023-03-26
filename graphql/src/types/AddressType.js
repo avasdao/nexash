@@ -11,7 +11,7 @@ export default new GraphQLEnumType({
 
         SCRIPT: {
             value: 'SCRIPT',
-            description: `Type ID is __1<<3 | 0x08__`,
+            description: `Type ID is __1<<3 | 0x08 | 8__`,
         },
 
         TEMPLATE: {
