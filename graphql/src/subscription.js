@@ -87,7 +87,12 @@ transactionsDb.changes({
     const address = { ...transaction } // FIXME FOR DEV PURPOSES ONLY
 
     /* Publish address update. */
-    pubsub.publish('ADDRESS_UPDATE', { address })
+    pubsub.publish('ADDRESS_UPDATE', {
+        address: {
+            prefix: 'nexa',
+            hash: JSON.stringify(address),
+        },
+    })
 }).on('complete', function (info) {
     // console.log('CHANGES (complete):', change)
 }).on('error', function (err) {
