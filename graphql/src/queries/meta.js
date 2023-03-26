@@ -27,12 +27,12 @@ const ChainIdType = new GraphQLEnumType({
 
         BSC: {
             value: 'BSC',
-            description: `[__BNB Smart Chain__](https://www.bnbchain.org/) _(from Binance)_ — Largest centralized exchange.`,
+            description: `[__BNB Smart Chain__](https://www.bnbchain.org/) _(from Binance)_ — Largest centralized exchange (CEX).`,
         },
 
         BTC: {
             value: 'BTC',
-            description: `[__Bitcoin__](https://bitcoin.org/) — The "original" innovation that introduced a new kind of "digital" gold.`,
+            description: `[__Bitcoin__](https://bitcoin.org/) — The "original" innovation that introduced a new form of "digital gold".`,
         },
 
         ETH: {
@@ -53,6 +53,16 @@ const ChainIdType = new GraphQLEnumType({
         TRX: {
             value: 'TRX',
             description: `[__Tron__](https://tron.network/) — Leading "legal tender" provider in the Caribbean.`,
+        },
+
+        XMR: {
+            value: 'XMR',
+            description: `[__Monero__](https://www.getmonero.org/) — Private, decentralized cryptocurrency that keeps your finances confidential and secure.`,
+        },
+
+        ZEC: {
+            value: 'ZEC',
+            description: `[__Zcash__](https://z.cash/) — Zcash is a digital currency: fast and confidential with low fees.`,
         },
     },
     description: `Select from one of the compatible __Meta Networks__ supported by NexaShell.`,
