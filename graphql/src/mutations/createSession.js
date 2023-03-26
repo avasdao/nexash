@@ -25,7 +25,7 @@ export default {
 
         sessionid: {
             type: GraphQLString,
-            description: `Provide your own __Session ID__ to identify your new Session.\nNOTE: This MUST be a unique (random) value in UUID v4 format or you will receive an error.`,
+            description: `Provide your own __Session ID__ to identify your new Session.\n__NOTE:__ This MUST be a unique _(random)_ value in __UUID v4__ format or you will receive an error.`,
         },
     },
     resolve: (_root, args, ctx) => {
@@ -43,5 +43,5 @@ export default {
             sessionid,
         }
     },
-    description: `Create a new __Session__ for authenticated requests.`,
+    description: `Create a new __Session__ for managing your authenticated requests to NexaShell data services.`,
 }
