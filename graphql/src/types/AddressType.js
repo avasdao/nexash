@@ -6,22 +6,22 @@ export default new GraphQLEnumType({
     values: {
         P2PKH: {
             value: 'P2PKH',
-            description: `Type ID is 0.`,
+            description: `Type ID is __0.__`,
         },
 
         SCRIPT: {
             value: 'SCRIPT',
-            description: `Type ID is 1<<3.`,
+            description: `Type ID is __1<<3__ _(or 8)._`,
         },
 
         TEMPLATE: {
             value: 'TEMPLATE',
-            description: `Type ID is 19<<3.`,
+            description: `Type ID is __19<<3__ _(or 0xC8|200)._`,
         },
 
         GROUP: {
             value: 'GROUP',
-            description: `Type ID is 11<<3.`,
+            description: `Type ID is __11<<3__ _(or 0x88|136)._`,
         },
     },
     description: `Select from one of the compatible __Address Types__ supported by the Nexa protocol.`,
