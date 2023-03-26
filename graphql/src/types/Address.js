@@ -1,4 +1,5 @@
 /* Import types. */
+import AddressType from './AddressType.js'
 import TransactionType from './Transaction.js'
 
 import {
@@ -17,32 +18,32 @@ export default new GraphQLObjectType({
 
         prefix: {
             type: new GraphQLNonNull(GraphQLString),
-            description: `TBD`,
+            description: `The __prefix__ for the _Address_. _(eg. "nexa:")_`,
         },
 
         type: {
-            type: new GraphQLNonNull(GraphQLInt),
-            description: `TBD`,
+            type: new GraphQLNonNull(AddressType),
+            description: `The __type__ for the _Address._`,
         },
 
         hash: {
             type: new GraphQLNonNull(GraphQLString),
-            description: `TBD`,
+            description: `The __public key template hash__ for the _Address._`,
         },
 
         base58: {
             type: new GraphQLNonNull(GraphQLString),
-            description: `TBD`,
+            description: `The __human-readable__ format of the _Address._`,
         },
 
         publicKey: {
             type: GraphQLString,
-            description: `TBD`,
+            description: `The public key for the Address. _(NOTE: Not available until after 1st broadcast)_`,
         },
 
         firstSeenAt: {
             type: GraphQLInt,
-            description: `TBD`,
+            description: `The __height__ that first recorded this _Address_ to the blockchain.`,
         },
 
         txidem: {
