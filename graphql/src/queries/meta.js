@@ -20,7 +20,7 @@ export default {
         },
     },
     resolve: (_root, args, ctx) => {
-        console.log('Blank (args):', args)
+        console.log('MMeta (args):', args)
 
         return [JSON.stringify({
             field1: 'This is a META asset!',
@@ -28,5 +28,5 @@ export default {
             field3: 88888888,
         })]
     },
-    description: `Request (unstructured) __Meta__ data from Networks outside of Nexa (incl. BSC, ETH and TRX.`,
+    description: `Request _(unstructured)_ __Meta__ data from Networks outside of Nexa _(incl. BSC, ETH and TRX)._`,
 }
