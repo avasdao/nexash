@@ -11,17 +11,17 @@ export default new GraphQLEnumType({
 
         SCRIPT: {
             value: 'SCRIPT',
-            description: `Type ID is __1<<3__ _(or 8)_`,
+            description: `Type ID is __1<<3 | 0x08__`,
         },
 
         TEMPLATE: {
             value: 'TEMPLATE',
-            description: `Type ID is __19<<3__ _(or 0xC8|200)_`,
+            description: `Type ID is __19<<3 | 0xC8 | 200__`,
         },
 
         GROUP: {
             value: 'GROUP',
-            description: `Type ID is __11<<3__ _(or 0x88|136)_`,
+            description: `Type ID is __11<<3 | 0x88 | 136__`,
         },
     },
     description: `Select from one of the compatible __Address Types__ supported by the Nexa protocol.`,
