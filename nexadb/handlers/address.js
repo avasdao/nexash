@@ -14,7 +14,7 @@ export default async (_transaction) => {
         /* Set output. */
         const output = outputs[i]
 
-        /* Set outpoint. */
+        /* Set script public key. */
         const scriptPubKey = output.scriptPubKey.hex.slice(6)
 
         /* Saved (in database) value. */
@@ -36,7 +36,7 @@ export default async (_transaction) => {
             txs[_transaction.txidem] = _transaction.hex
 
             newAddress = {
-                _id: outpoint,
+                _id: scriptPubKey,
                 txs,
             }
         }
