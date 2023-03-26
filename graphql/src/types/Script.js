@@ -14,8 +14,13 @@ export default new GraphQLInputObjectType({
     fields: () => ({
 
         opcode: {
-            type: new GraphQLNonNull(new GraphQLList(GraphQLInt)),
-            description: `Holds an array of Operation Codes (Op_Codes).`,
+            type: new GraphQLList(GraphQLInt),
+            description: `Holds an array of Operation Codes __(Op_Codes).__`,
+        },
+
+        hex: {
+            type: new GraphQLList(GraphQLString),
+            description: `Holds one or more full __HEX__ string(s).`,
         },
 
     }),
