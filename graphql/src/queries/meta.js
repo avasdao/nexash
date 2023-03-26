@@ -17,32 +17,32 @@ const ChainIdType = new GraphQLEnumType({
     values: {
         AVAX: {
             value: 'AVAX',
-            description: `[__Avalanche__](https://www.avax.com/)`,
+            description: `[__Avalanche__](https://www.avax.com/) — Largest network of decentralized Validators.`,
         },
 
         BSC: {
             value: 'BSC',
-            description: `[__BNB Smart Chain__ _(from Binance)_](https://www.bnbchain.org/)`,
+            description: `[__BNB Smart Chain__](https://www.bnbchain.org/) _(from Binance)_ — Largest centralized exchange.`,
         },
 
         ETH: {
             value: 'ETH',
-            description: `[__Ethereum__](https://ethereum.org/)`,
+            description: `[__Ethereum__](https://ethereum.org/) — Leading provider of decentralized computing.`,
         },
 
         MATIC: {
             value: 'MATIC',
-            description: `[__Polygon__](https://polygon.technology/)`,
+            description: `[__Polygon__](https://polygon.technology/) — Leading provider of scalable, on-chain asset exchange.`,
         },
 
         NEXA: {
             value: 'NEXA',
-            description: `[__Nexa Metanet__](https://nexa.org/)`,
+            description: `[__Nexa Metanet__](https://nexa.org/) — Full asset/value scaling on L1 up to 100k/sec.`,
         },
 
         TRX: {
             value: 'TRX',
-            description: `[__Tron__](https://tron.network/)`,
+            description: `[__Tron__](https://tron.network/) — Leading "legal tender" provider in the Caribbean.`,
         },
     },
     description: `Select from one of the compatible __Meta Networks__ supported by NexaShell.`,
