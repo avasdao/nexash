@@ -1,3 +1,6 @@
+/* Import modules. */
+import BitInt from 'graphql-bigint'
+
 /* Import types. */
 // import BlankType from './Blank.js'
 
