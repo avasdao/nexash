@@ -92,30 +92,25 @@ transactionsDb.changes({
         const scriptPubKey = _output.scriptPubKey.hex.slice(6)
         const pkhScript = '17005114' + scriptPubKey
 
-        /* Build address. */
-        const address = { ...transaction } // FIXME FOR DEV PURPOSES ONLY
-
         const prefix = 'nexa'
 
         const type = 'TEMPLATE'
 
-        const base58 = encodeAddress(
-            prefix, type, pkhScript)
+        const base58 = encodeAddress(prefix, type, pkhScript)
         // console.info('Nexa address (base58):', base58)
 
+        const address = {
+            prefix,
+            type,
+            hash: scriptPubKey,
+            base58,
+            txidem: transaction.txidem,
+            hex: transaction.hex,
+        }
+        console.log('ADDRESS', address)
 
         /* Publish address update. */
-        pubsub.publish('ADDRESS_UPDATE', {
-            address: {
-                prefix,
-                type,
-                hash: scriptPubKey,
-                base58,
-                txidem: transaction.txidem,
-                hex: transaction.hex,
-            },
-        })
-
+        pubsub.publish('ADDRESS_UPDATE', { address })
     })
 }).on('complete', function (info) {
     // console.log('CHANGES (complete):', change)

@@ -27,7 +27,7 @@ export default {
         },
     },
     resolve: async (parent, args, params) => {
-        console.log('Block (args):', args)
+        // console.log('Block (args):', args)
 
         /* Initialize block. */
         let block = null
@@ -39,7 +39,7 @@ export default {
                     key: args.hash[0],
                 })
                 .catch(err => console.error(err))
-            console.log('BLOCK (by hash):', block)
+            // console.log('BLOCK (by hash):', block)
         }
 
         /* Validate block height. */
@@ -47,7 +47,7 @@ export default {
             // NOTE: We MUST convert height (Int) to a (String).
             block = await blocksDb.get(args.height[0].toString())
                 .catch(err => console.error(err))
-            console.log('BLOCK (by height):', block)
+            // console.log('BLOCK (by height):', block)
         }
 
         /* Validate block. */
