@@ -6,6 +6,7 @@ import account from './queries/account.js'
 import block from './queries/block.js'
 import meta from './queries/meta.js'
 import owner from './queries/owner.js'
+import script from './queries/script.js'
 import transaction from './queries/transaction.js'
 
 /* Set name. */
@@ -17,6 +18,7 @@ const fields = {
     block,
     meta,
     owner,
+    script,
     transaction,
 }
 
