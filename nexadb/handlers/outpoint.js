@@ -67,6 +67,7 @@ export default async (_transaction) => {
 
             newOutpoint = {
                 ...saved,
+                isSpent: true,
                 txs,
             }
         } else {
@@ -75,6 +76,7 @@ export default async (_transaction) => {
 
             newOutpoint = {
                 _id: outpoint,
+                isSpent: true,
                 txs,
             }
         }

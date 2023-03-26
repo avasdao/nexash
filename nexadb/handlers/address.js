@@ -29,6 +29,7 @@ export default async (_transaction) => {
 
             newAddress = {
                 ...saved,
+                txcount: Object.keys(txs).length,
                 txs,
             }
         } else {
@@ -37,6 +38,7 @@ export default async (_transaction) => {
 
             newAddress = {
                 _id: scriptPubKey,
+                txcount: Object.keys(txs).length,
                 txs,
             }
         }
