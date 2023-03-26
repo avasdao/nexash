@@ -1,5 +1,5 @@
 /* Import types. */
-// import BlankType from '../types/Blank.js'
+import ScriptType from '../types/Script.js'
 
 import {
     GraphQLBoolean,
@@ -15,7 +15,7 @@ export default {
     type: new GraphQLList(GraphQLString),
     args: {
         prefix: {
-            type: new GraphQLList(GraphQLString),
+            type: new GraphQLList(ScriptType),
             description: `Enter the __Prefix__ for an on-chain Script.`,
         },
     },
@@ -24,5 +24,5 @@ export default {
 
         return ['010203040506070809']
     },
-    description: `Request information about on-chain __Script__ transactions, eg. OP_RETURN and CashFusion.`,
+    description: `Request information about on-chain __Script__ transactions, eg. _OP_RETURN_ and _CashFusion._`,
 }
