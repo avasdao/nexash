@@ -100,8 +100,8 @@ transactionsDb.changes({
         const type = 'TEMPLATE'
 
         const base58 = encodeAddress(
-            , , pkhScript)
-        console.info('Nexa address (base58):', base58)
+            prefix, type, pkhScript)
+        // console.info('Nexa address (base58):', base58)
 
 
         /* Publish address update. */
