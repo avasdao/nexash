@@ -15,12 +15,35 @@ import {
 const ChainIdType = new GraphQLEnumType({
     name: 'ChainId',
     values: {
-        AVAX  : { value: 'AVAX'  },
-        BSC   : { value: 'BSC'   },
-        ETH   : { value: 'ETH'   },
-        MATIC : { value: 'MATIC' },
-        NEXA  : { value: 'NEXA'  },
-        TRX   : { value: 'TRX'   },
+        AVAX: {
+            value: 'AVAX',
+            description: `Avalanche — [https://www.avax.com/](https://www.avax.com/)`,
+        },
+
+        BSC: {
+            value: 'BSC',
+            description: `BNB Smart Chain _(from Binance)_ — [https://www.bnbchain.org/](https://www.bnbchain.org/)`,
+        },
+
+        ETH: {
+            value: 'ETH',
+            description: `Ethereum — [https://ethereum.org/](https://ethereum.org/)`,
+        },
+
+        MATIC: {
+            value: 'MATIC',
+            description: `Polygon — [https://polygon.technology/](https://polygon.technology/)`,
+        },
+
+        NEXA: {
+            value: 'NEXA',
+            description: `Nexa — [https://nexa.org/](https://nexa.org/)`,
+        },
+
+        TRX: {
+            value: 'TRX',
+            description: `Tron — [https://tron.network/](https://tron.network/)`,
+        },
     },
     description: `Select from one of the compatible __Meta Networks__ supported by NexaShell.`,
 })
@@ -47,5 +70,5 @@ export default {
             field3: 88888888,
         })]
     },
-    description: `Request _(unstructured)_ __Meta__ data from Networks outside of the Nexa Core blockchain _(incl. BSC, ETH and TRX)._`,
+    description: `Request _(unstructured)_ __Meta__ data from Networks outside of the Nexa Core blockchain _(incl. Binance, Ethereum and Tron)._`,
 }
