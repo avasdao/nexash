@@ -3,6 +3,7 @@
 
 import {
     GraphQLBoolean,
+    GraphQLEnumType,
     GraphQLFloat,
     GraphQLList,
     GraphQLNonNull,
@@ -11,11 +12,24 @@ import {
     GraphQLString,
 } from 'graphql'
 
+const ChainIdType = new GraphQLEnumType({
+    name: 'ChainId',
+    values: {
+        AVAX  : { value: 'AVAX'  },
+        BSC   : { value: 'BSC'   },
+        ETH   : { value: 'ETH'   },
+        MATIC : { value: 'MATIC' },
+        NEXA  : { value: 'NEXA'  },
+        TRX   : { value: 'TRX'   },
+    },
+    description: `Select from one of the compatible __Meta Networks__ supported by NexaShell.`,
+})
+
 export default {
     type: new GraphQLList(GraphQLString),
     args: {
         chainid: {
-            type: new GraphQLList(GraphQLString),
+            type: ChainIdType,
             description: `Specify the __Chain ID__ for your desired network.`,
         },
 
