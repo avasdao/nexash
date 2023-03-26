@@ -1,5 +1,5 @@
 /* Import modules. */
-import BitInt from 'graphql-bigint'
+import BigInt from 'graphql-bigint'
 
 /* Import types. */
 import ScriptSigType from './ScriptSig.js'
@@ -28,13 +28,13 @@ export default new GraphQLObjectType({
             description: `TBD`,
         },
 
-        scriptSig: { 
+        scriptSig: {
             type: new GraphQLNonNull(ScriptSigType),
             description: `TBD`,
         },
 
         sequence: {
-            type: BitInt,
+            type: BigInt,
             description: `TBD`,
         },
 
