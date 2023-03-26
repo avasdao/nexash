@@ -22,11 +22,11 @@ export default async (_transaction) => {
         const saved = await outpointsDb
             .get(outpoint)
             .catch(err => console.error(err))
-        console.log('SAVED (inputs):', saved)
+        // console.log('SAVED (inputs):', saved)
 
         if (saved) {
             const txs = saved.txs
-            txs[_transaction.txidem] = _transaction
+            txs[_transaction.txidem] = _transaction.hex
 
             newOutpoint = {
                 ...saved,
@@ -34,7 +34,7 @@ export default async (_transaction) => {
             }
         } else {
             const txs = {}
-            txs[_transaction.txidem] = _transaction
+            txs[_transaction.txidem] = _transaction.hex
 
             newOutpoint = {
                 _id: outpoint,
@@ -45,7 +45,7 @@ export default async (_transaction) => {
         result = await outpointsDb
             .put(newOutpoint)
             .catch(err => console.error(err))
-        console.log('OUTPOINT (result):', result)
+        // console.log('OUTPOINT (result):', result)
     }
 
     for (let i = 0; i < outputs.length; i++) {
@@ -59,11 +59,11 @@ export default async (_transaction) => {
         const saved = await outpointsDb
             .get(outpoint)
             .catch(err => console.error(err))
-        console.log('SAVED (outputs):', saved)
+        // console.log('SAVED (outputs):', saved)
 
         if (saved) {
             const txs = saved.txs
-            txs[_transaction.txidem] = _transaction
+            txs[_transaction.txidem] = _transaction.hex
 
             newOutpoint = {
                 ...saved,
@@ -71,7 +71,7 @@ export default async (_transaction) => {
             }
         } else {
             const txs = {}
-            txs[_transaction.txidem] = _transaction
+            txs[_transaction.txidem] = _transaction.hex
 
             newOutpoint = {
                 _id: outpoint,
@@ -82,7 +82,7 @@ export default async (_transaction) => {
         result = await outpointsDb
             .put(newOutpoint)
             .catch(err => console.error(err))
-        console.log('OUTPOINT (result):', result)
+        // console.log('OUTPOINT (result):', result)
     }
 
     return result
