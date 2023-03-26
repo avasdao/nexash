@@ -37,7 +37,7 @@ const ChainIdType = new GraphQLEnumType({
 
         NEXA: {
             value: 'NEXA',
-            description: `[__Nexa Metanet__](https://nexa.org/) — Full asset/value scaling on L1 up to 100k/sec.`,
+            description: `[__Nexa + Metanet__](https://nexa.org/) — Global asset/value scaling on L1 up to 100k/sec, with 100% EVM compatiblity on L2.`,
         },
 
         TRX: {
