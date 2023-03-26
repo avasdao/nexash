@@ -10,6 +10,7 @@ import { v4 as uuidv4 } from 'uuid'
 import zmq from 'zeromq'
 
 /* Import handlers. */
+import handleAddress from './handlers/address.js'
 import handleOutpoint from './handlers/outpoint.js'
 
 /* Initialize databases. */
@@ -281,6 +282,9 @@ const checkDbSync = async () => {
             .catch(err => {
                 console.error(err)
             })
+
+            /* Handle Address. */
+            await handleAddress(decoded)
 
             /* Handle Outpoint. */
             await handleOutpoint(decoded)
