@@ -17,7 +17,7 @@ const fields = {
 /* Set (Mutation) description. */
 const description = `
 Make authenticated requests to the entire suite of [__Nexa__](https://nexa.org) on-chain data services.
-\nPlease visit the [__NexaShell Documentation__](https://docs.nexa.exchange) for more information.
+\nPlease visit the [__NexaShell Docs__](https://docs.nexa.exchange) for more information.
 `.trim()
 
 /**
