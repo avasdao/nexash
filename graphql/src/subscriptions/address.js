@@ -1,5 +1,5 @@
 /* Import types. */
-import TransactionType from '../types/Transaction.js'
+import AddressType from '../types/Address.js'
 
 import {
     GraphQLList,
@@ -7,10 +7,10 @@ import {
 } from 'graphql'
 
 export default (_pubsub) => ({
-    type: TransactionType,
+    type: AddressType,
     args: {
 
-        txidem: {
+        base58: {
             type: new GraphQLList(GraphQLString),
             description: `Filter by transaction idem.`,
         },
@@ -19,8 +19,8 @@ export default (_pubsub) => ({
             type: new GraphQLList(GraphQLString),
             description: `Filter by transaction Owner (address) as sender or receiver.`,
         },
-        
+
     },
-    subscribe: () => _pubsub.asyncIterator(['NEW_TRANSACTION']),
-    description: `This subscription will report __every new transaction__ that appears on the blockchain.`,
+    subscribe: () => _pubsub.asyncIterator(['ADDRESS_UPDATE']),
+    description: `This subscription will report __every Address action__ that appears on the blockchain.`,
 })

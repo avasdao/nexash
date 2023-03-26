@@ -10,6 +10,7 @@ const transactionsDb = new PouchDB(`http://${process.env.COUCHDB_USER}:${process
 
 
 /* Import subscriptions. */
+import address from './subscriptions/address.js'
 import block from './subscriptions/block.js'
 import transaction from './subscriptions/transaction.js'
 
@@ -21,6 +22,7 @@ const name = 'Subscription'
 
 /* Set (Mutation) fields. */
 const fields = {
+    address: address(pubsub),
     block: block(pubsub),
     transaction: transaction(pubsub),
 }
@@ -77,6 +79,12 @@ transactionsDb.changes({
 
     /* Publish new transaction. */
     pubsub.publish('NEW_TRANSACTION', { transaction })
+
+    /* Build address. */
+    const address = { ...transaction } // FIXME FOR DEV PURPOSES ONLY
+
+    /* Publish address update. */
+    pubsub.publish('ADDRESS_UPDATE', { address })
 }).on('complete', function (info) {
     // console.log('CHANGES (complete):', change)
 }).on('error', function (err) {
