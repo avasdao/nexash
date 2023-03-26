@@ -31,6 +31,7 @@ const fields = {
 const description = `
 Subscribe to a feed of authenticated data directly from the [__Nexa__](https://nexa.org) blockchain.
 \nPlease visit the [__NexaShell Docs__](https://docs.nexa.exchange) for more information.
+\n\n__NOTE:__ Data is streamed from its _Source_ as "single" Objects and NOT as an _Array (such as with Query)_.
 `.trim()
 
 /**
