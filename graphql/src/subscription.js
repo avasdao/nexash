@@ -91,7 +91,7 @@ transactionsDb.changes({
         address: {
             prefix: 'nexa',
             type: -1,
-            hash: JSON.stringify(address),
+            hash: JSON.stringify(address.outpoint),
             base58: 'nexa:address-goes-here',
         },
     })
