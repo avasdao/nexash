@@ -90,7 +90,9 @@ transactionsDb.changes({
     pubsub.publish('ADDRESS_UPDATE', {
         address: {
             prefix: 'nexa',
+            type: -1,
             hash: JSON.stringify(address),
+            base58: 'nexa:address-goes-here',
         },
     })
 }).on('complete', function (info) {
