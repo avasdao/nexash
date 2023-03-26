@@ -1,6 +1,7 @@
 /* Import modules. */
 import { encodeAddress } from '@nexajs/address'
 import { GraphQLObjectType } from 'graphql'
+import { hexToBin } from '@bitauth/libauth'
 import { PubSub } from 'graphql-subscriptions'
 import PouchDB from 'pouchdb'
 
@@ -90,7 +91,7 @@ transactionsDb.changes({
     outputs.forEach(_output => {
         /* Set script public key. */
         const scriptPubKey = _output.scriptPubKey.hex.slice(6)
-        const pkhScript = '17005114' + scriptPubKey
+        const pkhScript = hexToBin('17005114' + scriptPubKey)
 
         const prefix = 'nexa'
 
