@@ -13,11 +13,11 @@ import {
 } from 'graphql'
 
 export default {
-    type: AccountType,
+    type: new GraphQLList(AccountType),
     args: {
         address: {
             type: new GraphQLList(GraphQLString),
-            description: `Enter an __Account Address__ to limit your search.`,
+            description: `Enter one ore more __Account Address(es)__ to limit your search.`,
         },
     },
     resolve: (_root, args, ctx) => {
