@@ -21,7 +21,12 @@ export default {
     // },
     resolve: (_root, args, ctx) => {
         console.log('BLANK ARGS:', args)
-        return 'Blank created successfully!'
+
+        return {
+            field1: 'This is a BLANK asset!',
+            field2: 1337,
+            field3: 88888888,
+        }
     },
     description: `Blank description goes here.`,
 }

@@ -17,12 +17,23 @@ import {
 
 export default {
     type: SessionType,
+    args: {
+        address: {
+            type: GraphQLString,
+            description: `Provide an __Address__ to identify your new Session.`,
+        },
+
+        sessionid: {
+            type: GraphQLString,
+            description: `Provide your own __Session ID__ to identify your new Session.\nNOTE: This MUST be a unique (random) value in UUID v4 format or you will receive an error.`,
+        },
+    },
     resolve: (_root, args, ctx) => {
-        console.log('SESSION PARAMS:', params)
+        console.log('SESSION ARGS:', args)
 
         /* Initialize holders. */
-        let errors
-        let sessionid
+        let errors = []
+        let sessionid = ''
 
         /* Create a new Session ID. */
         sessionid = uuidv4()
@@ -32,5 +43,5 @@ export default {
             sessionid,
         }
     },
-    description: `Create a new Session for authenticated requests.`,
+    description: `Create a new __Session__ for authenticated requests.`,
 }
