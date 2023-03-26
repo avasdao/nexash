@@ -18,6 +18,11 @@ export default {
             type: new GraphQLList(GraphQLString),
             description: `Specify the __Chain ID__ for your desired network.`,
         },
+
+        request: {
+            type: new GraphQLList(GraphQLString),
+            description: `Provide serialized __Request(s)__ to be processed by Meta networks.`,
+        },
     },
     resolve: (_root, args, ctx) => {
         console.log('MMeta (args):', args)
