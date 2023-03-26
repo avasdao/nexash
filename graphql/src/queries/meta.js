@@ -20,9 +20,19 @@ const ChainIdType = new GraphQLEnumType({
             description: `[__Avalanche__](https://www.avax.com/) — Largest network of decentralized Validators.`,
         },
 
+        BCH: {
+            value: 'BCH',
+            description: `[__Bitcoin Cash__](https://bitcoincash.org/) — The leading provider of peer-to-peer electronic cash solutions.`,
+        },
+
         BSC: {
             value: 'BSC',
             description: `[__BNB Smart Chain__](https://www.bnbchain.org/) _(from Binance)_ — Largest centralized exchange.`,
+        },
+
+        BTC: {
+            value: 'BTC',
+            description: `[__Bitcoin__](https://bitcoin.org/) — The "original" innovation that introduced a new kind of "digital" gold.`,
         },
 
         ETH: {
