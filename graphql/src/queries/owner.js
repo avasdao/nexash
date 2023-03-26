@@ -1,5 +1,5 @@
 /* Import types. */
-// import BlankType from '../types/Blank.js'
+import BlankType from '../types/Blank.js'
 
 import {
     GraphQLBoolean,
@@ -14,19 +14,19 @@ import {
 export default {
     type: new GraphQLList(GraphQLString),
     args: {
-        chainid: {
+        address: {
             type: new GraphQLList(GraphQLString),
-            description: `Specify the __Chain ID__ for your desired network.`,
+            description: `Provide the __Address__ for an Owner.`,
         },
     },
     resolve: (_root, args, ctx) => {
-        console.log('MMeta (args):', args)
+        console.log('Owner (args):', args)
 
-        return [JSON.stringify({
-            field1: 'This is a META asset!',
+        return [{
+            field1: 'This is a BLANK asset!',
             field2: 1337,
             field3: 88888888,
-        })]
+        }]
     },
-    description: `Request _(unstructured)_ __Meta__ data from Networks outside of the Nexa Core blockchain _(incl. BSC, ETH and TRX)._`,
+    description: `Request _(strucutred)_ __Owner__ details, aggregated from multiple data sources, for your convenience.`,
 }
