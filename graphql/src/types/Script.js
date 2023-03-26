@@ -7,11 +7,12 @@ import {
     GraphQLList,
     GraphQLNonNull,
     GraphQLObjectType,
+    GraphQLInputObjectType,
     GraphQLInt,
     GraphQLString,
 } from 'graphql'
 
-export default new GraphQLObjectType({
+export default new GraphQLInputObjectType({
     name: 'Script',
     fields: () => ({
 
