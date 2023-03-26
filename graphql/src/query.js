@@ -4,6 +4,7 @@ import { GraphQLObjectType } from 'graphql'
 /* Import mutations. */
 import account from './queries/account.js'
 import block from './queries/block.js'
+import id from './queries/id.js'
 import meta from './queries/meta.js'
 import owner from './queries/owner.js'
 import script from './queries/script.js'
@@ -17,6 +18,7 @@ const name = 'Query'
 const fields = {
     account,
     block,
+    id,
     meta,
     owner,
     script,
