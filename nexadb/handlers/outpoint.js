@@ -19,10 +19,10 @@ export default async (_transaction) => {
         const outpoint = input.outpoint
 
         /* Saved (in database) value. */
-        const saved = outpointsDb
+        const saved = await outpointsDb
             .get(outpoint)
             .catch(err => console.error(err))
-        console.log('SAVED', saved)
+        console.log('SAVED (inputs):', saved)
 
         if (saved) {
             const txs = saved.txs
@@ -42,7 +42,7 @@ export default async (_transaction) => {
             }
         }
 
-        result = outpointsDb
+        result = await outpointsDb
             .put(newOutpoint)
             .catch(err => console.error(err))
         console.log('OUTPOINT (result):', result)
@@ -56,14 +56,14 @@ export default async (_transaction) => {
         const outpoint = output.outpoint
 
         /* Saved (in database) value. */
-        const saved = outpointsDb
+        const saved = await outpointsDb
             .get(outpoint)
             .catch(err => console.error(err))
-        console.log('SAVED', saved)
+        console.log('SAVED (outputs):', saved)
 
         if (saved) {
             const txs = saved.txs
-            saved.txs[_transaction.txidem] = _transaction
+            txs[_transaction.txidem] = _transaction
 
             newOutpoint = {
                 ...saved,
@@ -71,7 +71,7 @@ export default async (_transaction) => {
             }
         } else {
             const txs = {}
-            saved.txs[_transaction.txidem] = _transaction
+            txs[_transaction.txidem] = _transaction
 
             newOutpoint = {
                 _id: outpoint,
@@ -79,7 +79,7 @@ export default async (_transaction) => {
             }
         }
 
-        result = outpointsDb
+        result = await outpointsDb
             .put(newOutpoint)
             .catch(err => console.error(err))
         console.log('OUTPOINT (result):', result)
