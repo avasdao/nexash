@@ -1,4 +1,5 @@
 /* Import modules. */
+import { encodeAddress } from '@nexajs/address'
 import { GraphQLObjectType } from 'graphql'
 import { PubSub } from 'graphql-subscriptions'
 import PouchDB from 'pouchdb'
@@ -83,17 +84,38 @@ transactionsDb.changes({
     /* Publish new transaction. */
     pubsub.publish('NEW_TRANSACTION', { transaction })
 
-    /* Build address. */
-    const address = { ...transaction } // FIXME FOR DEV PURPOSES ONLY
+    /* Set outputs. */
+    const outputs = transaction.vout
 
-    /* Publish address update. */
-    pubsub.publish('ADDRESS_UPDATE', {
-        address: {
-            prefix: 'nexa',
-            type: -1,
-            hash: JSON.stringify(address.txid),
-            base58: 'nexa:address-goes-here',
-        },
+    outputs.forEach(_output => {
+        /* Set script public key. */
+        const scriptPubKey = _output.scriptPubKey.hex.slice(6)
+        const pkhScript = '17005114' + scriptPubKey
+
+        /* Build address. */
+        const address = { ...transaction } // FIXME FOR DEV PURPOSES ONLY
+
+        const prefix = 'nexa'
+
+        const type = 'TEMPLATE'
+
+        const base58 = encodeAddress(
+            , , pkhScript)
+        console.info('Nexa address (base58):', base58)
+
+
+        /* Publish address update. */
+        pubsub.publish('ADDRESS_UPDATE', {
+            address: {
+                prefix,
+                type,
+                hash: scriptPubKey,
+                base58,
+                txidem: transaction.txidem,
+                hex: transaction.hex,
+            },
+        })
+
     })
 }).on('complete', function (info) {
     // console.log('CHANGES (complete):', change)

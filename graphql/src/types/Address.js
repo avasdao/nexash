@@ -45,9 +45,14 @@ export default new GraphQLObjectType({
             description: `TBD`,
         },
 
-        txs: {
-            type: new GraphQLList(TransactionType),
-            description: `TBD`,
+        txidem: {
+            type: GraphQLString,
+            description: `The __Transaction Idem__ of the _Transaction_ containing the address.`,
+        },
+
+        hex: {
+            type: GraphQLString,
+            description: `The __(Raw) Hex__ for the _Transaction_ containing the address.`,
         },
 
     }),
