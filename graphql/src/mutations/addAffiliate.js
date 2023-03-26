@@ -26,9 +26,16 @@ const TEST_AFFILIATE = {
 
 export default {
     type: AffiliateType,
+    args: {
+        address: {
+            type: GraphQLString,
+            description: `Provide a Nexa __Address__ to link to your __Affiliate__ account.`,
+        },
+    },
     resolve: (_root, args, ctx) => {
-        console.log('AFFILIATE PARAMS:', params)
+        console.log('AFFILIATE ARGS:', args)
+
         return TEST_AFFILIATE
     },
-    description: `Add a new Affiliate to the NexaShell Rewards program.`,
+    description: `Add a new __Affiliate__ member to the __NexaShell Rewards__ program.`,
 }
