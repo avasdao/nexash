@@ -12,7 +12,7 @@ import {
 } from 'graphql'
 
 export default {
-    type: GraphQLString,
+    type: new GraphQLList(GraphQLString),
     // args: {
     //     fieldName: {
     //         type: new GraphQLList(GraphQLString),
@@ -22,11 +22,11 @@ export default {
     resolve: (_root, args, ctx) => {
         console.log('Blank (args):', args)
 
-        return {
+        return [{
             field1: 'This is a BLANK asset!',
             field2: 1337,
             field3: 88888888,
-        }
+        }]
     },
     description: `Blank description goes here.`,
 }
