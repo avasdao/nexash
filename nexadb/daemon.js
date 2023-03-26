@@ -9,6 +9,9 @@ import SSE from 'express-sse'
 import { v4 as uuidv4 } from 'uuid'
 import zmq from 'zeromq'
 
+/* Import handlers. */
+import handleOutpoint from './handlers/outpoint.js'
+
 /* Initialize databases. */
 const blocksDb = new PouchDB(`http://${process.env.COUCHDB_USER}:${process.env.COUCHDB_PASSWORD}@127.0.0.1:5984/blocks`)
 const logsDb = new PouchDB(`http://${process.env.COUCHDB_USER}:${process.env.COUCHDB_PASSWORD}@127.0.0.1:5984/logs`)
@@ -278,6 +281,9 @@ const checkDbSync = async () => {
             .catch(err => {
                 console.error(err)
             })
+
+            /* Handle Outpoint. */
+            await handleOutpoint(decoded)
 
             try {
                 /* Broadcast event. */
