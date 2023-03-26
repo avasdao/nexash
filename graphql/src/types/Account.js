@@ -31,5 +31,5 @@ export default new GraphQLObjectType({
         },
 
     }),
-    description: `An __Address__ provides a target (or destination) for receiving assets.`,
+    description: `An __Account__ provides a target (or destination) for receiving assets.`,
 })

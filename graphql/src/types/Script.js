@@ -2,11 +2,8 @@
 // import BlankType from './Blank.js'
 
 import {
-    GraphQLBoolean,
-    GraphQLFloat,
     GraphQLList,
     GraphQLNonNull,
-    GraphQLObjectType,
     GraphQLInputObjectType,
     GraphQLInt,
     GraphQLString,
@@ -17,7 +14,7 @@ export default new GraphQLInputObjectType({
     fields: () => ({
 
         opcode: {
-            type: new GraphQLList(GraphQLInt),
+            type: new GraphQLNonNull(new GraphQLList(GraphQLInt)),
             description: `Holds an array of Operation Codes (Op_Codes).`,
         },
 
