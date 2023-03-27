@@ -105,6 +105,7 @@ transactionsDb.changes({
             type,
             hash: scriptPubKey,
             base58,
+            owner: base58, // alias
             txidem: transaction.txidem,
             hex: transaction.hex,
         }
