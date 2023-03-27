@@ -1,4 +1,8 @@
 <script setup>
+/* Import modules. */
+import { createClient } from 'graphql-ws'
+import { ref } from 'vue'
+
 useHead({
     title: 'NexaShell - Data Query',
     meta: [{
@@ -6,6 +10,88 @@ useHead({
         content: 'Direct access to ALL the Nexa data that you need.'
     }]
 })
+
+/* Initialize Transactions (array). */
+const transactions = ref([])
+
+const displayedTxs = computed(() => {
+    return transactions.value.reverse().slice(0, 10)
+})
+
+let client
+
+const onNext = (_buffer) => {
+    console.log('MEMPOOL TX', _buffer?.data?.transaction)
+
+    if (_buffer?.data?.transaction) {
+        transactions.value.push(_buffer?.data?.transaction)
+    }
+}
+
+let unsubscribe = () => {
+    /* complete the subscription */
+}
+
+const initUpdates = async () => {
+    await new Promise((resolve, reject) => {
+        unsubscribe = client.subscribe({
+        query: `subscription {
+transaction {
+  txidem
+  txid
+  confirmations
+  size
+  version
+  locktime
+  spends
+  sends
+  fee
+  vin {
+    outpoint
+    amount
+    scriptSig {
+      asm
+      hex
+    }
+    sequence
+  }
+  vout {
+    value
+    type
+    n
+    scriptPubKey {
+      asm
+      hex
+      type
+      scriptHash
+      argsHash
+      addresses
+    }
+    outpoint
+  }
+  blockhash
+  time
+  blocktime
+  hex
+}
+}`,
+    }, {
+        next: onNext,
+        error: reject,
+        complete: resolve,
+    })
+})
+
+}
+
+if (process.client) {
+    client = createClient({
+        url: 'wss://nexa.sh/graphql',
+    })
+
+    initUpdates()
+
+}
 
 </script>
 
@@ -21,8 +107,11 @@ useHead({
                     Let's drop in a Transactions Feed here
                 </h2>
 
-                <div>
-
+                <div
+                    class="my-5 px-3 py-2 bg-rose-500"
+                    v-for="transaction of displayedTxs" :key="transactions.txidem"
+                >
+                    Hash : {{transaction.txidem}}
                 </div>
             </section>
 
