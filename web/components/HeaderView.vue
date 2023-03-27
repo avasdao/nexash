@@ -24,9 +24,9 @@ const updateTicker = async () => {
     nexUsd.value = numeral(last).format('$0,0.00[00]')
 }
 
-updateTicker()
+// updateTicker()
 
-setInterval(updateTicker, TICKER_UPDATE_INTERVAL)
+// setInterval(updateTicker, TICKER_UPDATE_INTERVAL)
 </script>
 
 <template>

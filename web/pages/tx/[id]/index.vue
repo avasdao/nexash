@@ -18,7 +18,7 @@ const ENDPOINT = 'https://nexa.sh/graphql'
 
 const query = `
 {
-  transaction(txid: [${id}], txidem: [${id}]) {
+  transaction(txidem: "${id}", txid: "${id}") {
     txidem
     txid
     confirmations
