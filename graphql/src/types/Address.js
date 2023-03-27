@@ -37,7 +37,7 @@ export default new GraphQLObjectType({
         },
 
         owner: {
-            type: new GraphQLNonNull(GraphQLString),
+            type: GraphQLString,
             description: `The __human-readable__ format of the _Address._`,
         },
 
