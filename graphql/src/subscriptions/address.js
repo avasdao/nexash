@@ -12,7 +12,7 @@ export default (_pubsub) => ({
 
         base58: {
             type: new GraphQLList(GraphQLString),
-            description: `Filter by transaction idem.`,
+            description: `Filter by Address.`,
         },
 
         owner: {
@@ -21,6 +21,11 @@ export default (_pubsub) => ({
         },
 
     },
-    subscribe: () => _pubsub.asyncIterator(['ADDRESS_UPDATE']),
+    subscribe: (_root, args, ctx) => {
+        console.log('SUBSCRIBE ROOT', _root)
+        console.log('SUBSCRIBE ARGS', args)
+        console.log('SUBSCRIBE CTX', ctx)
+        return _pubsub.asyncIterator(['ADDRESS_UPDATE'])
+    },
     description: `This subscription will report __every Address action__ that appears on the blockchain.`,
 })
