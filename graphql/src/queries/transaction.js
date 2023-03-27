@@ -56,16 +56,7 @@ export default {
         }
 
         /* Return transaction details. */
-        return [{
-            txidem: transaction.txidem,
-            txid: transaction.txid,
-            confirmations: transaction.confirmations,
-            size: transaction.size,
-            version: transaction.version,
-            locktime: transaction.locktime,
-            blocktime: transaction.blocktime,
-            hex: transaction.hex,
-        }]
+        return [transaction]
     },
     description: `Request full __Transaction__ details by _hash_ or _height_.`,
 }

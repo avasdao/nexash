@@ -6,6 +6,7 @@ useHead({
         content: 'Direct access to ALL the Nexa data that you need.'
     }]
 })
+
 </script>
 
 <template>
@@ -14,6 +15,16 @@ useHead({
             <SearchView />
 
             <!-- <HeroView /> -->
+
+            <section>
+                <h2>
+                    Let's drop in a Transactions Feed here
+                </h2>
+
+                <div>
+
+                </div>
+            </section>
 
             <Sponsors />
 
