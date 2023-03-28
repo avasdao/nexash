@@ -25,4 +25,17 @@ if (slug && typeof slug[0] !== 'undefined' && slug[0].length === 64) {
     /* Redirect to transaction page. */
     await navigateTo({ path: '/tx/' + txid })
 }
+
+if (slug[0].slice(0, 7) === 'nexa:tr') {
+    /* Set group id. */
+    const groupid = slug[0]
+    console.log('TOKEN ID', groupid)
+
+    // TODO: Validate token.
+
+    /* Redirect to token page. */
+    await navigateTo({ path: '/token/' + groupid })
+}
 </script>
+
+<template></template>
