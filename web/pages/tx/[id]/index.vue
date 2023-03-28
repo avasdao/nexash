@@ -58,10 +58,10 @@ const query = `
   }
 }
 `
-
+let transaction
 
 /* Make query request. */
-const transaction = await $fetch(ENDPOINT,
+const result = await $fetch(ENDPOINT,
     {
         method: 'POST',
         headers: {
@@ -72,22 +72,104 @@ const transaction = await $fetch(ENDPOINT,
     })
     .catch(err => console.error(err))
 
+if (result?.data?.transaction) {
+    transaction = result.data.transaction[0]
+}
 </script>
 
 <template>
-    <main class="">
+    <main v-if="transaction" class="">
         <main class="max-w-7xl mx-auto">
-            <h1 class="text-4xl font-medium">
-                Transaction
-            </h1>
+            <section class="p-3">
+                <h1 class="text-4xl font-medium">
+                    {{transaction?.txidem}}
+                </h1>
+
+                <NuxtLink :to="'/tx/' + txid + '/privacy'" class="text-lg text-blue-500 font-medium hover:underline">
+                    View Privacy Report
+                </NuxtLink>
+
+            </section>
+
+            <TransactionItem
+                title="Transaction IDEM"
+                :value="transaction.txidem"
+            />
+
+            <TransactionItem
+                title="Transaction ID"
+                :value="transaction.txid"
+            />
+
+            <TransactionItem
+                title="Confirmations"
+                :value="transaction.confirmations"
+            />
+
+            <TransactionItem
+                title="Size"
+                :value="transaction.size"
+            />
+
+            <TransactionItem
+                title="Version"
+                :value="transaction.version"
+            />
+
+            <TransactionItem
+                title="Lock Time"
+                :value="transaction.locktime"
+            />
+
+            <TransactionItem
+                title="Spends"
+                :value="transaction.spends"
+            />
+
+            <TransactionItem
+                title="Sends"
+                :value="transaction.sends"
+            />
+
+            <TransactionItem
+                title="Fee"
+                :value="transaction.fee"
+            />
+
+            <TransactionItem
+                title="Inputs"
+                value="inputs here"
+            />
+
+            <TransactionItem
+                title="Outputs"
+                value="outputs here"
+            />
+
+            <TransactionItem
+                title="Block Hash"
+                :value="transaction.blockhash"
+            />
+
+            <TransactionItem
+                title="Time"
+                :value="transaction.time"
+            />
+
+            <TransactionItem
+                title="Block Time"
+                :value="transaction.blocktime"
+            />
+
+            <TransactionItem
+                title="Hex"
+                :value="transaction.hex"
+            />
+
 
             <pre class="block text-lg font-medium">
                 {{ transaction }}
             </pre>
-
-            <NuxtLink :to="'/tx/' + txid + '/privacy'" class="text-lg text-blue-500 font-medium hover:underline">
-                View Privacy Report
-            </NuxtLink>
 
             <section class="p-32">
                 <div class="bg-yellow-100 border-4 border-yellow-400 rounded-xl">
@@ -95,5 +177,13 @@ const transaction = await $fetch(ENDPOINT,
                 </div>
             </section>
         </main>
+    </main>
+
+    <main v-else class="max-w-7xl mx-auto">
+        <div class="p-5 flex w-full justify-center">
+            <h1 class="text-4xl font-medium">
+                Oops! No transaction found
+            </h1>
+        </div>
     </main>
 </template>

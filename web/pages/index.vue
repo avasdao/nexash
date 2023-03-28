@@ -108,10 +108,16 @@ if (process.client) {
                 </h2>
 
                 <div
-                    class="my-5 px-3 py-2 bg-rose-500"
+                    class="my-5 px-3 py-2 bg-rose-100 border-2 border-rose-300 rounded-lg shadow"
                     v-for="transaction of displayedTxs" :key="transactions.txidem"
                 >
-                    Hash : {{transaction.txidem}}
+                    <span class="block text-xs text-rose-400 font-medium uppercase">
+                        Hash
+                    </span>
+
+                    <NuxtLink class="text-rose-700 font-medium" :to="'tx/' + transaction.txidem">
+                        {{transaction.txidem}}
+                    </NuxtLink>
                 </div>
             </section>
 
