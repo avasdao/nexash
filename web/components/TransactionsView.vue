@@ -93,10 +93,13 @@ startUpdates()
 
 <template>
     <main class="px-3 py-2 bg-gray-100 border-4 border-gray-400 rounded-xl shadow-md">
-        <h2>
-            Real-time Nexa Transactions
-            <em>(in mempool)</em>
+        <h2 class="text-2xl text-gray-700 font-medium">
+            Real-time Transactions
         </h2>
+
+        <h3 class="text-xs text-gray-400 font-medium uppercase">
+            pending in mempool
+        </h3>
 
         <NuxtLink
             class="block my-5 px-3 py-2 bg-gray-300 border-2 border-gray-500 rounded-lg shadow"

@@ -84,7 +84,7 @@ startUpdates()
         </h2>
 
         <h3 class="text-xs text-gray-300 font-medium uppercase">
-            pending in mempool
+            avg block time is 1.337 minutes
         </h3>
 
         <section
