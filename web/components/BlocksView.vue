@@ -91,11 +91,11 @@ startUpdates()
             class="my-5 px-3 py-2 bg-gray-300 border-2 border-gray-500 rounded-lg shadow"
             v-for="block of displayedTxs" :key="block.height"
         >
-            <span class="block text-xs text-gray-700 font-medium uppercase">
+            <span class="block text-base text-gray-700 font-medium uppercase">
                 #{{numeral(block.height).format('0,0')}}
             </span>
 
-            <NuxtLink class="text-gray-700 font-medium" :to="'block/' + block.height">
+            <NuxtLink class="text-sm text-gray-700 font-medium" :to="'block/' + block.height">
                 {{block.hash}}
             </NuxtLink>
         </section>
