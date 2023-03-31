@@ -11,88 +11,6 @@ useHead({
     }]
 })
 
-/* Initialize Transactions (array). */
-const transactions = ref([])
-
-const displayedTxs = computed(() => {
-    return transactions.value.reverse().slice(0, 10)
-})
-
-let client
-
-const onNext = (_buffer) => {
-    console.log('MEMPOOL TX', _buffer?.data?.transaction)
-
-    if (_buffer?.data?.transaction) {
-        transactions.value.push(_buffer?.data?.transaction)
-    }
-}
-
-let unsubscribe = () => {
-    /* complete the subscription */
-}
-
-const initUpdates = async () => {
-    await new Promise((resolve, reject) => {
-        unsubscribe = client.subscribe({
-        query: `subscription {
-transaction {
-  txidem
-  txid
-  confirmations
-  size
-  version
-  locktime
-  spends
-  sends
-  fee
-  vin {
-    outpoint
-    amount
-    scriptSig {
-      asm
-      hex
-    }
-    sequence
-  }
-  vout {
-    value
-    type
-    n
-    scriptPubKey {
-      asm
-      hex
-      type
-      scriptHash
-      argsHash
-      addresses
-    }
-    outpoint
-  }
-  blockhash
-  time
-  blocktime
-  hex
-}
-}`,
-    }, {
-        next: onNext,
-        error: reject,
-        complete: resolve,
-    })
-})
-
-}
-
-if (process.client) {
-    client = createClient({
-        url: 'wss://nexa.sh/graphql',
-    })
-
-    initUpdates()
-
-}
-
 </script>
 
 <template>
@@ -102,25 +20,13 @@ if (process.client) {
 
             <!-- <HeroView /> -->
 
-            <section>
-                <h2>
-                    Real-time Nexa Transactions
-                    <em>(in mempool)</em>
-                </h2>
+            <ClientOnly fallback-tag="span" fallback="Loading transactions...">
+                <div class="grid grid-cols-2 gap-4">
+                    <TransactionsView />
 
-                <div
-                    class="my-5 px-3 py-2 bg-rose-100 border-2 border-rose-300 rounded-lg shadow"
-                    v-for="transaction of displayedTxs" :key="transactions.txidem"
-                >
-                    <span class="block text-xs text-rose-400 font-medium uppercase">
-                        Hash
-                    </span>
-
-                    <NuxtLink class="text-rose-700 font-medium" :to="'tx/' + transaction.txidem">
-                        {{transaction.txidem}}
-                    </NuxtLink>
+                    <BlocksView />
                 </div>
-            </section>
+            </ClientOnly>
 
             <!-- <Sponsors /> -->
 

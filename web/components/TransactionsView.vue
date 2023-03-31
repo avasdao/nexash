@@ -1,0 +1,115 @@
+<script setup lang="ts">
+/* Import modules. */
+import { createClient } from 'graphql-ws'
+import { ref } from 'vue'
+
+const props = defineProps({
+    title: String,
+    value: String,
+})
+
+/* Initialize Transactions (array). */
+const transactions = ref([])
+
+const displayedTxs = computed(() => {
+    return transactions.value.reverse().slice(0, 10)
+})
+
+/* Create client. */
+const client = createClient({
+    url: 'wss://nexa.sh/graphql',
+})
+
+const query = `
+subscription {
+  transaction {
+    txidem
+    txid
+    confirmations
+    size
+    version
+    locktime
+    spends
+    sends
+    fee
+    vin {
+      outpoint
+      amount
+      scriptSig {
+        asm
+        hex
+      }
+      sequence
+    }
+    vout {
+      value
+      type
+      n
+      scriptPubKey {
+        asm
+        hex
+        type
+        scriptHash
+        argsHash
+        addresses
+      }
+      outpoint
+    }
+    blockhash
+    time
+    blocktime
+    hex
+  }
+}`
+
+const onNext = (_buffer) => {
+    console.log('MEMPOOL TX', _buffer?.data?.transaction)
+
+    if (_buffer?.data?.transaction) {
+        transactions.value.push(_buffer?.data?.transaction)
+    }
+}
+
+let unsubscribe = () => {
+    /* complete the subscription */
+}
+
+/**
+ * Start Updates
+ */
+const startUpdates = async () => {
+    await new Promise((resolve, reject) => {
+        unsubscribe = client.subscribe({ query }, {
+            next: onNext,
+            error: reject,
+            complete: resolve,
+        })
+    })
+}
+
+/* Start updates. */
+startUpdates()
+</script>
+
+<template>
+    <main class="px-3 py-2 bg-gray-100 border-4 border-gray-400 rounded-xl shadow-md">
+        <h2>
+            Real-time Nexa Transactions
+            <em>(in mempool)</em>
+        </h2>
+
+        <NuxtLink
+            class="block my-5 px-3 py-2 bg-gray-300 border-2 border-gray-500 rounded-lg shadow"
+            v-for="transaction of displayedTxs" :key="transaction.txidem"
+            :to="'tx/' + transaction.txidem"
+        >
+            <!-- <span class="block text-xs text-gray-700 font-medium uppercase">
+                Hash
+            </span> -->
+
+            <h3 class="text-sm text-gray-700 font-medium">
+                {{transaction.txidem}}
+            </h3>
+        </NuxtLink>
+    </main>
+</template>
