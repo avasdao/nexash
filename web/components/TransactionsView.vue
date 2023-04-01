@@ -65,7 +65,7 @@ subscription {
 }`
 
 const onNext = (_buffer) => {
-    console.log('MEMPOOL TX', _buffer?.data?.transaction)
+    // console.log('MEMPOOL TX', _buffer?.data?.transaction)
 
     if (_buffer?.data?.transaction) {
         transactions.value.push(_buffer?.data?.transaction)

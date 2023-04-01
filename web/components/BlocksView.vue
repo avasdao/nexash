@@ -53,7 +53,7 @@ subscription Block {
 }`
 
 const onNext = (_buffer) => {
-    console.log('CONFIRMED', _buffer?.data?.block)
+    // console.log('CONFIRMED', _buffer?.data?.block)
 
     if (_buffer?.data?.block) {
         blocks.value.push(_buffer?.data?.block)
