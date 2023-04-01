@@ -9,24 +9,24 @@ const isShowingMobileMenu = ref(false)
 const TICKER_UPDATE_INTERVAL = 30000 // default: 30 seconds
 
 /* Initialize NEX/USD holder. */
-const nexUsd = ref(null)
+const mexUsd = ref(null)
 
-const ENDPOINT = 'https://www.exbitron.com/api/v2/peatio/public/markets/nexausdt/tickers'
+const ENDPOINT = 'https://nexa.exchange/mex'
 
 const updateTicker = async () => {
-    const response = await $fetch(ENDPOINT)
+    const price = await $fetch(ENDPOINT)
         .catch(err => console.error)
+    // console.log('MEX PRICE', price)
 
-    const ticker = response.ticker
-
-    const last = ticker.last * 1000000.0
-
-    nexUsd.value = numeral(last).format('$0,0.00[00]')
+    mexUsd.value = numeral(price).format('$0,0.00[00]')
 }
 
-// updateTicker()
+/* Start price update (interval). */
+setInterval(updateTicker, TICKER_UPDATE_INTERVAL)
 
-// setInterval(updateTicker, TICKER_UPDATE_INTERVAL)
+/* Update price. */
+updateTicker()
+
 </script>
 
 <template>
@@ -62,32 +62,32 @@ const updateTicker = async () => {
                     Dashboard
                 </NuxtLink>
 
-                <button>
+                <NuxtLink to="/blocks" class="hover:underline">
                     Blocks
-                </button>
+                </NuxtLink>
 
-                <button>
+                <NuxtLink to="/txs" class="hover:underline">
                     Transactions
-                </button>
+                </NuxtLink>
 
-                <button>
+                <NuxtLink to="/assets" class="hover:underline">
                     Assets
-                </button>
+                </NuxtLink>
 
-                <button>
+                <NuxtLink to="/defi" class="hover:underline">
                     DeFi
-                </button>
+                </NuxtLink>
 
-                <button>
+                <NuxtLink to="/contracts" class="hover:underline">
                     Contracts
-                </button>
+                </NuxtLink>
             </nav>
 
         </section>
 
         <section class="bg-gradient-to-r from-gray-100 to-gray-200">
             <div class="py-1 max-w-7xl mx-auto flex justify-end">
-                <h3 class="text-sm">$ Price: {{nexUsd}}</h3>
+                <h3 class="text-sm">$ Price: {{mexUsd}}</h3>
             </div>
         </section>
     </header>

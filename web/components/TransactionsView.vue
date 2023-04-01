@@ -112,7 +112,7 @@ startUpdates()
                 Hash
             </span> -->
 
-            <h3 class="text-sm text-gray-700 font-medium">
+            <h3 class="text-sm text-gray-700 font-medium truncate">
                 {{transaction.txidem}}
             </h3>
         </NuxtLink>

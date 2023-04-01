@@ -21,7 +21,7 @@ useHead({
             <!-- <HeroView /> -->
 
             <ClientOnly fallback-tag="span" fallback="Loading transactions...">
-                <div class="grid grid-cols-2 gap-4">
+                <div class="mt-5 px-3 grid grid-cols-1 lg:grid-cols-2 gap-4">
                     <TransactionsView />
 
                     <BlocksView />
