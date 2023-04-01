@@ -10,7 +10,7 @@ useHead({
 
 <template>
     <main class="">
-        <section class="max-w-7xl mx-auto">
+        <section class="my-5 max-w-7xl mx-auto">
             <h1 class="text-4xl font-medium">
                 DeFi
             </h1>

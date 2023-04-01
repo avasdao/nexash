@@ -10,13 +10,13 @@ useHead({
 
 <template>
     <main class="">
-        <section class="max-w-7xl mx-auto">
+        <section class="my-5 max-w-7xl mx-auto">
             <h1 class="text-4xl font-medium">
                 Contracts
             </h1>
 
             <p>
-                A dashboard of the most popular Smart Contracts.
+                A dashboard of the most popular "Wise" Contracts.
             </p>
         </section>
     </main>
