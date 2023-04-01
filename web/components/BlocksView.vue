@@ -99,7 +99,7 @@ startUpdates()
                 #{{numeral(block.height).format('0,0')}}
             </span>
 
-            <NuxtLink :to="'block/' + block.height" class="text-sm text-gray-700 font-medium truncate">
+            <NuxtLink :to="'block/' + block.height" class="block text-sm text-gray-700 font-medium truncate">
                 {{block.hash}}
             </NuxtLink>
         </section>
