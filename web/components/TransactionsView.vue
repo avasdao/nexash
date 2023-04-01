@@ -11,7 +11,7 @@ const props = defineProps({
 /* Initialize Transactions (array). */
 const transactions = ref([])
 
-const MAX_TXS_DISPLAYED = 10
+const MAX_TXS_DISPLAYED = 7
 
 const displayedTxs = computed(() => {
     return transactions.value.reverse().slice(0, MAX_TXS_DISPLAYED)

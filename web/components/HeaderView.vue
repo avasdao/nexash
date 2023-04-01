@@ -87,7 +87,10 @@ updateTicker()
 
         <section class="bg-gradient-to-r from-gray-100 to-gray-200">
             <div class="py-1 max-w-7xl mx-auto flex justify-end">
-                <h3 class="text-sm">$ Price: {{mexUsd}}</h3>
+                <h3 class="px-3 py-1 flex items-center text-gray-500 mr-5 bg-gray-700 border-2 border-yellow-400 rounded-full">
+                    <span class="text-yellow-100 text-sm">MEX/USD</span>
+                    <span class="text-yellow-300 text-lg font-medium mx-1">{{mexUsd}}</span>
+                </h3>
             </div>
         </section>
     </header>
@@ -100,6 +103,13 @@ updateTicker()
                         <span class="sr-only">NexaShell</span>
                         <img class="h-12 w-auto md:h-16" src="~/assets/icon.png" alt="" />
                     </NuxtLink>
+                </div>
+
+                <div class="py-1 max-w-7xl mx-auto flex justify-end">
+                    <h3 class="px-3 py-1 flex items-center text-gray-500 mr-5 bg-gray-700 border-2 border-yellow-400 rounded-full">
+                        <span class="text-yellow-100 text-sm">MEX/USD</span>
+                        <span class="text-yellow-300 text-lg font-medium mx-1">{{mexUsd}}</span>
+                    </h3>
                 </div>
 
                 <div class="-my-2 -mr-2 md:hidden">
