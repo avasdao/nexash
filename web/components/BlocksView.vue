@@ -12,8 +12,12 @@ const props = defineProps({
 /* Initialize Blocks (array). */
 const blocks = ref([])
 
+const MAX_BLOCKS_DISPLAYED = 5
+
 const displayedTxs = computed(() => {
-    return blocks.value.reverse().slice(0, 10)
+    return blocks.value.sort((a, b) => {
+        return b.height - a.height
+    }).slice(0, MAX_BLOCKS_DISPLAYED)
 })
 
 /* Create client. */

@@ -11,8 +11,10 @@ const props = defineProps({
 /* Initialize Transactions (array). */
 const transactions = ref([])
 
+const MAX_TXS_DISPLAYED = 10
+
 const displayedTxs = computed(() => {
-    return transactions.value.reverse().slice(0, 10)
+    return transactions.value.reverse().slice(0, MAX_TXS_DISPLAYED)
 })
 
 /* Create client. */
