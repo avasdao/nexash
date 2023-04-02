@@ -43,10 +43,17 @@ updateTicker()
                 </NuxtLink>
 
                 <section class="flex gap-4">
+                    <div class="py-1 max-w-7xl mx-auto flex justify-end">
+                        <h3 class="px-3 py-1 flex items-center text-gray-500 mr-5 bg-gray-700 border-2 border-yellow-400 rounded-full">
+                            <span class="text-yellow-100 text-sm">MEX/USD</span>
+                            <span class="text-yellow-300 text-lg font-medium mx-1">{{mexUsd}}</span>
+                        </h3>
+                    </div>
+
                     <input
                         type="text"
                         placeholder="What can I do for you?    (eg. /help)"
-                        class="w-1/3 px-5 py-1 text-rose-100 placeholder:text-rose-100 font-medium bg-rose-700 border-2 border-rose-200 rounded hover:bg-rose-800"
+                        class="px-5 py-1 text-rose-100 placeholder:text-rose-100 font-medium bg-rose-700 border-2 border-rose-200 rounded hover:bg-rose-800"
                     />
 
                     <button class="px-3 py-1 bg-blue-100 border-2 border-blue-400 rounded hover:bg-blue-200">
@@ -56,10 +63,18 @@ updateTicker()
             </div>
         </section>
 
-        <section class="bg-white">
-            <nav class="px-20 py-5 max-w-7xl mx-auto flex justify-between">
+        <section class="bg-gradient-to-r from-yellow-50 to-yellow-100 border-b-2 border-yellow-400 shadow">
+            <nav class="px-3 py-2 max-w-5xl mx-auto flex justify-between font-light tracking-widest">
                 <NuxtLink to="/" class="hover:underline">
                     Dashboard
+                </NuxtLink>
+
+                <NuxtLink to="/assets" class="hover:underline">
+                    Assets
+                </NuxtLink>
+
+                <NuxtLink to="/contracts" class="hover:underline">
+                    Contracts
                 </NuxtLink>
 
                 <NuxtLink to="/blocks" class="hover:underline">
@@ -69,29 +84,7 @@ updateTicker()
                 <NuxtLink to="/txs" class="hover:underline">
                     Transactions
                 </NuxtLink>
-
-                <NuxtLink to="/assets" class="hover:underline">
-                    Assets
-                </NuxtLink>
-
-                <NuxtLink to="/defi" class="hover:underline">
-                    DeFi
-                </NuxtLink>
-
-                <NuxtLink to="/contracts" class="hover:underline">
-                    Contracts
-                </NuxtLink>
             </nav>
-
-        </section>
-
-        <section class="bg-gradient-to-r from-gray-100 to-gray-200">
-            <div class="py-1 max-w-7xl mx-auto flex justify-end">
-                <h3 class="px-3 py-1 flex items-center text-gray-500 mr-5 bg-gray-700 border-2 border-yellow-400 rounded-full">
-                    <span class="text-yellow-100 text-sm">MEX/USD</span>
-                    <span class="text-yellow-300 text-lg font-medium mx-1">{{mexUsd}}</span>
-                </h3>
-            </div>
         </section>
     </header>
 
@@ -196,18 +189,6 @@ updateTicker()
 
                                     <div class="ml-4 text-base font-medium text-gray-900">
                                         Assets
-                                    </div>
-                                </NuxtLink>
-
-                                <NuxtLink to="/defi" @click="isShowingMobileMenu = false" class="-m-3 flex items-center rounded-lg p-3 hover:bg-gray-50">
-                                    <div class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-md bg-gradient-to-r from-purple-600 to-indigo-600 text-white">
-                                        <svg class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v17.25m0 0c-1.472 0-2.882.265-4.185.75M12 20.25c1.472 0 2.882.265 4.185.75M18.75 4.97A48.416 48.416 0 0012 4.5c-2.291 0-4.545.16-6.75.47m13.5 0c1.01.143 2.01.317 3 .52m-3-.52l2.62 10.726c.122.499-.106 1.028-.589 1.202a5.988 5.988 0 01-2.031.352 5.988 5.988 0 01-2.031-.352c-.483-.174-.711-.703-.59-1.202L18.75 4.971zm-16.5.52c.99-.203 1.99-.377 3-.52m0 0l2.62 10.726c.122.499-.106 1.028-.589 1.202a5.989 5.989 0 01-2.031.352 5.989 5.989 0 01-2.031-.352c-.483-.174-.711-.703-.59-1.202L5.25 4.971z"></path>
-                                        </svg>
-                                    </div>
-
-                                    <div class="ml-4 text-base font-medium text-gray-900">
-                                        DeFi
                                     </div>
                                 </NuxtLink>
 

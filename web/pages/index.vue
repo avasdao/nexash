@@ -16,12 +16,22 @@ useHead({
 <template>
     <main class="bg-white">
         <main class="max-w-7xl mx-auto">
-            <SearchView />
+            <div class="mt-10 px-3 lg:px-0 grid grid-cols-1 lg:grid-cols-5 gap-8">
+                <section class="col-span-1 lg:col-span-3 flex flex-col gap-4">
+                    <SearchView />
+
+                    <FeaturedStats />
+                </section>
+
+                <section class="col-span-1 lg:col-span-2 h-32 lg:h-full flex bg-sky-100 border-2 border-sky-400 justify-center items-center rounded-lg">
+                    <h4 class="text-sm text-sky-600 font-light">[ YOUR AD GOES HERE ]</h4>
+                </section>
+            </div>
 
             <!-- <HeroView /> -->
 
             <ClientOnly fallback-tag="span" fallback="Loading transactions...">
-                <div class="mt-5 px-3 lg:px-0 grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="mt-12 px-3 lg:px-0 grid grid-cols-1 lg:grid-cols-2 gap-8">
                     <TransactionsView />
 
                     <BlocksView />
