@@ -35,9 +35,11 @@ const logsDb = new PouchDB(`http://${process.env.COUCHDB_USER}:${process.env.COU
 const app = express()
 
 /* Set rate limits. */
+// FIXME We MUST take into account the load balacing distribution
+//       in calculating these limits.
 const limiter = rateLimit({
-	windowMs: 2 * 60 * 1000, // NOTE: Default is 2 minutes.
-	max: 10, // NOTE: We limit each IP to 250 requests per 2 minute window.
+	windowMs: 1 * 60 * 1000, // NOTE: Default is 1 minute.
+	max: 60, // NOTE: We limit each IP to 60 requests per 1 minute window (avg 1 request per second across ALL instances).
 	standardHeaders: true, // NOTE: Return rate limit info in the `RateLimit-*` headers.
 	legacyHeaders: false, // NOTE: Disable the `X-RateLimit-*` headers.
 })
