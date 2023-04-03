@@ -16,4 +16,5 @@ RUN yarn build
 
 EXPOSE 3000
 
-CMD ["node", "/webapp/.output/server/index.mjs"]
+# CMD ["node", "/webapp/.output/server/index.mjs"]
+CMD ["node", "./cluster.js"]

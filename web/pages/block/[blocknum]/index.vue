@@ -8,8 +8,7 @@ useHead({
 })
 
 const route = useRoute()
-
-console.log('ROUTE PARAMS', route.params)
+// console.log('ROUTE PARAMS', route.params)
 
 const blocknum = route.params.blocknum
 
