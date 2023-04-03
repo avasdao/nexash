@@ -1,6 +1,6 @@
 /* Import modules. */
-import cluster from 'cluster'
-import os from 'os'
+const cluster = require('cluster')
+const os = require('os')
 
 if (cluster.isPrimary) {
     // Count the machine's CPUs
