@@ -16,5 +16,6 @@ if (cluster.isPrimary) {
         cluster.fork()
     })
 } else {
-    require('/webapp/.output/server/index.mjs')
+    // NOTE: Dynamic import of ES module.
+    import('/webapp/.output/server/index.mjs')
 }
