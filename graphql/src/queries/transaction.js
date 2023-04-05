@@ -50,6 +50,13 @@ export default {
             console.log('TRANSACTION (by idem):', transaction)
         }
 
+        if (!transaction && args?.txid) {
+            // NOTE: We MUST convert height (Int) to a (String).
+            transaction = await transactionsDb.query(args.txid[0])
+                .catch(err => console.error(err))
+            console.log('TRANSACTION (by id):', transaction)
+        }
+
         /* Validate transaction. */
         if (!transaction) {
             return []
