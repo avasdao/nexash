@@ -27,7 +27,7 @@ export default {
         },
     },
     resolve: async (parent, args, params) => {
-        console.log('Transaction (args):', args)
+        // console.log('Transaction (args):', args)
 
         /* Initialize transaction. */
         let transaction = null
@@ -48,7 +48,7 @@ export default {
             transaction = await transactionsDb
                 .get(args.txidem[0])
                 .catch(err => console.error(err))
-            console.log('TRANSACTION (by idem):', transaction)
+            // console.log('TRANSACTION (by idem):', transaction)
         }
 
         if (!transaction && args?.txid) {
@@ -59,7 +59,7 @@ export default {
                     include_docs: true,
                 })
                 .catch(err => console.error(err))
-            console.log('TRANSACTION (by id):', transaction)
+            // console.log('TRANSACTION (by id):', transaction)
 
             /* Retrieve (document) result. */
             if (transaction?.rows[0]?.doc) {

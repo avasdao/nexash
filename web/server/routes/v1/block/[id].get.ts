@@ -50,6 +50,8 @@ export default defineEventHandler(async (event) => {
 
     if (result?.data?.block) {
         block = result.data.block[0]
+    } else {
+        block = {}
     }
 
     /* Return block. */
