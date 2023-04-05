@@ -45,14 +45,18 @@ export default {
         /* Validate transaction height. */
         if (!transaction && args?.txidem) {
             // NOTE: We MUST convert height (Int) to a (String).
-            transaction = await transactionsDb.get(args.txidem[0])
+            transaction = await transactionsDb
+                .get(args.txidem[0])
                 .catch(err => console.error(err))
             console.log('TRANSACTION (by idem):', transaction)
         }
 
         if (!transaction && args?.txid) {
             // NOTE: We MUST convert height (Int) to a (String).
-            transaction = await transactionsDb.query(args.txid[0])
+            transaction = await transactionsDb
+                .query('api/byTxid', {
+                    key: args.txid[0],
+                })
                 .catch(err => console.error(err))
             console.log('TRANSACTION (by id):', transaction)
         }
