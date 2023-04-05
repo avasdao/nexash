@@ -56,6 +56,7 @@ export default {
             transaction = await transactionsDb
                 .query('api/byTxid', {
                     key: args.txid[0],
+                    include_docs: true,
                 })
                 .catch(err => console.error(err))
             console.log('TRANSACTION (by id):', transaction)
