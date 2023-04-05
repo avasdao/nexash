@@ -60,6 +60,11 @@ export default {
                 })
                 .catch(err => console.error(err))
             console.log('TRANSACTION (by id):', transaction)
+
+            /* Retrieve (document) result. */
+            if (transaction?.rows[0]?.doc) {
+                transaction = transaction.rows[0].doc
+            }
         }
 
         /* Validate transaction. */
