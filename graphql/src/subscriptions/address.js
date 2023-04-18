@@ -28,8 +28,8 @@ export default (_pubsub) => ({
     subscribe: withFilter(
         () => _pubsub.asyncIterator('ADDRESS_UPDATE'),
         (_payload, _args) => {
-            // console.log('SUBSCRIBE PAYLOAD', _payload)
-            // console.log('SUBSCRIBE ARGS', _args)
+            console.log('SUBSCRIBE PAYLOAD', _payload)
+            console.log('SUBSCRIBE ARGS', _args)
 
             /* Validate filter arguments. */
             if (Object.keys(_args).length === 0) {
