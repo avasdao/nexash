@@ -28,9 +28,10 @@ export default (_pubsub) => ({
     subscribe: withFilter(
         () => _pubsub.asyncIterator('ADDRESS_UPDATE'),
         (_payload, _args) => {
-            // console.log('SUBSCRIBE PAYLOAD', _payload)
-            console.log('SUBSCRIBE PAYLOAD (address.base58):', _payload?.address?.base58)
-            console.log('SUBSCRIBE ARGS', _args)
+            if (payload?.address?.base58.slice(0, 13) === 'nexa:nqtsq5g5y') {
+                console.log('SUBSCRIBE PAYLOAD', _payload)
+                console.log('SUBSCRIBE ARGS', _args)
+            }
 
             /* Validate filter arguments. */
             if (Object.keys(_args).length === 0) {
