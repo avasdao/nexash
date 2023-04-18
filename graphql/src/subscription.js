@@ -109,7 +109,7 @@ transactionsDb.changes({
             txidem: transaction.txidem,
             hex: transaction.hex,
         }
-        console.log('ADDRESS', address)
+        // console.log('ADDRESS', address)
 
         /* Publish address update. */
         pubsub.publish('ADDRESS_UPDATE', { address })

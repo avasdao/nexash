@@ -78,6 +78,7 @@ export default (_pubsub) => ({
                 })
             }
 
+            console.log('hasMatch', hasMatch);
             /* Return false (no match). */
             return hasMatch
         }
