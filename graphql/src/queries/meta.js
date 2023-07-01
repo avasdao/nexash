@@ -26,8 +26,8 @@ export default {
             description: `Provide serialized __Request(s)__ to be processed by Meta networks.`,
         },
     },
-    resolve: (_root, args, ctx) => {
-        console.log('MMeta (args):', args)
+    resolve: (_root, _args, _ctx) => {
+        console.log('MMeta (args):', _args)
 
         return [JSON.stringify({
             field1: 'This is a META asset!',

@@ -20,8 +20,8 @@ export default {
             description: `Enter one ore more __Account Address(es)__ to limit your search.`,
         },
     },
-    resolve: (_root, args, ctx) => {
-        console.log('ACCOUNT ARGS:', args)
+    resolve: (_root, _args, _ctx) => {
+        console.log('ACCOUNT ARGS:', _args)
         return {
             field1: 'This is an ACCOUNT asset!',
             field2: 1337,

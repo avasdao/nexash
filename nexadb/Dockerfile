@@ -12,8 +12,5 @@ COPY package.json /usr/src/app/package.json
 RUN yarn install --silent
 
 COPY . /usr/src/app
-#RUN yarn run build
-
-#EXPOSE 3000
 
 CMD ["node", "./daemon.js"]

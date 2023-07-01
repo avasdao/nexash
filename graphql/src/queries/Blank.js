@@ -19,8 +19,8 @@ export default {
     //         description: `Field description goes here.`,
     //     },
     // },
-    resolve: (_root, args, ctx) => {
-        console.log('Blank (args):', args)
+    resolve: (_root, _args, _ctx) => {
+        console.log('Blank (args):', _args)
 
         return [{
             field1: 'This is a BLANK asset!',

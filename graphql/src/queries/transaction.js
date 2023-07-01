@@ -26,8 +26,8 @@ export default {
             description: `Provide a __Transaction__ id.`,
         },
     },
-    resolve: async (parent, args, params) => {
-        // console.log('Transaction (args):', args)
+    resolve: async (_root, _args, _ctx) => {
+        // console.log('Transaction (args):', _args)
 
         /* Initialize transaction. */
         let transaction = null

@@ -26,8 +26,8 @@ export default {
         },
 
     },
-    resolve: (_root, args, ctx) => {
-        console.log('Token (args):', args)
+    resolve: (_root, _args, _ctx) => {
+        console.log('Token (args):', _args)
 
         return [{
             groupid: 'nexa:tzgroupid-goes-here',

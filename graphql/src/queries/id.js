@@ -24,8 +24,8 @@ export default {
             description: `Provide one or more __Session ID(s)__ to receive _Profile_ and/or _Session_ info.`,
         },
     },
-    resolve: (_root, args, ctx) => {
-        console.log('Nexa ID (args):', args)
+    resolve: (_root, _args, _ctx) => {
+        console.log('Nexa ID (args):', _args)
 
         return [{
             field1: 'This is a PROFILE!',

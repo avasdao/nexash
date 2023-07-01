@@ -19,8 +19,8 @@ export default {
             description: `Enter a __Base58__-formatted string.`,
         },
     },
-    resolve: (_root, args, ctx) => {
-        console.log('Address (args):', args)
+    resolve: (_root, _args, _ctx) => {
+        console.log('Address (args):', _args)
 
         return [{
             base58: 'nexa:nqsome-random-address',

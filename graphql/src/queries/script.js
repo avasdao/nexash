@@ -19,8 +19,8 @@ export default {
             description: `Enter the __Prefix__ for an on-chain Script.`,
         },
     },
-    resolve: (_root, args, ctx) => {
-        console.log('Script (args):', args)
+    resolve: (_root, _args, _ctx) => {
+        console.log('Script (args):', _args)
 
         return ['010203040506070809']
     },

@@ -26,8 +26,8 @@ export default {
             description: `Provide a __Block__ height.`,
         },
     },
-    resolve: async (parent, args, params) => {
-        // console.log('Block (args):', args)
+    resolve: async (_root, _args, _ctx) => {
+        // console.log('Block (args):', _args)
 
         /* Initialize block. */
         let block = null

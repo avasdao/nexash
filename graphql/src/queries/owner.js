@@ -19,8 +19,8 @@ export default {
             description: `Provide the __Address__ for an Owner.`,
         },
     },
-    resolve: (_root, args, ctx) => {
-        console.log('Owner (args):', args)
+    resolve: (_root, _args, _ctx) => {
+        console.log('Owner (args):', _args)
 
         return [{
             field1: 'This is a BLANK asset!',
