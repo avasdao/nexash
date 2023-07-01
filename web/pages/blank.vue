@@ -1,8 +1,8 @@
 <script setup lang="ts">
 useHead({
-    title: 'Blank — Nexa Studio',
+    title: 'Blank — NexaShell',
     meta: [
-        { name: 'description', content: 'Nexa Studio makes building your next BIG idea effortless.' }
+        { name: 'description', content: 'NexaShell makes building your next BIG idea effortless.' }
     ],
 })
 
@@ -45,5 +45,5 @@ watch(System.$state, (_state) => {
         </p>
     </main>
 
-    <Footer />
+    <FooterView />
 </template>
