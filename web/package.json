@@ -1,6 +1,6 @@
 {
   "name": "nexash-web",
-  "version": "23.3.26",
+  "version": "23.7.1",
   "license": "MIT",
   "description": "NexaShell offers enterprise-class data delivery services for the Nexa blockchain.",
   "scripts": {
@@ -11,12 +11,16 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "@nexajs/address": "23.6.23",
+    "@nexajs/utils": "23.5.15",
+    "@pinia/nuxt": "0.4.11",
     "graphql": "16.6.0",
     "graphql-ws": "5.12.0",
     "isomorphic-ws": "5.0.0",
     "moment": "2.29.4",
     "numeral": "2.0.6",
     "nuxt": "3.0.0",
+    "pinia": "2.1.4",
     "uuid": "9.0.0",
     "ws": "8.12.0",
     "zeromq": "6.0.0-beta.16"
