@@ -53,38 +53,47 @@ onMounted(() => {
                 Featured Assets
             </h2>
 
-            <div
+            <NuxtLink
                 v-for="asset of topAssets"
                 :key="asset.token"
-                class="px-3 py-1 bg-amber-200 border-2 border-amber-400 rounded-lg shadow"
+                :to="'/token/' + asset.token"
+                class="px-3 py-1 bg-gray-100 border-2 border-gray-300 rounded-lg shadow"
             >
-                <h2 class="text-2xl text-amber-800 font-medium">
+                <h2 class="text-2xl text-sky-800 font-medium">
                     {{asset.name}}
                 </h2>
 
-                <h3 class="text-lg text-amber-600 font-medium">
+                <h3 class="text-lg text-sky-600 font-medium">
                     ${{asset.ticker}}
                 </h3>
 
-                <h5 class="text-xs text-amber-700 font-medium">
+                <h5 class="text-sm text-sky-700 font-medium">
                     Decimals: {{asset.decimals || 0}}
                 </h5>
 
-                <h5 class="text-xs text-amber-700 font-medium truncate">
-                    {{asset.token}}
-                </h5>
-
-                <h5 class="text-xs text-amber-700 font-medium truncate">
-                    {{asset.documentUrl}}
-                </h5>
-
-                <h4 class="text-amber-600 font-medium">
-                    <span class="text-lg text-amber-700 font-bold">
+                <h4 class="text-sky-600 font-medium">
+                    <span class="text-lg text-sky-700 font-bold">
                         {{numeral(asset.txCount).format('0,0')}}
                     </span>
                     transactions
                 </h4>
-            </div>
+
+                <section class="w-fit mx-3 my-2 px-3 py-1 bg-sky-100 border-2 border-sky-300 rounded-xl">
+                    <h5 class="text-xs text-sky-700 font-medium truncate">
+                        {{asset.token}}
+                    </h5>
+
+                    <h5 class="text-xs text-sky-700 font-medium truncate">
+                        {{asset.tokenIdHex}}
+                    </h5>
+
+                    <h5 class="text-xs text-sky-700 font-medium truncate">
+                        {{asset.documentUrl}}
+                    </h5>
+
+                </section>
+
+            </NuxtLink>
             <!-- <pre>{{topAssets}}</pre> -->
         </section>
     </main>
