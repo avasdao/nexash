@@ -1,69 +1,76 @@
 <script setup>
 /* Import modules. */
 import numeral from 'numeral'
-import { ref } from 'vue'
+
+const Router = useRouter()
 
 const isShowingSolutionsMenu = ref(false)
 const isShowingMobileMenu = ref(false)
 
+const mexUsd = ref(null)
+const query = ref(null)
+
+const ENDPOINT = 'https://nexa.exchange'
 const TICKER_UPDATE_INTERVAL = 30000 // default: 30 seconds
 
-/* Initialize NEX/USD holder. */
-const mexUsd = ref(null)
 
-const ENDPOINT = 'https://nexa.exchange/mex'
+watch(query, (_query) => {
+    console.log('QUERY IS NOW', _query)
+
+    if (_query.length === 64) {
+        Router.push('/tx/' + _query)
+    }
+})
 
 const updateTicker = async () => {
-    const price = await $fetch(ENDPOINT)
+    /* Request price. */
+    const mex = await $fetch(ENDPOINT + '/mex')
         .catch(err => console.error)
-    // console.log('MEX PRICE', price)
 
-    mexUsd.value = numeral(price).format('$0,0.00[00]')
+    /* Set price. */
+    mexUsd.value = numeral(mex).format('$0,0.00[00]')
 }
 
-/* Start price update (interval). */
+/* Start ticker update (interval). */
 setInterval(updateTicker, TICKER_UPDATE_INTERVAL)
 
-/* Update price. */
+/* Update ticker. */
 updateTicker()
-
 </script>
 
 <template>
-    <!-- <header class="hidden md:flex flex-col"> -->
     <header class="hidden md:flex flex-col sticky top-0 z-50 opacity-[.99]">
-        <section class="py-1 bg-gradient-to-r from-rose-400 to-rose-600">
+        <section class="py-1 bg-gradient-to-r from-amber-400 to-amber-600 border-b border-amber-700">
             <div class="max-w-7xl mx-auto flex justify-between">
                 <NuxtLink to="/" class="flex gap-4 items-center">
                     <img class="h-6 w-auto sm:h-8" src="~/assets/icon.png" alt="" />
 
-                    <h1 class="text-2xl text-gray-100 font-bold">
+                    <h1 class="text-3xl text-amber-700 font-light tracking-tighter">
                         NexaShell
                     </h1>
                 </NuxtLink>
 
-                <section class="flex gap-4">
-                    <div class="py-1 max-w-7xl mx-auto flex justify-end">
-                        <h3 class="px-3 py-1 flex items-center text-gray-500 mr-5 bg-gray-700 border-2 border-yellow-400 rounded-full">
-                            <span class="text-yellow-100 text-sm">mNEXA/USD</span>
-                            <span class="text-yellow-300 text-lg font-medium mx-1">{{mexUsd}}</span>
-                        </h3>
-                    </div>
+                <section class="flex flex-row items-center gap-4">
+                    <h3 class="px-5 py-1 flex items-end text-gray-500 bg-amber-700 border-0 border-yellow-400 rounded-full">
+                        <span class="text-amber-100 text-xs mb-1">mNEXA/USD</span>
+                        <span class="text-amber-200 text-2xl font-medium mx-1">{{mexUsd}}</span>
+                    </h3>
 
                     <input
                         type="text"
-                        placeholder="What can I do for you?    (eg. /help)"
-                        class="px-5 py-1 text-rose-100 placeholder:text-rose-100 font-medium bg-rose-700 border-2 border-rose-200 rounded hover:bg-rose-800"
+                        placeholder="Search addrs, tokens, txs..."
+                        v-model="query"
+                        class="h-10 px-5 py-1 text-amber-100 placeholder:text-amber-100 font-medium bg-gray-900 border-0 border-amber-300 rounded-full hover:bg-gray-800"
                     />
 
-                    <button class="px-3 py-1 bg-blue-100 border-2 border-blue-400 rounded hover:bg-blue-200">
-                        <h3 class="text-xl font-medium">Get Connected</h3>
-                    </button>
+                    <svg class="w-12 h-auto text-amber-300" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"></path>
+                    </svg>
                 </section>
             </div>
         </section>
 
-        <section class="bg-gradient-to-r from-yellow-50 to-yellow-100 border-b-2 border-yellow-400 shadow">
+        <section class="bg-gradient-to-r from-yellow-50 to-yellow-100 border-b border-yellow-400 shadow">
             <nav class="px-3 py-2 max-w-5xl mx-auto flex justify-between font-light tracking-widest">
                 <NuxtLink to="/" class="hover:underline">
                     Dashboard
@@ -231,10 +238,6 @@ updateTicker()
                             >
                                 Get Connected
                             </a>
-                            <!-- <p class="mt-6 text-center text-base font-medium text-gray-500">
-                                Existing customer?
-                                <a href="javascript://" class="text-gray-900">Sign in</a>
-                            </p> -->
                         </div>
                     </div>
                 </div>
