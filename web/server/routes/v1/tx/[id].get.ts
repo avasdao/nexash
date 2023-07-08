@@ -1,14 +1,19 @@
+/* Import modules. */
+import { getTransaction } from '@nexajs/rostrum'
+
 export default defineEventHandler(async (event) => {
     /* Set block id. */
     // NOTE: Either txid or txidem.
-    const transactionid = event.context.params.id
+    const id = event.context.params.id
+
+    return await getTransaction(id)
 
     /* Set Nexa GraphQL endpoint. */
     const ENDPOINT = 'https://nexa.sh/graphql'
 
     const query = `
     {
-        transaction(txidem: "${transactionid}", txid: "${transactionid}") {
+        transaction(txidem: "${id}", txid: "${id}") {
           txidem
           txid
           confirmations

@@ -7,14 +7,17 @@ useHead({
     }]
 })
 
-const route = useRoute()
-
-console.log('ROUTE PARAMS', route.params)
-
-const id = route.params.id
-
 /* Set Nexa GraphQL endpoint. */
 const ENDPOINT = 'https://nexa.sh/graphql'
+
+const isLoaded = ref(false)
+const transaction = ref(null)
+
+const route = useRoute()
+// console.log('ROUTE PARAMS', route.params)
+
+/* Set id. */
+const id = route.params.id
 
 const query = `
 {
@@ -58,34 +61,66 @@ const query = `
   }
 }
 `
-let transaction
+// let transaction
 
-/* Make query request. */
-const result = await $fetch(ENDPOINT,
-    {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
-        },
-        body: JSON.stringify({ query }),
-    })
-    .catch(err => console.error(err))
+// /* Make query request. */
+// const result = await $fetch(ENDPOINT,
+//     {
+//         method: 'POST',
+//         headers: {
+//             'Content-Type': 'application/json',
+//             'Accept': 'application/json',
+//         },
+//         body: JSON.stringify({ query }),
+//     })
+//     .catch(err => console.error(err))
 
-if (result?.data?.transaction) {
-    transaction = result.data.transaction[0]
+// if (result?.data?.transaction) {
+//     transaction = result.data.transaction[0]
+// }
+
+const init = async () => {
+    /* Initialize locals. */
+    let response
+
+    /* Request transaction. */
+    response = await $fetch('/v1/tx/' + id)
+        .catch(err => console.error(err))
+    console.log('RESPONSE', response)
+
+    /* Set transaction details. */
+    transaction.value = response
+
+    /* Set flag. */
+    isLoaded.value = true
 }
+
+onMounted(() => {
+    init()
+})
+
+// onBeforeUnmount(() => {
+//     console.log('Before Unmount!')
+//     // Now is the time to perform all cleanup operations.
+// })
+
 </script>
 
 <template>
-    <main v-if="transaction" class="">
-        <main class="max-w-7xl mx-auto">
+    <main v-if="!isLoaded" class="max-w-5xl mx-auto py-20">
+        <h2 class="text-3xl font-medium text-center">
+            Loading. Please wait...
+        </h2>
+    </main>
+
+    <main v-else-if="transaction" class="max-w-7xl mx-auto">
+        <div class="flex flex-col gap-4">
             <section class="p-3">
-                <h1 class="text-4xl font-medium">
+                <h1 class="text-3xl font-medium">
                     {{transaction?.txidem}}
                 </h1>
 
-                <NuxtLink :to="'/tx/' + txid + '/privacy'" class="text-lg text-blue-500 font-medium hover:underline">
+                <NuxtLink :to="'/tx/' + id + '/privacy'" class="text-lg text-blue-500 font-medium hover:underline">
                     View Privacy Report
                 </NuxtLink>
 
@@ -167,16 +202,10 @@ if (result?.data?.transaction) {
             />
 
 
-            <pre class="block text-lg font-medium">
+            <pre class="block text-xs font-medium">
                 {{ transaction }}
             </pre>
-
-            <section class="p-32">
-                <div class="bg-yellow-100 border-4 border-yellow-400 rounded-xl">
-                    <pre>{{debug}}</pre>
-                </div>
-            </section>
-        </main>
+        </div>
     </main>
 
     <main v-else class="max-w-7xl mx-auto">
