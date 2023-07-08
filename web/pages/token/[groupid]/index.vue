@@ -293,7 +293,7 @@ onMounted(async () => {
                                             Homepage
                                         </div>
 
-                                        <NuxtLink :to="homepageUrl" target="_blank" class="text-sm text-sky-900 font-medium text-center sm:text-left group px-2 py-1 col-span-1 sm:col-span-2 bg-sky-200 hover:bg-sky-300">
+                                        <NuxtLink :to="homepageUrl" target="_blank" class="text-sm text-sky-900 font-medium text-center sm:text-left group px-2 py-1 col-span-1 sm:col-span-2 bg-sky-200 hover:bg-sky-300 truncate">
                                             {{homepageUrl}}
 
                                             <svg class="inline ml-2 w-3 h-auto group-hover:w-4" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -307,7 +307,7 @@ onMounted(async () => {
                                             Document URL
                                         </div>
 
-                                        <NuxtLink :to="tokenUrl" target="_blank" class="text-sm text-sky-900 font-medium text-center sm:text-left group px-2 py-1 col-span-1 sm:col-span-2 bg-sky-200 hover:bg-sky-300">
+                                        <NuxtLink :to="tokenUrl" target="_blank" class="text-sm text-sky-900 font-medium text-center sm:text-left group px-2 py-1 col-span-1 sm:col-span-2 bg-sky-200 hover:bg-sky-300 truncate">
                                             {{tokenUrl}}
 
                                             <svg class="inline ml-2 w-3 h-auto group-hover:w-4" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -325,7 +325,7 @@ onMounted(async () => {
                                             Category
                                         </div>
 
-                                        <div class="text-sm text-sky-900 font-medium text-center sm:text-left group px-2 py-1 col-span-1 sm:col-span-2 bg-sky-200 hover:bg-sky-300">
+                                        <div class="text-sm text-sky-900 font-medium text-center sm:text-left group px-2 py-1 col-span-1 sm:col-span-2 bg-sky-200 hover:bg-sky-300 truncate">
                                             {{tokenDoc[0].category}}
                                         </div>
                                     </div>
@@ -335,7 +335,7 @@ onMounted(async () => {
                                             Legal
                                         </div>
 
-                                        <div class="text-sm text-sky-900 font-medium text-center sm:text-left group px-2 py-1 col-span-1 sm:col-span-2 bg-sky-200 hover:bg-sky-300">
+                                        <div class="text-sm text-sky-900 font-medium text-center sm:text-left group px-2 py-1 col-span-1 sm:col-span-2 bg-sky-200 hover:bg-sky-300 truncate">
                                             {{tokenDoc[0].legal}}
                                         </div>
                                     </div>
@@ -345,7 +345,7 @@ onMounted(async () => {
                                             Contact
                                         </div>
 
-                                        <div class="text-sm text-sky-900 font-medium text-center sm:text-left group px-2 py-1 col-span-1 sm:col-span-2 bg-sky-200 hover:bg-sky-300">
+                                        <div class="text-sm text-sky-900 font-medium text-center sm:text-left group px-2 py-1 col-span-1 sm:col-span-2 bg-sky-200 hover:bg-sky-300 truncate">
                                             <p class="px-3 py-2 grid-cols-1 sm:col-span-2 text-xs truncate">{{JSON.stringify(tokenDoc?.[0].contact, null, 2)}}</p>
                                             <!-- <pre class="hidden lg:block px-3 py-2 grid-cols-1 sm:col-span-2 text-sm">{{JSON.stringify(tokenDoc?.[0].contact, null, 2)}}</pre> -->
                                         </div>
