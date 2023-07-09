@@ -2,11 +2,21 @@
 import { getTransaction } from '@nexajs/rostrum'
 
 export default defineEventHandler(async (event) => {
+    let id
+    let response
+    let result
+    let transaction
+
     /* Set block id. */
     // NOTE: Either txid or txidem.
-    const id = event.context.params.id
+    id = event.context.params.id
+    console.log('ID', id)
 
-    return await getTransaction(id)
+    response = await getTransaction(id)
+        .catch(err => console.error(err))
+    console.log('RESPONSE', response)
+
+    return response
 
     /* Set Nexa GraphQL endpoint. */
     const ENDPOINT = 'https://nexa.sh/graphql'
@@ -54,10 +64,9 @@ export default defineEventHandler(async (event) => {
       }
     `
 
-    let transaction
 
     /* Make query request. */
-    const result = await $fetch(ENDPOINT,
+    result = await $fetch(ENDPOINT,
         {
             method: 'POST',
             headers: {
