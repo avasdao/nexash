@@ -76,19 +76,18 @@ export default defineEventHandler(async (event) => {
     } else {
         transaction = {}
     }
-    console.log('TRANSACTION', transaction)
+    // console.log('TRANSACTION', transaction)
 
     if (transaction.confirmations === 0) {
-        response = await getTransaction(id)
+        response = await getTransaction(transaction.txid)
             .catch(err => console.error(err))
-        console.log('RESPONSE', response)
+        // console.log('RESPONSE', response)
 
-        transaction.extra = response
+        // transaction.extra = response
         transaction.height = response.height
         transaction.blockhash = response.blockhash
         transaction.blocktime = response.blocktime
         transaction.confirmations = response.confirmations
-
         transaction.version = response.version
         transaction.time = response.time
         transaction.locktime = response.locktime

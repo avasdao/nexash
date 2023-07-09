@@ -86,7 +86,7 @@ const init = async () => {
     /* Request transaction. */
     response = await $fetch('/v1/tx/' + id)
         .catch(err => console.error(err))
-    console.log('RESPONSE', response)
+    // console.log('RESPONSE', response)
 
     /* Set transaction details. */
     transaction.value = response
