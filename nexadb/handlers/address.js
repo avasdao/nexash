@@ -33,18 +33,27 @@ export default async (_transaction) => {
         if (saved) {
             /* Load transactions. */
             txs = saved.txs
+
+            /* Add transaction. */
+            txs.push(_transaction.txidem)
+
+            newAddress = {
+                ...saved,
+                txcount: txs.length,
+                txs,
+            }
         } else {
             /* Initialize transactions. */
             txs = []
-        }
 
-        /* Add transaction. */
-        txs.push(_transaction.txidem)
+            /* Add transaction. */
+            txs.push(_transaction.txidem)
 
-        newAddress = {
-            ...saved,
-            txcount: txs.length,
-            txs,
+            newAddress = {
+                _id: scriptPubKey,
+                txcount: txs.length,
+                txs,
+            }
         }
 
         result = await addressesDb
