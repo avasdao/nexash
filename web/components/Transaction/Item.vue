@@ -1,5 +1,6 @@
 <script setup lang="ts">
 const props = defineProps({
+    text: String,
     title: String,
     value: String,
 })
@@ -11,8 +12,12 @@ const props = defineProps({
             {{title}}
         </h3>
 
-        <span class="block text-sky-900 font-medium truncate">
+        <span v-if="value" class="block text-sky-900 font-medium truncate">
             {{value}}
+        </span>
+
+        <span v-if="text" class="block text-sky-900 font-medium">
+            {{text}}
         </span>
     </main>
 </template>

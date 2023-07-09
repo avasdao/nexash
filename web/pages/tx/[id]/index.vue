@@ -120,26 +120,72 @@ onMounted(() => {
                     {{transaction?.txidem}}
                 </h1>
 
-                <NuxtLink :to="'/tx/' + id + '/privacy'" class="w-full sm:w-fit block my-3 px-3 py-2 bg-rose-100 border-2 border-rose-600 text-lg text-rose-500 font-medium rounded-lg shadow hover:underline">
-                    View Privacy Report
-                </NuxtLink>
-
+                <span class="text-xs text-gray-400">
+                    txid: {{transaction?.txid}}
+                </span>
             </header>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <TransactionItem
-                    title="Transaction IDEM"
-                    :value="transaction.txidem"
-                />
+            <div>
+                <div class="sm:hidden">
+                    <label for="tabs" class="sr-only">Select a tab</label>
+                    <!-- Use an "onChange" listener to redirect the user to the selected tab URL. -->
+                    <select id="tabs" name="tabs" class="block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
+                        <option selected>Summary</option>
+                        <option>Inputs</option>
+                        <option>Outputs</option>
+                        <option>Privacy Report</option>
+                    </select>
+                </div>
+                <div class="hidden sm:block">
+                    <div class="border-b border-gray-200">
+                        <nav class="-mb-px flex space-x-8" aria-label="Tabs">
+                            <a href="javascript://" class="border-indigo-500 text-indigo-600 flex whitespace-nowrap border-b-2 py-4 px-1 text-sm font-medium">
+                                Overview
+                            </a>
 
+                            <a href="javascript://" class="border-transparent text-gray-500 hover:border-gray-200 hover:text-gray-700 flex whitespace-nowrap border-b-2 py-4 px-1 text-sm font-medium">
+                                Inputs
+                                <span class="bg-gray-100 text-gray-900 ml-3 hidden rounded-full py-0.5 px-2.5 text-xs font-medium md:inline-block">
+                                    {{transaction?.vin.length}}
+                                </span>
+                            </a>
+
+                            <a href="javascript://" class="border-transparent text-gray-500 hover:border-gray-200 hover:text-gray-700 flex whitespace-nowrap border-b-2 py-4 px-1 text-sm font-medium" aria-current="page">
+                                Outputs
+                                <span class="bg-gray-100 text-gray-900 ml-3 hidden rounded-full py-0.5 px-2.5 text-xs font-medium md:inline-block">
+                                    {{transaction?.vout.length}}
+                                </span>
+                            </a>
+
+                            <a href="javascript://" class="border-transparent text-gray-500 hover:border-gray-200 hover:text-gray-700 flex whitespace-nowrap border-b-2 py-4 px-1 text-sm font-medium">
+                                Dev Tools
+                            </a>
+
+                            <NuxtLink :to="'/tx/' + id + '/privacy'" class="border-transparent text-gray-500 hover:border-gray-200 hover:text-gray-700 flex whitespace-nowrap border-b-2 py-4 px-1 text-sm font-medium">
+                                Privacy Report
+                                <svg class="mx-1 w-3 h-auto" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"></path>
+                                </svg>
+                            </NuxtLink>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+
+            <div v-if="transaction" class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <TransactionItem
-                    title="Transaction ID"
-                    :value="transaction.txid"
+                    title="Block Height"
+                    :value="transaction.height"
                 />
 
                 <TransactionItem
                     title="Confirmations"
                     :value="transaction.confirmations"
+                />
+
+                <TransactionItem
+                    title="Fee"
+                    :value="transaction.fee + ' NEXA'"
                 />
 
                 <TransactionItem
@@ -158,31 +204,6 @@ onMounted(() => {
                 />
 
                 <TransactionItem
-                    title="Spends"
-                    :value="transaction.spends"
-                />
-
-                <TransactionItem
-                    title="Sends"
-                    :value="transaction.sends"
-                />
-
-                <TransactionItem
-                    title="Fee"
-                    :value="transaction.fee"
-                />
-
-                <TransactionItem
-                    title="Inputs"
-                    value="inputs here"
-                />
-
-                <TransactionItem
-                    title="Outputs"
-                    value="outputs here"
-                />
-
-                <TransactionItem
                     title="Block Hash"
                     :value="transaction.blockhash"
                 />
@@ -198,8 +219,9 @@ onMounted(() => {
                 />
 
                 <TransactionItem
-                    title="Hex"
-                    :value="transaction.hex"
+                    title="Raw Hex"
+                    :text="transaction.hex.match(/.{1,16}/g).join(' ')"
+                    class="col-span-3"
                 />
             </div>
 
