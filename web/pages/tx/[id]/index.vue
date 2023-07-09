@@ -113,98 +113,97 @@ onMounted(() => {
         </h2>
     </main>
 
-    <main v-else-if="transaction" class="max-w-7xl mx-auto">
-        <div class="flex flex-col gap-4">
-            <section class="p-3">
-                <h1 class="text-3xl font-medium">
+    <main v-else-if="transaction" class="max-w-7xl mx-auto py-10">
+        <div class="px-3 flex flex-col gap-4">
+            <header class="">
+                <h1 class="text-3xl font-medium truncate">
                     {{transaction?.txidem}}
                 </h1>
 
-                <NuxtLink :to="'/tx/' + id + '/privacy'" class="text-lg text-blue-500 font-medium hover:underline">
+                <NuxtLink :to="'/tx/' + id + '/privacy'" class="w-full sm:w-fit block my-3 px-3 py-2 bg-rose-100 border-2 border-rose-600 text-lg text-rose-500 font-medium rounded-lg shadow hover:underline">
                     View Privacy Report
                 </NuxtLink>
 
-            </section>
+            </header>
 
-            <TransactionItem
-                title="Transaction IDEM"
-                :value="transaction.txidem"
-            />
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <TransactionItem
+                    title="Transaction IDEM"
+                    :value="transaction.txidem"
+                />
 
-            <TransactionItem
-                title="Transaction ID"
-                :value="transaction.txid"
-            />
+                <TransactionItem
+                    title="Transaction ID"
+                    :value="transaction.txid"
+                />
 
-            <TransactionItem
-                title="Confirmations"
-                :value="transaction.confirmations"
-            />
+                <TransactionItem
+                    title="Confirmations"
+                    :value="transaction.confirmations"
+                />
 
-            <TransactionItem
-                title="Size"
-                :value="transaction.size"
-            />
+                <TransactionItem
+                    title="Size"
+                    :value="transaction.size"
+                />
 
-            <TransactionItem
-                title="Version"
-                :value="transaction.version"
-            />
+                <TransactionItem
+                    title="Version"
+                    :value="transaction.version"
+                />
 
-            <TransactionItem
-                title="Lock Time"
-                :value="transaction.locktime"
-            />
+                <TransactionItem
+                    title="Lock Time"
+                    :value="transaction.locktime"
+                />
 
-            <TransactionItem
-                title="Spends"
-                :value="transaction.spends"
-            />
+                <TransactionItem
+                    title="Spends"
+                    :value="transaction.spends"
+                />
 
-            <TransactionItem
-                title="Sends"
-                :value="transaction.sends"
-            />
+                <TransactionItem
+                    title="Sends"
+                    :value="transaction.sends"
+                />
 
-            <TransactionItem
-                title="Fee"
-                :value="transaction.fee"
-            />
+                <TransactionItem
+                    title="Fee"
+                    :value="transaction.fee"
+                />
 
-            <TransactionItem
-                title="Inputs"
-                value="inputs here"
-            />
+                <TransactionItem
+                    title="Inputs"
+                    value="inputs here"
+                />
 
-            <TransactionItem
-                title="Outputs"
-                value="outputs here"
-            />
+                <TransactionItem
+                    title="Outputs"
+                    value="outputs here"
+                />
 
-            <TransactionItem
-                title="Block Hash"
-                :value="transaction.blockhash"
-            />
+                <TransactionItem
+                    title="Block Hash"
+                    :value="transaction.blockhash"
+                />
 
-            <TransactionItem
-                title="Time"
-                :value="transaction.time"
-            />
+                <TransactionItem
+                    title="Time"
+                    :value="transaction.time"
+                />
 
-            <TransactionItem
-                title="Block Time"
-                :value="transaction.blocktime"
-            />
+                <TransactionItem
+                    title="Block Time"
+                    :value="transaction.blocktime"
+                />
 
-            <TransactionItem
-                title="Hex"
-                :value="transaction.hex"
-            />
+                <TransactionItem
+                    title="Hex"
+                    :value="transaction.hex"
+                />
+            </div>
 
-
-            <pre class="block text-xs font-medium">
-                {{ transaction }}
-            </pre>
+            <!-- <pre class="block text-xs font-medium">{{ transaction }}</pre> -->
         </div>
     </main>
 

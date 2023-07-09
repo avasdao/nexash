@@ -1,8 +1,4 @@
 <script setup>
-/* Import modules. */
-import { createClient } from 'graphql-ws'
-import { ref } from 'vue'
-
 useHead({
     title: 'NexaShell - Data Query',
     meta: [{
