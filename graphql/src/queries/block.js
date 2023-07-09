@@ -33,19 +33,19 @@ export default {
         let block = null
 
         /* Validate block hash. */
-        if (!block && args?.hash) {
+        if (!block && _args?.hash) {
             block = await blocksDb
                 .query('api/byHash', {
-                    key: args.hash[0],
+                    key: _args.hash[0],
                 })
                 .catch(err => console.error(err))
             // console.log('BLOCK (by hash):', block)
         }
 
         /* Validate block height. */
-        if (!block && args?.height.length) {
+        if (!block && _args?.height.length) {
             // NOTE: We MUST convert height (Int) to a (String).
-            block = await blocksDb.get(args.height[0].toString())
+            block = await blocksDb.get(_args.height[0].toString())
                 .catch(err => console.error(err))
             // console.log('BLOCK (by height):', block)
         }

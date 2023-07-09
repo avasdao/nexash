@@ -33,29 +33,29 @@ export default {
         let transaction = null
 
         /* Validate transaction id. */
-        // if (!transaction && args?.txid) {
+        // if (!transaction && _args?.txid) {
         //     transaction = await transactionsDb
         //         .query('api/byHash', {
-        //             key: args.txidem[0],
+        //             key: _args.txidem[0],
         //         })
         //         .catch(err => console.error(err))
         //     console.log('TRANSACTION (by id):', transaction)
         // }
 
         /* Validate transaction height. */
-        if (!transaction && args?.txidem) {
+        if (!transaction && _args?.txidem) {
             // NOTE: We MUST convert height (Int) to a (String).
             transaction = await transactionsDb
-                .get(args.txidem[0])
+                .get(_args.txidem[0])
                 .catch(err => console.error(err))
             // console.log('TRANSACTION (by idem):', transaction)
         }
 
-        if (!transaction && args?.txid) {
+        if (!transaction && _args?.txid) {
             // NOTE: We MUST convert height (Int) to a (String).
             transaction = await transactionsDb
                 .query('api/byTxid', {
-                    key: args.txid[0],
+                    key: _args.txid[0],
                     include_docs: true,
                 })
                 .catch(err => console.error(err))
