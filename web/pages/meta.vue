@@ -35,14 +35,113 @@ watch(System.$state, (_state) => {
 </script>
 
 <template>
-    <main class="max-w-7xl mx-auto py-5">
-        <h1 class="text-5xl font-medium">
-            MetaNet
-        </h1>
+    <main class="max-w-7xl mx-auto px-3 py-5 grid grid-cols-1 lg:grid-cols-5 gap-8">
+        <header class="col-span-1 lg:col-span-5 flex flex-col gap-3">
+            <h1 class="text-6xl sm:text-5xl font-medium">
+                Meta
+                <span class="block sm:inline text-4xl sm:text-5xl">Sidechains</span>
+            </h1>
 
-        <p>
-            An EVM-compatible sidechain for Nexa.
-        </p>
+            <p class="w-full sm:w-3/4 lg:w-1/2">
+                100% EVM-compatible L2 sidechains <em>(powered by <NuxtLink to="https://docs.avax.network/subnets" target="_blank" class="text-blue-500 font-medium hover:underline">Avalanche Subnets</NuxtLink>)</em> cross-bridged with Nexa L1 100K TPS blockchain.
+            </p>
+        </header>
+
+        <div class="mx-10 col-span-1 lg:col-span-5 border-t border-gray-300" />
+
+        <div class="col-span-1 lg:col-span-3 flex flex-col gap-8">
+            <section class="px-5 py-3 w-full grid grid-cols-2 gap-1 sm:gap-4 items-center bg-indigo-100 border-4 border-indigo-300 rounded-2xl shadow-md">
+                <h2 class="col-span-2 text-3xl font-medium">
+                    MetaNet
+                    <span class="text-base">Mainnet</span>
+                </h2>
+
+                <h3 class="col-span-2 sm:col-span-1 text-gray-700 text-center sm:text-right">
+                    Network name
+                </h3>
+                <h3 class="col-span-2 sm:col-span-1 text-lg font-medium text-center sm:text-left">
+                    MetaNet
+                </h3>
+
+                <h3 class="col-span-2 sm:col-span-1 text-gray-700 text-center sm:text-right">
+                    New RPC URL
+                </h3>
+                <h3 class="col-span-2 sm:col-span-1 text-lg font-medium text-center sm:text-left">
+                    https://nexa.sh/metanet
+                </h3>
+
+                <h3 class="col-span-2 sm:col-span-1 text-gray-700 text-center sm:text-right">
+                    Chain ID
+                </h3>
+                <h3 class="col-span-2 sm:col-span-1 text-lg font-medium text-center sm:text-left">
+                    7227
+                </h3>
+
+                <h3 class="col-span-2 sm:col-span-1 text-gray-700 text-center sm:text-right">
+                    Currency symbol
+                </h3>
+                <h3 class="col-span-2 sm:col-span-1 text-lg font-medium text-center sm:text-left">
+                    NEXA
+                </h3>
+
+                <h3 class="col-span-2 sm:col-span-1 text-gray-700 text-center sm:text-right">
+                    Block explorer URL
+                </h3>
+                <h3 class="col-span-2 sm:col-span-1 text-lg font-medium text-center sm:text-left">
+                    https://nexa.sh
+                </h3>
+            </section>
+
+            <section class="px-5 py-3 w-full grid grid-cols-2 gap-4 items-center bg-indigo-100 border-4 border-indigo-300 rounded-2xl shadow-md">
+                <h2 class="col-span-2 text-3xl font-medium">
+                    MetaTest
+                    <span class="text-base">Testnet</span>
+                </h2>
+
+                <h3 class="col-span-2 sm:col-span-1 text-gray-700 text-center sm:text-right">
+                    Network name
+                </h3>
+                <h3 class="col-span-2 sm:col-span-1 text-lg font-medium text-center sm:text-left">
+                    MetaTest
+                </h3>
+
+                <h3 class="col-span-2 sm:col-span-1 text-gray-700 text-center sm:text-right">
+                    New RPC URL
+                </h3>
+                <h3 class="col-span-2 sm:col-span-1 text-lg font-medium text-center sm:text-left">
+                    https://nexa.sh/metatest
+                </h3>
+
+                <h3 class="col-span-2 sm:col-span-1 text-gray-700 text-center sm:text-right">
+                    Chain ID
+                </h3>
+                <h3 class="col-span-2 sm:col-span-1 text-lg font-medium text-center sm:text-left">
+                    17227
+                </h3>
+
+                <h3 class="col-span-2 sm:col-span-1 text-gray-700 text-center sm:text-right">
+                    Currency symbol
+                </h3>
+                <h3 class="col-span-2 sm:col-span-1 text-lg font-medium text-center sm:text-left">
+                    NEXA
+                </h3>
+
+                <h3 class="col-span-2 sm:col-span-1 text-gray-700 text-center sm:text-right">
+                    Block explorer URL
+                </h3>
+                <h3 class="col-span-2 sm:col-span-1 text-lg font-medium text-center sm:text-left">
+                    https://nexa-test.sh
+                </h3>
+            </section>
+        </div>
+
+        <section class="col-span-1 lg:col-span-2 w-full flex flex-col items-center gap-8">
+            <p class="text-gray-400">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore, at possimus perspiciatis sapiente molestiae ab, eveniet, facere corrupti eaque pariatur adipisci nesciunt vitae quasi. Explicabo iste pariatur sint voluptas odio!
+            </p>
+
+            <img src="~/assets/lottie/101887-blockchain.gif" class="w-96 h-auto" />
+        </section>
     </main>
 
     <FooterView />
