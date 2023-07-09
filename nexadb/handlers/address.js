@@ -5,42 +5,46 @@ import PouchDB from 'pouchdb'
 const addressesDb = new PouchDB(`http://${process.env.COUCHDB_USER}:${process.env.COUCHDB_PASSWORD}@127.0.0.1:5984/addresses`)
 
 export default async (_transaction) => {
+    /* Initialize locals. */
     let newAddress
+    let output
+    let outputs
     let result
+    let saved
+    let scriptPubKey
+    let txs
 
-    const outputs = _transaction.vout
+    outputs = _transaction.vout
 
     for (let i = 0; i < outputs.length; i++) {
         /* Set output. */
-        const output = outputs[i]
+        output = outputs[i]
 
         /* Set script public key. */
-        const scriptPubKey = output.scriptPubKey.hex.slice(6)
+        scriptPubKey = output.scriptPubKey.hex.slice(6)
 
-        /* Saved (in database) value. */
-        const saved = await addressesDb
+        /* Request saved (in database) data. */
+        saved = await addressesDb
             .get(scriptPubKey)
             .catch(err => console.error(err))
         // console.log('SAVED (outputs):', saved)
 
+        /* Validate saved address. */
         if (saved) {
-            const txs = saved.txs
-            txs[_transaction.txidem] = _transaction.hex
-
-            newAddress = {
-                ...saved,
-                txcount: Object.keys(txs).length,
-                txs,
-            }
+            /* Load transactions. */
+            txs = saved.txs
         } else {
-            const txs = {}
-            txs[_transaction.txidem] = _transaction.hex
+            /* Initialize transactions. */
+            txs = []
+        }
 
-            newAddress = {
-                _id: scriptPubKey,
-                txcount: Object.keys(txs).length,
-                txs,
-            }
+        /* Add transaction. */
+        txs.push(_transaction.txidem)
+
+        newAddress = {
+            ...saved,
+            txcount: txs.length,
+            txs,
         }
 
         result = await addressesDb
