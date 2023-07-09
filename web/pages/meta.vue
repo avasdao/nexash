@@ -39,11 +39,11 @@ watch(System.$state, (_state) => {
         <header class="col-span-1 lg:col-span-5 flex flex-col gap-3">
             <h1 class="text-6xl sm:text-5xl font-medium">
                 Meta
-                <span class="block sm:inline text-4xl sm:text-5xl">Sidechains</span>
+                <span class="block sm:inline text-4xl sm:text-5xl">Sidechain</span>
             </h1>
 
             <p class="w-full sm:w-3/4 lg:w-1/2">
-                100% EVM-compatible L2 sidechains <em>(powered by <NuxtLink to="https://docs.avax.network/subnets" target="_blank" class="text-blue-500 font-medium hover:underline">Avalanche Subnets</NuxtLink>)</em> cross-bridged with Nexa L1 100K TPS blockchain.
+                100% EVM-compatible <span class="font-medium text-rose-600">L2</span> sidechain <em>(powered by <NuxtLink to="https://docs.avax.network/subnets" target="_blank" class="text-blue-500 font-medium hover:underline">Avalanche Subnets</NuxtLink>)</em> <span class="font-medium text-rose-600">WARP cross-bridged</span> with Nexa's <span class="font-medium text-rose-600">L1</span> 100K TPS blockchain.
             </p>
         </header>
 
@@ -66,16 +66,16 @@ watch(System.$state, (_state) => {
                 <h3 class="col-span-2 sm:col-span-1 text-gray-700 text-center sm:text-right">
                     New RPC URL
                 </h3>
-                <h3 class="col-span-2 sm:col-span-1 text-lg font-medium text-center sm:text-left">
+                <NuxtLink to="https://nexa.sh/metanet" target="_blank" class="col-span-2 sm:col-span-1 text-blue-500 text-lg font-medium text-center sm:text-left hover:underline">
                     https://nexa.sh/metanet
-                </h3>
+                </NuxtLink>
 
                 <h3 class="col-span-2 sm:col-span-1 text-gray-700 text-center sm:text-right">
                     Chain ID
                 </h3>
-                <h3 class="col-span-2 sm:col-span-1 text-lg font-medium text-center sm:text-left">
+                <NuxtLink to="https://chainlist.org/?search=7227" target="_blank" class="col-span-2 sm:col-span-1 text-blue-500 text-lg font-medium text-center sm:text-left hover:underline">
                     7227
-                </h3>
+                </NuxtLink>
 
                 <h3 class="col-span-2 sm:col-span-1 text-gray-700 text-center sm:text-right">
                     Currency symbol
@@ -87,9 +87,9 @@ watch(System.$state, (_state) => {
                 <h3 class="col-span-2 sm:col-span-1 text-gray-700 text-center sm:text-right">
                     Block explorer URL
                 </h3>
-                <h3 class="col-span-2 sm:col-span-1 text-lg font-medium text-center sm:text-left">
+                <NuxtLink to="https://nexa.sh" target="_blank" class="col-span-2 sm:col-span-1 text-blue-500 text-lg font-medium text-center sm:text-left hover:underline">
                     https://nexa.sh
-                </h3>
+                </NuxtLink>
             </section>
 
             <section class="px-5 py-3 w-full grid grid-cols-2 gap-4 items-center bg-indigo-100 border-4 border-indigo-300 rounded-2xl shadow-md">
@@ -108,16 +108,16 @@ watch(System.$state, (_state) => {
                 <h3 class="col-span-2 sm:col-span-1 text-gray-700 text-center sm:text-right">
                     New RPC URL
                 </h3>
-                <h3 class="col-span-2 sm:col-span-1 text-lg font-medium text-center sm:text-left">
+                <NuxtLink to="https://nexa.sh/metatest" target="_blank" class="col-span-2 sm:col-span-1 text-blue-500 text-lg font-medium text-center sm:text-left hover:underline">
                     https://nexa.sh/metatest
-                </h3>
+                </NuxtLink>
 
                 <h3 class="col-span-2 sm:col-span-1 text-gray-700 text-center sm:text-right">
                     Chain ID
                 </h3>
-                <h3 class="col-span-2 sm:col-span-1 text-lg font-medium text-center sm:text-left">
+                <NuxtLink to="https://chainlist.org/?testnets=true&search=17227" target="_blank" class="col-span-2 sm:col-span-1 text-blue-500 text-lg font-medium text-center sm:text-left hover:underline">
                     17227
-                </h3>
+                </NuxtLink>
 
                 <h3 class="col-span-2 sm:col-span-1 text-gray-700 text-center sm:text-right">
                     Currency symbol
@@ -129,9 +129,9 @@ watch(System.$state, (_state) => {
                 <h3 class="col-span-2 sm:col-span-1 text-gray-700 text-center sm:text-right">
                     Block explorer URL
                 </h3>
-                <h3 class="col-span-2 sm:col-span-1 text-lg font-medium text-center sm:text-left">
+                <NuxtLink to="https://nexa-test.sh" target="_blank" class="col-span-2 sm:col-span-1 text-blue-500 text-lg font-medium text-center sm:text-left hover:underline">
                     https://nexa-test.sh
-                </h3>
+                </NuxtLink>
             </section>
         </div>
 
