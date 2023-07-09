@@ -106,10 +106,10 @@ updateTicker()
                 </div>
 
                 <div class="py-1 max-w-7xl mx-auto flex justify-end">
-                    <h3 class="px-3 py-1 flex items-center text-gray-500 mr-5 bg-gray-700 border-2 border-yellow-400 rounded-full">
+                    <NuxtLink to="https://nexa.exchange/markets" target="_blank" class="px-3 py-1 flex items-center text-gray-500 mr-5 bg-gray-700 border-2 border-yellow-400 rounded-full">
                         <span class="text-yellow-100 text-sm">mNEXA/USD</span>
                         <span class="text-yellow-300 text-lg font-medium mx-1">{{mexUsd}}</span>
-                    </h3>
+                    </NuxtLink>
                 </div>
 
                 <div class="-my-2 -mr-2 md:hidden">
