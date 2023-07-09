@@ -51,10 +51,10 @@ updateTicker()
                 </NuxtLink>
 
                 <section class="flex flex-row items-center gap-4">
-                    <h3 class="px-5 py-1 flex items-end text-gray-500 bg-amber-700 border-0 border-yellow-400 rounded-full">
+                    <NuxtLink to="https://nexa.exchange/markets" target="_blank" class="px-5 py-1 flex items-end text-gray-500 bg-amber-700 border-0 border-yellow-400 rounded-full">
                         <span class="text-amber-100 text-xs mb-1">mNEXA/USD</span>
                         <span class="text-amber-200 text-2xl font-medium mx-1">{{mexUsd}}</span>
-                    </h3>
+                    </NuxtLink>
 
                     <input
                         type="text"
