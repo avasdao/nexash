@@ -40,7 +40,7 @@ updateTicker()
 
 <template>
     <header class="hidden md:flex flex-col sticky top-0 z-50 opacity-[.99]">
-        <section class="py-1 bg-gradient-to-r from-amber-400 to-amber-600 border-b border-amber-700">
+        <section class="px-3 py-1 bg-gradient-to-r from-amber-400 to-amber-600 border-b border-amber-700">
             <div class="max-w-7xl mx-auto flex justify-between">
                 <NuxtLink to="/" class="flex gap-4 items-center">
                     <img class="h-6 w-auto sm:h-8" src="~/assets/icon.png" alt="" />
@@ -71,7 +71,7 @@ updateTicker()
         </section>
 
         <section class="bg-gradient-to-r from-yellow-50 to-yellow-100 border-b border-yellow-400 shadow">
-            <nav class="px-3 py-2 max-w-5xl mx-auto flex justify-between font-light tracking-widest">
+            <nav class="px-3 sm:px-10 py-2 max-w-5xl mx-auto flex justify-between font-light tracking-widest">
                 <NuxtLink to="/" class="hover:underline">
                     Dashboard
                 </NuxtLink>
