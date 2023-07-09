@@ -10,13 +10,7 @@ export default defineEventHandler(async (event) => {
     /* Set block id. */
     // NOTE: Either txid or txidem.
     id = event.context.params.id
-    console.log('ID', id)
-
-    response = await getTransaction(id)
-        .catch(err => console.error(err))
-    console.log('RESPONSE', response)
-
-    return response
+    // console.log('ID', id)
 
     /* Set Nexa GraphQL endpoint. */
     const ENDPOINT = 'https://nexa.sh/graphql'
@@ -64,7 +58,6 @@ export default defineEventHandler(async (event) => {
       }
     `
 
-
     /* Make query request. */
     result = await $fetch(ENDPOINT,
         {
@@ -76,11 +69,29 @@ export default defineEventHandler(async (event) => {
             body: JSON.stringify({ query }),
         })
         .catch(err => console.error(err))
+    // console.log('RESULT', result)
 
     if (result?.data?.transaction) {
         transaction = result.data.transaction[0]
     } else {
         transaction = {}
+    }
+    console.log('TRANSACTION', transaction)
+
+    if (transaction.confirmations === 0) {
+        response = await getTransaction(id)
+            .catch(err => console.error(err))
+        console.log('RESPONSE', response)
+
+        transaction.extra = response
+        transaction.height = response.height
+        transaction.blockhash = response.blockhash
+        transaction.blocktime = response.blocktime
+        transaction.confirmations = response.confirmations
+
+        transaction.version = response.version
+        transaction.time = response.time
+        transaction.locktime = response.locktime
     }
 
     /* Return transaction. */

@@ -12,11 +12,11 @@ const props = defineProps({
             {{title}}
         </h3>
 
-        <span v-if="value" class="block text-sky-900 font-medium truncate">
+        <span v-if="typeof value !== 'undefined'" class="block text-sky-900 font-medium truncate">
             {{value}}
         </span>
 
-        <span v-if="text" class="block text-sky-900 font-medium">
+        <span v-if="typeof text !== 'undefined'" class="block text-sky-900 font-medium">
             {{text}}
         </span>
     </main>
