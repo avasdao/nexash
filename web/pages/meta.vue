@@ -84,7 +84,7 @@ const addTestnet = async () => {
         <div class="mx-10 col-span-1 lg:col-span-5 border-t border-gray-300" />
 
         <div class="col-span-1 lg:col-span-3 flex flex-col gap-8">
-            <section class="px-5 py-3 w-full grid grid-cols-2 gap-1 sm:gap-4 items-center bg-indigo-100 border-4 border-indigo-300 rounded-2xl shadow-md">
+            <section class="px-5 py-3 w-full grid grid-cols-2 gap-2 sm:gap-4 items-center bg-indigo-100 border-4 border-indigo-300 rounded-2xl shadow-md">
                 <h2 class="col-span-2 text-3xl font-medium">
                     MetaNet
                     <span class="text-base">Mainnet</span>
@@ -126,13 +126,13 @@ const addTestnet = async () => {
                 </NuxtLink>
 
                 <div class="col-span-2 flex justify-center">
-                    <button @click="addMainnet" class="px-5 py-2 w-fit text-xl text-amber-800 font-medium bg-amber-200 border-2 border-amber-400 rounded-lg shadow hover:bg-amber-100">
-                        Add MetaNet to Web3 Wallet
+                    <button @click="addMainnet" class="px-5 py-2 w-full lg:w-fit text-xl text-amber-800 font-medium bg-amber-200 border-2 border-amber-400 rounded-lg shadow hover:bg-amber-100">
+                        Add to Web3 Wallet
                     </button>
                 </div>
             </section>
 
-            <section class="px-5 py-3 w-full grid grid-cols-2 gap-4 items-center bg-indigo-100 border-4 border-indigo-300 rounded-2xl shadow-md">
+            <section class="px-5 py-3 w-full grid grid-cols-2 gap-2 sm:gap-4 items-center bg-indigo-100 border-4 border-indigo-300 rounded-2xl shadow-md">
                 <h2 class="col-span-2 text-3xl font-medium">
                     MetaTest
                     <span class="text-base">Testnet</span>
@@ -173,12 +173,12 @@ const addTestnet = async () => {
                     https://nexa-test.sh
                 </NuxtLink>
 
-                <div class="col-span-2 flex justify-center gap-4">
-                    <button @click="addTestnet" class="px-5 py-2 w-fit text-xl text-amber-800 font-medium bg-amber-200 border-2 border-amber-400 rounded-lg shadow hover:bg-amber-100">
-                        Add MetaTest to Web3 Wallet
+                <div class="col-span-2 flex flex-col lg:flex-row justify-center gap-4">
+                    <button @click="addTestnet" class="px-5 py-2 w-full lg:w-fit text-xl text-amber-800 font-medium bg-amber-200 border-2 border-amber-400 rounded-lg shadow hover:bg-amber-100">
+                        Add to Web3 Wallet
                     </button>
 
-                    <NuxtLink to="https://subnets-test.avax.network/subnets/4dguqEGXSUSS3aTwZeZJD9P7fWezoU9x5BiHYiRspjrXAV3GW" target="_blank" class="px-5 py-2 w-fit text-xl text-sky-800 font-medium bg-sky-200 border-2 border-sky-400 rounded-lg shadow hover:bg-sky-100">
+                    <NuxtLink to="https://subnets-test.avax.network/subnets/4dguqEGXSUSS3aTwZeZJD9P7fWezoU9x5BiHYiRspjrXAV3GW" target="_blank" class="px-5 py-2 w-full lg:w-fit text-xl text-sky-800 text-center font-medium bg-sky-200 border-2 border-sky-400 rounded-lg shadow hover:bg-sky-100">
                         Load Subnet Details
                     </NuxtLink>
                 </div>
