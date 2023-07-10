@@ -193,6 +193,4 @@ const addTestnet = async () => {
             <img src="~/assets/lottie/101887-blockchain.gif" class="w-96 h-auto" />
         </section>
     </main>
-
-    <FooterView />
 </template>
