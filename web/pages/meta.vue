@@ -22,6 +22,40 @@ watch(System.$state, (_state) => {
 })
 // watch additional states here...
 
+
+const addMainnet = () => {
+    if(confirm(`We're sorry, MetaNet has not yet been deployed. Do you want to learn more?`)) {
+        window.open('https://causes.cash/c/f900d1b8-1ae0-4e18-8a2f-212631b62562')
+    }
+}
+
+const addTestnet = async () => {
+    const _provider = {
+        chainId: '0x7229',
+        rpcUrls: [
+            'https://nexa.sh/metatest',
+        ],
+        chainName: 'MetaTest',
+        nativeCurrency: {
+            name: 'MetaTest',
+            symbol: 'NEXA',
+            decimals: 18,
+        },
+        // blockExplorerUrls: [ 'https://nexa-test.sh' ],
+        blockExplorerUrls: [ 'https://nexa.sh' ],
+        iconUrls: [ 'https://assets.nexa.sh/nexa.png' ],
+    }
+
+    const success = await window.ethereum
+        .request({
+            method: 'wallet_addEthereumChain',
+            params: [ _provider ],
+        })
+        .catch(err => console.error(err))
+    console.log('SUCCESS', success)
+}
+
+
 // onMounted(() => {
 //     console.log('Mounted!')
 //     // Now it's safe to perform setup operations.
@@ -73,8 +107,8 @@ watch(System.$state, (_state) => {
                 <h3 class="col-span-2 sm:col-span-1 text-gray-700 text-center sm:text-right">
                     Chain ID
                 </h3>
-                <NuxtLink to="https://chainlist.org/?search=7227" target="_blank" class="col-span-2 sm:col-span-1 text-blue-500 text-lg font-medium text-center sm:text-left hover:underline">
-                    7227
+                <NuxtLink to="https://chainlist.org/?testnets=true&search=nexa" target="_blank" class="col-span-2 sm:col-span-1 text-blue-500 text-lg font-medium text-center sm:text-left hover:underline">
+                    29223 <small>(0x7227)</small>
                 </NuxtLink>
 
                 <h3 class="col-span-2 sm:col-span-1 text-gray-700 text-center sm:text-right">
@@ -90,6 +124,12 @@ watch(System.$state, (_state) => {
                 <NuxtLink to="https://nexa.sh" target="_blank" class="col-span-2 sm:col-span-1 text-blue-500 text-lg font-medium text-center sm:text-left hover:underline">
                     https://nexa.sh
                 </NuxtLink>
+
+                <div class="col-span-2 flex justify-center">
+                    <button @click="addMainnet" class="px-5 py-2 w-fit text-xl text-amber-800 font-medium bg-amber-200 border-2 border-amber-400 rounded-lg shadow hover:bg-amber-100">
+                        Add MetaNet to Web3 Wallet
+                    </button>
+                </div>
             </section>
 
             <section class="px-5 py-3 w-full grid grid-cols-2 gap-4 items-center bg-indigo-100 border-4 border-indigo-300 rounded-2xl shadow-md">
@@ -115,8 +155,8 @@ watch(System.$state, (_state) => {
                 <h3 class="col-span-2 sm:col-span-1 text-gray-700 text-center sm:text-right">
                     Chain ID
                 </h3>
-                <NuxtLink to="https://chainlist.org/?testnets=true&search=17227" target="_blank" class="col-span-2 sm:col-span-1 text-blue-500 text-lg font-medium text-center sm:text-left hover:underline">
-                    17227
+                <NuxtLink to="https://chainlist.org/?testnets=true&search=nexa" target="_blank" class="col-span-2 sm:col-span-1 text-blue-500 text-lg font-medium text-center sm:text-left hover:underline">
+                    29225 <small>(0x7229)</small>
                 </NuxtLink>
 
                 <h3 class="col-span-2 sm:col-span-1 text-gray-700 text-center sm:text-right">
@@ -132,6 +172,16 @@ watch(System.$state, (_state) => {
                 <NuxtLink to="https://nexa-test.sh" target="_blank" class="col-span-2 sm:col-span-1 text-blue-500 text-lg font-medium text-center sm:text-left hover:underline">
                     https://nexa-test.sh
                 </NuxtLink>
+
+                <div class="col-span-2 flex justify-center gap-4">
+                    <button @click="addTestnet" class="px-5 py-2 w-fit text-xl text-amber-800 font-medium bg-amber-200 border-2 border-amber-400 rounded-lg shadow hover:bg-amber-100">
+                        Add MetaTest to Web3 Wallet
+                    </button>
+
+                    <NuxtLink to="https://subnets-test.avax.network/subnets/4dguqEGXSUSS3aTwZeZJD9P7fWezoU9x5BiHYiRspjrXAV3GW" target="_blank" class="px-5 py-2 w-fit text-xl text-sky-800 font-medium bg-sky-200 border-2 border-sky-400 rounded-lg shadow hover:bg-sky-100">
+                        Load Subnet Details
+                    </NuxtLink>
+                </div>
             </section>
         </div>
 
