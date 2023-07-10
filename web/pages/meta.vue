@@ -127,7 +127,7 @@ const addTestnet = async () => {
 
                 <div class="col-span-2 flex justify-center">
                     <button @click="addMainnet" class="px-5 py-2 w-full lg:w-fit text-xl text-amber-800 font-medium bg-amber-200 border-2 border-amber-400 rounded-lg shadow hover:bg-amber-100">
-                        Add to Web3 Wallet
+                        Add MetaNet to Wallet
                     </button>
                 </div>
             </section>
@@ -175,11 +175,11 @@ const addTestnet = async () => {
 
                 <div class="col-span-2 flex flex-col lg:flex-row justify-center gap-4">
                     <button @click="addTestnet" class="px-5 py-2 w-full lg:w-fit text-xl text-amber-800 font-medium bg-amber-200 border-2 border-amber-400 rounded-lg shadow hover:bg-amber-100">
-                        Add to Web3 Wallet
+                        Add MetaTest to Wallet
                     </button>
 
                     <NuxtLink to="https://subnets-test.avax.network/subnets/4dguqEGXSUSS3aTwZeZJD9P7fWezoU9x5BiHYiRspjrXAV3GW" target="_blank" class="px-5 py-2 w-full lg:w-fit text-xl text-sky-800 text-center font-medium bg-sky-200 border-2 border-sky-400 rounded-lg shadow hover:bg-sky-100">
-                        Load Subnet Details
+                        Open Subnet Details
                     </NuxtLink>
                 </div>
             </section>
