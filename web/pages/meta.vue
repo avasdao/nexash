@@ -35,7 +35,7 @@ const addTestnet = async () => {
         rpcUrls: [
             'https://nexa.sh/metatest',
         ],
-        chainName: 'Nexa (Testnet)',
+        chainName: 'Nexa (MetaTest)',
         nativeCurrency: {
             name: 'Nexa',
             symbol: 'NEXA',
