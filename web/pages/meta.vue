@@ -35,9 +35,9 @@ const addTestnet = async () => {
         rpcUrls: [
             'https://nexa.sh/metatest',
         ],
-        chainName: 'MetaTest',
+        chainName: 'Nexa (Testnet)',
         nativeCurrency: {
-            name: 'MetaTest',
+            name: 'Nexa',
             symbol: 'NEXA',
             decimals: 18,
         },
@@ -83,7 +83,7 @@ const addTestnet = async () => {
 
         <div class="mx-10 col-span-1 lg:col-span-5 border-t border-gray-300" />
 
-        <div class="col-span-1 lg:col-span-3 flex flex-col gap-8">
+        <div class="pb-10 col-span-1 lg:col-span-3 flex flex-col gap-8">
             <section class="px-5 py-3 w-full grid grid-cols-2 gap-2 sm:gap-4 items-center bg-indigo-100 border-4 border-indigo-300 rounded-2xl shadow-md">
                 <h2 class="col-span-2 text-3xl font-medium">
                     MetaNet
@@ -178,7 +178,7 @@ const addTestnet = async () => {
                         Add MetaTest to Wallet
                     </button>
 
-                    <NuxtLink to="https://subnets-test.avax.network/subnets/4dguqEGXSUSS3aTwZeZJD9P7fWezoU9x5BiHYiRspjrXAV3GW" target="_blank" class="px-5 py-2 w-full lg:w-fit text-xl text-sky-800 text-center font-medium bg-sky-200 border-2 border-sky-400 rounded-lg shadow hover:bg-sky-100">
+                    <NuxtLink to="https://subnets-test.avax.network/subnets/YiMZZYboFapD5kRq7i6pVpoVWfZoY5Mvan8ZaKRWqzGS71nV3" target="_blank" class="px-5 py-2 w-full lg:w-fit text-xl text-sky-800 text-center font-medium bg-sky-200 border-2 border-sky-400 rounded-lg shadow hover:bg-sky-100">
                         Open Subnet Details
                     </NuxtLink>
                 </div>

@@ -99,8 +99,8 @@ const curYear = moment().format('YYYY')
 
                             <ul role="list" class="mt-6 space-y-4">
                                 <li>
-                                    <NuxtLink to="/explorer" class="text-base leading-6 text-gray-200 hover:text-gray-400">
-                                        Block Explorer
+                                    <NuxtLink to="/meta" class="text-base leading-6 text-gray-200 hover:text-gray-400">
+                                        Meta Sidechain
                                     </NuxtLink>
                                 </li>
 
@@ -111,7 +111,7 @@ const curYear = moment().format('YYYY')
                                 </li>
 
                                 <li>
-                                    <a href="javascript://" class="text-base leading-6 text-gray-200 hover:text-gray-400">
+                                    <a href="https://nexa.sh/graphql" target="_blank" class="text-base leading-6 text-gray-200 hover:text-gray-400">
                                         GraphQL Queries
                                     </a>
                                 </li>
@@ -120,12 +120,6 @@ const curYear = moment().format('YYYY')
                                     <a href="javascript://" class="text-base leading-6 text-gray-200 hover:text-gray-400">
                                         Assets Repo / CDN
                                     </a>
-                                </li>
-
-                                <li>
-                                    <NuxtLink to="/pricing" class="text-base leading-6 text-gray-200 hover:text-gray-400">
-                                        Pricing
-                                    </NuxtLink>
                                 </li>
                             </ul>
                         </div>
@@ -155,9 +149,9 @@ const curYear = moment().format('YYYY')
                                 </li>
 
                                 <li>
-                                    <a href="javascript://" class="text-base leading-6 text-gray-200 hover:text-gray-400">
-                                        Courses
-                                    </a>
+                                    <NuxtLink to="/pricing" class="text-base leading-6 text-gray-200 hover:text-gray-400">
+                                        Pricing
+                                    </NuxtLink>
                                 </li>
                             </ul>
                         </div>
