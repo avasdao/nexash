@@ -1,7 +1,6 @@
 <script setup lang="ts">
 /* Import modules. */
 import { createClient } from 'graphql-ws'
-import { ref } from 'vue'
 
 const props = defineProps({
     title: String,
@@ -89,14 +88,21 @@ const startUpdates = async () => {
     })
 }
 
-/* Start updates. */
-startUpdates()
+onMounted(() => {
+    /* Start updates. */
+    startUpdates()
+})
+
+// onBeforeUnmount(() => {
+//     console.log('Before Unmount!')
+//     // Now is the time to perform all cleanup operations.
+// })
 </script>
 
 <template>
     <main class="px-3 py-2 bg-gray-100 border-4 border-gray-400 rounded-xl shadow-md">
         <h2 class="text-2xl text-gray-700 font-medium">
-            Real-time Transactions
+            $NEXA Transactions
         </h2>
 
         <h3 class="text-xs text-gray-400 font-medium uppercase">

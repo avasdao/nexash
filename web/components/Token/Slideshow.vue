@@ -2,7 +2,6 @@
 /* Import modules. */
 import { createClient } from 'graphql-ws'
 import numeral from 'numeral'
-import { ref } from 'vue'
 
 const props = defineProps({
     title: String,
@@ -78,17 +77,27 @@ const startUpdates = async () => {
 }
 
 /* Start updates. */
-startUpdates()
+// startUpdates()
+
+// onMounted(() => {
+//     console.log('Mounted!')
+//     // Now it's safe to perform setup operations.
+// })
+
+// onBeforeUnmount(() => {
+//     console.log('Before Unmount!')
+//     // Now is the time to perform all cleanup operations.
+// })
 </script>
 
 <template>
-    <main class="px-3 py-2 bg-gray-700 border-4 border-gray-900 rounded-xl shadow-md">
+    <main class="px-3 py-2 bg-gray-500 border-4 border-gray-700 rounded-xl shadow-md">
         <h2 class="text-2xl text-gray-100 font-medium">
-            Most Recent Blocks
+            Asset Transfers
         </h2>
 
-        <h3 class="text-xs text-gray-300 font-medium uppercase">
-            avg block time is 1.337 minutes
+        <h3 class="text-xs text-gray-900 font-medium uppercase">
+            pending in mempool
         </h3>
 
         <section
