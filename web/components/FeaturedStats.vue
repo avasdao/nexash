@@ -1,11 +1,45 @@
 <script setup>
 /* Import modules. */
+import moment from 'moment'
+import numeral from 'numeral'
 
 /* Initialize stores. */
 import { useSystemStore } from '@/stores/system'
 
 /* Initialize System. */
 const System = useSystemStore()
+
+const marketCap = computed(() => {
+    return numeral(System.ticker?.quote.USD.marketCap).format('$0,0.00')
+})
+
+const vol24 = computed(() => {
+    return numeral(System.ticker?.quote.USD.vol24).format('$0,0.00')
+})
+
+const volChg24 = computed(() => {
+    return numeral(System.ticker?.quote.USD.volChg24).format('$0,0.00')
+})
+
+const pctChg24h = computed(() => {
+    return numeral(System.ticker?.quote.USD.pctChg24h / 100.0).format('0.00%')
+})
+
+const numMarkets = computed(() => {
+    return numeral(System.ticker?.numMarkets).format('0,0')
+})
+
+const circulatingSupply = computed(() => {
+    return numeral(System.ticker?.circulatingSupply).format('0.000a')
+})
+
+const pctCirculatingSupply = computed(() => {
+    return numeral(System.ticker?.circulatingSupply / (21 * 10**12)).format('0.0%')
+})
+
+const updatedAt = computed(() => {
+    return moment(System.ticker?.updatedAt).fromNow()
+})
 
 const init = () => {
     //
@@ -25,48 +59,60 @@ onMounted(() => {
     <main class="flex flex-col lg:flex-row gap-4">
         <section class="h-full w-full lg:w-fit px-5 py-2 bg-yellow-100 border-2 border-yellow-400 rounded-lg shadow-md">
             <h3 class="text-yellow-600 text-sm font-medium uppercase">
-                Circulating Supply
+                Market Capitalization
             </h3>
 
             <h2 class="text-3xl font-bold">
-                2.251T
-                <span class="text-lg">/ 21.0T</span>
+                {{marketCap}}
             </h2>
 
             <h4 class="text-base font-medium">
-                10.7% <span class="text-xs">is circulating</span>
+                {{numMarkets}} <span class="text-xs">markets trading $NEXA</span>
             </h4>
+
+            <span class="px-2 py-1 text-xs bg-green-100 border-2 border-green-400 rounded-full">
+                Rank #725
+            </span>
         </section>
 
         <section class="h-full w-full lg:w-fit px-5 py-2 bg-yellow-100 border-2 border-yellow-400 rounded-lg shadow-md">
-            <h3 class="text-yellow-600 text-sm font-medium">
-                <span class="uppercase">
-                    Price
-                </span>
-
-                <span class="px-2 py-1 text-xs bg-green-100 border-2 border-green-400 rounded-full">
-                    Rank #360
-                </span>
+            <h3 class="text-yellow-600 text-sm font-medium uppercase">
+                Fair Market Price
             </h3>
 
             <h2 class="text-3xl font-bold">
                 {{System.priceDisplay}}
-                <span class="text-lg">↑ 28.16%</span>
+                <span class="text-lg">↑ {{pctChg24h}}</span>
             </h2>
 
             <h4 class="flex flex-row justify-between text-base font-medium">
                 <span>
-                    <span class="text-xs">24h Vol:</span> $24.1M
+                    <span class="text-xs">24h Vol</span> {{vol24}}
                 </span>
 
                 <span>
-                    <span class="text-xs">MCap:</span> $63.4M
+                    <span class="text-xs">24h Vol Chg</span> {{volChg24}}
                 </span>
             </h4>
+        </section>
 
-            <small class="flex w-full justify-end text-yellow-600 text-xs font-medium">
-                Updated at 05:28:56 EDT
-            </small>
+        <section class="h-full w-full lg:w-fit px-5 py-2 bg-yellow-100 border-2 border-yellow-400 rounded-lg shadow-md">
+            <h3 class="text-yellow-600 text-sm font-medium uppercase whitespace-nowrap">
+                Circulating Supply
+            </h3>
+
+            <h2 class="text-3xl font-bold">
+                {{circulatingSupply}}
+                <span class="block text-lg">of 21.0T</span>
+            </h2>
+
+            <h4 class="text-base font-medium">
+                {{pctCirculatingSupply}} <span class="text-xs">is circulating</span>
+            </h4>
         </section>
     </main>
+
+    <small class="-mt-2 px-5 flex w-full justify-end text-yellow-600 text-xs font-medium italic">
+        Updated {{updatedAt}}
+    </small>
 </template>
