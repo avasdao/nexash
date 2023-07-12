@@ -4,15 +4,16 @@ import numeral from 'numeral'
 
 const Router = useRouter()
 
+/* Initialize stores. */
+import { useSystemStore } from '@/stores/system'
+
+/* Initialize System. */
+const System = useSystemStore()
+
 const isShowingSolutionsMenu = ref(false)
 const isShowingMobileMenu = ref(false)
 
-const mexUsd = ref(null)
 const query = ref(null)
-
-const ENDPOINT = 'https://nexa.exchange'
-const TICKER_UPDATE_INTERVAL = 30000 // default: 30 seconds
-
 
 watch(query, (_query) => {
     console.log('QUERY IS NOW', _query)
@@ -21,21 +22,6 @@ watch(query, (_query) => {
         Router.push('/tx/' + _query)
     }
 })
-
-const updateTicker = async () => {
-    /* Request price. */
-    const mex = await $fetch(ENDPOINT + '/mex')
-        .catch(err => console.error)
-
-    /* Set price. */
-    mexUsd.value = numeral(mex).format('$0,0.00[00]')
-}
-
-/* Start ticker update (interval). */
-setInterval(updateTicker, TICKER_UPDATE_INTERVAL)
-
-/* Update ticker. */
-updateTicker()
 </script>
 
 <template>
@@ -53,7 +39,7 @@ updateTicker()
                 <section class="flex flex-row items-center gap-4">
                     <NuxtLink to="https://nexa.exchange/markets" target="_blank" class="px-5 py-1 flex items-end text-gray-500 bg-amber-700 border-0 border-yellow-400 rounded-full">
                         <span class="text-amber-100 text-xs mb-1">mNEXA/USD</span>
-                        <span class="text-amber-200 text-2xl font-medium mx-1">{{mexUsd}}</span>
+                        <span class="text-amber-200 text-2xl font-medium mx-1">{{System.priceDisplay}}</span>
                     </NuxtLink>
 
                     <input

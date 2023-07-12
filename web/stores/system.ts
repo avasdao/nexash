@@ -1,5 +1,6 @@
 /* Import modules. */
 import { defineStore } from 'pinia'
+import numeral from 'numeral'
 
 /**
  * System Store
@@ -12,6 +13,9 @@ export const useSystemStore = defineStore('system', {
         ONE_KEX: BigInt('100000'),
         ONE_MEX: BigInt('100000000'),
         ONE_META: BigInt('1000000000000000000'),
+
+        EXCHANGE_ENDPOINT: 'https://nexa.exchange',
+        TICKER_UPDATE_INTERVAL: 30000, // default: 30 seconds
 
         /* Initialize notifications. */
         _notif: {
@@ -59,10 +63,27 @@ export const useSystemStore = defineStore('system', {
          *       of this storage field.
          */
         _notices: null,
+
+        _ticker: null,
     }),
 
     getters: {
-        // TODO
+        ticker() {
+            return this._ticker
+        },
+
+        price() {
+            if (this.ticker) {
+                return this.ticker.quote.USD.price
+            }
+        },
+
+        priceDisplay() {
+            if (this.price) {
+                return numeral(this.price * 1000000.0).format('$0,0.00[00')
+            }
+        },
+
     },
 
     actions: {
@@ -71,8 +92,21 @@ export const useSystemStore = defineStore('system', {
          *
          * Performs startup activities.
          */
-        initApp() {
+        init() {
             this._appStarts++
+
+            /* Start ticker update (interval). */
+            setInterval(this.updateTicker, this.TICKER_UPDATE_INTERVAL)
+
+            /* Update ticker. */
+            this.updateTicker()
         },
+
+        async updateTicker () {
+            this._ticker = await $fetch(this.EXCHANGE_ENDPOINT + '/ticker')
+                .catch(err => console.error)
+            console.log('TICKER', this.ticker)
+        },
+
     },
 })

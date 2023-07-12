@@ -1,29 +1,24 @@
 <script setup>
 /* Import modules. */
-import numeral from 'numeral'
-import { ref } from 'vue'
 
-const TICKER_UPDATE_INTERVAL = 30000 // default: 30 seconds
+/* Initialize stores. */
+import { useSystemStore } from '@/stores/system'
 
-/* Initialize NEX/USD holder. */
-const mexUsd = ref(null)
+/* Initialize System. */
+const System = useSystemStore()
 
-const ENDPOINT = 'https://nexa.exchange/mex'
-
-const updateTicker = async () => {
-    const price = await $fetch(ENDPOINT)
-        .catch(err => console.error)
-    // console.log('MEX PRICE', price)
-
-    mexUsd.value = numeral(price).format('$0,0.00[00]')
+const init = () => {
+    //
 }
 
-/* Start price update (interval). */
-setInterval(updateTicker, TICKER_UPDATE_INTERVAL)
+onMounted(() => {
+    init()
+})
 
-/* Update price. */
-updateTicker()
-
+// onBeforeUnmount(() => {
+//     console.log('Before Unmount!')
+//     // Now is the time to perform all cleanup operations.
+// })
 </script>
 
 <template>
@@ -55,7 +50,7 @@ updateTicker()
             </h3>
 
             <h2 class="text-3xl font-bold">
-                {{mexUsd}}
+                {{System.priceDisplay}}
                 <span class="text-lg">↑ 28.16%</span>
             </h2>
 
