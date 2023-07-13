@@ -26,7 +26,7 @@ useHead({
 
             <ClientOnly fallback-tag="span" fallback="Loading transactions...">
                 <div class="mt-5 flex flex-col gap-4">
-                    <div class="px-3 lg:px-0">
+                    <div class="px-3 py-5 lg:px-0">
                         <BlockSlideshow />
                     </div>
 
