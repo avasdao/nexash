@@ -142,7 +142,7 @@ onMounted(() => {
         </h2>
 
         <h3 class="text-xs text-gray-300 font-medium uppercase">
-            Last 100 blocks confirmed every <span class="text-base text-amber-400">{{avgBlockTime}}</span> minutes
+            Last 100 blocks confirmed on avg every <span class="text-base text-amber-400">{{avgBlockTime}}</span> minutes
         </h3>
 
         <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 h-40 gap-4 overflow-hidden">
