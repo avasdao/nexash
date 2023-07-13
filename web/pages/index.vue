@@ -58,11 +58,11 @@ useHead({
             <div class="bg-white">
                 <div class="mx-auto max-w-4xl py-16 px-6 sm:py-24 lg:flex lg:max-w-7xl lg:items-center lg:justify-between lg:px-8">
                     <h2 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-                        <span class="block">
+                        <span class="block bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent">
                             Ready to #BUIDL?
                         </span>
 
-                        <span class="-mb-1 block bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text pb-1 text-transparent">
+                        <span class="-mb-1 block pb-1 text-gray-700">
                             Read the docs, then start a project!
                         </span>
                     </h2>
@@ -70,12 +70,12 @@ useHead({
                     <div class="mt-6 space-y-4 sm:flex sm:space-y-0 sm:space-x-5">
                         <NuxtLink
                             to="https://docs.nexa.sh/" target="_blank"
-                            class="flex items-center justify-center rounded-md border border-transparent bg-gradient-to-r from-purple-600 to-indigo-600 bg-origin-border px-4 py-3 text-lg font-medium text-white shadow-sm hover:from-purple-700 hover:to-indigo-700"
+                            class="flex items-center justify-center rounded-md border border-transparent bg-gradient-to-r from-purple-600 to-indigo-600 bg-origin-border px-4 py-3 text-xl font-medium text-white shadow-sm hover:from-purple-700 hover:to-indigo-700"
                         >
                             Read the Docs
                         </NuxtLink>
 
-                        <NuxtLink to="https://nexa.studio" target="_blank" class="flex items-center justify-center rounded-md border border-transparent bg-indigo-50 px-4 py-3 text-lg font-medium text-indigo-800 shadow-sm hover:bg-indigo-100">
+                        <NuxtLink to="https://nexa.studio" target="_blank" class="flex items-center justify-center rounded-md border border-transparent bg-indigo-50 px-4 py-3 text-xl font-medium text-indigo-800 shadow-sm hover:bg-indigo-100">
                             Start a Project
                         </NuxtLink>
                     </div>
