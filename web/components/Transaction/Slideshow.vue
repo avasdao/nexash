@@ -106,7 +106,7 @@ onMounted(() => {
         </h2>
 
         <h3 class="text-xs text-gray-400 font-medium uppercase">
-            pending in mempool
+            Including pending in mempool
         </h3>
 
         <NuxtLink

@@ -93,11 +93,11 @@ const startUpdates = async () => {
 <template>
     <main class="px-3 py-2 bg-gray-500 border-4 border-gray-700 rounded-xl shadow-md">
         <h2 class="text-2xl text-gray-100 font-medium">
-            Asset Transfers
+            Asset Transfers <small class="pl-2 text-amber-400">FT, NFT &amp; SFT</small>
         </h2>
 
         <h3 class="text-xs text-gray-900 font-medium uppercase">
-            pending in mempool
+            Including pending in mempool
         </h3>
 
         <div class="px-10 py-5">
