@@ -109,7 +109,7 @@ onMounted(() => {
 
             <h2 class="text-3xl font-bold">
                 {{circulatingSupply}}
-                <span class="block text-lg">of 21.0T</span>
+                <span class="block text-lg">of 21.0 Trillion</span>
             </h2>
 
             <h4 class="text-base font-medium">
