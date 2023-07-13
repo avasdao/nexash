@@ -6,8 +6,9 @@ services:
     image: nexash
     container_name: nexash
     restart: always
-    ports:
-      - '127.0.0.1:3000:3000'
+    network_mode: 'host'
+    # ports:
+    #   - '127.0.0.1:3000:3000'
     # volumes:
     #   - './:/webapp/'
     environment:
