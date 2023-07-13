@@ -1,6 +1,7 @@
 <script setup lang="ts">
 /* Import modules. */
 import { createClient } from 'graphql-ws'
+import moment from 'moment'
 import numeral from 'numeral'
 
 const props = defineProps({
@@ -11,13 +12,45 @@ const props = defineProps({
 /* Initialize Blocks (array). */
 const blocks = ref([])
 
-const MAX_BLOCKS_DISPLAYED = 5
+const MAX_BLOCKS_DISPLAYED = 8
 
 const displayedTxs = computed(() => {
     return blocks.value.sort((a, b) => {
         return b.height - a.height
     }).slice(0, MAX_BLOCKS_DISPLAYED)
 })
+
+const avgBlockTime = computed(() => {
+    if (!blocks.value?.length) {
+        return 'n/a'
+    }
+
+    const numBlocks = blocks.value.length
+    console.log('NUM BLOCKS', numBlocks)
+
+    const duration = blocks.value[0].time - blocks.value[numBlocks - 1].time
+    console.log('DURATION', duration, moment.duration(duration, 'seconds').humanize())
+
+    const avg = duration / numBlocks
+    console.log('AVG', avg)
+
+    const rate = numeral(avg / 60.0).format('0[.]0')
+
+    return rate
+})
+
+const displayTime = (_block) => {
+    return moment.unix(_block.time).fromNow()
+}
+
+const displayTxCount = (_block) => {
+    return numeral(_block.txcount).format('0,0') + ' txs'
+}
+
+const displaySize = (_block) => {
+    return numeral(_block.size).format('0[.]0 ib')
+}
+
 
 /* Create client. */
 const client = createClient({
@@ -109,20 +142,32 @@ onMounted(() => {
         </h2>
 
         <h3 class="text-xs text-gray-300 font-medium uppercase">
-            avg block time is 1.337 minutes
+            Last 100 blocks confirmed every <span class="text-base text-amber-400">{{avgBlockTime}}</span> minutes
         </h3>
 
-        <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 h-40 gap-4">
+        <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 h-40 gap-4 overflow-hidden">
             <NuxtLink :to="'/block/' + block.height"
-                class="mt-5 mb-2 px-3 py-2 h-32 bg-gray-300 border-2 border-gray-500 rounded-lg shadow group hover:bg-gray-200"
+                class="mt-5 mb-2 px-3 py-2 h-32 flex flex-col justify-between bg-gray-300 border-2 border-gray-500 rounded-lg shadow group hover:bg-gray-200"
                 v-for="block of displayedTxs" :key="block.height"
             >
-                <span class="block text-base text-gray-700 font-medium uppercase group-hover:font-bold">
+                <span class="block text-base text-gray-700 font-medium uppercase group-hover:font-bold group-hover:text-rose-700">
                     #{{numeral(block.height).format('0,0')}}
                 </span>
 
-                <span class="block text-sm text-gray-700 font-medium truncate group-hover:font-bold">
+                <span class="block text-sm text-gray-700 font-medium truncate">
                     {{block.hash}}
+                </span>
+
+                <span class="block text-xs text-gray-700 text-right font-medium truncate">
+                    {{displayTxCount(block)}}
+                </span>
+
+                <span class="block text-xs text-gray-700 text-right font-medium truncate">
+                    {{displaySize(block)}}
+                </span>
+
+                <span class="block text-xs text-gray-700 text-right font-medium truncate">
+                    {{displayTime(block)}}
                 </span>
             </NuxtLink>
         </div>

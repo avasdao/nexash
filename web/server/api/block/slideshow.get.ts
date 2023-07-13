@@ -19,7 +19,7 @@ export default defineEventHandler(async (event) => {
     response = await blocksDb
         .query('api/byHeight', {
             startkey: system.idxHeight,
-            endkey: system.idxHeight - 9,
+            endkey: system.idxHeight - 99,
             descending: true,
             include_docs: true,
         })

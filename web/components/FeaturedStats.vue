@@ -71,7 +71,7 @@ onMounted(() => {
             </h4>
 
             <span class="px-2 py-1 text-xs bg-green-100 border-2 border-green-400 rounded-full">
-                Rank #725
+                Rank #500+
             </span>
         </section>
 
