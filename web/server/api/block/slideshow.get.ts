@@ -15,6 +15,9 @@ export default defineEventHandler(async (event) => {
         .catch(err => console.error(err))
     console.log('SYSTEM', system)
 
+    if (!system) {
+        return []
+    }
 
     response = await blocksDb
         .query('api/byHeight', {
@@ -36,5 +39,5 @@ export default defineEventHandler(async (event) => {
     })
 
     /* Return token details. */
-    return blocks || {}
+    return blocks || []
 })
