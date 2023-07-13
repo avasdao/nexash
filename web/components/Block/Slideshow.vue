@@ -77,9 +77,23 @@ const startUpdates = async () => {
 }
 
 
+const init = async () => {
+    let response
+
+    response = await $fetch('/api/block/slideshow')
+        .catch(err => console.error(err))
+    console.log('RESPONSE', response)
+
+    response.forEach(_block => {
+        blocks.value.push(_block)
+    })
+}
+
 onMounted(() => {
     /* Start updates. */
     startUpdates()
+
+    init()
 })
 
 // onBeforeUnmount(() => {

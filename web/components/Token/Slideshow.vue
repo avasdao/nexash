@@ -100,6 +100,11 @@ const startUpdates = async () => {
             pending in mempool
         </h3>
 
+        <div class="px-10 py-5">
+            <SkeletonAsset />
+        </div>
+
+
         <section
             class="my-5 px-3 py-2 bg-gray-300 border-2 border-gray-500 rounded-lg shadow"
             v-for="block of displayedTxs" :key="block.height"

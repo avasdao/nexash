@@ -94,7 +94,7 @@ watch(query, (_query) => {
                 <div class="py-1 max-w-7xl mx-auto flex justify-end">
                     <NuxtLink to="https://nexa.exchange/markets" target="_blank" class="px-3 py-1 flex items-center text-gray-500 mr-5 bg-gray-700 border-2 border-yellow-400 rounded-full">
                         <span class="text-yellow-100 text-sm">mNEXA/USD</span>
-                        <span class="text-yellow-300 text-lg font-medium mx-1">{{mexUsd}}</span>
+                        <span class="text-yellow-300 text-lg font-medium mx-1">{{System.priceDisplay}}</span>
                     </NuxtLink>
                 </div>
 

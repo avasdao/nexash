@@ -105,7 +105,7 @@ export const useSystemStore = defineStore('system', {
         async updateTicker () {
             this._ticker = await $fetch(this.EXCHANGE_ENDPOINT + '/ticker')
                 .catch(err => console.error)
-            console.log('TICKER', this.ticker)
+            // console.log('TICKER', this.ticker)
         },
 
     },

@@ -265,6 +265,22 @@ const checkDbSync = async () => {
             } catch (err) {
                 console.error(err)
             }
+
+            /* Retrieve (latest) System status. */
+            const updatedSystem = await statusDb
+                .get('system')
+                .catch(err => console.error(err))
+            // console.log('UPDATED SYSTEM', system)
+
+            /* Set new indexed height. */
+            updatedSystem.idxHeight = parseInt(decoded.height)
+            updatedSystem.updatedAt = moment().unix()
+
+            /* Save (updated) System status to storage. */
+            await statusDb
+                .put(updatedSystem)
+                .catch(err => console.error(err))
+
         }
 
         /* Handle raw transaction. */
