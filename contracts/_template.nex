@@ -1,0 +1,49 @@
+pragma nexscript ^0.1.0;
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ *
+ * Copyright (c) 2023 Ava's DAO
+ * Released under the MIT License.
+ *
+ * Blank
+ *
+ * Empty contract template.
+ *
+ * IMPORTANT NOTE:
+ *
+ * TBD..
+ *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ *
+ * Version     : 01
+ * Fingerprint : 0x00000000
+ * Namespace   : BLANK01
+ *
+ * owner : Party whom will receive the payouts.
+ * param : A very useful parameter.
+ *
+ * For more information, please visit the following resources:
+ *   - https://domain.tld
+ *   - https://avasdao.org
+ *
+ */
+contract Blank(bytes20 owner, int param) {
+    /**
+     * Method Name
+     *
+     * TBD..
+     *
+     * @param owner
+     * @param signature
+     */
+    function transfer(pubkey owner, sig signature) {
+        /* Set dust value. */
+        int DUST_VALUE = 546;
+
+        /* Verify parameter. */
+        require(param >= DUST_VALUE);
+
+        /* Verify transaction is signed by the owner. */
+        require(checkSig(signature, owner));
+    }
+}

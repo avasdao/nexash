@@ -81,7 +81,9 @@ onMounted(() => {
                 />
 
                 <p class="text-gray-600 text-sm">
-                    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Neque voluptatem beatae aliquam eius excepturi facere nobis quibusdam iure, inventore quod suscipit nulla nemo, distinctio ullam. Libero voluptatibus excepturi nemo obcaecati.
+                    0xcdcd77c0:
+                    the Contract ID is derived as the first 4 bytes of the HASH160 (SHA-265 + RIPEMD-160) of the HEX form of the contract's raw bytes.
+                    NOTE: This is what is saved on-chain.
                 </p>
 
                 <div class="mx-5 border-t border-gray-300" />
