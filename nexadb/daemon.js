@@ -11,7 +11,7 @@ import zmq from 'zeromq'
 
 /* Import handlers. */
 import handleAddress from './handlers/address.js'
-import handleOutpoint from './handlers/outpoint.js'
+// import handleOutpoint from './handlers/outpoint.js'
 
 /* Initialize databases. */
 const blocksDb = new PouchDB(`http://${process.env.COUCHDB_USER}:${process.env.COUCHDB_PASSWORD}@127.0.0.1:5984/blocks`)
@@ -303,7 +303,7 @@ const checkDbSync = async () => {
             await handleAddress(decoded)
 
             /* Handle Outpoint. */
-            await handleOutpoint(decoded)
+            // await handleOutpoint(decoded)
 
             try {
                 /* Broadcast event. */
