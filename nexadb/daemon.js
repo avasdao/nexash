@@ -16,7 +16,7 @@ import handleGroup from './handlers/group.js'
 /* Initialize databases. */
 const blocksDb = new PouchDB(`http://${process.env.COUCHDB_USER}:${process.env.COUCHDB_PASSWORD}@127.0.0.1:5984/blocks`)
 const logsDb = new PouchDB(`http://${process.env.COUCHDB_USER}:${process.env.COUCHDB_PASSWORD}@127.0.0.1:5984/logs`)
-const statusDb = new PouchDB(`http://${process.env.COUCHDB_USER}:${process.env.COUCHDB_PASSWORD}@127.0.0.1:5984/status`)
+const systemDb = new PouchDB(`http://${process.env.COUCHDB_USER}:${process.env.COUCHDB_PASSWORD}@127.0.0.1:5984/status`)
 const transactionsDb = new PouchDB(`http://${process.env.COUCHDB_USER}:${process.env.COUCHDB_PASSWORD}@127.0.0.1:5984/transactions`)
 
 /* Set node options. */
@@ -171,8 +171,8 @@ const checkDbSync = async () => {
     let txidem
     let updatedSystem
 
-    system = await statusDb
-        .get('system')
+    system = await systemDb
+        .get('0')
         .catch(err => console.error(err))
     // console.log('SYSTEM', system)
 
@@ -220,12 +220,18 @@ const checkDbSync = async () => {
                         .catch(err => {
                             console.error(err)
                         })
+
+                    /* Handle Address. */
+                    await handleAddress(tx)
+
+                    /* Handle Group (Tokens). */
+                    await handleGroup(tx)
                 }
             }
 
             /* Retrieve (latest) System status. */
-            updatedSystem = await statusDb
-                .get('system')
+            updatedSystem = await systemDb
+                .get('0')
                 .catch(err => console.error(err))
             // console.log('UPDATED SYSTEM', system)
 
@@ -234,7 +240,7 @@ const checkDbSync = async () => {
             updatedSystem.updatedAt = moment().unix()
 
             /* Save (updated) System status to storage. */
-            await statusDb
+            await systemDb
                 .put(updatedSystem)
                 .catch(err => console.error(err))
         }
@@ -298,8 +304,8 @@ const checkDbSync = async () => {
             }
 
             /* Retrieve (latest) System status. */
-            updatedSystem = await statusDb
-                .get('system')
+            updatedSystem = await systemDb
+                .get('0')
                 .catch(err => console.error(err))
             // console.log('UPDATED SYSTEM', system)
 
@@ -308,7 +314,7 @@ const checkDbSync = async () => {
             updatedSystem.updatedAt = moment().unix()
 
             /* Save (updated) System status to storage. */
-            await statusDb
+            await systemDb
                 .put(updatedSystem)
                 .catch(err => console.error(err))
         }
