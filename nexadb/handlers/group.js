@@ -31,7 +31,8 @@ export default async (_transaction) => {
 
         /* Validate group. */
         if (typeof group !== 'undefined') {
-            result = await transactionsDb
+console.log('\n\n*** FOUND A GROUP ***\n\n')
+            result = await groupDb
                 .put({
                     _id: _transaction.txidem,
                     ..._transaction

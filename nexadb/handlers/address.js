@@ -63,7 +63,7 @@ export default async (_transaction) => {
                 txs,
             }
         }
-
+console.log('NEW ADDRESS', newAddress)
         result = await addressesDb
             .put(newAddress)
             .catch(err => console.error(err))
