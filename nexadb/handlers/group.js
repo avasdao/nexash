@@ -29,7 +29,7 @@ export default async (_transaction) => {
         console.log('HANDLING GROUP', typeof group, group)
 
         if (typeof group === 'undefined') {
-            return
+            continue
         }
         console.log('SCRIPT PUB KEY', scriptPubKey)
 
