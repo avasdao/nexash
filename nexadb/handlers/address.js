@@ -42,6 +42,7 @@ export default async (_transaction) => {
             if (!txs.includes(_transaction.txidem)) {
                 /* Add transaction. */
                 // TODO What is the (MAX) number of entries we can add here??
+                // (at least 18,573)
                 txs.push(_transaction.txidem)
             }
 
@@ -63,7 +64,9 @@ export default async (_transaction) => {
                 txs,
             }
         }
-console.log('NEW ADDRESS', newAddress)
+if (!newAddress._id) {
+    console.log('NEW ADDRESS', newAddress)
+}
         result = await addressesDb
             .put(newAddress)
             .catch(err => console.error(err))
