@@ -21,7 +21,9 @@ export default async (_transaction) => {
         output = outputs[i]
 
         /* Set script public key. */
-        scriptPubKey = output.scriptPubKey.hex.slice(6)
+        // NOTE: This is the constraint.
+        // scriptPubKey = output.scriptPubKey.hex.slice(6)
+        scriptPubKey = output.scriptPubKey.argsHash.toLowerCase()
 
         /* Request saved (in database) data. */
         saved = await addressesDb
@@ -34,8 +36,13 @@ export default async (_transaction) => {
             /* Load transactions. */
             txs = saved.txs
 
-            /* Add transaction. */
-            txs.push(_transaction.txidem)
+            /* Validate saved transactions. */
+            // NOTE: Required during re-syncing to prevent duplicates.
+            if (!txs.includes(_transaction.txidem)) {
+                /* Add transaction. */
+                // TODO What is the (MAX) number of entries we can add here??
+                txs.push(_transaction.txidem)
+            }
 
             newAddress = {
                 ...saved,
@@ -59,7 +66,7 @@ export default async (_transaction) => {
         result = await addressesDb
             .put(newAddress)
             .catch(err => console.error(err))
-        console.log('OUTPOINT (result):', result)
+        // console.log('OUTPOINT (result):', result)
     }
 
     return result

@@ -11,7 +11,7 @@ import zmq from 'zeromq'
 
 /* Import handlers. */
 import handleAddress from './handlers/address.js'
-// import handleOutpoint from './handlers/outpoint.js'
+import handleGroup from './handlers/group.js'
 
 /* Initialize databases. */
 const blocksDb = new PouchDB(`http://${process.env.COUCHDB_USER}:${process.env.COUCHDB_PASSWORD}@127.0.0.1:5984/blocks`)
@@ -61,14 +61,18 @@ app.listen(SSE_PORT, LOCAL_HOST, () => {
 })
 
 const decodeRawTransaction = async (_rawTx) => {
+    let method
+    let params
+    let response
+
     /* Set method. */
-    const method = 'decoderawtransaction'
+    method = 'decoderawtransaction'
 
     /* Set parameters. */
-    const params = [_rawTx]
+    params = [_rawTx]
 
     /* Execute JSON-RPC request. */
-    const response = await callNode(method, params, RPC_OPTIONS)
+    response = await callNode(method, params, RPC_OPTIONS)
     // console.log('\nJSON-RPC response:\n%s', response)
 
     /* Return response. */
@@ -76,14 +80,19 @@ const decodeRawTransaction = async (_rawTx) => {
 }
 
 const getBlock = async (_blockHash) => {
+    let method
+    let options
+    let params
+    let response
+
     /* Set method. */
-    const method = 'getblock'
+    method = 'getblock'
 
     /* Set parameters. */
-    const params = [_blockHash]
+    params = [_blockHash]
 
     /* Set node options. */
-    const options = {
+    options = {
         username: 'user', // required
         password: 'password', // required
         host: '127.0.0.1', // (optional) default is localhost (127.0.0.1)
@@ -91,7 +100,7 @@ const getBlock = async (_blockHash) => {
     }
 
     /* Execute JSON-RPC request. */
-    const response = await callNode(method, params, RPC_OPTIONS)
+    response = await callNode(method, params, RPC_OPTIONS)
     // console.log('\nJSON-RPC response:\n%s', response)
 
     /* Return response. */
@@ -99,14 +108,18 @@ const getBlock = async (_blockHash) => {
 }
 
 const getTransaction = async (_txidem) => {
+    let method
+    let params
+    let response
+
     /* Set method. */
-    const method = 'getrawtransaction'
+    method = 'getrawtransaction'
 
     /* Set parameters. */
-    const params = [_txidem, true]
+    params = [_txidem, true]
 
     /* Execute JSON-RPC request. */
-    const response = await callNode(method, params, RPC_OPTIONS)
+    response = await callNode(method, params, RPC_OPTIONS)
     // console.log('\nJSON-RPC response:\n%s', response)
 
     /* Return response. */
@@ -114,14 +127,19 @@ const getTransaction = async (_txidem) => {
 }
 
 const getBlockchainInfo = async () => {
+    let method
+    let options
+    let params
+    let response
+
     /* Set method. */
-    const method = 'getblockchaininfo'
+    method = 'getblockchaininfo'
 
     /* Set parameters. */
-    const params = []
+    params = []
 
     /* Set node options. */
-    const options = {
+    options = {
         username: 'user', // required
         password: 'password', // required
         host: '127.0.0.1', // (optional) default is localhost (127.0.0.1)
@@ -129,7 +147,7 @@ const getBlockchainInfo = async () => {
     }
 
     /* Execute JSON-RPC request. */
-    const response = await callNode(method, params, RPC_OPTIONS)
+    response = await callNode(method, params, RPC_OPTIONS)
 
     /* Return response. */
     return response
@@ -147,60 +165,66 @@ console.info('\n  Starting Nexa Database daemon...\n')
 const checkDbSync = async () => {
     console.info('\n  Checking database sync...\n')
 
+    let block
     let system
+    let tx
+    let txidem
+    let updatedSystem
 
     system = await statusDb
         .get('system')
         .catch(err => console.error(err))
-    console.log('SYSTEM', system)
+    // console.log('SYSTEM', system)
 
     if (blockchainInfo?.blocks > system?.idxHeight) {
-        console.log('\n\n  Starting database sycn...\n')
+        console.info('\n  Starting database sycn...\n')
 
         /* Handle new blocks. */
         for (let i = system.idxHeight + 1; i <= blockchainInfo.blocks; i++) {
             /* Request block at height. */
-            const block = await getBlock(i)
+            block = await getBlock(i)
                 .catch(err => {
                     console.error(err)
                 })
             // console.log(`BLOCK #${i}`, block)
 
             /* Save block to storage. */
-            blocksDb.put({
-                _id: block.height.toString(),
-                ...block,
-            })
-            .catch(err => {
-                console.error(err)
-            })
+            await blocksDb
+                .put({
+                    _id: block.height.toString(),
+                    ...block,
+                })
+                .catch(err => {
+                    console.error(err)
+                })
 
             // NOTE: Block MUST contain at least the Coinbase transaction.
             if (block?.txidem) {
                 for (let j = 0; j < block.txidem.length; j++) {
                     /* Set transaction idem. */
-                    const txidem = block.txidem[j]
+                    txidem = block.txidem[j]
 
                     /* Request transaction details. */
-                    const tx = await getTransaction(txidem)
+                    tx = await getTransaction(txidem)
                         .catch(err => {
                             console.error(err)
                         })
                     // console.log(`TRANSACTION [${txidem}]`, tx)
 
                     /* Save transaction to storage. */
-                    transactionsDb.put({
-                        _id: tx.txidem,
-                        ...tx
-                    })
-                    .catch(err => {
-                        console.error(err)
-                    })
+                    await transactionsDb
+                        .put({
+                            _id: tx.txidem,
+                            ...tx
+                        })
+                        .catch(err => {
+                            console.error(err)
+                        })
                 }
             }
 
             /* Retrieve (latest) System status. */
-            const updatedSystem = await statusDb
+            updatedSystem = await statusDb
                 .get('system')
                 .catch(err => console.error(err))
             // console.log('UPDATED SYSTEM', system)
@@ -218,12 +242,18 @@ const checkDbSync = async () => {
 }
 
 ;(async () => {
+    let decoded
+    let msg
+    let sock
+    let topic
+    let updatedSystem
+
     /* Request Blockchain information. */
     blockchainInfo = await getBlockchainInfo()
     console.log('\n\n  Blockchain info:\n', blockchainInfo)
 
     /* Initialize Zero Message Queue (ZMQ) socket. */
-    const sock = new zmq.Subscriber
+    sock = new zmq.Subscriber
 
     /* Connect to local node. */
     sock.connect('tcp://127.0.0.1:28332')
@@ -234,8 +264,8 @@ const checkDbSync = async () => {
 
     /* Handle incoming messages. */
     for await (const [ _topic, _msg ] of sock) {
-        const topic = Buffer.from(_topic).toString()
-        const msg = Buffer.from(_msg).toString('hex')
+        topic = Buffer.from(_topic).toString()
+        msg = Buffer.from(_msg).toString('hex')
 
         console.log('received a message related to:',
             topic,
@@ -245,19 +275,20 @@ const checkDbSync = async () => {
 
         /* Handle hash block. */
         if (topic === 'hashblock') {
-            const decoded = await getBlock(msg)
+            decoded = await getBlock(msg)
                 .catch(err => {
                     console.error(err)
                 })
-            console.log('DECODED', decoded)
+            // console.log('DECODED', decoded)
 
-            blocksDb.put({
-                _id: decoded.height.toString(),
-                ...decoded,
-            })
-            .catch(err => {
-                console.error(err)
-            })
+            await blocksDb
+                .put({
+                    _id: decoded.height.toString(),
+                    ...decoded,
+                })
+                .catch(err => {
+                    console.error(err)
+                })
 
             try {
                 /* Broadcast event. */
@@ -267,7 +298,7 @@ const checkDbSync = async () => {
             }
 
             /* Retrieve (latest) System status. */
-            const updatedSystem = await statusDb
+            updatedSystem = await statusDb
                 .get('system')
                 .catch(err => console.error(err))
             // console.log('UPDATED SYSTEM', system)
@@ -280,30 +311,30 @@ const checkDbSync = async () => {
             await statusDb
                 .put(updatedSystem)
                 .catch(err => console.error(err))
-
         }
 
         /* Handle raw transaction. */
         if (topic === 'rawtx') {
-            const decoded = await decodeRawTransaction(msg)
+            decoded = await decodeRawTransaction(msg)
                 .catch(err => {
                     console.error(err)
                 })
-            console.log('DECODED', decoded)
+            // console.log('DECODED', decoded)
 
-            transactionsDb.put({
-                _id: decoded.txidem,
-                ...decoded
-            })
-            .catch(err => {
-                console.error(err)
-            })
+            await transactionsDb
+                .put({
+                    _id: decoded.txidem,
+                    ...decoded
+                })
+                .catch(err => {
+                    console.error(err)
+                })
 
             /* Handle Address. */
             await handleAddress(decoded)
 
-            /* Handle Outpoint. */
-            // await handleOutpoint(decoded)
+            /* Handle Group (Tokens). */
+            await handleGroup(decoded)
 
             try {
                 /* Broadcast event. */
