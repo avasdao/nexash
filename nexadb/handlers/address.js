@@ -26,6 +26,11 @@ export default async (_transaction) => {
         scriptPubKey = output.scriptPubKey.argsHash?.toLowerCase()
         // console.log('SCRIPT PUB KEY', scriptPubKey)
 
+        /* Validate script public key. */
+        if (typeof scriptPubKey === 'undefined') {
+            continue
+        }
+
         /* Request saved (in database) data. */
         saved = await addressesDb
             .get(scriptPubKey)
