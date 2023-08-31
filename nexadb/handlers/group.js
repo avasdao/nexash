@@ -26,6 +26,7 @@ export default async (_transaction) => {
 
         /* Set group. */
         group = scriptPubKey.group
+        console.log('HANDLING GROUP', typeof group, group)
 
         /* Validate group. */
         if (typeof group !== 'undefined') {

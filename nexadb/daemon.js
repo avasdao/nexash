@@ -267,11 +267,11 @@ const checkDbSync = async () => {
         topic = Buffer.from(_topic).toString()
         msg = Buffer.from(_msg).toString('hex')
 
-        console.log('received a message related to:',
-            topic,
-            'containing message:',
-            msg,
-            '\n')
+        // console.log('received a message related to:',
+        //     topic,
+        //     'containing message:',
+        //     msg,
+        //     '\n')
 
         /* Handle hash block. */
         if (topic === 'hashblock') {
