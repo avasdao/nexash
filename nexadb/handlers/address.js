@@ -65,7 +65,7 @@ export default async (_transaction) => {
             }
         }
 if (!newAddress._id) {
-    console.log('NEW ADDRESS', newAddress)
+    console.log('NEW ADDRESS', newAddress, _transaction.vout)
 }
         result = await addressesDb
             .put(newAddress)
