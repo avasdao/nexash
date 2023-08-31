@@ -24,7 +24,7 @@ export default async (_transaction) => {
         // NOTE: This is the constraint.
         // scriptPubKey = output.scriptPubKey.hex.slice(6)
         scriptPubKey = output.scriptPubKey.argsHash?.toLowerCase()
-        console.log('SCRIPT PUB KEY', scriptPubKey)
+        // console.log('SCRIPT PUB KEY', scriptPubKey)
 
         /* Request saved (in database) data. */
         saved = await addressesDb

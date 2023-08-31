@@ -23,6 +23,7 @@ export default async (_transaction) => {
 
         /* Set script public key. */
         scriptPubKey = output.scriptPubKey
+        console.log('SCRIPT PUB KEY', scriptPubKey)
 
         /* Set group. */
         group = scriptPubKey.group
