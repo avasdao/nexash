@@ -23,24 +23,24 @@ export default async (_transaction) => {
 
         /* Set script public key. */
         scriptPubKey = output.scriptPubKey
-        console.log('SCRIPT PUB KEY', scriptPubKey)
 
         /* Set group. */
         group = scriptPubKey.group
         console.log('HANDLING GROUP', typeof group, group)
 
-        /* Validate group. */
         if (typeof group !== 'undefined') {
-console.log('\n\n*** FOUND A GROUP ***\n\n')
-            result = await groupDb
-                .put({
-                    _id: _transaction.txidem,
-                    ..._transaction
-                })
-                .catch(err => {
-                    console.error(err)
-                })
+            return
         }
+        console.log('SCRIPT PUB KEY', scriptPubKey)
+
+        result = await groupDb
+            .put({
+                _id: _transaction.txidem,
+                ..._transaction
+            })
+            .catch(err => {
+                console.error(err)
+            })
     }
 
     return result
