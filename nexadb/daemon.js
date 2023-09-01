@@ -189,14 +189,14 @@ const checkDbSync = async () => {
             // console.log(`BLOCK #${i}`, block)
 
             /* Save block to storage. */
-            await blocksDb
-                .put({
-                    _id: block.height.toString(),
-                    ...block,
-                })
-                .catch(err => {
-                    console.error(err)
-                })
+            // await blocksDb
+            //     .put({
+            //         _id: block.height.toString(),
+            //         ...block,
+            //     })
+            //     .catch(err => {
+            //         console.error(err)
+            //     })
 
             // NOTE: Block MUST contain at least the Coinbase transaction.
             if (block?.txidem) {
@@ -212,17 +212,17 @@ const checkDbSync = async () => {
                     // console.log(`TRANSACTION [${txidem}]`, tx)
 
                     /* Save transaction to storage. */
-                    await transactionsDb
-                        .put({
-                            _id: tx.txidem,
-                            ...tx
-                        })
-                        .catch(err => {
-                            console.error(err)
-                        })
+                    // await transactionsDb
+                    //     .put({
+                    //         _id: tx.txidem,
+                    //         ...tx
+                    //     })
+                    //     .catch(err => {
+                    //         console.error(err)
+                    //     })
 
                     /* Handle Address. */
-                    await handleAddress(tx)
+                    // await handleAddress(tx)
 
                     /* Handle Group (Tokens). */
                     await handleGroup(tx)
