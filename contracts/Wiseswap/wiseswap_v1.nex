@@ -9,10 +9,10 @@ pragma nexscript ^0.1.0;
  *
  * Empty contract template.
  *
- * IMPORTANT NOTE:
- *
- * Based on the Uniswap v3 protocol.
- * (source: https://docs.uniswap.org/)
+ * NOTES
+ * --------------------
+ * Based on the Cauldron contract by Dagur Valberg Johannsson
+ * (source: https://www.cauldron.quest/_files/ugd/ae85be_b1dc04d2b6b94ab5a200e3d8cd197aa3.pdf)
  *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  *
@@ -29,22 +29,37 @@ pragma nexscript ^0.1.0;
  *   - https://avasdao.org
  *
  */
-contract Blank(bytes20 owner, int param) {
+contract Wiseswap(pubkey owner) {
     /**
-     * Method Name
+     * Swap
      *
-     * TBD..
-     *
-     * @param owner
-     * @param signature
+     * Allows two (2) assets to be swapped with each other, while maintaining
+     * the same contant multiplier??
      */
-    function transfer(pubkey owner, sig signature) {
+    function swap() {
         /* Set dust value. */
         int DUST_VALUE = 546;
 
         /* Verify parameter. */
         require(param >= DUST_VALUE);
 
+        // 1.
+        // 2.
+        // 3.
+
+
+        /* Verify transaction is signed by the owner. */
+        require(checkSig(signature, owner));
+    }
+
+    /**
+     * Withdraw
+     *
+     * Allows a liquidity provider to transfer their assets out from the pool.
+     *
+     * @param signature
+     */
+    function withdraw(sig signature) {
         /* Verify transaction is signed by the owner. */
         require(checkSig(signature, owner));
     }

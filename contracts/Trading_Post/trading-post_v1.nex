@@ -9,8 +9,8 @@ pragma nexscript ^0.1.0;
  *
  * Allows for decentralized swap of $NEXA with ANY other (token) asset.
  *
- * IMPORTANT NOTE:
- *
+ * NOTES
+ * --------------------
  * TBD..
  *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *

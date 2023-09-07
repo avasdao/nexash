@@ -9,17 +9,17 @@ pragma nexscript ^0.1.0;
  *
  * Empty contract template.
  *
- * IMPORTANT NOTE:
- *
+ * NOTES
+ * --------------------
  * Based on the Uniswap v3 protocol.
  * (source: https://docs.uniswap.org/)
  *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  *
- * Version     : 01
+ * Version     : 02
  * Fingerprint : 0x00000000
  * Signature   : 0x0000000000000000000000000000000000000000
- * Namespace   : SWAP01
+ * Namespace   : SWAP02
  *
  * owner : Party whom will receive the payouts.
  * param : A very useful parameter.
@@ -29,7 +29,7 @@ pragma nexscript ^0.1.0;
  *   - https://avasdao.org
  *
  */
-contract Blank(bytes20 owner, int param) {
+contract Wiseswap(pubkey owner) {
     /**
      * Method Name
      *
