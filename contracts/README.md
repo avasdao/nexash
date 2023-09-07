@@ -1,3 +1,3 @@
 # Nexa Shell Contracts
 
-A collection of "popular" Scripts.
+A collection of the most popular smart & wise contracts.

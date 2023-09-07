@@ -5,20 +5,21 @@ pragma nexscript ^0.1.0;
  * Copyright (c) 2023 Ava's DAO
  * Released under the MIT License.
  *
- * Blank
+ * Wiseswap
  *
  * Empty contract template.
  *
  * IMPORTANT NOTE:
  *
- * TBD..
+ * Based on the Uniswap v3 protocol.
+ * (source: https://docs.uniswap.org/)
  *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  *
  * Version     : 01
  * Fingerprint : 0x00000000
  * Signature   : 0x0000000000000000000000000000000000000000
- * Namespace   : BLANK01
+ * Namespace   : SWAP01
  *
  * owner : Party whom will receive the payouts.
  * param : A very useful parameter.

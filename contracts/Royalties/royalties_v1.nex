@@ -28,6 +28,7 @@ pragma nexscript ^0.1.0;
  *
  * Version     : 01
  * Fingerprint : 0x00000000
+ * Signature   : 0x0000000000000000000000000000000000000000
  * Namespace   : PAYME01
  *
  * owner       : Party whom will receive the payouts.
@@ -55,11 +56,11 @@ contract Royalties(bytes20 creator, int royalty) {
 
         /**
          * We restrict the outputs to:
-         *   - 1st output is the asset (and covenant) transfer.
+         *   - 1st output is the asset transfer.
          *   - 2nd output is the royalty payout to the asset Creator.
          *   - 3rd output is the payment to the asset Owner.
          *   - (optional) 4th output may either be "change" or a "broker fee".
-         *     NOTE: Either way, this is included in the royalty calculation.
+         *     NOTE: Either way, the 4th output is included in the royalty calculation.
          */
         require(tx.outputs.length <= 4);
 

@@ -1,0 +1,134 @@
+pragma nexscript ^0.1.0;
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ *
+ * Copyright (c) 2023 Ava's DAO
+ * Released under the MIT License.
+ *
+ * Trading Post
+ *
+ * Allows for decentralized swap of $NEXA with ANY other (token) asset.
+ *
+ * IMPORTANT NOTE:
+ *
+ * TBD..
+ *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ *
+ * Version     : 01
+ * Fingerprint : 0x00000000
+ * Signature   : 0x0000000000000000000000000000000000000000
+ * Namespace   : TPOST01
+ *
+ * tokenid : TBD
+ * seller  : TBD
+ * ask     : TBD
+ * buyer   : TBD
+ * bid     : TBD
+ *
+ * For more information, please visit the following resources:
+ *   - https://docs.causes.cash/trading-post
+ *   - https://avasdao.org
+ *
+ */
+contract TradingPost(bytes32 tokenid, pubkey seller, bytes8 ask, pubkey buyer, bytes8 bid, pubkey broker) {
+    /**
+     * Trade (Token) Asset
+     *
+     * NOTE: Anyone can call this function and broadcast to the blockchain,
+     *       AFTER the trade terms have been satisfied completely.
+     */
+    function trade() {
+        /* Set (token) dust value. */
+        int DUST_VALUE = 546;
+
+        /* Set template 1 length. */
+        int TEMPLATE_1_OUTPUT_LENGTH = 33;
+
+        /* Set template 1 length. */
+        int GROUP_OUTPUT_LENGTH = 22;
+
+        /* Set template 1 length. */
+        int NFT_OUTPUT_LENGTH = 11;
+
+        int ASSET_OUTPUT_IDX = 0
+        int PAYMENT_OUTPUT_IDX = 1
+
+        bytes4 tokenAmount = 0;
+
+        /**
+         * We restrict the outputs to:
+         *   - 1st output is the asset transfer.
+         *   - 2nd output is the payment to the asset Owner.
+         *   - (optional) additional output(s) may one or more "change" or "broker fee" output(s).
+         *     NOTE: The 3rd output is NOT enforced and can be anything agreed by all parties.
+         */
+        require(tx.outputs.length >= 2);
+
+        // NOTE: This is the asset output.
+        require(tx.outputs[0].value == DUST_VALUE);
+
+        /* Validate asset/token transfer output. */
+        // NOTE: Confirm any possibilities to "engineer" around this check.
+        require(
+            tx.outputs[ASSET_OUTPUT_IDX].lockingBytecode.length == GROUP_OUTPUT_LENGTH ||       // 16-bit value
+            tx.outputs[ASSET_OUTPUT_IDX].lockingBytecode.length == GROUP_OUTPUT_LENGTH + 2 ||   // 32-bit value
+            tx.outputs[ASSET_OUTPUT_IDX].lockingBytecode.length == GROUP_OUTPUT_LENGTH + 4 ||   // 64-bit value
+            tx.outputs[ASSET_OUTPUT_IDX].lockingBytecode.length == NFT_OUTPUT_LENGTH ||         // 16-bit value
+            tx.outputs[ASSET_OUTPUT_IDX].lockingBytecode.length == NFT_OUTPUT_LENGTH + 2 ||     // 32-bit value
+            tx.outputs[ASSET_OUTPUT_IDX].lockingBytecode.length == NFT_OUTPUT_LENGTH + 4        // 64-bit value
+        );
+
+        /* Validate asset/token amount. */
+        require(
+            (bid <= 0xffff) && (tx.outputs[ASSET_OUTPUT_IDX].lockingBytecode.split(34)[1].split(2)[0] >= bytes2(bid)) ||
+            (bid <= 0xffffffff) && (tx.outputs[ASSET_OUTPUT_IDX].lockingBytecode.split(34)[1].split(4)[0] .= bytes4(bid)) ||
+            tx.outputs[ASSET_OUTPUT_IDX].lockingBytecode.split(34)[1].split(8)[0] >= bytes8(bid)
+        )
+
+        /* Validate payment output. */
+        require(tx.outputs[PAYMENT_OUTPUT_IDX].lockingBytecode.length == TEMPLATE_1_OUTPUT_LENGTH);
+
+        /* Validate payment amount. */
+        require(tx.outputs[PAYMENT_OUTPUT_IDX].value == ask)
+    }
+
+    /**
+     * Cancel Trade
+     *
+     * Refunds any and all deposited funds and/or assets back to their
+     * respective owners.
+     *
+     * NOTE: This can ONLY be executed by one (1) of three (3) parties
+     *       directly involved in the transaction.
+     *
+     * @param owner
+     * @param signature
+     */
+    function cancel(sig signature) {
+        /* Set dust value. */
+        int DUST_VALUE = 546;
+
+        // NOTE: This is the asset output.
+        require(tx.outputs[0].value == DUST_VALUE);
+
+        /* Calculate Creator bytecode. */
+        // bytes23 creatorBytecode = new LockingBytecodeP2PKT(creator);
+
+        /* Verify that we payout to the Creator. */
+        // require(tx.outputs[1].lockingBytecode == creatorBytecode);
+
+        /* Verify output meets the Minimum Royalty Payout threshold. */
+        // require(tx.outputs[1].value >= royaltyPayout);
+
+        /* Verify transaction is signed by the asset owner. */
+        require(
+            checkSig(signature, seller) ||
+            checkSig(signature, buyer) ||
+            (
+                broker == 0x0 || // NOTE: Trade Broker is optional.
+                checkSig(signature, broker)
+            )
+        );
+    }
+}

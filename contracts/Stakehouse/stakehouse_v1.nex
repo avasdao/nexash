@@ -19,6 +19,7 @@ pragma nexscript ^0.1.0;
  *
  * Version     : 01
  * Fingerprint : 0x00000000
+ * Signature   : 0x0000000000000000000000000000000000000000
  * Namespace   : STAKE01
  *
  * owner       : Party whom will receive the payouts.
@@ -35,7 +36,7 @@ pragma nexscript ^0.1.0;
  * (source: https://prestwi.ch/bitcoin-time-locks/)
  *
  * For more information, please visit the following resources:
- *   - https://avas.cash
+ *   - https://docs.avas.cash/staking
  *   - https://avasdao.org
  *
  */
