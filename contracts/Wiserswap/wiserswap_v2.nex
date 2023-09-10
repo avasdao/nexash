@@ -5,21 +5,21 @@ pragma nexscript ^0.1.0;
  * Copyright (c) 2023 Ava's DAO
  * Released under the MIT License.
  *
- * Wiseswap
+ * Wiserswap
  *
  * Empty contract template.
  *
  * NOTES
  * --------------------
- * Based on the Cauldron contract by Dagur Valberg Johannsson
- * (source: https://www.cauldron.quest/_files/ugd/ae85be_b1dc04d2b6b94ab5a200e3d8cd197aa3.pdf)
+ * Based on the Uniswap v3 protocol.
+ * (source: https://docs.uniswap.org/)
  *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  *
- * Version     : 01
+ * Version     : 02
  * Fingerprint : 0x00000000
  * Signature   : 0x0000000000000000000000000000000000000000
- * Namespace   : SWAP01
+ * Namespace   : SWAP02
  *
  * owner : Party whom will receive the payouts.
  * param : A very useful parameter.
@@ -29,37 +29,22 @@ pragma nexscript ^0.1.0;
  *   - https://avasdao.org
  *
  */
-contract Wiseswap(pubkey owner) {
+contract Wiserswap(pubkey owner) {
     /**
-     * Swap
+     * Method Name
      *
-     * Allows two (2) assets to be swapped with each other, while maintaining
-     * the same contant multiplier??
+     * TBD..
+     *
+     * @param owner
+     * @param signature
      */
-    function swap() {
+    function transfer(pubkey owner, sig signature) {
         /* Set dust value. */
         int DUST_VALUE = 546;
 
         /* Verify parameter. */
         require(param >= DUST_VALUE);
 
-        // 1.
-        // 2.
-        // 3.
-
-
-        /* Verify transaction is signed by the owner. */
-        require(checkSig(signature, owner));
-    }
-
-    /**
-     * Withdraw
-     *
-     * Allows a liquidity provider to transfer their assets out from the pool.
-     *
-     * @param signature
-     */
-    function withdraw(sig signature) {
         /* Verify transaction is signed by the owner. */
         require(checkSig(signature, owner));
     }
