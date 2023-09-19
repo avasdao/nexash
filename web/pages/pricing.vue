@@ -10,7 +10,7 @@ useHead({
 
 <template>
     <main class="bg-white">
-        <section class="bg-white">
+        <div class="bg-white">
             <!-- Pricing with four tiers and toggle -->
             <div class="bg-gradient-to-b from-white to-gray-50">
                 <div class="mx-auto max-w-7xl px-6 pt-24 lg:px-8">
@@ -71,23 +71,36 @@ useHead({
                         </div>
                     </div>
 
+                    <section>
+
+                        <label for="default-range" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Default range</label>
+                        <input id="default-range" type="range" min="0" max="5" value="2.5" step="0.5" class="w-full h-3 bg-gray-200 rounded-lg appearance-none cursor-pointer range-lg dark:bg-gray-700">
+
+                    </section>
+
                     <div class="mt-12 space-y-4 sm:mt-16 sm:grid sm:grid-cols-2 sm:gap-6 sm:space-y-0 lg:mx-auto lg:max-w-4xl xl:mx-0 xl:max-w-none xl:grid-cols-4">
                         <div class="divide-y divide-gray-200 rounded-lg border border-gray-200 shadow-sm">
                             <div class="p-6">
                                 <h2 class="text-3xl font-medium leading-6 text-gray-900">
-                                    FOSS
+                                    Nexican
                                 </h2>
 
                                 <p class="mt-4 text-sm text-gray-500">
                                     Our entire suite of resources and services are available to Free and Open Source Software projects.
                                 </p>
 
-                                <p class="mt-8">
-                                    <span class="text-4xl font-bold tracking-tight text-gray-900">FREE</span>
+                                <p class="mt-8 flex flex-col items-end gap-2">
+                                    <span class="text-4xl font-bold tracking-tight text-gray-900">
+                                        FREE
+                                    </span>
+
+                                    <span class="text-base font-medium text-gray-500">
+                                        FOREVER
+                                    </span>
                                 </p>
 
                                 <a href="javascript://" class="mt-8 block w-full rounded-md border border-transparent bg-purple-600 py-2 text-center text-lg font-semibold text-white hover:bg-purple-700">
-                                    Apply for a FOSS Key
+                                    NFT Registration
                                 </a>
                             </div>
 
@@ -121,13 +134,18 @@ useHead({
                                         Everything your team will need to launch and support the MVP of your first Nexa dApp.
                                     </p>
 
-                                    <p class="mt-8 flex items-end gap-2">
-                                        <span class="text-4xl font-bold tracking-tight text-gray-900">$5</span>
-                                        <span class="text-base font-medium text-gray-500">for 30 days</span>
+                                    <p class="mt-8 flex flex-col items-end gap-2">
+                                        <span class="text-4xl font-bold tracking-tight text-gray-900">
+                                            15 $AVAS
+                                        </span>
+
+                                        <span class="text-base font-medium text-gray-500">
+                                            for 30 days
+                                        </span>
                                     </p>
 
                                     <a href="javascript://" class="mt-8 block w-full rounded-md border border-transparent bg-purple-600 py-2 text-center text-lg font-semibold text-white hover:bg-purple-700">
-                                        Buy dApp Keys
+                                        Active Stakeline
                                     </a>
                                 </div>
 
@@ -211,13 +229,18 @@ useHead({
                                         When it's time to scale, we've got your covered 100% with elastic resources at your disposal.
                                     </p>
 
-                                    <p class="mt-8 flex items-end gap-2">
-                                        <span class="text-4xl font-bold tracking-tight text-gray-900">$20</span>
-                                        <span class="text-base font-medium text-gray-500">for 30 days</span>
+                                    <p class="mt-8 flex flex-col items-end gap-2">
+                                        <span class="text-4xl font-bold tracking-tight text-gray-900">
+                                            60 $AVAS
+                                        </span>
+
+                                        <span class="text-base font-medium text-gray-500">
+                                            for 30 days
+                                        </span>
                                     </p>
 
                                     <a href="javascript://" class="mt-8 block w-full rounded-md border border-transparent bg-purple-600 py-2 text-center text-lg font-semibold text-white hover:bg-purple-700">
-                                        Buy Platform Keys
+                                        Activate Stakeline
                                     </a>
                                 </div>
 
@@ -281,9 +304,13 @@ useHead({
                                         When your application becomes the next BIG sensation, we're ready to deliver the bandwidth you'll need.
                                     </p>
 
-                                    <p class="mt-8 flex items-end gap-2">
+                                    <p class="mt-8 flex flex-col items-end gap-2">
                                         <span class="text-4xl font-bold tracking-tight text-gray-900">
                                             Custom
+                                        </span>
+
+                                        <span class="text-base font-medium text-gray-500">
+                                            24x7 Uptime + Support
                                         </span>
                                     </p>
 
@@ -435,6 +462,6 @@ useHead({
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
     </main>
 </template>
