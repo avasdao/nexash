@@ -33,11 +33,11 @@ pragma nexscript ^0.5.0;
  */
 contract TradingPost(
     bytes32 tokenid,
-    pubkey seller,
-    bytes8 ask,
-    pubkey buyer,
-    bytes8 bid,
-    pubkey arbiter
+    bytes20 seller,
+    int ask,
+    bytes20 buyer,
+    int bid,
+    bytes20 arbiter
 ) {
     /**
      * Cancel Trade
@@ -51,8 +51,7 @@ contract TradingPost(
      * @param owner
      * @param signature
      */
-    function cancel(sig signature) {
-        /* Set constants. */
+    function cancel(pubkey executor, sig signature) {
         int DUST_VALUE = 546;
         int MAX_OUTPUTS = 2;
 
@@ -71,14 +70,17 @@ contract TradingPost(
         /* Verify that we payout to the Creator. */
         require(tx.outputs[0].lockingBytecode == sellerBytecode);
 
-        /* Verify transaction is signed by the asset owner. */
+        /* Verify transaction has a valid signature. */
+        require(checkSig(signature, executor));
+
+        /* Hash the executor's public key. */
+        bytes20 pkh = hash160(executor);
+
+        /* Verify the executor is an authorized participant. */
         require(
-            checkSig(signature, seller) ||
-            checkSig(signature, buyer) ||
-            (
-                arbiter == 0x0 || // NOTE: Trade Broker is optional.
-                checkSig(signature, arbiter)
-            )
+            (pkh == seller) ||
+            (pkh == buyer) ||
+            (pkh == arbiter)
         );
     }
 
@@ -89,55 +91,93 @@ contract TradingPost(
      *       AFTER the trade terms have been satisfied completely.
      */
     function trade() {
-        /* Set (token) dust value. */
+        int MAXIMUM_NUM_OUTPUTS = 2;
+
+        /* Validate number of outputs. */
+        // We restrict the outputs to:
+        //   - 1st output is the asset transfer.
+        //   - 2nd output is the payment to the asset Owner.
+        //   - (optional) additional output(s) may one or more "change" or "arbiter fee" output(s).
+        //     NOTE: The 3rd output is NOT enforced and can be anything agreed by all parties.
+        require(tx.outputs.length >= MAXIMUM_NUM_OUTPUTS);
+
         int DUST_VALUE = 546;
-
-        /* Set template 1 length. */
-        int TEMPLATE_1_OUTPUT_LENGTH = 33;
-
-        /* Set template 1 length. */
-        int GROUP_OUTPUT_LENGTH = 22;
-
-        /* Set template 1 length. */
-        int NFT_OUTPUT_LENGTH = 11;
-
-        int ASSET_OUTPUT_IDX = 0;
-        int PAYMENT_OUTPUT_IDX = 1;
-
-        // bytes4 tokenAmount = 0;
-
-        /**
-         * We restrict the outputs to:
-         *   - 1st output is the asset transfer.
-         *   - 2nd output is the payment to the asset Owner.
-         *   - (optional) additional output(s) may one or more "change" or "arbiter fee" output(s).
-         *     NOTE: The 3rd output is NOT enforced and can be anything agreed by all parties.
-         */
-        require(tx.outputs.length >= 2);
 
         // NOTE: This is the asset output.
         require(tx.outputs[0].value == DUST_VALUE);
 
+        int ASSET_OUTPUT_IDX = 0;
+        int GROUP_OUTPUT_LENGTH = 22;
+        int NFT_OUTPUT_LENGTH = 11;
+
+        bytes lockingAsset = tx.outputs[ASSET_OUTPUT_IDX].lockingBytecode;
+        int lockingAssetLen = lockingAsset.length;
+
         /* Validate asset/token transfer output. */
         // NOTE: Confirm any possibilities to "engineer" around this check.
         require(
-            tx.outputs[ASSET_OUTPUT_IDX].lockingBytecode.length == GROUP_OUTPUT_LENGTH ||       // 16-bit value
-            tx.outputs[ASSET_OUTPUT_IDX].lockingBytecode.length == GROUP_OUTPUT_LENGTH + 2 ||   // 32-bit value
-            tx.outputs[ASSET_OUTPUT_IDX].lockingBytecode.length == GROUP_OUTPUT_LENGTH + 4 ||   // 64-bit value
-            tx.outputs[ASSET_OUTPUT_IDX].lockingBytecode.length == NFT_OUTPUT_LENGTH ||         // 16-bit value
-            tx.outputs[ASSET_OUTPUT_IDX].lockingBytecode.length == NFT_OUTPUT_LENGTH + 2 ||     // 32-bit value
-            tx.outputs[ASSET_OUTPUT_IDX].lockingBytecode.length == NFT_OUTPUT_LENGTH + 4        // 64-bit value
+            within(
+                lockingAssetLen,
+                GROUP_OUTPUT_LENGTH,    // 16-bit value length
+                GROUP_OUTPUT_LENGTH + 5 // 64-bit value length (+1)
+            ) ||
+            within(
+                lockingAssetLen,
+                NFT_OUTPUT_LENGTH,      // 16-bit value length
+                NFT_OUTPUT_LENGTH + 5   // 64-bit value length (+1)
+            )
         );
+
+        /* Validate asset/token id. */
+        require(lockingAsset
+            .split(1)[1]
+            .split(20)[0] == tokenid
+        );
+
+        /* Retrieve asset/token amount (length). */
+        int amountLen = int(lockingAsset
+            .split(21)[1]
+            .split(1)[0]);
 
         /* Validate asset/token amount. */
         require(
-            (bid <= 0xffff) && (tx.outputs[ASSET_OUTPUT_IDX].lockingBytecode.split(34)[1].split(2)[0] >= bytes2(bid)) ||
-            (bid <= 0xffffffff) && (tx.outputs[ASSET_OUTPUT_IDX].lockingBytecode.split(34)[1].split(4)[0] >= bytes4(bid)) ||
-            tx.outputs[ASSET_OUTPUT_IDX].lockingBytecode.split(34)[1].split(8)[0] >= bytes8(bid)
+            int(lockingAsset
+                .split(22)[1]
+                .split(amountLen)[0]) >= bid
         );
 
+        // require(
+        //     // 16-bit validation
+        //     (
+        //         bid <= int(0xffff) &&
+        //         int(lockingAsset
+        //             .split(22)[1]
+        //             .split(2)[0]) >= bid
+        //     ) ||
+        //
+        //     // 32-bit validation
+        //     (
+        //         bid <= int(0xffffffff) &&
+        //         int(lockingAsset
+        //             .split(22)[1]
+        //             .split(4)[0]) >= bid
+        //     ) ||
+        //
+        //     // 64-bit validation
+        //     int(lockingAsset
+        //         .split(22)[1]
+        //         .split(8)[0]) >= bid
+        // );
+
+        int TEMPLATE_1_OUTPUT_LENGTH = 33;
+
+        int PAYMENT_OUTPUT_IDX = 1;
+
         /* Validate payment output. */
-        require(tx.outputs[PAYMENT_OUTPUT_IDX].lockingBytecode.length == TEMPLATE_1_OUTPUT_LENGTH);
+        require(tx.outputs[PAYMENT_OUTPUT_IDX]
+            .lockingBytecode
+            .length == TEMPLATE_1_OUTPUT_LENGTH
+        );
 
         /* Validate payment amount. */
         require(tx.outputs[PAYMENT_OUTPUT_IDX].value == ask);
