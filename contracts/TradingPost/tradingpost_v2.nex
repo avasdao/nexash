@@ -1,4 +1,4 @@
-pragma nexscript ^0.5.0;
+pragma nexscript >= 0.6.0;
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  *
@@ -7,18 +7,20 @@ pragma nexscript ^0.5.0;
  *
  * Trading Post
  *
- * Allows for decentralized swap of $NEXA with ANY other (token) asset.
+ * Allows for decentralized swap of ANY (token) asset with ANY other
+ * (token) asset.
  *
  * NOTES
  * --------------------
- * TBD..
+ * Utilizes Merklized Abstract Syntax Trees (MAST) for very efficient and
+ * privacy-preserving contract (Script) execution(s).
  *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  *
- * Version     : 01
+ * Version     : 02
  * Fingerprint : 0x00000000
  * Signature   : 0x0000000000000000000000000000000000000000
- * Namespace   : TPOST01
+ * Namespace   : TPOST02
  *
  * owner      : (bytes20) The sellers' public key hash.
  * tokenGet   : (bytes32) The token id of the asset.
@@ -35,180 +37,33 @@ pragma nexscript ^0.5.0;
  *
  */
 contract TradingPost(
-    bytes20 owner,
-    bytes32 tokenGet,
-    int amountGet,
-    bytes32 tokenGive,
-    int amountGive,
-    bytes20 provider,
-    int fee,
-    int expires
+    bytes20 visible unused owner,
+    bytes32 visible unused tokenGet,
+    int visible unused amountGet,
+    bytes32 visible unused tokenGive,
+    int visible unused amountGive,
+    bytes20 visible unused provider,
+    int visible unused fee,
+    int visible unused expires
 ) {
     /**
-     * Cancel Trade
+     * Cancel
      *
-     * Refunds any and all deposited funds and/or assets back to their
-     * respective owners.
-     *
-     * NOTE: This can ONLY be executed by one (1) of three (3) parties
-     *       directly involved in the transaction.
-     *
-     * @param owner
-     * @param signature
+     * Cancel the trading contract and return asset(s) to Seller.
      */
-    function cancel(pubkey executor, sig signature) {
-        /* Verify executor has provided a valid signature. */
-        require(checkSig(signature, executor));
-
-        /* Hash the executor's public key hash. */
-        bytes20 pubKeyHash = hash160(executor);
-
-        /* Verify the executor is an authorized participant. */
-        require(pubKeyHash == seller || pubKeyHash == provider);
-
-        int MAX_OUTPUTS = 2;
-
-        // NOTE: This is the asset output.
-        require(tx.outputs.length == MAX_OUTPUTS);
-
-        /* Validate the asset. */
-        require(tx.outputs[0].tokenGroupId == tokenid);
-
-        /* Verify that we payout to the Seller. */
-        require(tx.inputs[0].tokenAmount == tx.outputs[0].tokenAmount);
-
-        /* Validate the asset. */
-        require(tx.outputs[1].tokenGroupId == 0);
-
-
-        /* Retrieve asset/token amount (length). */
-        int amountParentLen = int(lockingAsset
-            .split(21)[1]
-            .split(1)[0]);
-
-        /* Retrieve asset/token amount (length). */
-        int amountChildLen = int(lockingAsset
-            .split(41)[1]
-            .split(1)[0]);
-
-
-
-        /* Validate asset/token id and amount. */
-        require(
-            // Validate "parent" token.
-            (
-                lockingAsset
-                    .split(1)[1]
-                    .split(20)[0] == tokenid &&
-                int(lockingAsset
-                    .split(22)[1]
-                    .split(amountParentLen)[0]) >= bid
-            ) ||
-            // Validate "child" token.
-            (
-                lockingAsset
-                    .split(1)[1]
-                    .split(40)[0] == tokenid &&
-                int(lockingAsset
-                    .split(42)[1]
-                    .split(amountChildLen)[0]) >= bid
-            )
-        );
-
-
-        /* Calculate Seller bytecode. */
-        bytes23 tokenBytecode = new LockingBytecodeP2PKT(seller);
-        bytes23 nftBytecode = new LockingBytecodeP2PKT(seller);
-
-        /* Verify that we payout to the Seller. */
-        require(tx.outputs[0].lockingBytecode == sellerBytecode);
-    }
+    import './tradingpost_v2_cancel.nex';
 
     /**
-     * Trade (Token) Asset
+     * Group Trade
      *
-     * NOTE: Anyone can call this function and broadcast to the blockchain,
-     *       AFTER the trade terms have been satisfied completely.
+     * Trade a standard group token.
      */
-    function trade() {
-        /* Set the asset output index. */
-        int ASSET_OUTPUT_IDX = 0;
+    import './tradingpost_v2_group.nex';
 
-        bytes lockingAsset = tx.outputs[ASSET_OUTPUT_IDX].lockingBytecode;
-
-        // bytes pkh1 = lockingAsset.split[lockingAsset.length - 20][1];
-        // bytes pkh2 = buyerBytecode.split[3][1];
-        //
-        // /* Verify that we payout to the Buyer. */
-        // require(pkh1 == pkh2);
-
-        /* Retrieve asset/token amount (length). */
-        int amountParentLen = int(lockingAsset
-            .split(21)[1]
-            .split(1)[0]);
-
-        /* Retrieve asset/token amount (length). */
-        int amountChildLen = int(lockingAsset
-            .split(41)[1]
-            .split(1)[0]);
-
-        /* Validate asset/token id and amount. */
-        require(
-            // Validate "parent" token.
-            (
-                lockingAsset
-                    .split(1)[1]
-                    .split(20)[0] == tokenid &&
-                int(lockingAsset
-                    .split(22)[1]
-                    .split(amountParentLen)[0]) >= bid
-            ) ||
-            // Validate "child" token.
-            (
-                lockingAsset
-                    .split(1)[1]
-                    .split(40)[0] == tokenid &&
-                int(lockingAsset
-                    .split(42)[1]
-                    .split(amountChildLen)[0]) >= bid
-            )
-        );
-
-        /* Calculate Seller bytecode. */
-        bytes23 sellerBytecode = new LockingBytecodeP2PKT(seller);
-
-        int PAYMENT_OUTPUT_IDX = 1;
-
-        /* Verify that we payout to the Seller. */
-        require(tx.outputs[PAYMENT_OUTPUT_IDX].lockingBytecode == sellerBytecode);
-
-        /* Validate payout amount. */
-        require(tx.outputs[PAYMENT_OUTPUT_IDX].value >= ask);
-
-        /* Calculate Provider bytecode. */
-        bytes23 providerBytecode = new LockingBytecodeP2PKT(provider);
-
-        int MIN_PARTICIPANTS = 2;
-        int FEE_OUTPUT_IDX = 2;
-
-        int PROVIDER_OUTPUT_IDX = 2;
-
-        /* Validate number of outputs. */
-        // We restrict the outputs to:
-        //   - 1st output is the asset transfer.
-        //   - 2nd output is the payment to the asset Owner.
-        //   - (optional) additional output(s) may one or more "change" or "provider fee" output(s).
-        //     NOTE: The 3rd output is NOT enforced and can be anything agreed by all parties.
-        /* Verify that ANY fee payout goes to the Executor. */
-        require(
-            tx.outputs.length == MIN_PARTICIPANTS ||
-            tx.outputs[FEE_OUTPUT_IDX].lockingBytecode == providerBytecode
-        );
-
-        /* Verify that we payout to the Seller. */
-        require(tx.outputs[PROVIDER_OUTPUT_IDX].lockingBytecode == providerBytecode);
-
-        /* Validate payout amount. */
-        require(tx.outputs[PROVIDER_OUTPUT_IDX].value >= fee);
-    }
+    /**
+     * Subgroup Trade
+     *
+     * Trade a sub(child-) group token.
+     */
+    import './tradingpost_v2_subgroup.nex';
 }

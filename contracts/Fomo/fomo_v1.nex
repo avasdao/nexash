@@ -5,7 +5,9 @@ pragma nexscript >= 0.2.0;
  * Copyright (c) 2023 Ava's DAO
  * Released under the MIT License.
  *
- * Blank
+ * Fomo (Fear of missing out) — is an auction contract designed for very
+ * exclusive and limited edition collections that offer asset quantities usually
+ * numbering in the single (1 - 9) digits.
  *
  * Empty contract template.
  *
@@ -18,26 +20,46 @@ pragma nexscript >= 0.2.0;
  * Version     : 01
  * Fingerprint : 0x00000000
  * Signature   : 0x0000000000000000000000000000000000000000
- * Namespace   : BLANK01
+ * Namespace   : FOMO01
  *
  * owner : Party whom will receive the payouts.
  * param : A very useful parameter.
  *
  * For more information, please visit the following resources:
- *   - https://domain.tld
+ *   - https://docs.causes.cash/fomo
  *   - https://avasdao.org
  *
  */
-contract Blank(pubkey owner, bytes32 key, int value) {
+contract Fomo(pubkey owner, bytes32 key, int value) {
     /**
-     * Method Name
+     * Reclaim
      *
-     * TBD..
+     * Allows a bidder to reclaim their bid amount.
      *
      * @param owner
      * @param signature
      */
-    function transfer(pubkey owner, sig signature) {
+    function reclaim(pubkey owner, sig signature) {
+        /* Set dust value. */
+        int DUST_VALUE = 546;
+
+        /* Verify parameter. */
+        require(param >= DUST_VALUE);
+
+        /* Verify transaction is signed by the owner. */
+        require(checkSig(signature, owner));
+    }
+
+    /**
+     * Collect
+     *
+     * Alllows the bidder to Claim their asset, in exchange for the agreed
+     * upon amount.
+     *
+     * @param owner
+     * @param signature
+     */
+    function collect(pubkey owner, sig signature) {
         /* Set dust value. */
         int DUST_VALUE = 546;
 

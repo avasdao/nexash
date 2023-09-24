@@ -1,4 +1,4 @@
-pragma nexscript ^0.5.0;
+pragma nexscript >= 0.2.0;
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  *
@@ -20,11 +20,14 @@ pragma nexscript ^0.5.0;
  * Signature   : 0x0000000000000000000000000000000000000000
  * Namespace   : TPOST01
  *
- * tokenid : TBD
- * seller  : TBD
- * ask     : TBD
- * buyer   : TBD
- * bid     : TBD
+ * owner      : (bytes20) The sellers' public key hash.
+ * tokenGet   : (bytes32) The token id of the asset.
+ * amountGet  : (int)     The amount of NEXA requested by the seller.
+ * tokenGive  : (bytes32) The token id of the asset.
+ * amountGive : (int)     The amount of NEXA requested by the seller.
+ * provider   : (bytes20) An optional 3rd-party (agreed upon by the Buyer and Seller) used to facilitate the tranaction.
+ * fee        : (int)     An optional amount charged by the Provider. (measured in basis points (bp), eg. 5.25% = 525bp)
+ * expires    : (int)     An optional amount charged by the Provider. (measured in basis points (bp), eg. 5.25% = 525bp)
  *
  * For more information, please visit the following resources:
  *   - https://docs.causes.cash/trading-post
@@ -32,12 +35,14 @@ pragma nexscript ^0.5.0;
  *
  */
 contract TradingPost(
-    bytes32 tokenid,
-    bytes20 seller,
-    int ask,
-    bytes20 buyer,
-    int bid,
-    bytes20 arbiter
+    bytes20 owner,
+    bytes32 tokenGet,
+    int amountGet,
+    bytes32 tokenGive,
+    int amountGive,
+    bytes20 provider,
+    int fee,
+    int expires
 ) {
     /**
      * Cancel Trade
@@ -52,36 +57,71 @@ contract TradingPost(
      * @param signature
      */
     function cancel(pubkey executor, sig signature) {
-        int DUST_VALUE = 546;
+        /* Verify executor has provided a valid signature. */
+        require(checkSig(signature, executor));
+
+        /* Hash the executor's public key hash. */
+        bytes20 pubKeyHash = hash160(executor);
+
+        /* Verify the executor is an authorized participant. */
+        require(pubKeyHash == seller || pubKeyHash == provider);
+
         int MAX_OUTPUTS = 2;
 
         // NOTE: This is the asset output.
         require(tx.outputs.length == MAX_OUTPUTS);
 
-        // NOTE: This is the asset output.
-        require(tx.outputs[0].value == DUST_VALUE);
+        /* Validate the asset. */
+        require(tx.outputs[0].tokenGroupId == tokenid);
 
-        // NOTE: This is the arbiter/processer output.
-        require(tx.outputs[1].value != DUST_VALUE);
+        /* Verify that we payout to the Seller. */
+        require(tx.inputs[0].tokenAmount == tx.outputs[0].tokenAmount);
+
+        /* Validate the asset. */
+        require(tx.outputs[1].tokenGroupId == 0);
+
+
+        /* Retrieve asset/token amount (length). */
+        int amountParentLen = int(lockingAsset
+            .split(21)[1]
+            .split(1)[0]);
+
+        /* Retrieve asset/token amount (length). */
+        int amountChildLen = int(lockingAsset
+            .split(41)[1]
+            .split(1)[0]);
+
+
+
+        /* Validate asset/token id and amount. */
+        require(
+            // Validate "parent" token.
+            (
+                lockingAsset
+                    .split(1)[1]
+                    .split(20)[0] == tokenid &&
+                int(lockingAsset
+                    .split(22)[1]
+                    .split(amountParentLen)[0]) >= bid
+            ) ||
+            // Validate "child" token.
+            (
+                lockingAsset
+                    .split(1)[1]
+                    .split(40)[0] == tokenid &&
+                int(lockingAsset
+                    .split(42)[1]
+                    .split(amountChildLen)[0]) >= bid
+            )
+        );
+
 
         /* Calculate Seller bytecode. */
-        bytes23 sellerBytecode = new LockingBytecodeP2PKT(seller);
+        bytes23 tokenBytecode = new LockingBytecodeP2PKT(seller);
+        bytes23 nftBytecode = new LockingBytecodeP2PKT(seller);
 
-        /* Verify that we payout to the Creator. */
+        /* Verify that we payout to the Seller. */
         require(tx.outputs[0].lockingBytecode == sellerBytecode);
-
-        /* Verify transaction has a valid signature. */
-        require(checkSig(signature, executor));
-
-        /* Hash the executor's public key. */
-        bytes20 pkh = hash160(executor);
-
-        /* Verify the executor is an authorized participant. */
-        require(
-            (pkh == seller) ||
-            (pkh == buyer) ||
-            (pkh == arbiter)
-        );
     }
 
     /**
@@ -91,95 +131,84 @@ contract TradingPost(
      *       AFTER the trade terms have been satisfied completely.
      */
     function trade() {
-        int MAXIMUM_NUM_OUTPUTS = 2;
+        /* Set the asset output index. */
+        int ASSET_OUTPUT_IDX = 0;
+
+        bytes lockingAsset = tx.outputs[ASSET_OUTPUT_IDX].lockingBytecode;
+
+        // bytes pkh1 = lockingAsset.split[lockingAsset.length - 20][1];
+        // bytes pkh2 = buyerBytecode.split[3][1];
+        //
+        // /* Verify that we payout to the Buyer. */
+        // require(pkh1 == pkh2);
+
+        /* Retrieve asset/token amount (length). */
+        int amountParentLen = int(lockingAsset
+            .split(21)[1]
+            .split(1)[0]);
+
+        /* Retrieve asset/token amount (length). */
+        int amountChildLen = int(lockingAsset
+            .split(41)[1]
+            .split(1)[0]);
+
+        /* Validate asset/token id and amount. */
+        require(
+            // Validate "parent" token.
+            (
+                lockingAsset
+                    .split(1)[1]
+                    .split(20)[0] == tokenid &&
+                int(lockingAsset
+                    .split(22)[1]
+                    .split(amountParentLen)[0]) >= bid
+            ) ||
+            // Validate "child" token.
+            (
+                lockingAsset
+                    .split(1)[1]
+                    .split(40)[0] == tokenid &&
+                int(lockingAsset
+                    .split(42)[1]
+                    .split(amountChildLen)[0]) >= bid
+            )
+        );
+
+        /* Calculate Seller bytecode. */
+        bytes23 sellerBytecode = new LockingBytecodeP2PKT(seller);
+
+        int PAYMENT_OUTPUT_IDX = 1;
+
+        /* Verify that we payout to the Seller. */
+        require(tx.outputs[PAYMENT_OUTPUT_IDX].lockingBytecode == sellerBytecode);
+
+        /* Validate payout amount. */
+        require(tx.outputs[PAYMENT_OUTPUT_IDX].value >= ask);
+
+        /* Calculate Provider bytecode. */
+        bytes23 providerBytecode = new LockingBytecodeP2PKT(provider);
+
+        int MIN_PARTICIPANTS = 2;
+        int FEE_OUTPUT_IDX = 2;
+
+        int PROVIDER_OUTPUT_IDX = 2;
 
         /* Validate number of outputs. */
         // We restrict the outputs to:
         //   - 1st output is the asset transfer.
         //   - 2nd output is the payment to the asset Owner.
-        //   - (optional) additional output(s) may one or more "change" or "arbiter fee" output(s).
+        //   - (optional) additional output(s) may one or more "change" or "provider fee" output(s).
         //     NOTE: The 3rd output is NOT enforced and can be anything agreed by all parties.
-        require(tx.outputs.length >= MAXIMUM_NUM_OUTPUTS);
-
-        int DUST_VALUE = 546;
-
-        // NOTE: This is the asset output.
-        require(tx.outputs[0].value == DUST_VALUE);
-
-        int ASSET_OUTPUT_IDX = 0;
-        int GROUP_OUTPUT_LENGTH = 22;
-        int NFT_OUTPUT_LENGTH = 11;
-
-        bytes lockingAsset = tx.outputs[ASSET_OUTPUT_IDX].lockingBytecode;
-        int lockingAssetLen = lockingAsset.length;
-
-        /* Validate asset/token transfer output. */
-        // NOTE: Confirm any possibilities to "engineer" around this check.
+        /* Verify that ANY fee payout goes to the Executor. */
         require(
-            within(
-                lockingAssetLen,
-                GROUP_OUTPUT_LENGTH,    // 16-bit value length
-                GROUP_OUTPUT_LENGTH + 5 // 64-bit value length (+1)
-            ) ||
-            within(
-                lockingAssetLen,
-                NFT_OUTPUT_LENGTH,      // 16-bit value length
-                NFT_OUTPUT_LENGTH + 5   // 64-bit value length (+1)
-            )
+            tx.outputs.length == MIN_PARTICIPANTS ||
+            tx.outputs[FEE_OUTPUT_IDX].lockingBytecode == providerBytecode
         );
 
-        /* Validate asset/token id. */
-        require(lockingAsset
-            .split(1)[1]
-            .split(20)[0] == tokenid
-        );
+        /* Verify that we payout to the Seller. */
+        require(tx.outputs[PROVIDER_OUTPUT_IDX].lockingBytecode == providerBytecode);
 
-        /* Retrieve asset/token amount (length). */
-        int amountLen = int(lockingAsset
-            .split(21)[1]
-            .split(1)[0]);
-
-        /* Validate asset/token amount. */
-        require(
-            int(lockingAsset
-                .split(22)[1]
-                .split(amountLen)[0]) >= bid
-        );
-
-        // require(
-        //     // 16-bit validation
-        //     (
-        //         bid <= int(0xffff) &&
-        //         int(lockingAsset
-        //             .split(22)[1]
-        //             .split(2)[0]) >= bid
-        //     ) ||
-        //
-        //     // 32-bit validation
-        //     (
-        //         bid <= int(0xffffffff) &&
-        //         int(lockingAsset
-        //             .split(22)[1]
-        //             .split(4)[0]) >= bid
-        //     ) ||
-        //
-        //     // 64-bit validation
-        //     int(lockingAsset
-        //         .split(22)[1]
-        //         .split(8)[0]) >= bid
-        // );
-
-        int TEMPLATE_1_OUTPUT_LENGTH = 33;
-
-        int PAYMENT_OUTPUT_IDX = 1;
-
-        /* Validate payment output. */
-        require(tx.outputs[PAYMENT_OUTPUT_IDX]
-            .lockingBytecode
-            .length == TEMPLATE_1_OUTPUT_LENGTH
-        );
-
-        /* Validate payment amount. */
-        require(tx.outputs[PAYMENT_OUTPUT_IDX].value == ask);
+        /* Validate payout amount. */
+        require(tx.outputs[PROVIDER_OUTPUT_IDX].value >= fee);
     }
 }
