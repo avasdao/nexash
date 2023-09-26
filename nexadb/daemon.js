@@ -11,7 +11,6 @@ import zmq from 'zeromq'
 
 /* Import indexers. */
 import blocksIndexer from './indexer/blocks.js'
-import handleGroup from './handlers/group.js'
 
 /* Import handlers. */
 import handleAddress from './handlers/address.js'
