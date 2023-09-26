@@ -173,7 +173,7 @@ console.info('\n  Starting Nexa Database daemon...\n')
     console.log('\n\n  Blockchain info:\n', blockchainInfo)
 
     /* Check database sync. */
-    blocksIndexer()
+    blocksIndexer(blockchainInfo?.blocks)
 
     /* Initialize Zero Message Queue (ZMQ) socket. */
     sock = new zmq.Subscriber

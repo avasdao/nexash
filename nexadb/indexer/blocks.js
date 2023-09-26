@@ -12,7 +12,7 @@ const systemDb = new PouchDB(`http://${process.env.COUCHDB_USER}:${process.env.C
  * Performs a check to make sure we have indexed up to the
  * latest block height.
  */
-export default async () => {
+export default async (_curHeight = 0) => {
     console.info('\n  Checking BLOCKS database sync...\n')
 
     let block
@@ -26,7 +26,7 @@ export default async () => {
         .catch(err => console.error(err))
     // console.log('SYSTEM', systemIdx)
 
-    if (blockchainInfo?.blocks > systemIdx?.last) {
+    if (_curHeight > systemIdx?.last) {
         console.info('\n  Starting database sycn...\n')
 
         /* Handle new blocks. */
