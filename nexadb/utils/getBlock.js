@@ -1,6 +1,14 @@
 /* Import modules. */
 import { callNode } from '@nexajs/rpc'
 
+/* Set node options. */
+const RPC_OPTIONS = {
+    username: 'user', // required
+    password: 'password', // required
+    host: '127.0.0.1', // (optional) default is localhost (127.0.0.1)
+    port: '7227', // (optional) default is 7227
+}
+
 /**
  * Get Block
  *
