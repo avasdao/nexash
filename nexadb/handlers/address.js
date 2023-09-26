@@ -69,9 +69,11 @@ export default async (_transaction) => {
                 txs,
             }
         }
+
 if (!newAddress._id) {
     console.log('NEW ADDRESS', newAddress, _transaction.vout)
 }
+
         result = await addressesDb
             .put(newAddress)
             .catch(err => console.error(err))

@@ -14,6 +14,7 @@ import getBlock from './utils/getBlock.js'
 
 /* Import indexers. */
 import blocksIndexer from './indexer/blocks.js'
+import groupsIndexer from './indexer/groups.js'
 
 /* Import handlers. */
 import handleAddress from './handlers/address.js'
@@ -85,25 +86,6 @@ const decodeRawTransaction = async (_rawTx) => {
     return response
 }
 
-const getTransaction = async (_txidem) => {
-    let method
-    let params
-    let response
-
-    /* Set method. */
-    method = 'getrawtransaction'
-
-    /* Set parameters. */
-    params = [_txidem, true]
-
-    /* Execute JSON-RPC request. */
-    response = await callNode(method, params, RPC_OPTIONS)
-    // console.log('\nJSON-RPC response:\n%s', response)
-
-    /* Return response. */
-    return response
-}
-
 const getBlockchainInfo = async () => {
     let method
     let options
@@ -147,8 +129,9 @@ console.info('\n  Starting Nexa Database daemon...\n')
     blockchainInfo = await getBlockchainInfo()
     console.log('\n\n  Blockchain info:\n', blockchainInfo)
 
-    /* Check database sync. */
+    /* Start (sync) database indexers. */
     blocksIndexer(blockchainInfo?.blocks)
+    groupsIndexer(blockchainInfo?.blocks)
 
     /* Initialize Zero Message Queue (ZMQ) socket. */
     sock = new zmq.Subscriber
