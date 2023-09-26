@@ -30,7 +30,7 @@ export default async (_curHeight = 0) => {
         console.info('\n  Starting database sycn...\n')
 
         /* Handle new blocks. */
-        for (let i = systemIdx.last + 1; i <= blockchainInfo.blocks; i++) {
+        for (let i = systemIdx.last + 1; i <= _curHeight; i++) {
             /* Request block at height. */
             block = await getBlock(i)
                 .catch(err => {
