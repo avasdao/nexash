@@ -2,9 +2,9 @@
 import { GraphQLSchema } from 'graphql'
 
 /* Import (Schema) objects. */
-import mutation from './mutation.js'
-import query from './query.js'
-import subscription from './subscription.js'
+import mutation from './mutation/index.js'
+import query from './query/index.js'
+import subscription from './subscription/index.js'
 
 /**
  * GraphQL Schema

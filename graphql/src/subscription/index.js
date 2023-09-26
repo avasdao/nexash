@@ -12,10 +12,10 @@ const transactionsDb = new PouchDB(`http://${process.env.COUCHDB_USER}:${process
 
 
 /* Import subscriptions. */
-import address from './subscriptions/address.js'
-import block from './subscriptions/block.js'
-import id from './subscriptions/id.js'
-import transaction from './subscriptions/transaction.js'
+import address from './address.js'
+import block from './block.js'
+import id from './id.js'
+import transaction from './transaction.js'
 
 /* Initialize PubSub. */
 const pubsub = new PubSub()

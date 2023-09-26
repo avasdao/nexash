@@ -1,6 +1,6 @@
 export default `######################################################################
 #
-#  Welcome to the NexaShell GraphiQL
+#  Welcome to NexaShell GraphQL Server
 #
 #  Application Builders should make great use of this tool for:
 #    ✔ Running on-chain Nexa data queries
@@ -52,4 +52,16 @@ export default `################################################################
     difficulty
   }
 }
+
+/* Uncomment this query to execute.
+{
+  # Example Token query
+  token(id: some-token-id) {
+    tokenid
+    groupid
+    title
+    createdAt
+  }
+}
+*/
 `

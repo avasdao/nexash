@@ -2,8 +2,8 @@
 import { GraphQLObjectType } from 'graphql'
 
 /* Import mutations. */
-import addAffiliate from './mutations/addAffiliate.js'
-import createSession from './mutations/createSession.js'
+import addAffiliate from './addAffiliate.js'
+import createSession from './createSession.js'
 
 /* Set name. */
 const name = 'Mutation'
