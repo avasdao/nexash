@@ -53,15 +53,14 @@ export default `################################################################
   }
 }
 
-/* Uncomment this query to execute.
-{
-  # Example Token query
-  token(id: some-token-id) {
-    tokenid
-    groupid
-    title
-    createdAt
-  }
-}
-*/
+# Example Token query
+# Uncomment (below) hashes to run this query.
+#{
+#  token(id: some-token-id) {
+#    tokenid
+#    groupid
+#    title
+#    createdAt
+#  }
+#}
 `
