@@ -10,7 +10,9 @@ import { v4 as uuidv4 } from 'uuid'
 import zmq from 'zeromq'
 
 /* Import helpers. */
+import decodeRawTransaction from './utils/decodeRawTransaction.js'
 import getBlock from './utils/getBlock.js'
+import getBlockchainInfo from './utils/getBlockchainInfo.js'
 
 /* Import indexers. */
 import blocksIndexer from './indexer/blocks.js'
@@ -66,52 +68,6 @@ app.get('/', (req, res) => {
 app.listen(SSE_PORT, LOCAL_HOST, () => {
     console.log(`Express SSE listening on port ${SSE_PORT}`)
 })
-
-const decodeRawTransaction = async (_rawTx) => {
-    let method
-    let params
-    let response
-
-    /* Set method. */
-    method = 'decoderawtransaction'
-
-    /* Set parameters. */
-    params = [_rawTx]
-
-    /* Execute JSON-RPC request. */
-    response = await callNode(method, params, RPC_OPTIONS)
-    // console.log('\nJSON-RPC response:\n%s', response)
-
-    /* Return response. */
-    return response
-}
-
-const getBlockchainInfo = async () => {
-    let method
-    let options
-    let params
-    let response
-
-    /* Set method. */
-    method = 'getblockchaininfo'
-
-    /* Set parameters. */
-    params = []
-
-    /* Set node options. */
-    options = {
-        username: 'user', // required
-        password: 'password', // required
-        host: '127.0.0.1', // (optional) default is localhost (127.0.0.1)
-        port: '7227', // (optional) default is 7227
-    }
-
-    /* Execute JSON-RPC request. */
-    response = await callNode(method, params, RPC_OPTIONS)
-
-    /* Return response. */
-    return response
-}
 
 console.info('\n  Starting Nexa Database daemon...\n')
 
