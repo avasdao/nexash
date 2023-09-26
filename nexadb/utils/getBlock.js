@@ -6,7 +6,7 @@ import { callNode } from '@nexajs/rpc'
  *
  * Retrieves the block information from the local node.
  */
-const getBlock = async (_blockHash) => {
+export default async (_blockHash) => {
     let method
     let options
     let params
