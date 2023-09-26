@@ -30,7 +30,7 @@ pragma nexscript >= 0.2.0;
  *   - https://avasdao.org
  *
  */
-contract Fomo(pubkey owner, bytes32 key, int value) {
+contract Fomo(bytes32 key, int value, pubkey owner) {
     /**
      * Reclaim
      *
@@ -39,12 +39,12 @@ contract Fomo(pubkey owner, bytes32 key, int value) {
      * @param owner
      * @param signature
      */
-    function reclaim(pubkey owner, sig signature) {
+    function reclaim(sig signature) {
         /* Set dust value. */
-        int DUST_VALUE = 546;
+        // int DUST_VALUE = 546;
 
         /* Verify parameter. */
-        require(param >= DUST_VALUE);
+        require(key == bytes(0) && value == 0);
 
         /* Verify transaction is signed by the owner. */
         require(checkSig(signature, owner));
@@ -59,14 +59,14 @@ contract Fomo(pubkey owner, bytes32 key, int value) {
      * @param owner
      * @param signature
      */
-    function collect(pubkey owner, sig signature) {
-        /* Set dust value. */
-        int DUST_VALUE = 546;
-
-        /* Verify parameter. */
-        require(param >= DUST_VALUE);
-
-        /* Verify transaction is signed by the owner. */
-        require(checkSig(signature, owner));
-    }
+    // function collect(pubkey owner, sig signature) {
+    //     /* Set dust value. */
+    //     int DUST_VALUE = 546;
+    //
+    //     /* Verify parameter. */
+    //     require(param >= DUST_VALUE);
+    //
+    //     /* Verify transaction is signed by the owner. */
+    //     require(checkSig(signature, owner));
+    // }
 }

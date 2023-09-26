@@ -9,6 +9,10 @@ import SSE from 'express-sse'
 import { v4 as uuidv4 } from 'uuid'
 import zmq from 'zeromq'
 
+/* Import indexers. */
+import blocksIndexer from './indexer/blocks.js'
+import handleGroup from './handlers/group.js'
+
 /* Import handlers. */
 import handleAddress from './handlers/address.js'
 import handleGroup from './handlers/group.js'
@@ -156,96 +160,7 @@ const getBlockchainInfo = async () => {
 console.info('\n  Starting Nexa Database daemon...\n')
 
 
-/**
- * Check Database Syncronization
- *
- * Performs a check to make sure we have indexed up to the
- * latest block height.
- */
-const checkDbSync = async () => {
-    console.info('\n  Checking database sync...\n')
 
-    let block
-    let system
-    let tx
-    let txidem
-    let updatedSystem
-
-    system = await systemDb
-        .get('0')
-        .catch(err => console.error(err))
-    // console.log('SYSTEM', system)
-
-    if (blockchainInfo?.blocks > system?.idxHeight) {
-        console.info('\n  Starting database sycn...\n')
-
-        /* Handle new blocks. */
-        for (let i = system.idxHeight + 1; i <= blockchainInfo.blocks; i++) {
-            /* Request block at height. */
-            block = await getBlock(i)
-                .catch(err => {
-                    console.error(err)
-                })
-            // console.log(`BLOCK #${i}`, block)
-
-            /* Save block to storage. */
-            // await blocksDb
-            //     .put({
-            //         _id: block.height.toString(),
-            //         ...block,
-            //     })
-            //     .catch(err => {
-            //         console.error(err)
-            //     })
-
-            // NOTE: Block MUST contain at least the Coinbase transaction.
-            if (block?.txidem) {
-                for (let j = 0; j < block.txidem.length; j++) {
-                    /* Set transaction idem. */
-                    txidem = block.txidem[j]
-
-                    /* Request transaction details. */
-                    tx = await getTransaction(txidem)
-                        .catch(err => {
-                            console.error(err)
-                        })
-                    // console.log(`TRANSACTION [${txidem}]`, tx)
-
-                    /* Save transaction to storage. */
-                    // await transactionsDb
-                    //     .put({
-                    //         _id: tx.txidem,
-                    //         ...tx
-                    //     })
-                    //     .catch(err => {
-                    //         console.error(err)
-                    //     })
-
-                    /* Handle Address. */
-                    // await handleAddress(tx)
-
-                    /* Handle Group (Tokens). */
-                    await handleGroup(tx)
-                }
-            }
-
-            /* Retrieve (latest) System status. */
-            updatedSystem = await systemDb
-                .get('0')
-                .catch(err => console.error(err))
-            // console.log('UPDATED SYSTEM', system)
-
-            /* Set new indexed height. */
-            updatedSystem.idxHeight = i
-            updatedSystem.updatedAt = moment().unix()
-
-            /* Save (updated) System status to storage. */
-            await systemDb
-                .put(updatedSystem)
-                .catch(err => console.error(err))
-        }
-    }
-}
 
 ;(async () => {
     let decoded
@@ -257,6 +172,9 @@ const checkDbSync = async () => {
     /* Request Blockchain information. */
     blockchainInfo = await getBlockchainInfo()
     console.log('\n\n  Blockchain info:\n', blockchainInfo)
+
+    /* Check database sync. */
+    blocksIndexer()
 
     /* Initialize Zero Message Queue (ZMQ) socket. */
     sock = new zmq.Subscriber
@@ -272,12 +190,6 @@ const checkDbSync = async () => {
     for await (const [ _topic, _msg ] of sock) {
         topic = Buffer.from(_topic).toString()
         msg = Buffer.from(_msg).toString('hex')
-
-        // console.log('received a message related to:',
-        //     topic,
-        //     'containing message:',
-        //     msg,
-        //     '\n')
 
         /* Handle hash block. */
         if (topic === 'hashblock') {
@@ -302,21 +214,6 @@ const checkDbSync = async () => {
             } catch (err) {
                 console.error(err)
             }
-
-            /* Retrieve (latest) System status. */
-            updatedSystem = await systemDb
-                .get('0')
-                .catch(err => console.error(err))
-            // console.log('UPDATED SYSTEM', system)
-
-            /* Set new indexed height. */
-            updatedSystem.idxHeight = parseInt(decoded.height)
-            updatedSystem.updatedAt = moment().unix()
-
-            /* Save (updated) System status to storage. */
-            await systemDb
-                .put(updatedSystem)
-                .catch(err => console.error(err))
         }
 
         /* Handle raw transaction. */
@@ -352,5 +249,3 @@ const checkDbSync = async () => {
     }
 
 })()
-
-checkDbSync()
