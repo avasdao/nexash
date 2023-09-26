@@ -6,6 +6,9 @@ import PouchDB from 'pouchdb'
 const blocksDb = new PouchDB(`http://${process.env.COUCHDB_USER}:${process.env.COUCHDB_PASSWORD}@127.0.0.1:5984/blocks`)
 const systemDb = new PouchDB(`http://${process.env.COUCHDB_USER}:${process.env.COUCHDB_PASSWORD}@127.0.0.1:5984/system`)
 
+/* Import helpers. */
+import getBlock from '../utils/getBlock.js'
+
 /**
  * Check Database Syncronization
  *
