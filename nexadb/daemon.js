@@ -71,10 +71,8 @@ app.listen(SSE_PORT, LOCAL_HOST, () => {
 
 console.info('\n  Starting Nexa Database daemon...\n')
 
-
-
-
 ;(async () => {
+    /* Initialize locals. */
     let decoded
     let msg
     let sock
@@ -83,11 +81,15 @@ console.info('\n  Starting Nexa Database daemon...\n')
 
     /* Request Blockchain information. */
     blockchainInfo = await getBlockchainInfo()
-    console.log('\n\n  Blockchain info:\n', blockchainInfo)
+    console.log('BLOCKCHAIN INFO', blockchainInfo)
+
+    if (!blockchainInfo.blocks) {
+        throw new Error('Oops! No blockchain info received.')
+    }
 
     /* Start (sync) database indexers. */
-    blocksIndexer(blockchainInfo?.blocks)
-    groupsIndexer(blockchainInfo?.blocks)
+    blocksIndexer(blockchainInfo.blocks)
+    groupsIndexer(blockchainInfo.blocks)
 
     /* Initialize Zero Message Queue (ZMQ) socket. */
     sock = new zmq.Subscriber
@@ -101,7 +103,10 @@ console.info('\n  Starting Nexa Database daemon...\n')
 
     /* Handle incoming messages. */
     for await (const [ _topic, _msg ] of sock) {
+        /* Set topic. */
         topic = Buffer.from(_topic).toString()
+
+        /* Set message. */
         msg = Buffer.from(_msg).toString('hex')
 
         /* Handle hash block. */
@@ -160,5 +165,4 @@ console.info('\n  Starting Nexa Database daemon...\n')
             }
         }
     }
-
 })()
