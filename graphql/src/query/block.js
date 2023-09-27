@@ -73,6 +73,7 @@ export default {
         if (!blocks) {
             return []
         }
+        console.log('BLOCKS', blocks)
 
         /* Return block details. */
         return blocks.map(_block => {
