@@ -79,7 +79,7 @@ export default {
 
         /* Map block details. */
         blocks = blocks.rows.map(_row => {
-            const block = _row.value
+            const block = _row.doc
             console.log('BLOCK', block)
 
             return {
