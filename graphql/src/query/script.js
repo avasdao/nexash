@@ -12,7 +12,7 @@ import {
 } from 'graphql'
 
 export default {
-    type: new GraphQLList(GraphQLString),
+    type: new GraphQLList(GraphQLObjectType),
     args: {
         hash: {
             type: new GraphQLList(ScriptType),
