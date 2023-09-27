@@ -11,6 +11,7 @@ export default async (_transaction) => {
     let outputs
     let result
     let scriptPubKey
+    let scriptType
 
     outputs = _transaction.vout
 
@@ -21,11 +22,15 @@ export default async (_transaction) => {
         /* Set script public key. */
         scriptPubKey = output?.scriptPubKey
 
+        /* Set script type. */
+        scriptType = scriptPubKey?.type
+        // console.log('SCRIPT TYPE', typeof scriptType, scriptType)
+
         /* Set script hash. */
         scriptHash = scriptPubKey?.scriptHash
-        // console.log('HANDLING GROUP', typeof scriptHash, scriptHash)
+        // console.log('SCRIPT HASH', typeof scriptHash, scriptHash)
 
-        if (scriptHash === 'pay2pubkeytemplate') {
+        if (scriptHash === 'pay2pubkeytemplate' || scriptType === 'nulldata') {
             continue
         }
         // console.log('SCRIPT HASH', scriptHash)
