@@ -30,50 +30,62 @@ export default {
         // console.log('Transaction (args):', _args)
 
         /* Initialize transaction. */
-        let transaction = null
+        let transactions
+        let txidems
+        let txids
 
-        /* Validate transaction id. */
-        // if (!transaction && _args?.txid) {
-        //     transaction = await transactionsDb
-        //         .query('api/byHash', {
-        //             key: _args.txidem[0],
-        //         })
-        //         .catch(err => console.error(err))
-        //     console.log('TRANSACTION (by id):', transaction)
-        // }
+        if (typeof _args?.txidem === 'string') {
+            txidems = [_args.txidem]
+        } else if (Array.isArray(_args?.txidem)) {
+            txidems = _args.txidem
+        }
+        // console.log('TRANSACTIONS (by txidem):', txidems)
+
+        if (typeof _args?.txid === 'string') {
+            txids = [_args.txid]
+        } else if (Array.isArray(_args?.txid)) {
+            txids = _args.txid
+        }
+        // console.log('TRANSACTIONS (by txid):', txids)
 
         /* Validate transaction height. */
-        if (!transaction && _args?.txidem) {
+        if (!transactions && txidems) {
             // NOTE: We MUST convert height (Int) to a (String).
-            transaction = await transactionsDb
-                .get(_args.txidem[0])
-                .catch(err => console.error(err))
-            // console.log('TRANSACTION (by idem):', transaction)
-        }
-
-        if (!transaction && _args?.txid) {
-            // NOTE: We MUST convert height (Int) to a (String).
-            transaction = await transactionsDb
-                .query('api/byTxid', {
-                    key: _args.txid[0],
+            transactions = await transactionsDb
+                .allDocs({
+                    keys: txidems,
                     include_docs: true,
                 })
                 .catch(err => console.error(err))
-            // console.log('TRANSACTION (by id):', transaction)
+            // console.log('TRANSACTION (by idem):', transactions)
+        }
 
-            /* Retrieve (document) result. */
-            if (transaction?.rows[0]?.doc) {
-                transaction = transaction.rows[0].doc
-            }
+        if (!transactions && _args?.txid) {
+            // NOTE: We MUST convert height (Int) to a (String).
+            transactions = await transactionsDb
+                .query('api/byTxid', {
+                    keys: txids,
+                    include_docs: true,
+                })
+                .catch(err => console.error(err))
+            // console.log('TRANSACTION (by id):', transactions)
         }
 
         /* Validate transaction. */
-        if (!transaction) {
+        if (!transactions) {
             return []
         }
 
+        /* Map block details. */
+        transactions = transactions.rows.map(_row => {
+            const transaction = _row.doc
+            // console.log('TRANSACTION', transaction)
+
+            return transaction
+        })
+
         /* Return transaction details. */
-        return [transaction]
+        return transactions
     },
     description: `Request full __Transaction__ details by _hash_ or _height_.`,
 }
