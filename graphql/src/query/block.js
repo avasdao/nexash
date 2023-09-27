@@ -65,6 +65,7 @@ export default {
             blocks = await blocksDb
                 .allDocs({
                     keys: heights,
+                    include_docs: true,
                 })
                 .catch(err => console.error(err))
             // console.log('BLOCK (by height):', block)
