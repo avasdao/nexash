@@ -6,7 +6,7 @@ import PouchDB from 'pouchdb'
 const systemDb = new PouchDB(`http://${process.env.COUCHDB_USER}:${process.env.COUCHDB_PASSWORD}@127.0.0.1:5984/system`)
 
 /* Import handlers. */
-import handleScript from '../handlers/script.js'
+import handleNulldata from '../handlers/nulldata.js'
 
 /* Import helpers. */
 import getBlock from '../utils/getBlock.js'
@@ -28,7 +28,7 @@ export default async (_curHeight = 0) => {
     let updatedSystem
 
     systemIdx = await systemDb
-        .get('idxScriptTxs')
+        .get('idxNulldataTxs')
         .catch(err => console.error(err))
     // console.log('SYSTEM', systemIdx)
 
@@ -57,13 +57,13 @@ export default async (_curHeight = 0) => {
                     // console.log(`TRANSACTION [${txidem}]`, tx)
 
                     /* Handle Scripts. */
-                    await handleScript(tx)
+                    await handleNulldata(tx)
                 }
             }
 
             /* Retrieve (latest) System status. */
             updatedSystem = await systemDb
-                .get('idxScriptTxs')
+                .get('idxNulldataTxs')
                 .catch(err => console.error(err))
             // console.log('UPDATED SYSTEM', updatedSystem)
 
