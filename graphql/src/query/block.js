@@ -39,7 +39,7 @@ export default {
         } else if (Array.isArray(_args?.hash)) {
             hashes = _args.hash
         }
-        console.log('BLOCKS (by hashes):', hashes)
+        // console.log('BLOCKS (by hashes):', hashes)
 
         if (typeof _args?.height === 'number') {
             heights = [_args.height.toString()]
@@ -48,7 +48,7 @@ export default {
                 return _height.toString()
             })
         }
-        console.log('BLOCKS (by heights):', heights)
+        // console.log('BLOCKS (by heights):', heights)
 
         /* Validate block hash. */
         if (!blocks && hashes) {
@@ -70,7 +70,7 @@ export default {
                 .catch(err => console.error(err))
             // console.log('BLOCK (by height):', block)
         }
-        console.log('BLOCKS', blocks)
+        // console.log('BLOCKS', blocks)
 
         /* Validate blocks. */
         if (!blocks) {
@@ -80,7 +80,7 @@ export default {
         /* Map block details. */
         blocks = blocks.rows.map(_row => {
             const block = _row.doc
-            console.log('BLOCK', block)
+            // console.log('BLOCK', block)
 
             return {
                 hash: block.hash,
