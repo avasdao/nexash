@@ -1,14 +1,15 @@
 /* Import types. */
 import ScriptType from '../types/Script.js'
+import TransactionType from '../types/Transaction.js'
 
 import {
-    GraphQLBoolean,
-    GraphQLFloat,
+    // GraphQLBoolean,
+    // GraphQLFloat,
     GraphQLList,
-    GraphQLNonNull,
-    GraphQLObjectType,
-    GraphQLInt,
-    GraphQLString,
+    // GraphQLNonNull,
+    // GraphQLObjectType,
+    // GraphQLInt,
+    // GraphQLString,
 } from 'graphql'
 
 export default {
