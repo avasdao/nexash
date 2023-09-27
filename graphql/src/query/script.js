@@ -29,8 +29,9 @@ export default {
 
         return [{
             txidem: '010203040506070809',
+            blockhash: '010203040506070809',
             confirmations: 1,
-            size: 1337,
+            fee: 1337,
         }]
     },
     description: `Request information about on-chain __Script__ transactions, eg. _OP_RETURN_ and _CashFusion._`,
