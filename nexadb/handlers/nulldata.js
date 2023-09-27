@@ -2,14 +2,13 @@
 import PouchDB from 'pouchdb'
 
 /* Initialize databases. */
-const scriptTxsDb = new PouchDB(`http://${process.env.COUCHDB_USER}:${process.env.COUCHDB_PASSWORD}@127.0.0.1:5984/script_txs`)
+const nulldataTxsDb = new PouchDB(`http://${process.env.COUCHDB_USER}:${process.env.COUCHDB_PASSWORD}@127.0.0.1:5984/nulldata_txs`)
 
 export default async (_transaction) => {
     /* Initialize locals. */
     let output
     let outputs
     let result
-    let scriptHash
     let scriptPubKey
     let scriptType
 
@@ -26,16 +25,12 @@ export default async (_transaction) => {
         scriptType = scriptPubKey?.type
         // console.log('SCRIPT TYPE', typeof scriptType, scriptType)
 
-        /* Set script hash. */
-        scriptHash = scriptPubKey?.scriptHash
-        // console.log('SCRIPT HASH', typeof scriptHash, scriptHash)
-
-        if (scriptHash === 'pay2pubkeytemplate' || scriptType === 'pubkeyhash' || scriptType === 'nulldata') {
+        if (scriptType === 'nulldata') {
             continue
         }
         // console.log('SCRIPT HASH', scriptHash)
 
-        result = await scriptTxsDb
+        result = await nulldataTxsDb
             .put({
                 _id: _transaction.txidem,
                 ..._transaction

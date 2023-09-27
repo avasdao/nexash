@@ -17,6 +17,7 @@ import getBlockchainInfo from './utils/getBlockchainInfo.js'
 /* Import indexers. */
 import blocksIndexer from './indexer/blocks.js'
 import groupsIndexer from './indexer/groups.js'
+import nulldataIndexer from './indexer/nulldata.js'
 import scriptsIndexer from './indexer/scripts.js'
 import transactionsIndexer from './indexer/transactions.js'
 
@@ -93,6 +94,7 @@ console.info('\n  Starting Nexa Database daemon...\n')
     /* Start (sync) database indexers. */
     blocksIndexer(blockchainInfo.blocks)
     groupsIndexer(blockchainInfo.blocks)
+    nulldataIndexer(blockchainInfo.blocks)
     scriptsIndexer(blockchainInfo.blocks)
     transactionsIndexer(blockchainInfo.blocks)
 
