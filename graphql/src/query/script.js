@@ -14,9 +14,13 @@ import {
 export default {
     type: new GraphQLList(GraphQLString),
     args: {
+        hash: {
+            type: new GraphQLList(ScriptType),
+            description: `Enter the __ScripHash__ for an on-chain Transaction.`,
+        },
         prefix: {
             type: new GraphQLList(ScriptType),
-            description: `Enter the __Prefix__ for an on-chain Script.`,
+            description: `Enter the __Nulldata (OP_RETURN) Prefix__ for an on-chain Transaction.`,
         },
     },
     resolve: (_root, _args, _ctx) => {
