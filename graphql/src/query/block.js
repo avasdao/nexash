@@ -29,56 +29,75 @@ export default {
     resolve: async (_root, _args, _ctx) => {
         // console.log('Block (args):', _args)
 
-        /* Initialize block. */
-        let block = null
+        /* Initialize local. */
+        let blocks
+        let hashes
+        let heights
+
+        if (typeof _args?.hash === 'string') {
+            hashes = [_args.hash.toString()]
+        } else if (Array.isArray(_args?.hash)) {
+            hashes = _args.hash
+        }
+
+        if (typeof _args?.height === 'number') {
+            heights = [_args.height.toString()]
+        } else if (Array.isArray(_args?.height)) {
+            heights = _args.height.map(_height => {
+                return _height.toString()
+            })
+        }
 
         /* Validate block hash. */
-        if (!block && _args?.hash) {
-            block = await blocksDb
+        if (!blocks && hashes) {
+            blocks = await blocksDb
                 .query('api/byHash', {
-                    key: _args.hash[0],
+                    keys: hashes,
                 })
                 .catch(err => console.error(err))
             // console.log('BLOCK (by hash):', block)
         }
 
         /* Validate block height. */
-        if (!block && _args?.height.length) {
+        if (!blocks && heights) {
             // NOTE: We MUST convert height (Int) to a (String).
-            block = await blocksDb.get(_args.height[0].toString())
+            blocks = await blocksDb
+                .allDocs({
+                    keys: heights,
+                })
                 .catch(err => console.error(err))
             // console.log('BLOCK (by height):', block)
         }
 
-        /* Validate block. */
-        if (!block) {
+        /* Validate blocks. */
+        if (!blocks) {
             return []
         }
 
         /* Return block details. */
-        return [{
-            hash: block.hash,
-            confirmations: block.confirmations,
-            height: block.height,
-            size: block.size,
-            txcount: block.txcount,
-            feePoolAmt: block.feePoolAmt,
-            merkleroot: block.merkleroot,
-            time: block.time,
-            mediantime: block.mediantime,
-            nonce: block.nonce,
-            bits: block.bits,
-            difficulty: block.difficulty,
-            chainwork: block.chainwork,
-            utxoCommitment: block.utxoCommitment,
-            minerData: block.minerData,
-            status: block.status,
-            onMainChain: block.onMainChain,
-            ancestorhash: block.ancestorhash,
-            nextblockhash: block.nextblockhash,
-            txid: block.txid,
-            txidem: block.txidem,
-        }]
+        return blocks.map(_block => {
+            hash: _block.hash,
+            confirmations: _block.confirmations,
+            height: _block.height,
+            size: _block.size,
+            txcount: _block.txcount,
+            feePoolAmt: _block.feePoolAmt,
+            merkleroot: _block.merkleroot,
+            time: _block.time,
+            mediantime: _block.mediantime,
+            nonce: _block.nonce,
+            bits: _block.bits,
+            difficulty: _block.difficulty,
+            chainwork: _block.chainwork,
+            utxoCommitment: _block.utxoCommitment,
+            minerData: _block.minerData,
+            status: _block.status,
+            onMainChain: _block.onMainChain,
+            ancestorhash: _block.ancestorhash,
+            nextblockhash: _block.nextblockhash,
+            txid: _block.txid,
+            txidem: _block.txidem,
+        })
     },
     description: `Request full __Block__ details by _hash_ or _height_.`,
 }
