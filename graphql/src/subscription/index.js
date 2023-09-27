@@ -103,7 +103,7 @@ transactionsDb.changes({
         const address = {
             prefix,
             type,
-            hash: scriptPubKey,
+            hash: pubKeyHash,
             base58,
             owner: base58, // alias
             txidem: transaction.txidem,
