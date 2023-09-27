@@ -51,5 +51,6 @@ export default async (_transaction) => {
             })
     }
 
+    /* Return result. */
     return result
 }

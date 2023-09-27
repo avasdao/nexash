@@ -30,7 +30,7 @@ export default async (_curHeight = 0) => {
     // console.log('SYSTEM', systemIdx)
 
     if (_curHeight > systemIdx?.last) {
-        console.info('\n  Starting database sycn...\n')
+        console.info('\n  Starting BLOCKS database sync...\n')
 
         /* Handle new blocks. */
         for (let i = systemIdx.last + 1; i <= _curHeight; i++) {

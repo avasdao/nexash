@@ -17,10 +17,13 @@ import getBlockchainInfo from './utils/getBlockchainInfo.js'
 /* Import indexers. */
 import blocksIndexer from './indexer/blocks.js'
 import groupsIndexer from './indexer/groups.js'
+import scriptsIndexer from './indexer/scripts.js'
+import transactionsIndexer from './indexer/transactions.js'
 
 /* Import handlers. */
 import handleAddress from './handlers/address.js'
 import handleGroup from './handlers/group.js'
+import handleScript from './handlers/script.js'
 
 /* Initialize databases. */
 const blocksDb = new PouchDB(`http://${process.env.COUCHDB_USER}:${process.env.COUCHDB_PASSWORD}@127.0.0.1:5984/blocks`)
@@ -90,6 +93,8 @@ console.info('\n  Starting Nexa Database daemon...\n')
     /* Start (sync) database indexers. */
     blocksIndexer(blockchainInfo.blocks)
     groupsIndexer(blockchainInfo.blocks)
+    scriptsIndexer(blockchainInfo.blocks)
+    transactionsIndexer(blockchainInfo.blocks)
 
     /* Initialize Zero Message Queue (ZMQ) socket. */
     sock = new zmq.Subscriber
@@ -156,6 +161,9 @@ console.info('\n  Starting Nexa Database daemon...\n')
 
             /* Handle Group (Tokens). */
             await handleGroup(decoded)
+
+            /* Handle Script. */
+            await handleScript(decoded)
 
             try {
                 /* Broadcast event. */

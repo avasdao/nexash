@@ -3,10 +3,8 @@ import moment from 'moment'
 import PouchDB from 'pouchdb'
 
 /* Initialize databases. */
+const blocksDb = new PouchDB(`http://${process.env.COUCHDB_USER}:${process.env.COUCHDB_PASSWORD}@127.0.0.1:5984/blocks`)
 const systemDb = new PouchDB(`http://${process.env.COUCHDB_USER}:${process.env.COUCHDB_PASSWORD}@127.0.0.1:5984/system`)
-
-/* Import handlers. */
-import handleGroup from '../handlers/group.js'
 
 /* Import helpers. */
 import getBlock from '../utils/getBlock.js'
@@ -19,8 +17,9 @@ import getTransaction from '../utils/getTransaction.js'
  * latest block height.
  */
 export default async (_curHeight = 0) => {
-    console.info('\n  Checking GROUPS database sync...\n')
+    console.info('\n  Checking TRANSACTIONS database sync...\n')
 
+    /* Initialize locals. */
     let block
     let systemIdx
     let tx
@@ -28,12 +27,12 @@ export default async (_curHeight = 0) => {
     let updatedSystem
 
     systemIdx = await systemDb
-        .get('idxGroupTxs')
+        .get('idxTransactions')
         .catch(err => console.error(err))
     // console.log('SYSTEM', systemIdx)
 
     if (_curHeight > systemIdx?.last) {
-        console.info('\n  Starting GROUPS database sync...\n')
+        console.info('\n  Starting TRANSACTIONS database sync...\n')
 
         /* Handle new blocks. */
         for (let i = systemIdx.last + 1; i <= _curHeight; i++) {
@@ -42,6 +41,7 @@ export default async (_curHeight = 0) => {
                 .catch(err => {
                     console.error(err)
                 })
+            // console.log(`BLOCK #${i}`, block)
 
             // NOTE: Block MUST contain at least the Coinbase transaction.
             if (block?.txidem) {
@@ -56,14 +56,21 @@ export default async (_curHeight = 0) => {
                         })
                     // console.log(`TRANSACTION [${txidem}]`, tx)
 
-                    /* Handle Group (Tokens). */
-                    await handleGroup(tx)
+                    /* Save transaction to storage. */
+                    await transactionsDb
+                        .put({
+                            _id: tx.txidem,
+                            ...tx
+                        })
+                        .catch(err => {
+                            console.error(err)
+                        })
                 }
             }
 
             /* Retrieve (latest) System status. */
             updatedSystem = await systemDb
-                .get('idxGroupTxs')
+                .get('idxTransactions')
                 .catch(err => console.error(err))
             // console.log('UPDATED SYSTEM', updatedSystem)
 

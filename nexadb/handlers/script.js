@@ -2,17 +2,15 @@
 import PouchDB from 'pouchdb'
 
 /* Initialize databases. */
-const addressesDb = new PouchDB(`http://${process.env.COUCHDB_USER}:${process.env.COUCHDB_PASSWORD}@127.0.0.1:5984/addresses`)
+const scriptTxsDb = new PouchDB(`http://${process.env.COUCHDB_USER}:${process.env.COUCHDB_PASSWORD}@127.0.0.1:5984/script_txs`)
 
 export default async (_transaction) => {
     /* Initialize locals. */
-    let newAddress
+    let scriptHash
     let output
     let outputs
     let result
-    let saved
     let scriptPubKey
-    let txs
 
     outputs = _transaction.vout
 
@@ -21,46 +19,27 @@ export default async (_transaction) => {
         output = outputs[i]
 
         /* Set script public key. */
-        scriptPubKey = output.scriptPubKey.hex.slice(6)
+        scriptPubKey = output?.scriptPubKey
 
-        /* Request saved (in database) data. */
-        saved = await addressesDb
-            .get(scriptPubKey)
-            .catch(err => console.error(err))
-        // console.log('SAVED (outputs):', saved)
+        /* Set script hash. */
+        scriptHash = scriptPubKey?.scriptHash
+        // console.log('HANDLING GROUP', typeof scriptHash, scriptHash)
 
-        /* Validate saved address. */
-        if (saved) {
-            /* Load transactions. */
-            txs = saved.txs
-
-            /* Add transaction. */
-            txs.push(_transaction.txidem)
-
-            newAddress = {
-                ...saved,
-                txcount: txs.length,
-                txs,
-            }
-        } else {
-            /* Initialize transactions. */
-            txs = []
-
-            /* Add transaction. */
-            txs.push(_transaction.txidem)
-
-            newAddress = {
-                _id: scriptPubKey,
-                txcount: txs.length,
-                txs,
-            }
+        if (scriptHash === 'pay2pubkeytemplate') {
+            continue
         }
+        // console.log('SCRIPT HASH', scriptHash)
 
-        result = await addressesDb
-            .put(newAddress)
-            .catch(err => console.error(err))
-        console.log('OUTPOINT (result):', result)
+        result = await scriptTxsDb
+            .put({
+                _id: _transaction.txidem,
+                ..._transaction
+            })
+            .catch(err => {
+                console.error(err)
+            })
     }
 
+    /* Return result. */
     return result
 }

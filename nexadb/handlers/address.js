@@ -80,5 +80,6 @@ if (!newAddress._id) {
         // console.log('OUTPOINT (result):', result)
     }
 
+    /* Return result. */
     return result
 }
