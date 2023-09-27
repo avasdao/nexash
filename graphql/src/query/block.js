@@ -39,6 +39,7 @@ export default {
         } else if (Array.isArray(_args?.hash)) {
             hashes = _args.hash
         }
+        console.log('BLOCKS (by hashes):', hashes)
 
         if (typeof _args?.height === 'number') {
             heights = [_args.height.toString()]
@@ -47,6 +48,7 @@ export default {
                 return _height.toString()
             })
         }
+        console.log('BLOCKS (by heights):', heights)
 
         /* Validate block hash. */
         if (!blocks && hashes) {
@@ -55,7 +57,6 @@ export default {
                     keys: hashes,
                 })
                 .catch(err => console.error(err))
-            // console.log('BLOCK (by hash):', block)
         }
 
         /* Validate block height. */
@@ -68,37 +69,40 @@ export default {
                 .catch(err => console.error(err))
             // console.log('BLOCK (by height):', block)
         }
+        console.log('BLOCKS', blocks)
 
         /* Validate blocks. */
         if (!blocks) {
             return []
         }
-        console.log('BLOCKS', blocks)
 
         /* Map block details. */
-        blocks = blocks.map(_block => {
+        blocks = blocks.rows.map(_row => {
+            const block = _row.doc
+            console.log('BLOCK', block)
+
             return {
-                hash: _block.hash,
-                confirmations: _block.confirmations,
-                height: _block.height,
-                size: _block.size,
-                txcount: _block.txcount,
-                feePoolAmt: _block.feePoolAmt,
-                merkleroot: _block.merkleroot,
-                time: _block.time,
-                mediantime: _block.mediantime,
-                nonce: _block.nonce,
-                bits: _block.bits,
-                difficulty: _block.difficulty,
-                chainwork: _block.chainwork,
-                utxoCommitment: _block.utxoCommitment,
-                minerData: _block.minerData,
-                status: _block.status,
-                onMainChain: _block.onMainChain,
-                ancestorhash: _block.ancestorhash,
-                nextblockhash: _block.nextblockhash,
-                txid: _block.txid,
-                txidem: _block.txidem,
+                hash: block.hash,
+                confirmations: block.confirmations,
+                height: block.height,
+                size: block.size,
+                txcount: block.txcount,
+                feePoolAmt: block.feePoolAmt,
+                merkleroot: block.merkleroot,
+                time: block.time,
+                mediantime: block.mediantime,
+                nonce: block.nonce,
+                bits: block.bits,
+                difficulty: block.difficulty,
+                chainwork: block.chainwork,
+                utxoCommitment: block.utxoCommitment,
+                minerData: block.minerData,
+                status: block.status,
+                onMainChain: block.onMainChain,
+                ancestorhash: block.ancestorhash,
+                nextblockhash: block.nextblockhash,
+                txid: block.txid,
+                txidem: block.txidem,
             }
         })
 
