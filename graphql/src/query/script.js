@@ -26,7 +26,11 @@ export default {
     resolve: (_root, _args, _ctx) => {
         console.log('Script (args):', _args)
 
-        return ['010203040506070809']
+        return [{
+            dust: '010203040506070809',
+            opcode: _args.opcode,
+            hex: _args.hex,
+        }]
     },
     description: `Request information about on-chain __Script__ transactions, eg. _OP_RETURN_ and _CashFusion._`,
 }
