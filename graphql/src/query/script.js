@@ -32,6 +32,11 @@ export default {
             blockhash: '010203040506070809',
             confirmations: 1,
             fee: 1337,
+        },{
+            txidem: '333',
+            blockhash: '444',
+            confirmations: 2,
+            fee: 888,
         }]
     },
     description: `Request information about on-chain __Script__ transactions, eg. _OP_RETURN_ and _CashFusion._`,
