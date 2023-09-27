@@ -1,7 +1,8 @@
 /* Import modules. */
 import { encodeAddress } from '@nexajs/address'
+import { OP } from '@nexajs/script'
+import { hexToBin } from '@nexajs/utils'
 import { GraphQLObjectType } from 'graphql'
-import { hexToBin } from '@bitauth/libauth'
 import { PubSub } from 'graphql-subscriptions'
 import PouchDB from 'pouchdb'
 
@@ -89,15 +90,14 @@ transactionsDb.changes({
     const outputs = transaction.vout
 
     outputs.forEach(_output => {
-        /* Set script public key. */
-        const scriptPubKey = _output.scriptPubKey.hex.slice(6)
-        const pkhScript = hexToBin('17005114' + scriptPubKey)
+        /* Set public key hash. */
+        const pubKeyHash = hexToBin(_output.scriptPubKey.hex)
 
         const prefix = 'nexa'
 
         const type = 'TEMPLATE'
 
-        const base58 = encodeAddress(prefix, type, pkhScript)
+        const base58 = encodeAddress(prefix, type, pubKeyHash)
         // console.info('Nexa address (base58):', base58)
 
         const address = {
