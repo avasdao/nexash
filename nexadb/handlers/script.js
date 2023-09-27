@@ -23,14 +23,14 @@ export default async (_transaction) => {
         scriptPubKey = output?.scriptPubKey
 
         /* Set script type. */
-        scriptType = scriptPubKey?.type
+        scriptType = scriptPubKey?.type || null
         // console.log('SCRIPT TYPE', typeof scriptType, scriptType)
 
         /* Set script hash. */
-        scriptHash = scriptPubKey?.scriptHash
+        scriptHash = scriptPubKey?.scriptHash || null
         // console.log('SCRIPT HASH', typeof scriptHash, scriptHash)
 
-        if (scriptHash === 'pay2pubkeytemplate' || scriptType === 'pubkeyhash' || scriptType === 'nulldata') {
+        if (scriptType === 'pubkeyhash' || scriptType === 'nulldata' || scriptHash === 'pay2pubkeytemplate') {
             continue
         }
         // console.log('SCRIPT HASH', scriptHash)
