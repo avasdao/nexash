@@ -75,8 +75,8 @@ export default {
         }
         console.log('BLOCKS', blocks)
 
-        /* Return block details. */
-        return blocks.map(_block => {
+        /* Map block details. */
+        blocks = blocks.map(_block => {
             hash: _block.hash,
             confirmations: _block.confirmations,
             height: _block.height,
@@ -99,6 +99,9 @@ export default {
             txid: _block.txid,
             txidem: _block.txidem,
         })
+
+        /* Return block details. */
+        return blocks
     },
     description: `Request full __Block__ details by _hash_ or _height_.`,
 }
