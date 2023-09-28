@@ -30,7 +30,7 @@ export default async (_transaction) => {
         scriptHash = scriptPubKey?.scriptHash || null
         // console.log('SCRIPT HASH', typeof scriptHash, scriptHash)
 
-        if (scriptType === 'pubkeyhash' || scriptType === 'nulldata' || scriptHash === 'pay2pubkeytemplate') {
+        if (scriptType === 'pubkeyhash' || scriptType === 'nulldata' || scriptType === 'publiclabel' || scriptHash === 'pay2pubkeytemplate') {
             continue
         }
         // console.log('SCRIPT HASH', scriptHash)
