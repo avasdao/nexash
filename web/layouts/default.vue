@@ -22,27 +22,48 @@ watch(System.$state, (_state) => {
 })
 // watch additional states here...
 
+/**
+ * Setup Hotkeys
+ *
+ * Manages the keyboard shortcuts used to improve UI/BX for power-builders.
+ */
+const setupHotkeys = () => {
+    /* Create a new `keydown` event handler. */
+    document.addEventListener('keydown', function onEvent(event) {
+        if (event.key === 'Escape') {
+            console.info('Canceling all open windows and requests...')
+        }
+        else if (event.key === 'Enter') {
+            console.log('enter key pressed')
+        }
+        else if (event.key === 'ArrowUp') {
+            console.log('up pressed')
+        }
+        else if (event.key === 'ArrowDown') {
+            console.log('down pressed')
+        }
+        else if (event.key === '/') {
+            console.log('open search win')
+        }
+    })
+}
+
 onMounted(() => {
+    /* Initialize the (main) application. */
     System.init()
+
+    /* Setup (global) hotkeys. */
+    setupHotkeys()
 })
 
 // onBeforeUnmount(() => {
 //     console.log('Before Unmount!')
 //     // Now is the time to perform all cleanup operations.
 // })
-
 </script>
 
 <template>
-    <!-- <main class="flex flex-col h-screen"> -->
-    <main class="">
-        <Header />
-
-        <!-- <section class="flex-1 overflow-y-auto"> -->
-        <section class="">
-            <slot />
-
-            <Footer />
-        </section>
-    </main>
+    <Header />
+        <slot />
+    <Footer />
 </template>

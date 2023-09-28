@@ -6,7 +6,7 @@
             </h2>
 
             <p class="mt-4 text-lg text-gray-500">
-                We guarantee that you will enjoy a <span class="text-indigo-500 font-medium">PREMIUM Developer Experience (DX)</span> when you upgrade to one of our value-packed Pro packages.
+                We guarantee that you will enjoy a <span class="text-indigo-500 font-medium">PREMIUM Builder Experience (BX)</span> when you upgrade to one of our value-packed Premium plans.
             </p>
         </div>
 
