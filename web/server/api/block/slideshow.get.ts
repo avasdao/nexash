@@ -3,15 +3,15 @@ import PouchDB from 'pouchdb'
 
 /* Initialize databases. */
 const blocksDb = new PouchDB(`http://${process.env.COUCHDB_USER}:${process.env.COUCHDB_PASSWORD}@127.0.0.1:5984/blocks`)
-const statusDb = new PouchDB(`http://${process.env.COUCHDB_USER}:${process.env.COUCHDB_PASSWORD}@127.0.0.1:5984/status`)
+const systemDb = new PouchDB(`http://${process.env.COUCHDB_USER}:${process.env.COUCHDB_PASSWORD}@127.0.0.1:5984/system`)
 
 export default defineEventHandler(async (event) => {
     let blocks
     let response
     let system
 
-    system = await statusDb
-        .get('system')
+    system = await systemDb
+        .get('idxBlocks')
         .catch(err => console.error(err))
     console.log('SYSTEM', system)
 
@@ -21,8 +21,8 @@ export default defineEventHandler(async (event) => {
 
     response = await blocksDb
         .query('api/byHeight', {
-            startkey: system.idxHeight,
-            endkey: system.idxHeight - 99,
+            startkey: system.last,
+            endkey: system.last - 99,
             descending: true,
             include_docs: true,
         })
