@@ -96,7 +96,7 @@ const curYear = moment().format('YYYY')
 
                                 <li>
                                     <a href="javascript://" class="text-base leading-6 text-gray-200 hover:text-gray-400">
-                                        Assets Repo / CDN
+                                        Downloads
                                     </a>
                                 </li>
                             </ul>
@@ -150,7 +150,7 @@ const curYear = moment().format('YYYY')
 
                                 <li>
                                     <a href="javascript://" class="text-base leading-6 text-gray-200 hover:text-gray-400">
-                                        SHELL Token
+                                        $SHELL Token
                                     </a>
                                 </li>
 

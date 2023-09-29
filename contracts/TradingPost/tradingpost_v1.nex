@@ -20,7 +20,7 @@ pragma nexscript >= 0.2.0;
  * Signature   : 0x0000000000000000000000000000000000000000
  * Namespace   : TPOST01
  *
- * owner      : (bytes20) The sellers' public key hash.
+ * seller     : (bytes20) The sellers' public key hash.
  * tokenGet   : (bytes32) The token id of the asset.
  * amountGet  : (int)     The amount of NEXA requested by the seller.
  * tokenGive  : (bytes32) The token id of the asset.
@@ -35,7 +35,7 @@ pragma nexscript >= 0.2.0;
  *
  */
 contract TradingPost(
-    bytes20 owner,
+    bytes20 seller,
     bytes32 tokenGet,
     int amountGet,
     bytes32 tokenGive,
@@ -45,15 +45,16 @@ contract TradingPost(
     int expires
 ) {
     /**
-     * Cancel Trade
+     * Cancel (Trade) Posting
      *
-     * Refunds any and all deposited funds and/or assets back to their
-     * respective owners.
+     * Sends all remaining assets back to the contract's owner (ie. the Seller).
      *
-     * NOTE: This can ONLY be executed by one (1) of three (3) parties
-     *       directly involved in the transaction.
+     * NOTE: For compliance purposes, both the Seller and the Provider have the
+     *       ability to cancel a trade posting.
      *
-     * @param owner
+     *       ASSETS CAN ONLY BE SENT TO THE SELLER.
+     *
+     * @param executor
      * @param signature
      */
     function cancel(pubkey executor, sig signature) {
@@ -71,57 +72,20 @@ contract TradingPost(
         // NOTE: This is the asset output.
         require(tx.outputs.length == MAX_OUTPUTS);
 
-        /* Validate the asset. */
-        require(tx.outputs[0].tokenGroupId == tokenid);
+        /* Validate the 1st output is the Seller's asset. */
+        require(tx.outputs[0].tokenGroupId == tokenGive);
 
-        /* Verify that we payout to the Seller. */
-        require(tx.inputs[0].tokenAmount == tx.outputs[0].tokenAmount);
-
-        /* Validate the asset. */
-        require(tx.outputs[1].tokenGroupId == 0);
-
-
-        /* Retrieve asset/token amount (length). */
-        int amountParentLen = int(lockingAsset
-            .split(21)[1]
-            .split(1)[0]);
-
-        /* Retrieve asset/token amount (length). */
-        int amountChildLen = int(lockingAsset
-            .split(41)[1]
-            .split(1)[0]);
-
-
-
-        /* Validate asset/token id and amount. */
+        /* Validate the 1st output is the Seller's `scriptPubKey`. */
+        // NOTE: PUSH(32) + 1|PUSH(2|4|8) + 1 + PUSH(20) = 56|58|60|64 bytes
         require(
-            // Validate "parent" token.
-            (
-                lockingAsset
-                    .split(1)[1]
-                    .split(20)[0] == tokenid &&
-                int(lockingAsset
-                    .split(22)[1]
-                    .split(amountParentLen)[0]) >= bid
-            ) ||
-            // Validate "child" token.
-            (
-                lockingAsset
-                    .split(1)[1]
-                    .split(40)[0] == tokenid &&
-                int(lockingAsset
-                    .split(42)[1]
-                    .split(amountChildLen)[0]) >= bid
-            )
+            tx.outputs[0].lockingBytecode.split(36)[1] == seller ||
+            tx.outputs[0].lockingBytecode.split(38)[1] == seller ||
+            tx.outputs[0].lockingBytecode.split(40)[1] == seller ||
+            tx.outputs[0].lockingBytecode.split(44)[1] == seller
         );
 
-
-        /* Calculate Seller bytecode. */
-        bytes23 tokenBytecode = new LockingBytecodeP2PKT(seller);
-        bytes23 nftBytecode = new LockingBytecodeP2PKT(seller);
-
-        /* Verify that we payout to the Seller. */
-        require(tx.outputs[0].lockingBytecode == sellerBytecode);
+        /* Validate the 2nd output IS NOT the Seller's asset. */
+        require(tx.outputs[1].tokenGroupId == 0);
     }
 
     /**
