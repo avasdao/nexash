@@ -86,7 +86,7 @@ export default {
                 include_docs: true,
             })
             .catch(err => console.error(err))
-        console.log('TRANSACTION (by id):', transactions)
+        // console.log('TRANSACTION (by id):', transactions)
 
         /* Validate transaction. */
         if (!transactions) {
