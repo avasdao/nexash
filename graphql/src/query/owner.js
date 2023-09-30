@@ -8,8 +8,11 @@ import {
     GraphQLString,
 } from 'graphql'
 
+/* Import types. */
+import OwnerConnectionType from '../types/OwnerConnection.js'
+
 export default {
-    type: ConnectionType,
+    type: OwnerConnectionType,
     args: {
         address: {
             type: new GraphQLList(GraphQLString),
