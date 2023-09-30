@@ -85,6 +85,9 @@ export default {
 
         /* Build edges. */
         const edges = transactions.map(_transaction => {
+            delete _transaction._id
+            delete _transaction._rev
+
             return {
                 node: _transaction,
                 cursor: null,
