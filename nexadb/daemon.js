@@ -125,7 +125,7 @@ const manageTransactions = async () => {
     /* Start (sync) database indexers. */
     manageBlocks()
     manageGroups()
-    manageNulldata()
+    // manageNulldata()
     manageScripts()
     manageTransactions()
 
