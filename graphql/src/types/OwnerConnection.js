@@ -10,7 +10,7 @@ import {
 } from 'graphql'
 
 /* Import types. */
-import TransactionEdgeType from '../types/TransactionEdge.js'
+import OwnerEdgeType from '../types/OwnerEdge.js'
 import PageInfoType from '../types/PageInfo.js'
 
 export default new GraphQLObjectType({
@@ -23,8 +23,8 @@ export default new GraphQLObjectType({
         },
 
         edges: {
-            type: new GraphQLNonNull(new GraphQLList(TransactionEdgeType)),
-            description: `Transaction Edge data.`,
+            type: new GraphQLNonNull(new GraphQLList(OwnerEdgeType)),
+            description: `Owner Edge data.`,
         },
 
         pageInfo: {
@@ -33,5 +33,5 @@ export default new GraphQLObjectType({
         },
 
     }),
-    description: `A __Transaction Edge__ description goes here.`,
+    description: `A __Owner Edge__ description goes here.`,
 })
