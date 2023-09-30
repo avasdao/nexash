@@ -102,8 +102,8 @@ export default {
         /* Build connection. */
         const connection = {
             totalCount,
-            edges: edges,
-            pageInfo: pageInfo,
+            edges,
+            pageInfo,
         }
 
         /* Return transaction details. */
