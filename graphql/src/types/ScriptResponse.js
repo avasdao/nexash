@@ -11,6 +11,9 @@ import {
     GraphQLString,
 } from 'graphql'
 
+/* Import types. */
+import TransactionType from '../types/Transaction.js'
+
 export default new GraphQLObjectType({
     name: 'ScriptResponse',
     fields: () => ({
@@ -21,7 +24,7 @@ export default new GraphQLObjectType({
         },
 
         edges: {
-            type: GraphQLString,
+            type: TransactionType,
             description: `TBD`,
         },
 

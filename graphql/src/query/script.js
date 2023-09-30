@@ -7,7 +7,6 @@ const scriptTxsDb = new PouchDB(`http://${process.env.COUCHDB_USER}:${process.en
 /* Import types. */
 import ScriptType from '../types/Script.js'
 import ScriptResponse from '../types/ScriptResponse.js'
-import TransactionType from '../types/Transaction.js'
 
 import {
     // GraphQLBoolean,
@@ -57,7 +56,7 @@ export default {
         } else {
             first = DEFAULT_MAXIMUM_RESULTS
         }
-        console.log('FIRST', first)
+        // console.log('FIRST', first)
 
         // NOTE: We MUST convert height (Int) to a (String).
         transactions = await scriptTxsDb
@@ -66,7 +65,7 @@ export default {
                 include_docs: true,
             })
             .catch(err => console.error(err))
-        console.log('TRANSACTION (by id):', transactions)
+        // console.log('TRANSACTION (by id):', transactions)
 
         /* Validate transaction. */
         if (!transactions) {
