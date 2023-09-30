@@ -85,10 +85,12 @@ export default {
         const totalCount = transactions.length
 
         /* Build edges. */
-        const edges = {
-            node: null,
-            // transactions,
-        }
+        const edges = transactions.map(_transaction => {
+            return {
+                node: _transaction,
+                cursor: null,
+            }
+        })
 
         /* Build page info. */
         const pageInfo = {
