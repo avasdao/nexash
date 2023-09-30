@@ -16,7 +16,7 @@ import EdgeType from '../types/Edge.js'
 import PageInfoType from '../types/PageInfo.js'
 
 export default new GraphQLObjectType({
-    name: 'ScriptResponse',
+    name: 'Connection',
     fields: () => ({
 
         totalCount: {

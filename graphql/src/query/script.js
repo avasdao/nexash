@@ -5,8 +5,8 @@ import PouchDB from 'pouchdb'
 const scriptTxsDb = new PouchDB(`http://${process.env.COUCHDB_USER}:${process.env.COUCHDB_PASSWORD}@127.0.0.1:5984/script_txs`)
 
 /* Import types. */
+import Connection from '../types/Connection.js'
 import ScriptType from '../types/Script.js'
-import ScriptResponse from '../types/ScriptResponse.js'
 
 import {
     // GraphQLBoolean,
@@ -21,7 +21,7 @@ import {
 const DEFAULT_MAXIMUM_RESULTS = 100
 
 export default {
-    type: ScriptResponse,
+    type: Connection,
     args: {
         first: {
             type: GraphQLInt,
