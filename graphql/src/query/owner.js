@@ -33,7 +33,7 @@ export default {
                 field3: 88888888,
             },
             cursor: null,
-        })
+        }
         // console.log('EDGES', edges);
 
         /* Build page info. */
