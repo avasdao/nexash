@@ -95,8 +95,8 @@ export default {
         const pageInfo = {
             startCursor: null,
             endCursor: null,
-            hasNextPage: null,
-            hasPreviousPage: null,
+            hasNextPage: false,
+            hasPreviousPage: false,
         }
 
         /* Build connection. */

@@ -11,26 +11,27 @@ import {
     GraphQLString,
 } from 'graphql'
 
-/* Import types. */
-import EdgeType from '../types/Edge.js'
-import PageInfoType from '../types/PageInfo.js'
-
 export default new GraphQLObjectType({
-    name: 'ScriptResponse',
+    name: 'PageInfo',
     fields: () => ({
 
-        totalCount: {
-            type: GraphQLInt,
+        startCursor: {
+            type: GraphQLString,
             description: `TBD`,
         },
 
-        edges: {
-            type: EdgeType,
+        endCursor: {
+            type: GraphQLString,
             description: `TBD`,
         },
 
-        pageInfo: {
-            type: PageInfoType,
+        hasNextPage: {
+            type: GraphQLBoolean,
+            description: `TBD`,
+        },
+
+        hasPreviousPage: {
+            type: GraphQLBoolean,
             description: `TBD`,
         },
 

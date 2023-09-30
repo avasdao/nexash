@@ -12,25 +12,19 @@ import {
 } from 'graphql'
 
 /* Import types. */
-import EdgeType from '../types/Edge.js'
-import PageInfoType from '../types/PageInfo.js'
+import TransactionType from '../types/Transaction.js'
 
 export default new GraphQLObjectType({
-    name: 'ScriptResponse',
+    name: 'Edge',
     fields: () => ({
 
-        totalCount: {
-            type: GraphQLInt,
+        node: {
+            type: new GraphQLNonNull(new GraphQLList(TransactionType)),
             description: `TBD`,
         },
 
-        edges: {
-            type: EdgeType,
-            description: `TBD`,
-        },
-
-        pageInfo: {
-            type: PageInfoType,
+        cursor: {
+            type: GraphQLString,
             description: `TBD`,
         },
 
