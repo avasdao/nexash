@@ -21,6 +21,10 @@ import {
 export default {
     type: new GraphQLList(TransactionType),
     args: {
+        first: {
+            type: GraphQLInt,
+            description: `Enter the number of records to return for the each __Slice__ of data.`,
+        },
         hash: {
             type: new GraphQLList(ScriptType),
             description: `Enter the __ScripHash__ for an on-chain Transaction.`,
