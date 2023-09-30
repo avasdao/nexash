@@ -93,7 +93,7 @@ export default {
                 cursor: null,
             }
         })
-        console.log('EDGES', edges);
+        // console.log('EDGES', edges);
 
         /* Build page info. */
         const pageInfo = {

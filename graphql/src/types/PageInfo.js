@@ -1,13 +1,11 @@
-/* Import types. */
-// import BlankType from './Blank.js'
-
+/* Import modules. */
 import {
     GraphQLBoolean,
-    GraphQLFloat,
-    GraphQLList,
+    // GraphQLFloat,
+    // GraphQLList,
     GraphQLNonNull,
     GraphQLObjectType,
-    GraphQLInt,
+    // GraphQLInt,
     GraphQLString,
 } from 'graphql'
 
@@ -16,25 +14,25 @@ export default new GraphQLObjectType({
     fields: () => ({
 
         startCursor: {
-            type: GraphQLString,
-            description: `TBD`,
+            type: new GraphQLNonNull(GraphQLString),
+            description: `Starting dataset position.`,
         },
 
         endCursor: {
-            type: GraphQLString,
-            description: `TBD`,
+            type: new GraphQLNonNull(GraphQLString),
+            description: `Ending dataset position.`,
         },
 
         hasNextPage: {
-            type: GraphQLBoolean,
-            description: `TBD`,
+            type: new GraphQLNonNull(GraphQLBoolean),
+            description: `Indicates the existance of additional records.`,
         },
 
         hasPreviousPage: {
-            type: GraphQLBoolean,
-            description: `TBD`,
+            type: new GraphQLNonNull(GraphQLBoolean),
+            description: `Indicates the existance of previous records.`,
         },
 
     }),
-    description: `A __Blank__ description goes here.`,
+    description: `A __PageInfo__ description goes here.`,
 })

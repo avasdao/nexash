@@ -1,13 +1,11 @@
-/* Import types. */
-// import BlankType from './Blank.js'
-
+/* Import modules. */
 import {
-    GraphQLBoolean,
-    GraphQLFloat,
-    GraphQLList,
+    // GraphQLBoolean,
+    // GraphQLFloat,
+    // GraphQLList,
     GraphQLNonNull,
     GraphQLObjectType,
-    GraphQLInt,
+    // GraphQLInt,
     GraphQLString,
 } from 'graphql'
 
@@ -19,7 +17,7 @@ export default new GraphQLObjectType({
     fields: () => ({
 
         node: {
-            type: TransactionType,
+            type: new GraphQLNonNull(TransactionType),
             description: `TBD`,
         },
 
@@ -29,5 +27,5 @@ export default new GraphQLObjectType({
         },
 
     }),
-    description: `A __Blank__ description goes here.`,
+    description: `An __Edge__ description goes here.`,
 })

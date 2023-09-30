@@ -1,14 +1,12 @@
-/* Import types. */
-// import BlankType from './Blank.js'
-
+/* Import modules. */
 import {
-    GraphQLBoolean,
-    GraphQLFloat,
+    // GraphQLBoolean,
+    // GraphQLFloat,
     GraphQLList,
     GraphQLNonNull,
     GraphQLObjectType,
     GraphQLInt,
-    GraphQLString,
+    // GraphQLString,
 } from 'graphql'
 
 /* Import types. */
@@ -20,20 +18,20 @@ export default new GraphQLObjectType({
     fields: () => ({
 
         totalCount: {
-            type: GraphQLInt,
-            description: `TBD`,
+            type: new GraphQLNonNull(GraphQLInt),
+            description: `Total number of records available.`,
         },
 
         edges: {
-            type: new GraphQLList(EdgeType),
-            description: `TBD`,
+            type: new GraphQLNonNull(new GraphQLList(EdgeType)),
+            description: `Edge data.`,
         },
 
         pageInfo: {
-            type: PageInfoType,
-            description: `TBD`,
+            type: new GraphQLNonNull(PageInfoType),
+            description: `Page info about the dataset.`,
         },
 
     }),
-    description: `A __Blank__ description goes here.`,
+    description: `A __Edge__ description goes here.`,
 })
