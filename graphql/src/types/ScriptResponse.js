@@ -21,12 +21,12 @@ export default new GraphQLObjectType({
         },
 
         edges: {
-            type: GraphQLObjectType,
+            type: GraphQLString,
             description: `TBD`,
         },
 
         pageInfo: {
-            type: GraphQLObjectType,
+            type: GraphQLString,
             description: `TBD`,
         },
 

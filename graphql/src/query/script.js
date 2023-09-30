@@ -101,8 +101,8 @@ export default {
         /* Build connection. */
         const connection = {
             totalCount,
-            edges,
-            pageInfo,
+            edges: JSON.stringify(edges),
+            pageInfo: JSON.stringify(pageInfo),
         }
 
         /* Return transaction details. */
