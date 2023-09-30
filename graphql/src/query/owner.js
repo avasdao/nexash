@@ -22,11 +22,11 @@ export default {
     resolve: (_root, _args, _ctx) => {
         console.log('Owner (args):', _args)
 
-        return [{
+        return [JSON.stringify({
             field1: 'This is a BLANK asset!',
             field2: 1337,
             field3: 88888888,
-        }]
+        })]
     },
     description: `Request _(strucutred)_ __Owner__ details, aggregated from multiple data sources, for your convenience.`,
 }
