@@ -33,7 +33,7 @@ export default {
                 nft: [{
                     groupid: 'cool_group',
                     name: 'My kewl nft',
-                    mintedAt: 0123,
+                    mintedAt: 123,
                 }],
             },
             cursor: null,
