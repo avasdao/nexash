@@ -43,10 +43,10 @@ export default {
 
         /* Build page info. */
         const pageInfo = {
-            startCursor: null,
-            endCursor: null,
-            hasNextPage: false,
             hasPreviousPage: false,
+            startCursor: null,
+            hasNextPage: true,
+            endCursor: Buffer.from('hi there!').toString('base64'),
         }
 
         /* Build connection. */
