@@ -5,7 +5,7 @@ import PouchDB from 'pouchdb'
 const scriptTxsDb = new PouchDB(`http://${process.env.COUCHDB_USER}:${process.env.COUCHDB_PASSWORD}@127.0.0.1:5984/script_txs`)
 
 /* Import types. */
-import Connection from '../types/Connection.js'
+import TransactionConnectionType from '../types/TransactionConnection.js'
 import ScriptType from '../types/Script.js'
 
 import {
@@ -15,13 +15,13 @@ import {
     // GraphQLNonNull,
     // GraphQLObjectType,
     GraphQLInt,
-    // GraphQLString,
+    GraphQLString,
 } from 'graphql'
 
 const DEFAULT_MAXIMUM_RESULTS = 100
 
 export default {
-    type: Connection,
+    type: TransactionConnectionType,
     args: {
         first: {
             type: GraphQLInt,
@@ -30,6 +30,14 @@ export default {
         last: {
             type: GraphQLInt,
             description: `Enter the number of records to return for the __Last Slice__ of data.`,
+        },
+        before: {
+            type: GraphQLString,
+            description: `Enter the cursor to proceed.`,
+        },
+        after: {
+            type: GraphQLString,
+            description: `Enter the cursor to proceed.`,
         },
         hash: {
             type: new GraphQLList(ScriptType),

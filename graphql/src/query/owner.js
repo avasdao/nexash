@@ -1,6 +1,3 @@
-/* Import types. */
-// import OwnerType from '../types/Owner.js'
-
 import {
     GraphQLBoolean,
     GraphQLFloat,
@@ -12,7 +9,7 @@ import {
 } from 'graphql'
 
 export default {
-    type: new GraphQLList(GraphQLString),
+    type: ConnectionType,
     args: {
         address: {
             type: new GraphQLList(GraphQLString),
@@ -22,7 +19,7 @@ export default {
     resolve: (_root, _args, _ctx) => {
         console.log('Owner (args):', _args)
 
-        return [JSON.stringify({
+        return [{
             field1: 'This is a BLANK asset!',
             field2: 1337,
             field3: 88888888,

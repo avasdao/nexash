@@ -1,7 +1,4 @@
-/* Import types. */
-import TransactionInputType from './TransactionInput.js'
-import TransactionOutputType from './TransactionOutput.js'
-
+/* Import modules. */
 import {
     GraphQLBoolean,
     GraphQLFloat,
@@ -11,6 +8,10 @@ import {
     GraphQLInt,
     GraphQLString,
 } from 'graphql'
+
+/* Import types. */
+import TransactionInputType from './TransactionInput.js'
+import TransactionOutputType from './TransactionOutput.js'
 
 export default new GraphQLObjectType({
     name: 'Transaction',

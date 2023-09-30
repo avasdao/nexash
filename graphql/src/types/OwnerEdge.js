@@ -13,7 +13,7 @@ import {
 import TransactionType from '../types/Transaction.js'
 
 export default new GraphQLObjectType({
-    name: 'Edge',
+    name: 'TransactionEdge',
     fields: () => ({
 
         node: {
@@ -27,5 +27,5 @@ export default new GraphQLObjectType({
         },
 
     }),
-    description: `An __Edge__ description goes here.`,
+    description: `A __Transaction Edge__ description goes here.`,
 })
