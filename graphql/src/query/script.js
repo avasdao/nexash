@@ -18,6 +18,8 @@ import {
     // GraphQLString,
 } from 'graphql'
 
+const DEFAULT_MAXIMUM_RESULTS = 100
+
 export default {
     type: new GraphQLList(TransactionType),
     args: {
@@ -38,23 +40,23 @@ export default {
         console.log('Script (args):', _args)
 
         /* Initialize transaction. */
+        let first
+        let hashes
         let transactions
-        let txidems
-        let txids
 
-        if (typeof _args?.txidem === 'string') {
-            txidems = [_args.txidem]
-        } else if (Array.isArray(_args?.txidem)) {
-            txidems = _args.txidem
-        }
-        console.log('TRANSACTIONS (by txidem):', txidems)
+        // if (typeof _args?.txidem === 'string') {
+        //     txidems = [_args.txidem]
+        // } else if (Array.isArray(_args?.txidem)) {
+        //     txidems = _args.txidem
+        // }
+        // console.log('TRANSACTIONS (by txidem):', txidems)
 
-        if (typeof _args?.txid === 'string') {
-            txids = [_args.txid]
-        } else if (Array.isArray(_args?.txid)) {
-            txids = _args.txid
+        if (typeof _args?.first === 'integer') {
+            first = _args.first
+        } else {
+            first = DEFAULT_MAXIMUM_RESULTS
         }
-        console.log('TRANSACTIONS (by txid):', txids)
+        console.log('FIRST', first)
 
         /* Validate transaction height. */
         if (!transactions && txidems) {
@@ -82,7 +84,7 @@ export default {
         // NOTE: We MUST convert height (Int) to a (String).
         transactions = await scriptTxsDb
             .query('api/byScriptHash', {
-                // keys: txids,
+                limit: first,
                 include_docs: true,
             })
             .catch(err => console.error(err))
