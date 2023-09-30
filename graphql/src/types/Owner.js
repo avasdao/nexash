@@ -10,7 +10,7 @@ import {
 } from 'graphql'
 
 /* Import types. */
-// import OwnerType from './Owner.js'
+import NFTType from '../types/NFT.js'
 
 export default new GraphQLObjectType({
     name: 'Owner',
@@ -26,9 +26,9 @@ export default new GraphQLObjectType({
             description: `TBD`,
         },
 
-        field3: {
-            type: GraphQLInt,
-            description: `TBD`,
+        nft: {
+            type: new GraphQLList(NFTType),
+            description: `List of NFTs owned by this wallet.`,
         },
 
     }),

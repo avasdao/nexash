@@ -30,7 +30,11 @@ export default {
             node: {
                 field1: 'This is a BLANK asset!',
                 field2: 1337,
-                field3: 88888888,
+                nft: [{
+                    groupid: 'cool_group',
+                    name: 'My kewl nft',
+                    mintedAt: 0123,
+                }],
             },
             cursor: null,
         }]
