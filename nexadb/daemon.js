@@ -75,7 +75,7 @@ app.listen(SSE_PORT, LOCAL_HOST, () => {
 
 console.info('\n  Starting Nexa Database daemon...\n')
 
-setInterval(() => {
+setInterval(async () => {
     /* Request Blockchain information. */
     blockchainInfo = await getBlockchainInfo()
     console.log('UPDATE: BLOCKCHAIN INFO', blockchainInfo)
