@@ -23,18 +23,16 @@ export default {
         console.log('Owner (args):', _args)
 
         /* Set total count. */
-        const totalCount = transactions.length
+        const totalCount = 1
 
         /* Build edges. */
-        const edges = transactions.map(_transaction => {
-            return {
-                node: {
-                    field1: 'This is a BLANK asset!',
-                    field2: 1337,
-                    field3: 88888888,
-                },
-                cursor: null,
-            }
+        const edges = {
+            node: {
+                field1: 'This is a BLANK asset!',
+                field2: 1337,
+                field3: 88888888,
+            },
+            cursor: null,
         })
         // console.log('EDGES', edges);
 
