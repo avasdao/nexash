@@ -14,7 +14,7 @@ import TransactionEdgeType from '../types/TransactionEdge.js'
 import PageInfoType from '../types/PageInfo.js'
 
 export default new GraphQLObjectType({
-    name: 'Connection',
+    name: 'OwnerConnection',
     fields: () => ({
 
         totalCount: {
