@@ -25,7 +25,7 @@ export default new GraphQLObjectType({
         },
 
         edges: {
-            type: EdgeType,
+            type: new GraphQLList(EdgeType),
             description: `TBD`,
         },
 
