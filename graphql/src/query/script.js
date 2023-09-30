@@ -25,7 +25,11 @@ export default {
     args: {
         first: {
             type: GraphQLInt,
-            description: `Enter the number of records to return for the each __Slice__ of data.`,
+            description: `Enter the number of records to return for the __First Slice__ of data.`,
+        },
+        last: {
+            type: GraphQLInt,
+            description: `Enter the number of records to return for the __Last Slice__ of data.`,
         },
         hash: {
             type: new GraphQLList(ScriptType),
@@ -39,8 +43,11 @@ export default {
     resolve: async (_root, _args, _ctx) => {
         console.log('Script (args):', _args)
 
-        /* Initialize transaction. */
+        /* Initialize locals. */
+        let after
+        let before
         let first
+        let last
         let hashes
         let transactions
 
@@ -57,6 +64,27 @@ export default {
             first = DEFAULT_MAXIMUM_RESULTS
         }
         // console.log('FIRST', first)
+
+        if (typeof _args?.last === 'number') {
+            last = _args.last
+        } else {
+            last = DEFAULT_MAXIMUM_RESULTS
+        }
+        // console.log('LAST', last)
+
+        if (typeof _args?.before === 'boolean') {
+            before = _args.before
+        } else {
+            before = null
+        }
+        console.log('BEFORE', before)
+
+        if (typeof _args?.after === 'boolean') {
+            after = _args.after
+        } else {
+            after = null
+        }
+        console.log('AFTER', after)
 
         // NOTE: We MUST convert height (Int) to a (String).
         transactions = await scriptTxsDb
@@ -85,9 +113,6 @@ export default {
 
         /* Build edges. */
         const edges = transactions.map(_transaction => {
-            delete _transaction._id
-            delete _transaction._rev
-
             return {
                 node: _transaction,
                 cursor: null,
