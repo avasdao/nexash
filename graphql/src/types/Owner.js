@@ -16,14 +16,14 @@ export default new GraphQLObjectType({
     name: 'Owner',
     fields: () => ({
 
-        field1: {
+        nickname: {
             type: GraphQLString,
             description: `TBD`,
         },
 
-        field2: {
+        balance: {
             type: GraphQLInt,
-            description: `TBD`,
+            description: `The wallet balance (in $NEXA).`,
         },
 
         nft: {

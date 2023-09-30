@@ -28,11 +28,12 @@ export default {
         /* Build edges. */
         const edges = [{
             node: {
-                field1: 'This is a BLANK asset!',
-                field2: 1337,
+                nickname: 'SatoshisGhost',
+                balance: 1337,
                 nft: [{
                     groupid: 'cool_group',
-                    name: 'My kewl nft',
+                    groupidHex: '1337beef',
+                    name: 'My Kewlst NFT evr',
                     mintedAt: 123,
                 }],
             },

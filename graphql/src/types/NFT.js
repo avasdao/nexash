@@ -23,6 +23,11 @@ export default new GraphQLObjectType({
             description: `The group identifier.`,
         },
 
+        groupidHex: {
+            type: new GraphQLNonNull(GraphQLString),
+            description: `The group identifier (in HEX format).`,
+        },
+
         name: {
             type: new GraphQLNonNull(GraphQLString),
             description: `The name of the token.`,
