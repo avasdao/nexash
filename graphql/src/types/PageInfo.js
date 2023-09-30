@@ -14,12 +14,12 @@ export default new GraphQLObjectType({
     fields: () => ({
 
         startCursor: {
-            type: new GraphQLNonNull(GraphQLString),
+            type: GraphQLString,
             description: `Starting dataset position.`,
         },
 
         endCursor: {
-            type: new GraphQLNonNull(GraphQLString),
+            type: GraphQLString,
             description: `Ending dataset position.`,
         },
 
