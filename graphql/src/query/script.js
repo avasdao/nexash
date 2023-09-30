@@ -58,29 +58,6 @@ export default {
         }
         console.log('FIRST', first)
 
-        /* Validate transaction height. */
-        if (!transactions && txidems) {
-            // NOTE: We MUST convert height (Int) to a (String).
-            transactions = await transactionsDb
-                .allDocs({
-                    keys: txidems,
-                    include_docs: true,
-                })
-                .catch(err => console.error(err))
-            // console.log('TRANSACTION (by idem):', transactions)
-        }
-
-        if (!transactions && _args?.txid) {
-            // NOTE: We MUST convert height (Int) to a (String).
-            transactions = await transactionsDb
-                .query('api/byTxid', {
-                    keys: txids,
-                    include_docs: true,
-                })
-                .catch(err => console.error(err))
-            // console.log('TRANSACTION (by id):', transactions)
-        }
-
         // NOTE: We MUST convert height (Int) to a (String).
         transactions = await scriptTxsDb
             .query('api/byScriptHash', {
