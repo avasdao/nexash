@@ -23,7 +23,7 @@ export default {
             field1: 'This is a BLANK asset!',
             field2: 1337,
             field3: 88888888,
-        })]
+        }]
     },
     description: `Request _(strucutred)_ __Owner__ details, aggregated from multiple data sources, for your convenience.`,
 }
