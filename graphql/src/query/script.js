@@ -37,7 +37,7 @@ export default {
         },
     },
     resolve: async (_root, _args, _ctx) => {
-        console.log('Script (args):', _args, typeof _args?.first)
+        console.log('Script (args):', _args)
 
         /* Initialize transaction. */
         let first
@@ -51,7 +51,7 @@ export default {
         // }
         // console.log('TRANSACTIONS (by txidem):', txidems)
 
-        if (typeof _args?.first === 'int') {
+        if (typeof _args?.first === 'number') {
             first = _args.first
         } else {
             first = DEFAULT_MAXIMUM_RESULTS
@@ -65,7 +65,7 @@ export default {
                 include_docs: true,
             })
             .catch(err => console.error(err))
-        // console.log('TRANSACTION (by id):', transactions)
+        console.log('TRANSACTION (by id):', transactions)
 
         /* Validate transaction. */
         if (!transactions) {
@@ -80,8 +80,32 @@ export default {
             return transaction
         })
 
+        /* Set total count. */
+        const totalCount = transactions.length
+
+        /* Build edges. */
+        const edges = {
+            node: null,
+            // transactions,
+        }
+
+        /* Build page info. */
+        const pageInfo = {
+            startCursor: null,
+            endCursor: null,
+            hasNextPage: null,
+            hasPreviousPage: null,
+        }
+
+        /* Build connection. */
+        const connection = {
+            totalCount,
+            edges,
+            pageInfo,
+        }
+
         /* Return transaction details. */
-        return transactions
+        return connection
     },
     description: `Request information about on-chain __Script__ transactions, eg. _OP_RETURN_ and _CashFusion._`,
 }
