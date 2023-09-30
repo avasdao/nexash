@@ -16,8 +16,7 @@ pragma nexscript >= 0.2.0;
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  *
  * Version     : 01
- * Fingerprint : 0x00000000
- * Signature   : 0x0000000000000000000000000000000000000000
+ * Fingerprint : 0x0000000000000000000000000000000000000000
  * Namespace   : TPOST01
  *
  * seller     : (bytes20) The sellers' public key hash.
@@ -122,7 +121,7 @@ contract TradingPost(
             (
                 lockingAsset
                     .split(1)[1]
-                    .split(20)[0] == tokenid &&
+                    .split(20)[0] == tokenGet &&
                 int(lockingAsset
                     .split(22)[1]
                     .split(amountParentLen)[0]) >= bid
@@ -131,7 +130,7 @@ contract TradingPost(
             (
                 lockingAsset
                     .split(1)[1]
-                    .split(40)[0] == tokenid &&
+                    .split(40)[0] == tokenGet &&
                 int(lockingAsset
                     .split(42)[1]
                     .split(amountChildLen)[0]) >= bid

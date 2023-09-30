@@ -17,8 +17,7 @@ pragma nexscript >= 0.6.0;
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  *
  * Version     : 02
- * Fingerprint : 0x00000000
- * Signature   : 0x0000000000000000000000000000000000000000
+ * Fingerprint : 0x0000000000000000000000000000000000000000
  * Namespace   : WISER02
  *
  * owner : Party whom will receive the payouts.
