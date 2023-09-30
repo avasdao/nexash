@@ -10,14 +10,14 @@ import {
 } from 'graphql'
 
 /* Import types. */
-import TransactionType from '../types/Transaction.js'
+import OwnerType from '../types/Owner.js'
 
 export default new GraphQLObjectType({
-    name: 'TransactionEdge',
+    name: 'OwnerEdge',
     fields: () => ({
 
         node: {
-            type: new GraphQLNonNull(TransactionType),
+            type: new GraphQLNonNull(OwnerType),
             description: `TBD`,
         },
 
@@ -27,5 +27,5 @@ export default new GraphQLObjectType({
         },
 
     }),
-    description: `A __Transaction Edge__ description goes here.`,
+    description: `A __Owner Edge__ description goes here.`,
 })
