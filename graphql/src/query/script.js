@@ -85,12 +85,12 @@ export default {
 
         /* Build edges. */
         const edges = transactions.map(_transaction => {
-            console.log('EDGE TX', _transaction);
             return {
                 node: _transaction,
                 cursor: null,
             }
         })
+        console.log('EDGES', edges);
 
         /* Build page info. */
         const pageInfo = {
