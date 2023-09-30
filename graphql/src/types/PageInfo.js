@@ -13,14 +13,14 @@ export default new GraphQLObjectType({
     name: 'PageInfo',
     fields: () => ({
 
+        hasPreviousPage: {
+            type: new GraphQLNonNull(GraphQLBoolean),
+            description: `Indicates the existance of previous records.`,
+        },
+
         startCursor: {
             type: GraphQLString,
             description: `Starting dataset position.`,
-        },
-
-        endCursor: {
-            type: GraphQLString,
-            description: `Ending dataset position.`,
         },
 
         hasNextPage: {
@@ -28,9 +28,9 @@ export default new GraphQLObjectType({
             description: `Indicates the existance of additional records.`,
         },
 
-        hasPreviousPage: {
-            type: new GraphQLNonNull(GraphQLBoolean),
-            description: `Indicates the existance of previous records.`,
+        endCursor: {
+            type: GraphQLString,
+            description: `Ending dataset position.`,
         },
 
     }),
