@@ -26,14 +26,14 @@ export default {
         const totalCount = 1
 
         /* Build edges. */
-        const edges = {
+        const edges = [{
             node: {
                 field1: 'This is a BLANK asset!',
                 field2: 1337,
                 field3: 88888888,
             },
             cursor: null,
-        }
+        }]
         // console.log('EDGES', edges);
 
         /* Build page info. */
