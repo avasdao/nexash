@@ -19,7 +19,7 @@ export default new GraphQLObjectType({
     fields: () => ({
 
         node: {
-            type: new GraphQLNonNull(new GraphQLList(TransactionType)),
+            type: new GraphQLList(TransactionType),
             description: `TBD`,
         },
 
