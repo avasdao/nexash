@@ -6,6 +6,7 @@ const scriptTxsDb = new PouchDB(`http://${process.env.COUCHDB_USER}:${process.en
 
 /* Import types. */
 import ScriptType from '../types/Script.js'
+import ScriptResponse from '../types/ScriptResponse.js'
 import TransactionType from '../types/Transaction.js'
 
 import {
@@ -21,7 +22,7 @@ import {
 const DEFAULT_MAXIMUM_RESULTS = 100
 
 export default {
-    type: new GraphQLList(TransactionType),
+    type: ScriptResponse,
     args: {
         first: {
             type: GraphQLInt,
