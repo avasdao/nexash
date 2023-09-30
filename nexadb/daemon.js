@@ -43,10 +43,10 @@ const RPC_OPTIONS = {
 /* Set constants. */
 const LOCAL_HOST = '127.0.0.1'
 const SSE_PORT = process.env.SSE_PORT || 5000
+const BLOCKCHAIN_UPDATE_INTERVAL = 60000
 
 /* Initialize locals. */
 let blockchainInfo
-let response
 
 /* Set welcome message. */
 const welcomeMsg = 'Nexa memory pool firehose!'
@@ -75,6 +75,37 @@ app.listen(SSE_PORT, LOCAL_HOST, () => {
 
 console.info('\n  Starting Nexa Database daemon...\n')
 
+setInterval(() => {
+    /* Request Blockchain information. */
+    blockchainInfo = await getBlockchainInfo()
+    console.log('UPDATE: BLOCKCHAIN INFO', blockchainInfo)
+}, BLOCKCHAIN_UPDATE_INTERVAL)
+
+const manageBlocks = async () => {
+    await blocksIndexer(blockchainInfo.blocks)
+    setTimeout(manageBlocks, 1000)
+}
+
+const manageGroups = async () => {
+    await groupsIndexer(blockchainInfo.blocks)
+    setTimeout(manageGroups, 1000)
+}
+
+const manageNulldata = async () => {
+    await nulldataIndexer(blockchainInfo.blocks)
+    setTimeout(manageNulldata, 1000)
+}
+
+const manageScripts = async () => {
+    await scriptsIndexer(blockchainInfo.blocks)
+    setTimeout(manageScripts, 1000)
+}
+
+const manageTransactions = async () => {
+    await transactionsIndexer(blockchainInfo.blocks)
+    setTimeout(manageTransactions, 1000)
+}
+
 ;(async () => {
     /* Initialize locals. */
     let decoded
@@ -92,11 +123,11 @@ console.info('\n  Starting Nexa Database daemon...\n')
     }
 
     /* Start (sync) database indexers. */
-    blocksIndexer(blockchainInfo.blocks)
-    groupsIndexer(blockchainInfo.blocks)
-    nulldataIndexer(blockchainInfo.blocks)
-    scriptsIndexer(blockchainInfo.blocks)
-    transactionsIndexer(blockchainInfo.blocks)
+    manageBlocks()
+    manageGroups()
+    manageNulldata()
+    scriptsIndexer()
+    manageTransactions()
 
     /* Initialize Zero Message Queue (ZMQ) socket. */
     sock = new zmq.Subscriber
