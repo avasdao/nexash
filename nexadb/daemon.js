@@ -126,7 +126,7 @@ const manageTransactions = async () => {
     manageBlocks()
     manageGroups()
     manageNulldata()
-    scriptsIndexer()
+    manageScripts()
     manageTransactions()
 
     /* Initialize Zero Message Queue (ZMQ) socket. */
