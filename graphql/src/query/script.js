@@ -37,7 +37,7 @@ export default {
         },
     },
     resolve: async (_root, _args, _ctx) => {
-        console.log('Script (args):', _args)
+        console.log('Script (args):', _args, typeof _args?.first)
 
         /* Initialize transaction. */
         let first
@@ -51,7 +51,7 @@ export default {
         // }
         // console.log('TRANSACTIONS (by txidem):', txidems)
 
-        if (typeof _args?.first === 'integer') {
+        if (typeof _args?.first === 'int') {
             first = _args.first
         } else {
             first = DEFAULT_MAXIMUM_RESULTS
