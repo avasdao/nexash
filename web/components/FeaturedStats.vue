@@ -10,7 +10,7 @@ import { useSystemStore } from '@/stores/system'
 const System = useSystemStore()
 
 const marketCap = computed(() => {
-    return numeral(System.ticker?.quote.USD.marketCap).format('$0,0')
+    return numeral(System.ticker?.marketCap).format('$0,0')
 })
 
 const vol24 = computed(() => {
@@ -58,7 +58,7 @@ onMounted(() => {
 <template>
     <main class="flex flex-col lg:flex-row gap-4">
         <section class="h-full w-full lg:w-fit px-5 py-2 text-center bg-yellow-100 border-2 border-yellow-400 rounded-lg shadow-md">
-            <h3 class="text-yellow-600 text-sm font-medium uppercase whitespace-nowrap">
+            <h3 class="text-yellow-600 text-sm font-medium uppercase tracking-widest whitespace-nowrap">
                 Market Capitalization
             </h3>
 
@@ -76,7 +76,7 @@ onMounted(() => {
         </section>
 
         <section class="h-full w-full lg:w-fit px-5 py-2 text-center bg-yellow-100 border-2 border-yellow-400 rounded-lg shadow-md">
-            <h3 class="text-yellow-600 text-sm font-medium uppercase whitespace-nowrap">
+            <h3 class="text-yellow-600 text-sm font-medium uppercase tracking-widest whitespace-nowrap">
                 Fair Market Price
             </h3>
 
@@ -127,7 +127,7 @@ onMounted(() => {
         </section>
 
         <section class="h-full w-full lg:w-fit px-5 py-2 text-center bg-yellow-100 border-2 border-yellow-400 rounded-lg shadow-md">
-            <h3 class="text-yellow-600 text-sm font-medium uppercase whitespace-nowrap">
+            <h3 class="text-yellow-600 text-sm font-medium uppercase tracking-widest whitespace-nowrap">
                 Circulating Supply
             </h3>
 
