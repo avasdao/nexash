@@ -116,6 +116,12 @@ export default {
             return transaction
         })
 
+        /* Set connection info. */
+        const connInfo = {
+            profiles: [],
+            updatedAt: moment().valueOf(),
+        }
+
         /* Set total count. */
         const totalCount = transactions.length
 
@@ -138,6 +144,7 @@ export default {
 
         /* Build connection. */
         const connection = {
+            connInfo,
             totalCount,
             edges,
             pageInfo,
