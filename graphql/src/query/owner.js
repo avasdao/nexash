@@ -27,8 +27,8 @@ export default {
 
         /* Set connection info. */
         const connInfo = {
-            profiles: [],
-            updatedAt: moment().valueOf(),
+            profiles: null,
+            updatedAt: moment().unix(),
         }
 
         /* Set total count. */
