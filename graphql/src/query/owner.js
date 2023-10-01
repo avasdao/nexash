@@ -1,3 +1,6 @@
+/* Import modules. */
+import moment from 'moment'
+
 import {
     GraphQLBoolean,
     GraphQLFloat,
@@ -21,6 +24,12 @@ export default {
     },
     resolve: (_root, _args, _ctx) => {
         console.log('Owner (args):', _args)
+
+        /* Set connection info. */
+        const connInfo = {
+            profiles: [],
+            updatedAt: moment().valueOf(),
+        }
 
         /* Set total count. */
         const totalCount = 1
@@ -51,6 +60,7 @@ export default {
 
         /* Build connection. */
         const connection = {
+            connInfo,
             totalCount,
             edges,
             pageInfo,
