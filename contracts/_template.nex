@@ -16,7 +16,7 @@ pragma nexscript >= 0.2.0;
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  *
  * Version     : 01
- * Fingerprint : 0x0000000000000000000000000000000000000000
+ * Script Hash : 0x0000000000000000000000000000000000000000
  * Namespace   : BLANK01
  *
  * owner : Party whom will receive the payouts.

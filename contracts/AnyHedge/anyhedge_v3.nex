@@ -22,7 +22,7 @@ pragma cashscript >= 0.6.0;
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  *
  * Version     : 03
- * Fingerprint : 0x0000000000000000000000000000000000000000
+ * Script Hash : 0x0000000000000000000000000000000000000000
  * Namespace   : AHEDGE03
  *
  * tokenid : TBD
