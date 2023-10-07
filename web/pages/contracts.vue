@@ -1,4 +1,7 @@
 <script setup>
+/* Import modules. */
+import numeral from 'numeral'
+
 useHead({
     title: 'Contracts - NexaShell',
     meta: [{
@@ -14,7 +17,22 @@ const contracts = ref(null)
 const scripts = ref(null)
 
 const isShowingMenu = ref(false)
-const totalTxCount = ref(0)
+// const totalTxCount = ref(0)
+
+const lookupMeta = (_scriptHash) => {
+    switch(_scriptHash.toUpperCase()) {
+    case '103012FB192C7DC29FAB0BF1126DFCA42106A574':
+        return {
+            title: 'Stakehouse',
+            bannerUrl: 'https://bafkreigmxsmkxuidebcgtdhmixlp2j5tcktehanvmg5bu54b5ilididniq.nexa.garden',
+        }
+    default:
+        return {
+            title: 'Unknown Contract',
+            bannerUrl: '',
+        }
+    }
+}
 
 const uniqueScripts = computed(() => {
     if (!scripts.value) {
@@ -45,7 +63,7 @@ const uniqueScripts = computed(() => {
             }
 
             /* Increment total transaction count. */
-            totalTxCount.value++
+            // totalTxCount.value++
 
             const out = outputs[j]
 
@@ -53,7 +71,8 @@ const uniqueScripts = computed(() => {
 
             if (!unique[scriptHash]) {
                 unique[scriptHash] = {
-                    title: 'n/a',
+                    title: lookupMeta(scriptHash).title,
+                    bannerUrl: lookupMeta(scriptHash).bannerUrl,
                     count: 1,
                 }
             } else {
@@ -68,7 +87,7 @@ const uniqueScripts = computed(() => {
     return unique
 })
 
-const cards = computed(() => {
+const displayCards = computed(() => {
     const sorted = []
 
     Object.keys(uniqueScripts.value).forEach(_scriptid => {
@@ -85,7 +104,8 @@ const cards = computed(() => {
         return b.count - a.count
     })
 
-    return sorted
+    /* Return TOP10 (contract) cards. */
+    return sorted.slice(0, 10)
 })
 
 const loadContracts = async () => {
@@ -232,10 +252,11 @@ onMounted(() => {
 
             <section class="col-span-2">
 
-                <div v-if="totalTxCount" class="px-5 py-2 flex flex-row justify-between">
-                    <div class="flex flex-row items-center gap-2">
-                        <h2 class="text-xl font-medium">
-                            Total # of Wise Contracts
+                <div class="px-5 py-2 flex flex-row justify-between">
+                    <div v-if="uniqueScripts" class="flex flex-row items-center gap-2">
+                        <h2 class="text-gray-700 text-base font-medium tracking-widest leading-5">
+                            Total # of Wise
+                            <br />Contracts Created
                         </h2>
 
                         <h2 class="text-5xl font-medium text-lime-600 italic">
@@ -243,13 +264,14 @@ onMounted(() => {
                         </h2>
                     </div>
 
-                    <div class="flex flex-row items-center gap-2">
-                        <h2 class="text-xl font-medium">
-                            Total # of Transactions
+                    <div v-if="scripts" class="flex flex-row items-center gap-2">
+                        <h2 class="text-gray-700 text-base font-medium tracking-widest leading-5">
+                            Total # of Script
+                            <br />Transactions Executed
                         </h2>
 
                         <h2 class="text-5xl font-medium text-lime-600 italic">
-                            {{numeral(totalTxCount).format('0,0')}}
+                            {{numeral(scripts.length).format('0,0')}}
                         </h2>
                     </div>
                 </div>
@@ -303,10 +325,10 @@ onMounted(() => {
 
                 <ul role="list" class="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-2 xl:gap-x-8">
 
-                    <li v-for="contract of cards" :key="contract.id" class="overflow-hidden rounded-xl border border-gray-200">
+                    <li v-for="contract of displayCards" :key="contract.id" class="overflow-hidden rounded-xl border border-gray-200">
                         <div class="relative flex items-center gap-x-4 border-b border-gray-900/5 bg-gray-50 p-6">
                             <img
-                                :src="contract.bgUrl"
+                                :src="contract.bannerUrl"
                                 class="-ml-6 absolute w-full h-full object-cover"
                             />
 
@@ -420,4 +442,6 @@ onMounted(() => {
             </section>
         </div>
     </main>
+
+    <pre>{{ scripts }}</pre>
 </template>
