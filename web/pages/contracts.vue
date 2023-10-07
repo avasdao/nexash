@@ -7,9 +7,86 @@ useHead({
     }]
 })
 
+/* Set Nexa GraphQL endpoint. */
+const ENDPOINT = 'https://nexa.sh/graphql'
+
 const contracts = ref(null)
+const scripts = ref(null)
 
 const isShowingMenu = ref(false)
+const totalTxCount = ref(0)
+
+const uniqueScripts = computed(() => {
+    if (!scripts.value) {
+        return []
+    }
+
+    // const contracts = {}
+    let unique = {}
+
+    for (let i = 0; i < scripts.value.length; i++) {
+        const script = scripts.value[i]
+
+        const outputs = script.node.vout
+
+        for (let j = 0; j < scripts.value.length; j++) {
+            const output = outputs[j]
+
+            if (!output || output === null || typeof output === 'undefined') {
+                continue
+            }
+
+            if (output?.scriptPubKey.scriptHash === null) {
+                continue
+            }
+
+            if (output?.scriptPubKey.scriptHash === 'pay2pubkeytemplate') {
+                continue
+            }
+
+            /* Increment total transaction count. */
+            totalTxCount.value++
+
+            const out = outputs[j]
+
+            const scriptHash = out.scriptPubKey.scriptHash
+
+            if (!unique[scriptHash]) {
+                unique[scriptHash] = {
+                    title: 'n/a',
+                    count: 1,
+                }
+            } else {
+                unique[scriptHash].count++
+            }
+
+            /* Add output. */
+            // unique.push(out)
+        }
+    }
+
+    return unique
+})
+
+const cards = computed(() => {
+    const sorted = []
+
+    Object.keys(uniqueScripts.value).forEach(_scriptid => {
+        console.log('SCRIPT ID', _scriptid)
+        const script = uniqueScripts.value[_scriptid]
+
+        sorted.push({
+            id: _scriptid,
+            ...script,
+        })
+    })
+
+    sorted.sort((a, b) => {
+        return b.count - a.count
+    })
+
+    return sorted
+})
 
 const loadContracts = async () => {
     contracts.value.push({
@@ -38,11 +115,65 @@ const loadContracts = async () => {
     })
 }
 
+const loadScripts = async (_first) => {
+    const MAXIMUM_RESULTS = 1000
+
+    const query = `
+    {
+      script(first: ${MAXIMUM_RESULTS}) {
+        totalCount
+        pageInfo {
+          hasPreviousPage
+          startCursor
+          hasNextPage
+          endCursor
+        }
+        edges {
+          node {
+            txidem
+            size
+            vout {
+              scriptPubKey {
+                scriptHash
+                asm
+              }
+            }
+          }
+          cursor
+        }
+      }
+    }
+    `
+
+    // let block
+
+    /* Make query request. */
+    const result = await $fetch(ENDPOINT,
+        {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+            },
+            body: JSON.stringify({ query }),
+        })
+        .catch(err => console.error(err))
+    console.log('RESULT', result)
+    // if (result?.data?.block) {
+    //     block = result.data.block[0]
+    // }
+
+    if (result?.data.script) {
+        scripts.value = result.data.script.edges
+    }
+
+}
 
 const init = async () => {
     contracts.value = []
 
     await loadContracts()
+    await loadScripts(1000)
 }
 
 
@@ -100,6 +231,29 @@ onMounted(() => {
             </div>
 
             <section class="col-span-2">
+
+                <div v-if="totalTxCount" class="px-5 py-2 flex flex-row justify-between">
+                    <div class="flex flex-row items-center gap-2">
+                        <h2 class="text-xl font-medium">
+                            Total # of Wise Contracts
+                        </h2>
+
+                        <h2 class="text-5xl font-medium text-lime-600 italic">
+                            {{numeral(Object.keys(uniqueScripts).length).format('0,0')}}
+                        </h2>
+                    </div>
+
+                    <div class="flex flex-row items-center gap-2">
+                        <h2 class="text-xl font-medium">
+                            Total # of Transactions
+                        </h2>
+
+                        <h2 class="text-5xl font-medium text-lime-600 italic">
+                            {{numeral(totalTxCount).format('0,0')}}
+                        </h2>
+                    </div>
+                </div>
+
                 <div class="mx-5 my-2 w-fit flex flex-row justify-between gap-16">
                     <div class="w-fit flex flex-col items-center gap-1">
                         <button type="button" class="group relative inline-flex h-5 w-10 flex-shrink-0 cursor-pointer items-center justify-center rounded-full focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2" role="switch" aria-checked="false">
@@ -149,7 +303,7 @@ onMounted(() => {
 
                 <ul role="list" class="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-2 xl:gap-x-8">
 
-                    <li v-for="contract of contracts" :key="contract.id" class="overflow-hidden rounded-xl border border-gray-200">
+                    <li v-for="contract of cards" :key="contract.id" class="overflow-hidden rounded-xl border border-gray-200">
                         <div class="relative flex items-center gap-x-4 border-b border-gray-900/5 bg-gray-50 p-6">
                             <img
                                 :src="contract.bgUrl"
@@ -166,8 +320,12 @@ onMounted(() => {
 
                             <div class="z-10 font-medium leading-6 text-gray-100">
                                 <h3 class="text-xl">
-                                    {{contract.name}}
+                                    {{contract.title}}
                                 </h3>
+
+                                <div class="w-fit rounded-md py-1 px-2 text-xs font-medium ring-1 ring-inset text-indigo-700 bg-indigo-50 ring-indigo-600/10">
+                                    {{contract.id}}
+                                </div>
 
                                 <div class="w-fit rounded-md py-1 px-2 text-xs font-medium ring-1 ring-inset text-indigo-700 bg-indigo-50 ring-indigo-600/10">
                                     Covenant
@@ -217,6 +375,18 @@ onMounted(() => {
                         </div>
 
                         <dl class="-my-3 divide-y divide-gray-100 px-6 py-4 text-sm leading-6">
+                            <div class="flex justify-between gap-x-4 py-3">
+                                <dt class="text-gray-500">
+                                    Total Transactions
+                                </dt>
+
+                                <dd class="text-gray-700">
+                                    <time datetime="2022-12-13">
+                                        {{contract.count}}
+                                    </time>
+                                </dd>
+                            </div>
+
                             <div class="flex justify-between gap-x-4 py-3">
                                 <dt class="text-gray-500">
                                     Last activity
