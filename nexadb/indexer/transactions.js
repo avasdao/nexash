@@ -21,6 +21,7 @@ export default async (_curHeight = 0) => {
 
     /* Initialize locals. */
     let block
+    let existing
     let systemIdx
     let tx
     let txidem
@@ -49,28 +50,33 @@ export default async (_curHeight = 0) => {
                     /* Set transaction idem. */
                     txidem = block.txidem[j]
 
+                    /* Request transaction details. */
+                    tx = await getTransaction(txidem)
+                        .catch(err => {
+                            console.error(err)
+                        })
+                    // console.log(`TRANSACTION [${txidem}]`, tx)
+
                     // NOTE: Attepmt to (1st) retrieve "existing" transaction data.
-                    tx = await transactionsDb.get(txidem)
+                    existing = await transactionsDb.get(txidem)
                         .catch(err => console.error(err))
 
                     /* Validate transaction. */
-                    if (!tx) {
-                        /* Request transaction details. */
-                        tx = await getTransaction(txidem)
-                            .catch(err => {
-                                console.error(err)
-                            })
-                        // console.log(`TRANSACTION [${txidem}]`, tx)
-
+                    if (existing) {
+                        /* Update existing entry. */
+                        tx = {
+                            _id: existing._id,
+                            _rev: existing._rev,
+                            ...tx,
+                            updatedAt: moment().unix(),
+                        }
+                    } else {
                         /* Create NEW entry. */
                         tx = {
                             _id: tx.txidem,
                             ...tx,
                             createdAt: moment().unix(),
                         }
-                    } else {
-                        /* Update existing entry. */
-                        tx.updatedAt = moment().unix()
                     }
 
                     /* Save transaction to storage. */
