@@ -49,6 +49,7 @@ export default async (_transaction) => {
         existingTx = await transactionsDb
             .get(txidem)
             .catch(err => console.error(err))
+        console.log('EXISTING TX', existingTx)
 
         /* Validate transaction. */
         if (existingTx) {
