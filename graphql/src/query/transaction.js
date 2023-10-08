@@ -80,6 +80,12 @@ export default {
             const transaction = _row.doc
             // console.log('TRANSACTION', transaction)
 
+            /* Validate `time` for "unconfirmed" transactions. */
+            if (transaction.time === null) {
+                /* Add `time` for "unconfirmed" transactions. */
+                transaction.time = moment().unix()
+            }
+
             return transaction
         })
 
