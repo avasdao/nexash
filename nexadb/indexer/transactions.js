@@ -21,9 +21,10 @@ export default async (_curHeight = 0) => {
 
     /* Initialize locals. */
     let block
-    let existing
+    let existingTx
+    let newUpdatedTx
+    let realtimeTx
     let systemIdx
-    let tx
     let txidem
     let updatedSystem
 
@@ -51,37 +52,38 @@ export default async (_curHeight = 0) => {
                     txidem = block.txidem[j]
 
                     /* Request transaction details. */
-                    tx = await getTransaction(txidem)
+                    realtimeTx = await getTransaction(txidem)
                         .catch(err => {
                             console.error(err)
                         })
                     // console.log(`TRANSACTION [${txidem}]`, tx)
 
                     // NOTE: Attepmt to (1st) retrieve "existing" transaction data.
-                    existing = await transactionsDb.get(txidem)
+                    existingTx = await transactionsDb
+                        .get(txidem)
                         .catch(err => console.error(err))
 
                     /* Validate transaction. */
-                    if (existing) {
-                        /* Update existing entry. */
-                        tx = {
-                            _id: existing._id,
-                            _rev: existing._rev,
+                    if (existingTx) {
+                        /* Update existingTx entry. */
+                        newUpdatedTx = {
+                            _id: existingTx._id,
+                            _rev: existingTx._rev,
                             ...tx,
                             updatedAt: moment().unix(),
                         }
                     } else {
                         /* Create NEW entry. */
-                        tx = {
-                            _id: tx.txidem,
-                            ...tx,
+                        newUpdatedTx = {
+                            _id: realtimeTx.txidem,
+                            ...realtimeTx,
                             createdAt: moment().unix(),
                         }
                     }
 
                     /* Save transaction to storage. */
                     await transactionsDb
-                        .put(tx)
+                        .put(newUpdatedTx)
                         .catch(err => {
                             console.error(err)
                         })
