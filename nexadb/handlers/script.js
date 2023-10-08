@@ -46,10 +46,10 @@ export default async (_transaction) => {
         // console.log('SCRIPT HASH', scriptHash)
 
         // NOTE: Attepmt to (1st) retrieve "existing" transaction data.
-        existingTx = await transactionsDb
+        existingTx = await scriptTxsDb
             .get(txidem)
             .catch(err => console.error(err))
-        console.log('EXISTING TX', existingTx)
+        // console.log('EXISTING TX', existingTx)
 
         /* Validate transaction. */
         if (existingTx) {
@@ -68,7 +68,7 @@ export default async (_transaction) => {
                 createdAt: moment().unix(),
             }
         }
-        console.log('NEW UPDATED', newUpdatedTx)
+        // console.log('NEW UPDATED', newUpdatedTx)
 
         /* Add transaction to database. */
         result = await scriptTxsDb

@@ -42,7 +42,7 @@ export default async (_transaction) => {
         // console.log('SCRIPT PUB KEY', scriptPubKey)
 
         // NOTE: Attepmt to (1st) retrieve "existing" transaction data.
-        existingTx = await transactionsDb
+        existingTx = await groupTxsDb
             .get(txidem)
             .catch(err => console.error(err))
 
