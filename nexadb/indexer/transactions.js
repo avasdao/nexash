@@ -49,19 +49,33 @@ export default async (_curHeight = 0) => {
                     /* Set transaction idem. */
                     txidem = block.txidem[j]
 
-                    /* Request transaction details. */
-                    tx = await getTransaction(txidem)
-                        .catch(err => {
-                            console.error(err)
-                        })
-                    // console.log(`TRANSACTION [${txidem}]`, tx)
+                    // NOTE: Attepmt to (1st) retrieve "existing" transaction data.
+                    tx = await transactionsDb.get(txidem)
+                        .catch(err => console.error(err))
+
+                    /* Validate transaction. */
+                    if (!tx) {
+                        /* Request transaction details. */
+                        tx = await getTransaction(txidem)
+                            .catch(err => {
+                                console.error(err)
+                            })
+                        // console.log(`TRANSACTION [${txidem}]`, tx)
+
+                        /* Create NEW entry. */
+                        tx = {
+                            _id: tx.txidem,
+                            ...tx,
+                            createdAt: moment().unix(),
+                        }
+                    } else {
+                        /* Update existing entry. */
+                        tx.updatedAt = moment().unix()
+                    }
 
                     /* Save transaction to storage. */
                     await transactionsDb
-                        .put({
-                            _id: tx.txidem,
-                            ...tx
-                        })
+                        .put(tx)
                         .catch(err => {
                             console.error(err)
                         })
