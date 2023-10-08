@@ -1,4 +1,5 @@
 /* Import modules. */
+import moment from 'moment'
 import PouchDB from 'pouchdb'
 
 /* Initialize databases. */
