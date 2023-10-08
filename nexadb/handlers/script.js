@@ -67,6 +67,7 @@ export default async (_transaction) => {
                 createdAt: moment().unix(),
             }
         }
+        console.log('NEW UPDATED', newUpdatedTx)
 
         /* Add transaction to database. */
         result = await scriptTxsDb
