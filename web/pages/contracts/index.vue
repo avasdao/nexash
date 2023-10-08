@@ -215,7 +215,7 @@ onMounted(() => {
             <span class="ml-0 sm:ml-2 block sm:inline text-5xl sm:text-4xl">Contracts</span>
         </h1>
 
-        <p class="my-5 pl-5 w-full lg:w-2/3 text-gray-500 leading-7">
+        <p class="my-5 pl-0 sm:pl-5 w-full lg:w-2/3 text-gray-500 leading-7">
             Nexa uses an ultra-scalable smart-contract system which enables practically everything possible on an EVM chain without the major scaling bottlenecks suffered by turing-complete networks.
             We call these "wise-contracts" because not only are they smart, but also wise in how network resources are used.
         </p>
