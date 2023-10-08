@@ -218,7 +218,7 @@ onMounted(() => {
         <p class="my-5 pl-0 sm:pl-5 w-full lg:w-2/3 text-gray-500 leading-7">
             Nexa uses an ultra-scalable smart-contract system which <span class="text-rose-500 font-medium">enables practically everything possible on an EVM network <em>(eg. Ethereum)</em></span>, but without the major scaling bottlenecks.
 
-            <span class="mt-3 sm:mt-0 block sm:inline">
+            <span class="mt-3 sm:mt-0 block sm:inline text-sm italic">
                 We call these <span class="text-rose-500 font-medium italic">"Wise Contracts"</span> because not only are they smart, but also wise in how skillfully they manage global network resources.
             </span>
         </p>
