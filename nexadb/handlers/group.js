@@ -7,14 +7,22 @@ const groupTxsDb = new PouchDB(`http://${process.env.COUCHDB_USER}:${process.env
 
 export default async (_transaction) => {
     /* Initialize locals. */
+    let existingTx
     let group
+    let newUpdatedTx
     let output
     let outputs
     let result
     let scriptPubKey
+    let txidem
 
+    /* Set transaction IDEM .*/
+    txidem = _transaction.txidem
+
+    /* Set outputs. */
     outputs = _transaction.vout
 
+    /* Handle outputs. */
     for (let i = 0; i < outputs.length; i++) {
         /* Set output. */
         output = outputs[i]
@@ -31,24 +39,41 @@ export default async (_transaction) => {
         }
         // console.log('SCRIPT PUB KEY', scriptPubKey)
 
-        result = await groupTxsDb
-            .put({
+        // NOTE: Attepmt to (1st) retrieve "existing" transaction data.
+        existingTx = await transactionsDb
+            .get(txidem)
+            .catch(err => console.error(err))
+
+        /* Validate transaction. */
+        if (existingTx) {
+            /* Update existingTx entry. */
+            newUpdatedTx = {
+                _id: existingTx._id,
+                _rev: existingTx._rev,
+                ..._transaction,
+                updatedAt: moment().unix(),
+            }
+        } else {
+            /* Create NEW entry. */
+            newUpdatedTx = {
                 _id: _transaction.txidem,
-                ..._transaction
-            })
+                ..._transaction,
+                createdAt: moment().unix(),
+            }
+        }
+
+        result = await groupTxsDb
+            .put(newUpdatedTx)
             .catch(err => {
                 console.error(err)
             })
 
-        // FIXME: THIS IS LEGACY -- REMOVE
-        result = await groupDb
-            .put({
-                _id: _transaction.txidem,
-                ..._transaction
-            })
-            .catch(err => {
-                console.error(err)
-            })
+// FIXME: THIS IS LEGACY -- REMOVE
+        // result = await groupDb
+        //     .put(newUpdatedTx)
+        //     .catch(err => {
+        //         console.error(err)
+        //     })
     }
 
     /* Return result. */
