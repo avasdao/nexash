@@ -246,7 +246,7 @@ onMounted(() => {
 
             <section class="col-span-2">
 
-                <div class="px-5 py-2 grid grid-cols-1 sm:grid-cols-2">
+                <div class="mt-3 px-5 py-2 grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div v-if="uniqueScripts" class="flex flex-row items-center gap-2">
                         <h2 class="text-gray-700 text-base font-medium tracking-widest leading-5">
                             Total # of Wise
@@ -270,7 +270,7 @@ onMounted(() => {
                     </div>
                 </div>
 
-                <div class="mx-5 mt-5 w-fit flex flex-row justify-between gap-20">
+                <div class="px-5 mt-5 w-full sm:w-fit flex flex-row justify-between sm:gap-20">
                     <div class="w-fit flex flex-col items-center gap-1">
                         <button type="button" class="group relative inline-flex h-5 w-10 flex-shrink-0 cursor-pointer items-center justify-center rounded-full focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2" role="switch" aria-checked="false">
                             <span class="sr-only">Use setting</span>
