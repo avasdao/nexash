@@ -160,7 +160,7 @@ if (result?.data?.block) {
     </main>
 
     <main v-else class="max-w-7xl mx-auto">
-        <div class="p-5 flex w-full justify-center">
+        <div class="px-5 py-20 flex w-full justify-center">
             <h1 class="text-4xl font-medium">
                 Oops! No block found
             </h1>

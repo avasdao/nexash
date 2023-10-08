@@ -1,6 +1,6 @@
 <script setup>
 useHead({
-    title: 'Transaction - NexaShell',
+    title: 'Contract Details - NexaShell',
     meta: [{
         name: 'description',
         content: 'Transaction'
@@ -240,7 +240,7 @@ onMounted(() => {
     <main v-else class="max-w-7xl mx-auto">
         <div class="px-5 py-20 flex w-full justify-center">
             <h1 class="text-4xl font-medium">
-                Oops! No transaction found
+                Oops! No contract found
             </h1>
         </div>
     </main>
