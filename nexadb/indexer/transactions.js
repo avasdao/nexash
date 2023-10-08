@@ -69,7 +69,7 @@ export default async (_curHeight = 0) => {
                         newUpdatedTx = {
                             _id: existingTx._id,
                             _rev: existingTx._rev,
-                            ...tx,
+                            ...realtimeTx, // NOTE: Use "fresh" data from blockchain.
                             updatedAt: moment().unix(),
                         }
                     } else {
