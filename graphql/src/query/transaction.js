@@ -79,10 +79,13 @@ export default {
         /* Map block details. */
         transactions = transactions.rows.map(_row => {
             const transaction = _row.doc
-            console.log('TRANSACTION', transaction)
+            // console.log('TRANSACTION', transaction)
 
             /* Validate `time` for "unconfirmed" transactions. */
-            if (transaction.time === null) {
+            if (
+                typeof transaction.time === 'undefined' ||
+                transaction.time === null
+            ) {
                 /* Add `time` for "unconfirmed" transactions. */
                 transaction.time = moment().unix()
             }
