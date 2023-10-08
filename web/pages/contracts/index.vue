@@ -253,7 +253,7 @@ onMounted(() => {
                             <br />Contracts Created
                         </h2>
 
-                        <h2 class="text-5xl font-medium text-lime-600 italic">
+                        <h2 class="text-5xl font-medium text-fuchsia-600 italic">
                             {{numeral(Object.keys(uniqueScripts).length).format('0,0')}}
                         </h2>
                     </div>
@@ -264,7 +264,7 @@ onMounted(() => {
                             <br />Transactions Completed
                         </h2>
 
-                        <h2 class="text-5xl font-medium text-lime-600 italic">
+                        <h2 class="text-5xl font-medium text-fuchsia-600 italic">
                             {{numeral(scripts.length).format('0,0')}}
                         </h2>
                     </div>
@@ -362,7 +362,7 @@ onMounted(() => {
                                     Total Transactions
                                 </dt>
 
-                                <dd class="text-amber-600 text-lg font-medium">
+                                <dd class="text-fuchsia-600 text-lg font-medium">
                                     {{contract.count}}
                                 </dd>
                             </div>
@@ -372,7 +372,7 @@ onMounted(() => {
                                     Last activity
                                 </dt>
 
-                                <dd class="text-amber-600 text-sm font-medium">
+                                <dd class="text-fuchsia-600 text-sm font-medium">
                                     {{moment.unix(contract.timestamp).fromNow()}}
                                 </dd>
                             </div>
