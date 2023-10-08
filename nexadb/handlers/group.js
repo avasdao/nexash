@@ -4,6 +4,7 @@ import PouchDB from 'pouchdb'
 /* Initialize databases. */
 const groupDb = new PouchDB(`http://${process.env.COUCHDB_USER}:${process.env.COUCHDB_PASSWORD}@127.0.0.1:5984/transactions_group`) // LEGACY -- REMOVE
 const groupTxsDb = new PouchDB(`http://${process.env.COUCHDB_USER}:${process.env.COUCHDB_PASSWORD}@127.0.0.1:5984/group_txs`)
+const transactionsDb = new PouchDB(`http://${process.env.COUCHDB_USER}:${process.env.COUCHDB_PASSWORD}@127.0.0.1:5984/transactions`)
 
 export default async (_transaction) => {
     /* Initialize locals. */
