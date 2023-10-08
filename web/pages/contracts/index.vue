@@ -119,11 +119,11 @@ const displayCards = computed(() => {
     const sorted = []
 
     Object.keys(uniqueScripts.value).forEach(_scriptid => {
-        console.log('SCRIPT ID', _scriptid)
+        // console.log('SCRIPT ID', _scriptid)
         const script = uniqueScripts.value[_scriptid]
 
         sorted.push({
-            id: _scriptid,
+            id: _scriptid.toLowerCase(),
             ...script,
         })
     })
@@ -246,7 +246,7 @@ onMounted(() => {
 
             <section class="col-span-2">
 
-                <div class="px-5 py-2 flex flex-row justify-between">
+                <div class="px-5 py-2 grid grid-cols-1 sm:grid-cols-2">
                     <div v-if="uniqueScripts" class="flex flex-row items-center gap-2">
                         <h2 class="text-gray-700 text-base font-medium tracking-widest leading-5">
                             Total # of Wise
@@ -335,8 +335,8 @@ onMounted(() => {
                                 class="z-10 w-16 h-auto p-1 flex-none rounded-lg bg-white object-cover ring-1 ring-gray-900/10 border-2 border-amber-300"
                             />
 
-                            <div class="flex flex-col gap-2 z-10 font-medium leading-6 text-gray-100">
-                                <h2 class="text-2xl uppercase tracking-wider text-white">
+                            <div class="flex flex-col gap-2 z-10 font-medium leading-6 text-gray-100 truncate">
+                                <h2 class="text-2xl uppercase tracking-wider text-white truncate">
                                     {{contract.title}}
                                 </h2>
 
