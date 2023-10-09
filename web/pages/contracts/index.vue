@@ -22,9 +22,17 @@ const isShowingMenu = ref(false)
 
 const lookupMeta = (_scriptHash) => {
     switch(_scriptHash.toUpperCase()) {
+    case '0A7399AA06B71F7B97E57FE29D152C6C28A7AD6F':
+        return {
+            title: `NexaJS Unit Test`,
+            bannerUrl: 'https://bafkreigxzephcvkblyba44yrx452qnsjlkr63cigjecbsr7hksndpwifr4.nexa.garden',
+            iconUrl: 'https://bafkreiedmuuonnul5a5k5bwnio4tewe4fshyhmwyjtc56kmvvqv5pgkqhi.nexa.garden',
+            version: '1',
+            type: 'Covenant',
+        }
     case '103012FB192C7DC29FAB0BF1126DFCA42106A574':
         return {
-            title: `Ava's Stakehouse`,
+            title: `Stakehouse`,
             bannerUrl: 'https://bafkreigmxsmkxuidebcgtdhmixlp2j5tcktehanvmg5bu54b5ilididniq.nexa.garden',
             iconUrl: 'https://bafkreifafbsuijfqoqztavkvxoe6uibwghstwe3lqsy4iu2ueuy47obuye.nexa.garden',
             version: '1',
@@ -335,7 +343,7 @@ onMounted(() => {
                             <img
                                 :src="contract.iconUrl"
                                 :alt="contract.title"
-                                class="z-10 w-16 h-auto p-1 flex-none rounded-lg bg-white object-cover ring-1 ring-gray-900/10 border-2 border-amber-300"
+                                class="z-10 w-16 h-auto p-2 flex-none rounded-lg bg-white object-cover ring-1 ring-gray-900/10 border-2 border-amber-300"
                             />
 
                             <div class="flex flex-col gap-2 z-10 font-medium leading-6 text-gray-100 truncate">
