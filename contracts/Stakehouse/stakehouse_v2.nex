@@ -1,4 +1,4 @@
-pragma nexscript >= 0.1.0;
+pragma nexscript >= 0.2.0;
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  *
@@ -17,9 +17,9 @@ pragma nexscript >= 0.1.0;
  *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  *
- * Version     : 01
- * Script Hash : 0x103012FB192C7DC29FAB0BF1126DFCA42106A574
- * Namespace   : STAKEH01
+ * Version     : 02
+ * Script Hash : 0x0000000000000000000000000000000000000000
+ * Namespace   : STAKEH02
  *
  * patron      : Party whom will receive the payouts.
  * reservation : The number of (512 second) cycles until expiration.
@@ -39,9 +39,44 @@ pragma nexscript >= 0.1.0;
  *   - https://avasdao.org
  *
  */
-contract Stakehouse(pubkey patron, int reservation) {
+contract Stakehouse(int reservation, bytes20 chef, pubkey patron) {
     /**
-     * Depart Stakehouse
+     * Cancel Reservation
+     *
+     * Allows a stakehouse patron to remove their assets BEFORE their
+     * reservation time has expired.
+     *
+     * Patrons will incur a "Cancellation Fee" (loss of assets) relative to the
+     * remaining time left on their reservation.
+     *
+     * NOTE: Cancelled assets are returned to Ava's Treasury.
+     *
+     * @param patron
+     * @param signature
+     */
+    function cancel(sig patronSig, pubkey chefPk, datasig chefSig, bytes chefMessage) {
+        /* Decode the message { treasuryHash, cancelRate } */
+        bytes20 treasuryHash, bytes8 cancelRateBin = chefMessage.split(20);
+        int cancelRate = int(cancelRateBin);
+
+        int cancelledAssets = tx.outputs[0].tokenAmount;
+        // TODO Add covenant requirements:
+        //   1. first output to treasury address
+        //   2. first output fee (rate) calculation (based on remaining time)
+
+        if (tx.outputs.length == 2) {
+            int changeAssets = tx.outputs[1].tokenAmount;
+        }
+
+        /* Check that the price message was signed by Chef. */
+        require(checkDataSig(chefSig, chefMessage, chefPk));
+
+        /* Verify transaction is signed by Patron. */
+        require(checkSig(signature, chef));
+    }
+
+    /**
+     * Depart
      *
      * Allows a stakehouse Patron to remove their assets AFTER their
      * reservation time has expired.
