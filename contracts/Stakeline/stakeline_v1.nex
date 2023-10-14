@@ -17,7 +17,7 @@ pragma nexscript >= 0.2.0;
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  *
  * Version     : 01
- * Script Hash : 0x0000000000000000000000000000000000000000
+ * Script Hash : 0xC4C275084F8869BD09B00FFEA63DF95D5BCEF16C
  * Namespace   : STAKEL01
  *
  * patron       : Party whom will receive the payouts.
