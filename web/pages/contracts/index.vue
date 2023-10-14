@@ -360,7 +360,7 @@ onMounted(() => {
                                 </h2>
 
                                 <h3 class="-mt-2 text-sm text-amber-300 font-medium tracking-widest">
-                                    Contract ID 0x{{contract.id.slice(0, 8)}}
+                                    Contract ID 0x{{contract.id?.slice(0, 8).toUpperCase()}}
                                 </h3>
 
                                 <div class="flex flex-row gap-3">
