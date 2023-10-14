@@ -1,0 +1,63 @@
+pragma nexscript >= 0.2.0;
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ *
+ * Copyright (c) 2023 Ava's DAO
+ * Released under the MIT License.
+ *
+ * Stakeline
+ *
+ * Creates a non-custodial container (ie. smart contract address), to be used
+ * for subscribing for premium access to a platform.
+ *
+ * Assets being held (ie. time-locked) in a stakeline:
+ *   1. cannot be transferred until AFTER the subscription (expiration) time.
+ *   2. are 100% under the control of the stakeline patron.
+ *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ *
+ * Version     : 01
+ * Script Hash : 0x0000000000000000000000000000000000000000
+ * Namespace   : STAKEL01
+ *
+ * patron       : Party whom will receive the payouts.
+ * subscription : The number of (512 second) cycles until expiration.
+ *
+ * Reservation Times
+ *   - 1 HOUR     1 hour         ~7 cycles
+ *   - 1 DAY      1 day        ~169 cycles
+ *   - 1 MONTH    30 days    ~5,063 cycles
+ *   - 1 QUARTER  90 days   ~15,188 cycles
+ *   - 1 YEAR     365 days  ~61,594 cycles
+ * NOTE: Each subscription cycle lasts for 512 seconds; while there are
+ *       exactly 168.75 cycles in a 24 hour day.
+ * (source: https://prestwi.ch/bitcoin-time-locks/)
+ *
+ * For more information, please visit the following resources:
+ *   - https://docs.avas.cash/staking
+ *   - https://avasdao.org
+ *
+ */
+contract Stakeline(
+    pubkey patron,
+    int subscription,
+    bytes visible unused location,
+) {
+    /**
+     * Depart
+     *
+     * Allows a stakeline Patron to remove their assets AFTER their
+     * subscription time has expired.
+     *
+     * @param location
+     * @param patron
+     * @param subscription
+     */
+    function depart(sig signature) {
+        /* Verify UTXO age is AFTER the subscription time. */
+        require(tx.age >= subscription);
+
+        /* Verify transaction is signed by the stakeline patron. */
+        require(checkSig(signature, patron));
+    }
+}

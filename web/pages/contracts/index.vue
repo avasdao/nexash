@@ -46,6 +46,14 @@ const lookupMeta = (_scriptHash) => {
             version: '1',
             type: 'Covenant',
         }
+    case 'C4C275084F8869BD09B00FFEA63DF95D5BCEF16C':
+        return {
+            title: `Stakeline`,
+            bannerUrl: 'https://bafkreia2mdw2shlj5zaxczv4lnknmpgu6aeukwsjm4cplx3e4xmsrthvqe.nexa.garden',
+            iconUrl: 'https://bafkreiddl5dctph6ojapucmcuyhf2rcj3fnbic5ijomhdn2xo6vskb2cr4.nexa.garden',
+            version: '1',
+            type: 'Covenant',
+        }
     default:
         return {
             title: 'Unknown',
