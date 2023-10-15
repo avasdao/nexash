@@ -1,0 +1,54 @@
+{
+  "contracts": [
+    {
+      "contractName": "TradingPost",
+      "constructorInputs": [
+        {
+          "name": "tokenid",
+          "type": "bytes32",
+          "visible": false,
+          "unused": false
+        },
+        {
+          "name": "seller",
+          "type": "bytes20",
+          "visible": false,
+          "unused": false
+        },
+        {
+          "name": "rate",
+          "type": "int",
+          "visible": false,
+          "unused": false
+        },
+        {
+          "name": "provider",
+          "type": "bytes20",
+          "visible": false,
+          "unused": false
+        },
+        {
+          "name": "fee",
+          "type": "int",
+          "visible": false,
+          "unused": false
+        }
+      ],
+      "abi": [
+        {
+          "name": "trade",
+          "inputs": []
+        }
+      ],
+      "dependencies": [],
+      "bytecode": "OP_FROMALTSTACK OP_FROMALTSTACK OP_FROMALTSTACK OP_FROMALTSTACK OP_FROMALTSTACK OP_1 OP_OUTPUTBYTECODE OP_1 OP_SPLIT OP_SWAP OP_DUP 00 OP_EQUAL OP_IF OP_2DROP OP_0 OP_ELSE OP_SPLIT OP_DROP 20 OP_SPLIT OP_DROP OP_ENDIF OP_EQUALVERIFY 005114 OP_SWAP OP_CAT OP_0 OP_OUTPUTBYTECODE OP_EQUALVERIFY OP_0 OP_OUTPUTVALUE OP_DUP 64 OP_MUL OP_ROT OP_DIV OP_1 OP_OUTPUTBYTECODE OP_1 OP_SPLIT OP_SWAP OP_DUP 00 OP_EQUAL OP_IF OP_2DROP OP_0 OP_ELSE OP_SPLIT OP_NIP OP_1 OP_SPLIT OP_SWAP OP_DUP 00 OP_EQUAL OP_IF OP_2DROP OP_0 OP_ELSE OP_SPLIT OP_DROP OP_BIN2NUM OP_ENDIF OP_ENDIF OP_NUMEQUALVERIFY OP_ROT OP_MUL 1027 OP_DIV OP_DUP OP_0 OP_GREATERTHAN OP_IF OP_2 OP_OUTPUTVALUE OP_OVER OP_GREATERTHANOREQUAL OP_VERIFY 005114 OP_2 OP_PICK OP_CAT OP_2 OP_OUTPUTBYTECODE OP_OVER OP_EQUALVERIFY OP_DROP OP_ENDIF OP_2DROP",
+      "contracts": []
+    }
+  ],
+  "hex": "6c6c6c6c6c51cd517f7c76010087636d00677f7501207f756888030051147c7e00cd8800cc760164957b9651cd517f7c76010087636d00677f77517f7c76010087636d00677f758168689d7b95021027967600a06352cc78a2690300511452797e52cd788875686d",
+  "compiler": {
+    "name": "nexc",
+    "version": "0.7.0"
+  },
+  "updatedAt": "2023-10-14T11:03:30.705Z"
+}

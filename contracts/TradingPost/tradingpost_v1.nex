@@ -7,11 +7,16 @@ pragma nexscript >= 0.2.0;
  *
  * Trading Post
  *
- * Allows for decentralized swap of $NEXA with ANY other (token) asset.
+ * Allows for a decentralized exchange of $NEXA with ANY other (token) asset,
+ * using a "trustless" atomic swap. There is ZERO risk of either party losing
+ * their asset(s) during the exchange.
+ *
+ * An additional fee may be charged, if there is a Provider added to the
+ * contract's parameters.
  *
  * NOTES
  * --------------------
- * TBD..
+ * TBD
  *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  *
@@ -38,80 +43,38 @@ contract TradingPost(
     int fee,
 ) {
     /**
-     * Cancel (Trade) Posting
-     *
-     * Sends all remaining assets back to the contract's owner (ie. the Seller).
-     *
-     * NOTE: For compliance purposes, both the Seller and the Provider have the
-     *       ability to cancel a trade posting.
-     *
-     *       ASSETS CAN ONLY BE SENT TO THE SELLER.
-     *
-     * @param executor
-     * @param signature
-     */
-    function cancelPosting(pubkey executor, sig signature) {
-        /* Verify executor has provided a valid signature. */
-        require(checkSig(signature, executor));
-
-        /* Hash the executor's public key hash. */
-        bytes20 pubKeyHash = hash160(executor);
-
-        /* Verify the executor is an authorized contract participant. */
-        require(pubKeyHash == seller || pubKeyHash == provider);
-
-        /* Validate the 1st output is the Seller's `scriptPubKey`. */
-        int lockingBytecodeLen = tx.outputs[0].lockingBytecode.length;
-        bytes20 sellerBytecode = bytes20(tx.outputs[0].lockingBytecode.split(lockingBytecodeLen - 20)[1]);
-        require(seller == sellerBytecode);
-
-        /* Validate the 1st output is the Seller's asset. */
-        require(tx.outputs[0].tokenGroupId == tokenid);
-
-        /* Set (min/max) constants. */
-        int MIN_OUTPUTS = 1;
-        int MAX_OUTPUTS = 2;
-
-        /* Validate the 2nd (change) output IS NOT the Seller's asset. */
-        require(
-            (tx.outputs.length == MIN_OUTPUTS) ||
-            (tx.outputs.length == MAX_OUTPUTS && tx.outputs[1].tokenGroupId == 0x0)
-        );
-    }
-
-    /**
      * Trade (Token) Asset
      *
      * Sends the buyer the requested amount of an asset for a rate set
      * by the contract's owner (ie. the Seller).
      */
-    function tradeAsset() {
-        /* Parse and verify Seller's bytecode receives the $NEXA payout. */
-        int lockingBytecodeLen = tx.outputs[0].lockingBytecode.length;
-        bytes20 payoutBytecode = bytes20(tx.outputs[0].lockingBytecode.split(lockingBytecodeLen - 20)[1]);
-        require(payoutBytecode == seller);
-
-        /* Set amount of $NEXA Seller paid to posting. */
-        int sellerPayout = tx.outputs[0].value;
-
-        /* Calculate and verify Buyer's asset payout amount. */
-        int buyerPayout = sellerPayout / rate;
-        require(tx.outputs[1].tokenAmount >= buyerPayout);
-
+    function trade() {
         /* Verify 2nd output is the Buyer's asset. */
         require(tx.outputs[1].tokenGroupId == tokenid);
 
+        /* Validate Seller's bytecode. */
+        bytes23 sellerBytecode = new LockingBytecodeP2PKT(seller);
+        require(tx.outputs[0].lockingBytecode == sellerBytecode);
+
+        /* Set amount of $NEXA Seller paid to contract. */
+        int sellerPayout = tx.outputs[0].value;
+
+        /* Calculate and verify Buyer's asset payout amount. */
+        // NOTE: MUST match any (integer) rounding when constructing the tx.
+        int buyerPayout = (sellerPayout * 100) / rate;
+        require(tx.outputs[1].tokenAmount == buyerPayout);
+
         /* Calculate Provider commission amount (received). */
-        int commission = (sellerPayout * fee) / 100;
+        int commission = (sellerPayout * fee) / 10000;
 
         /* Validate and handle commission payout. */
         if (commission > 0) {
+            /* Verify Provider payout amount. */
+            require(tx.outputs[2].value >= commission);
+
             /* Create Provider bytecode. */
             bytes23 providerBytecode = new LockingBytecodeP2PKT(provider);
             require(tx.outputs[2].lockingBytecode == providerBytecode);
-
-            /* Verify Provider payout amount. */
-            require(tx.outputs[2].value >= commission);
         }
     }
 }
