@@ -5,7 +5,7 @@ pragma nexscript >= 0.2.0;
  * Copyright (c) 2023 Ava's DAO
  * Released under the MIT License.
  *
- * Trading Post
+ * Trading Post (Fungible Edition)
  *
  * Allows for a decentralized exchange of $NEXA with ANY other (token) asset,
  * using a "trustless" atomic swap. There is ZERO risk of either party losing
@@ -16,7 +16,8 @@ pragma nexscript >= 0.2.0;
  *
  * NOTES
  * --------------------
- * TBD
+ * This contract will ONLY work with Fungible Tokens (FT),
+ * ie. with a 32-bit group id.
  *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  *
@@ -24,10 +25,9 @@ pragma nexscript >= 0.2.0;
  * Script Hash : 0x0000000000000000000000000000000000000000
  * Namespace   : TPOST01
  *
- * tokenid  : (bytes32) The token id of the asset.
  * seller   : (bytes20) The sellers' public key hash.
- * rate     : (int)     An optional amount charged by the Provider. (measured in basis points (bp), eg. 5.25% = 525bp)
- * provider : (bytes20) An optional 3rd-party (agreed upon by the Buyer and Seller) used to facilitate the tranaction.
+ * rate     : (int)     The rate of exchange, charged by the Seller. (measured in basis points (bp), eg. 5.25% = 525bp)
+ * provider : (bytes20) An optional 3rd-party (specified by the Seller) used to facilitate the tranaction.
  * fee      : (int)     An optional amount charged by the Provider. (measured in basis points (bp), eg. 5.25% = 525bp)
  *
  * For more information, please visit the following resources:
@@ -36,7 +36,6 @@ pragma nexscript >= 0.2.0;
  *
  */
 contract TradingPost(
-    bytes32 tokenid,
     bytes20 seller,
     int rate,
     bytes20 provider,
@@ -56,8 +55,11 @@ contract TradingPost(
      *   (4) (Optional) coin change
      */
     function trade() {
+        /* Set group (token) id. */
+        bytes32 groupid = bytes32(tx.inputs[0].tokenGroupId);
+
         /* Verify Buyer asset. */
-        require(tx.outputs[2].tokenGroupId == tokenid);
+        require(tx.outputs[2].tokenGroupId == groupid);
 
         /* Create Seller bytecode. */
         bytes23 sellerBytecode = new LockingBytecodeP2PKT(seller);
@@ -76,17 +78,20 @@ contract TradingPost(
         /* Verify Buyer (asset) payout amount. */
         require(tx.outputs[2].tokenAmount == buyerAssetQty);
 
+        /* Set available quantity. */
+        int availableQty = tx.inputs[0].tokenAmount;
+
         /* Token (asset) change). */
         // NOTE: Verify any remaining assets are transferred back to the contract.
-        if (buyerAssetQty < tx.inputs[0].tokenAmount) {
+        if (buyerAssetQty < availableQty) {
             /* Verify locking bytecode. */
             require(tx.outputs[0].lockingBytecode == tx.inputs[0].lockingBytecode);
 
             /* Verify token id. */
-            require(tx.outputs[0].tokenGroupId == tokenid);
+            require(tx.outputs[0].tokenGroupId == groupid);
 
             /* Verify token (change) amount. */
-            require(tx.outputs[0].tokenAmount == (tx.inputs[0].tokenAmount - buyerAssetQty));
+            require(tx.outputs[0].tokenAmount == (availableQty - buyerAssetQty));
         }
 
         /* Calculate Provider commission amount (received). */
