@@ -45,36 +45,78 @@ contract TradingPost(
     /**
      * Trade (Token) Asset
      *
-     * Sends the buyer the requested amount of an asset for a rate set
+     * Sends the Buyer the requested quantity of an asset, at a rate set
      * by the contract's owner (ie. the Seller).
+     *
+     * OUTPUTS:
+     *   (0) Token (trade) asset [covenant]
+     *   (1) (NEXA) payment to Seller [covenant]
+     *   (2) (Asset) delivery to Buyer [covenant]
+     *   (3) (NEXA) Fee paid to Provider [covenant]
+     *   (4) (Optional) coin change
      */
     function trade() {
-        /* Verify 2nd output is the Buyer's asset. */
-        require(tx.outputs[1].tokenGroupId == tokenid);
+        /* Verify Buyer asset. */
+        require(tx.outputs[2].tokenGroupId == tokenid);
 
-        /* Validate Seller's bytecode. */
+        /* Create Seller bytecode. */
         bytes23 sellerBytecode = new LockingBytecodeP2PKT(seller);
-        require(tx.outputs[0].lockingBytecode == sellerBytecode);
 
-        /* Set amount of $NEXA Seller paid to contract. */
-        int sellerPayout = tx.outputs[0].value;
+        /* Verify Seller bytecode. */
+        require(tx.outputs[1].lockingBytecode == sellerBytecode);
 
-        /* Calculate and verify Buyer's asset payout amount. */
-        // NOTE: MUST match any (integer) rounding when constructing the tx.
-        int buyerPayout = (sellerPayout * 100) / rate;
-        require(tx.outputs[1].tokenAmount == buyerPayout);
+        /* Set amount of $NEXA Buyer "paid" to contract. */
+        int sellerPayout = tx.outputs[1].value;
+
+        /* Calculate Buyer (asset) delivery quantity. */
+        // NOTE: Wallet MUST match any (integer) rounding when constructing
+        //       the transaction.
+        int buyerAssetQty = (sellerPayout * 100) / rate;
+
+        /* Verify Buyer (asset) payout amount. */
+        require(tx.outputs[2].tokenAmount == buyerAssetQty);
+
+        /* Token (asset) change). */
+        // NOTE: Verify any remaining assets are transferred back to the contract.
+        if (buyerAssetQty < tx.inputs[0].tokenAmount) {
+            /* Verify locking bytecode. */
+            require(tx.outputs[0].lockingBytecode == tx.inputs[0].lockingBytecode);
+
+            /* Verify token id. */
+            require(tx.outputs[0].tokenGroupId == tokenid);
+
+            /* Verify token (change) amount. */
+            require(tx.outputs[0].tokenAmount == (tx.inputs[0].tokenAmount - buyerAssetQty));
+        }
 
         /* Calculate Provider commission amount (received). */
         int commission = (sellerPayout * fee) / 10000;
 
-        /* Validate and handle commission payout. */
-        if (commission > 0) {
+        /* Set dust value. */
+        int DUST_VALUE = 546;
+
+        /* Verify and handle commission payout. */
+        if (commission > DUST_VALUE) {
             /* Verify Provider payout amount. */
-            require(tx.outputs[2].value >= commission);
+            require(tx.outputs[3].value >= commission);
+
+            /* Verify (coin) payout. */
+            require(tx.outputs[3].tokenGroupId == 0x0);
 
             /* Create Provider bytecode. */
             bytes23 providerBytecode = new LockingBytecodeP2PKT(provider);
-            require(tx.outputs[2].lockingBytecode == providerBytecode);
+
+            /* Verify Provider bytecode. */
+            require(tx.outputs[3].lockingBytecode == providerBytecode);
         }
+
+        /* Set maximum outputs. */
+        int MAXIMUM_OUTPUTS = 5;
+
+        /* Verify (maximum) outputs. */
+        require(tx.outputs.length <= MAXIMUM_OUTPUTS);
+
+        /* Verify (coin) change. */
+        require(tx.outputs.length == 4 || tx.outputs[4].tokenGroupId == 0x0);
     }
 }
