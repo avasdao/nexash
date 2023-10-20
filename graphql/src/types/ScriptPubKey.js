@@ -4,6 +4,7 @@
 import {
     GraphQLList,
     GraphQLNonNull,
+    GraphQLInt,
     GraphQLObjectType,
     GraphQLString,
 } from 'graphql'
@@ -34,6 +35,21 @@ export default new GraphQLObjectType({
 
         argsHash: {
             type: GraphQLString,
+            description: `TBD`,
+        },
+
+        group: {
+            type: GraphQLString,
+            description: `TBD`,
+        },
+
+        groupQuantity: {
+            type: GraphQLInt,
+            description: `TBD`,
+        },
+
+        groupAuthority: {
+            type: GraphQLInt,
             description: `TBD`,
         },
 
