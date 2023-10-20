@@ -1,3 +1,6 @@
+/* Import modules. */
+import BigInt from 'graphql-bigint'
+
 /* Import types. */
 // import Type from '../types/Type.js'
 
@@ -24,17 +27,17 @@ export default new GraphQLObjectType({
         },
 
         type: {
-            type: GraphQLString,
+            type: new GraphQLNonNull(GraphQLString),
             description: `TBD`,
         },
 
         scriptHash: {
-            type: GraphQLString,
+            type: new GraphQLNonNull(GraphQLString),
             description: `TBD`,
         },
 
         argsHash: {
-            type: GraphQLString,
+            type: new GraphQLNonNull(GraphQLString),
             description: `TBD`,
         },
 
@@ -44,17 +47,17 @@ export default new GraphQLObjectType({
         },
 
         groupQuantity: {
-            type: GraphQLInt,
+            type: BigInt,
             description: `TBD`,
         },
 
         groupAuthority: {
-            type: GraphQLInt,
+            type: BigInt,
             description: `TBD`,
         },
 
         addresses: {
-            type: new GraphQLList(GraphQLString),
+            type: new GraphQLNonNull(new GraphQLList(GraphQLString)),
             description: `TBD`,
         },
 
