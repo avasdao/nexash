@@ -61,6 +61,26 @@ if (result?.data?.block) {
     block = result.data.block[0]
 }
 
+// const init = async () => {
+//     /* Initialize locals. */
+//     let response
+//
+//     /* Request transaction. */
+//     response = await $fetch('/v1/tx/' + id)
+//         .catch(err => console.error(err))
+//     // console.log('RESPONSE', response)
+//
+//     /* Set transaction details. */
+//     transaction.value = response
+//
+//     /* Set flag. */
+//     isLoaded.value = true
+// }
+//
+// onMounted(() => {
+//     init()
+// })
+
 </script>
 
 <template>

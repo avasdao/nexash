@@ -7,9 +7,6 @@ useHead({
     }]
 })
 
-/* Set Nexa GraphQL endpoint. */
-const ENDPOINT = 'https://nexa.sh/graphql'
-
 const isLoaded = ref(false)
 const transaction = ref(null)
 
@@ -18,66 +15,6 @@ const route = useRoute()
 
 /* Set id. */
 const id = route.params.id
-
-const query = `
-{
-  transaction(txidem: "${id}", txid: "${id}") {
-    txidem
-    txid
-    confirmations
-    size
-    version
-    locktime
-    spends
-    sends
-    fee
-    vin {
-      outpoint
-      amount
-      scriptSig {
-        asm
-        hex
-      }
-      sequence
-    }
-    vout {
-      value
-      type
-      n
-      scriptPubKey {
-        asm
-        hex
-        type
-        scriptHash
-        argsHash
-        addresses
-      }
-      outpoint
-    }
-    blockhash
-    time
-    blocktime
-    hex
-  }
-}
-`
-// let transaction
-
-// /* Make query request. */
-// const result = await $fetch(ENDPOINT,
-//     {
-//         method: 'POST',
-//         headers: {
-//             'Content-Type': 'application/json',
-//             'Accept': 'application/json',
-//         },
-//         body: JSON.stringify({ query }),
-//     })
-//     .catch(err => console.error(err))
-
-// if (result?.data?.transaction) {
-//     transaction = result.data.transaction[0]
-// }
 
 const init = async () => {
     /* Initialize locals. */
