@@ -32,12 +32,12 @@ export default new GraphQLObjectType({
         },
 
         scriptHash: {
-            type: new GraphQLNonNull(GraphQLString),
+            type: GraphQLString,
             description: `TBD`,
         },
 
         argsHash: {
-            type: new GraphQLNonNull(GraphQLString),
+            type: GraphQLString,
             description: `TBD`,
         },
 
@@ -57,7 +57,7 @@ export default new GraphQLObjectType({
         },
 
         addresses: {
-            type: new GraphQLNonNull(new GraphQLList(GraphQLString)),
+            type: new GraphQLList(GraphQLString),
             description: `TBD`,
         },
 
