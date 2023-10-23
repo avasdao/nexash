@@ -83,6 +83,7 @@ contract TradingPost(
 
         /* Token (asset) change). */
         // NOTE: Verify any remaining assets are transferred back to the contract.
+        // NOTE: If there are NO remaining assets, send NULL data at (0) output.
         if (buyerAssetQty < availableQty) {
             /* Verify locking bytecode. */
             require(tx.outputs[0].lockingBytecode == tx.inputs[0].lockingBytecode);
