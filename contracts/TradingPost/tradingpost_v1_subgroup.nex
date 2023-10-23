@@ -50,11 +50,11 @@ contract TradingPost(
      * by the contract's owner (ie. the Seller).
      *
      * OUTPUTS:
-     *   (0) Token (trade) asset [covenant]
-     *   (1) (NEXA) payment to Seller [covenant]
-     *   (2) (Asset) delivery to Buyer [covenant]
-     *   (3) (NEXA) Fee paid to Provider [covenant]
-     *   (4) (Optional) coin change
+     *   0. (Required) (Asset) remaining balance OR null data [covenant]
+     *   1. (Required) (NEXA) payment to Seller [covenant]
+     *   2. (Required) (Asset) delivery to Buyer [covenant]
+     *   3. (Optional) (NEXA) Fee paid to Provider [covenant]
+     *   4. (Optional) (NEXA) change
      */
     function trade() {
         /* Verify (primary) group id. */
@@ -115,9 +115,6 @@ contract TradingPost(
             /* Verify Provider payout amount. */
             require(tx.outputs[3].value >= commission);
 
-            /* Verify (coin) payout. */
-            require(tx.outputs[3].tokenGroupId == 0x0);
-
             /* Create Provider bytecode. */
             bytes23 providerBytecode = new LockingBytecodeP2PKT(provider);
 
@@ -131,10 +128,15 @@ contract TradingPost(
         /* Verify (maximum) outputs. */
         require(tx.outputs.length <= MAXIMUM_OUTPUTS);
 
-        /* Verify (coin) change. */
-        // FIXME: Remove magic number, when within OP limit.
+        /* Verify (coin) commission -OR- change. */
         require(
-            tx.outputs.length == 4 ||
+            tx.outputs.length == (MAXIMUM_OUTPUTS - 2) ||
+            tx.outputs[3].tokenGroupId == 0x0
+        );
+
+        /* Verify (coin) change. */
+        require(
+            tx.outputs.length == (MAXIMUM_OUTPUTS - 1) ||
             tx.outputs[4].tokenGroupId == 0x0
         );
     }
