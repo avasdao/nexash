@@ -62,6 +62,7 @@ contract TradingPost(
         require(tx.outputs[2].tokenGroupId == groupid);
 
         /* Create Seller bytecode. */
+        // NOTE: Supports ONLY $NEXA assets.
         bytes23 sellerBytecode = new LockingBytecodeP2PKT(seller);
 
         /* Verify Seller bytecode. */
@@ -85,15 +86,33 @@ contract TradingPost(
         // NOTE: Verify any remaining assets are transferred back to the contract.
         // NOTE: If there are NO remaining assets, send NULL data at (0) output.
         if (buyerAssetQty < availableQty) {
-            /* Verify locking bytecode. */
-            require(tx.outputs[0].lockingBytecode == tx.inputs[0].lockingBytecode);
+            /* Parse output (script) prefix, plus 1st holder. */
+            bytes oPrefix, bytes oHolder = tx.outputs[0].lockingBytecode
+                .split(33);
 
-            /* Verify group id. */
-            require(tx.outputs[0].tokenGroupId == groupid);
+            /* Parse output `tokenAmount` size, plus 2nd holder. */
+            bytes1 oSize, bytes oHolderToo = oHolder.split(1);
 
-            // NOTE: It is NOT necessary to verify `tokenAmount`, as the (asset)
-            //       balance has to go "somewhere"; which also allows the entire
-            //       (asset) balance to be tranferred back to the Seller.
+            /* Parse output (script) suffix. */
+            // NOTE: Drop the `tokenAmount` value.
+            bytes oSuffix = oHolderToo.split(int(oSize))[1];
+
+            /* Parse input (script) prefix, plus 1st holder. */
+            bytes iPrefix, bytes iHolder = tx.inputs[0].lockingBytecode
+                .split(33);
+
+            /* Parse input `tokenAmount` size, plus 2nd holder. */
+            bytes1 iSize, bytes iHolderToo = iHolder.split(1);
+
+            /* Parse input (script) suffix. */
+            // NOTE: Drop the `tokenAmount` value.
+            bytes iSuffix = iHolderToo.split(int(iSize))[1];
+
+            /* Validate input/output prefix scripts. */
+            require(oPrefix == iPrefix);
+
+            /* Validate input/output suffix scripts. */
+            require(oSuffix == iSuffix);
         }
 
         /* Calculate Provider commission amount (received). */
@@ -108,6 +127,7 @@ contract TradingPost(
             require(tx.outputs[3].value >= commission);
 
             /* Create Provider bytecode. */
+            // NOTE: Supports ONLY $NEXA assets.
             bytes23 providerBytecode = new LockingBytecodeP2PKT(provider);
 
             /* Verify Provider bytecode. */
@@ -121,15 +141,13 @@ contract TradingPost(
         require(tx.outputs.length <= MAXIMUM_OUTPUTS);
 
         /* Verify (coin) commission -OR- change. */
-        require(
-            tx.outputs.length == (MAXIMUM_OUTPUTS - 2) ||
-            tx.outputs[3].tokenGroupId == 0x0
-        );
+        if (tx.outputs.length >= (MAXIMUM_OUTPUTS - 1)) {
+            require(int(tx.outputs[3].tokenGroupId) == 0);
+        }
 
         /* Verify (coin) change. */
-        require(
-            tx.outputs.length == (MAXIMUM_OUTPUTS - 1) ||
-            tx.outputs[4].tokenGroupId == 0x0
-        );
+        if (tx.outputs.length == MAXIMUM_OUTPUTS) {
+            require(int(tx.outputs[4].tokenGroupId) == 0);
+        }
     }
 }
