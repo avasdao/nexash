@@ -44,7 +44,7 @@ contract Stakeline(
     bytes visible unused location,
 ) {
     /**
-     * Depart
+     * Closeout
      *
      * Allows a stakeline Patron to remove their assets AFTER their
      * subscription time has expired.
@@ -53,7 +53,7 @@ contract Stakeline(
      * @param patron
      * @param subscription
      */
-    function depart(sig signature) {
+    function closeout(sig signature) {
         /* Verify UTXO age is AFTER the subscription time. */
         require(tx.age >= subscription);
 
