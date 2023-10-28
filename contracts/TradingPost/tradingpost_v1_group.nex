@@ -22,7 +22,7 @@ pragma nexscript >= 0.2.0;
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  *
  * Version     : 01
- * Script Hash : 0x0000000000000000000000000000000000000000
+ * Script Hash : 0x15495952793b089ee3b696015ff134f3ca64ae8f
  * Namespace   : TPOSTG01
  *
  * seller   : (bytes20) The Sellers' public key hash.

@@ -5,7 +5,7 @@ pragma nexscript >= 0.6.0;
  * Copyright (c) 2023 Ava's DAO
  * Released under the MIT License.
  *
- * Wiserswap
+ * WiserSwap
  *
  * Empty contract template.
  *
@@ -28,7 +28,7 @@ pragma nexscript >= 0.6.0;
  *   - https://avasdao.org
  *
  */
-contract Wiserswap(pubkey owner) {
+contract WiserSwap(pubkey owner) {
     /**
      * Method Name
      *

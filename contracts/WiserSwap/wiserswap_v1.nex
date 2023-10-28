@@ -1,0 +1,92 @@
+pragma nexscript >= 0.2.0;
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ *
+ * Copyright (c) 2023 Ava's DAO
+ * Released under the MIT License.
+ *
+ * WiserSwap
+ *
+ * Empty contract template.
+ *
+ * NOTES
+ * --------------------
+ * Based on the Cauldron contract by Dagur Valberg Johannsson
+ * (source: https://www.cauldron.quest/_files/ugd/ae85be_b1dc04d2b6b94ab5a200e3d8cd197aa3.pdf)
+ *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ *
+ * Version     : 01
+ * Script Hash : 0x0000000000000000000000000000000000000000
+ * Namespace   : WISER01
+ *
+ * tokenid  : (bytes32) The token id of the asset.
+ * seller   : (bytes20) The sellers' public key hash.
+ * provider : (bytes20) An optional 3rd-party (specified by the Seller) used to facilitate the tranaction.
+ * fee      : (int)     An optional amount charged by the Provider. (measured in <basis points> (bp), eg. 5.25% = 525bp)
+ *
+ * For more information, please visit the following resources:
+ *   - https://docs.nexa.exchange/wiserswap
+ *   - https://avasdao.org
+ *
+ */
+contract WiserSwap(
+    bytes32 tokenid,
+    bytes20 owner,
+    int autoPayout,
+    bytes20 provider,
+    int fee
+) {
+    /**
+     * Swap (Pool Assets)
+     *
+     * Allows two (2) assets to be swapped with each other, while maintaining
+     * the same constant multiplier.
+     */
+    function swap() {
+        /* Set dust value. */
+        int DUST_VALUE = 546;
+
+        /* Set Wiser index. */
+        int wiserIdx = this.activeInputIndex;
+
+        /* Set Wiser (satoshis) value. */
+        int wiserValue = tx.inputs[activeIdx].value;
+
+        /* Set Wiser bytecode. */
+        bytes wiserBytes = tx.inputs[activeIdx].lockingBytecode;
+
+        /* Set Wiser token id. */
+        bytes wiserGroupId = tx.inputs[activeIdx].tokenGroupId;
+
+        /* Set Wiser (token) amount. */
+        int wiserAmount = tx.inputs[activeIdx].tokenAmount;
+
+
+        /* Set total swap value. */
+        // NOTE: Used to calculate the provider fee.
+        int totalSwapValue = tx.amountOut;
+
+        /* Calculate commission. */
+        int commission = (totalSwapValue * fee) / 10000;
+
+        /* Validate commission. */
+        if (commission > DUST_VALUE) {
+            // TODO
+        }
+    }
+
+    /**
+     * Manage (Pool)
+     *
+     * Liquidity providers can manage assets held in the pool contract, eg.
+     *   1. Withdraw all funds
+     *   2. Re-balance the pool (aka adjust the price).
+     *
+     * NOTE: ONLY the pool's Owner can perform this action.
+     */
+    function manage(sig signature) {
+        /* Verify transaction is signed by the owner. */
+        require(checkSig(signature, owner));
+    }
+}
