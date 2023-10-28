@@ -25,7 +25,7 @@ pragma nexscript >= 0.2.0;
  * Script Hash : 0x15495952793b089ee3b696015ff134f3ca64ae8f
  * Namespace   : TPOSTG01
  *
- * seller   : (bytes20) The Sellers' public key hash.
+ * seller   : (bytes20) The Seller's public key hash.
  * rate     : (int)     The rate of exchange, charged by the Seller. (measured in <satoshis> per asset)
  * provider : (bytes20) An optional 3rd-party (specified by the Seller) used to facilitate the transaction.
  * fee      : (int)     An optional amount charged by the Provider. (measured in <basis points> (bp), eg. 5.25% = 525bp)

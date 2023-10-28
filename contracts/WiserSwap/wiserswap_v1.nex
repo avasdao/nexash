@@ -7,13 +7,13 @@ pragma nexscript >= 0.2.0;
  *
  * WiserSwap
  *
- * An implemenation of a Constant Product Market Maker (CPMM) "wise" contract
+ * A "wise" contract implemenation of a Constant Product Market Maker (CPMM)
  * for Nexa, using a micro-pools approach.
  *
- * Individual liquidity providers may employ their own CPMM contract and manage
- * their own micro-pool(s). This design leverages Nexa's UTXO model and its
- * 100K TPS throughput, allowing for unparalled scalability and efficiency
- * of any modern-day DEX.
+ * Individual liquidity provider(s) may employ their own CPMM contract(s) for
+ * managing their own micro-pool(s). This design leverages Nexa's UTXO model
+ * and its 100K TPS throughput, allowing for unparalled scalability and
+ * efficiency as compared to ANY modern-day DEX.
  *
  * GENERAL NOTES
  * --------------------
@@ -30,8 +30,8 @@ pragma nexscript >= 0.2.0;
  * Aggregating Micro-Pools
  * ----------------------------------------
  * WiserSwap supports aggregation of micro-pools to increase liquidity for
- * trades. Multiple pools can be included in a single Transaction, to increase
- * asset liquidity and swap effciency.
+ * trades. Multiple pools can be included in a single Transaction to increase
+ * asset liquidity and swap efficiency.
  *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  *
@@ -39,11 +39,12 @@ pragma nexscript >= 0.2.0;
  * Script Hash : 0x0000000000000000000000000000000000000000
  * Namespace   : WISER01
  *
- * tokenid    : (bytes32) The token id of the asset.
- * seller     : (bytes20) The sellers' public key hash.
- * autoPayout : (int)     An optional value (in satoshis) that will trigger an auto-payment to the Owner.
- * provider   : (bytes20) An optional 3rd-party (specified by the Seller) used to facilitate the transaction.
- * fee        : (int)     An optional amount charged by the Provider. (measured in <basis points> (bp), eg. 5.25% = 525bp)
+ * owner       : (pubkey)  The Seller's FULL public key.
+ * ownerFee    : (int)     An optional amount charged by the Owner. (measured in <basis points> (bp), eg. 5.25% = 525bp)
+ * autoPayout  : (int)     An optional (fee) value (in satoshis) that will trigger an auto-payment to the Owner.
+ * payout      : (bytes20) An optional Payout address (only if auto payout is enabled).
+ * provider    : (bytes20) An optional 3rd-party (specified by the Seller) used to facilitate the transaction.
+ * providerFee : (int)     An optional amount charged by the Provider. (measured in <basis points> (bp), eg. 5.25% = 525bp)
  *
  * For more information, please visit the following resources:
  *   - https://docs.nexa.exchange/wiserswap
@@ -51,10 +52,10 @@ pragma nexscript >= 0.2.0;
  *
  */
 contract WiserSwap(
-    bytes32 tokenid,
     pubkey owner,
     int ownerFee,
     int autoPayout,
+    bytes20 payout,
     bytes20 provider,
     int providerFee
 ) {
@@ -68,42 +69,43 @@ contract WiserSwap(
         /* Set Wiser index. */
         int wiserIdx = this.activeInputIndex;
 
-        /* Validate Wiser token id. */
-        require(tx.inputs[wiserIdx].tokenGroupId == tokenid);
-
-        /* Validate Wiser token id. */
-        require(tx.outputs[wiserIdx].tokenGroupId == tx.inputs[wiserIdx].tokenGroupId);
-
-        /* Set dust value. */
-        int DUST_VALUE = 546;
-
-        /* Set Wiser (satoshis) value. */
-        int wiserValue = tx.inputs[wiserIdx].value;
-
-        /* Set Wiser (token) amount. */
-        int wiserAmount = tx.inputs[wiserIdx].tokenAmount;
-
-        /* Calculate Wiser (K) constant. */
-        int wiserConstant = wiserValue * wiserAmount;
-
-        require(wiserConstant > 0); // FIXME
-
         /* Set Wiser bytecode. */
+        // NOTE: Used to compare inputs & outputs (excl `tokenAmount`).
         bytes wiserBytes = tx.inputs[wiserIdx].lockingBytecode;
 
         require(wiserBytes == 0x0);
 
+        /* Set Wiser (satoshis) input value. */
+        int wiserValueIn = tx.inputs[wiserIdx].value;
+
+        /* Set Wiser (satoshis) output value. */
+        int wiserValueOut = tx.outputs[wiserIdx].value;
+
+        /* Set Wiser (token) input amount. */
+        int wiserAmountIn = tx.inputs[wiserIdx].tokenAmount;
+
+        /* Set Wiser (token) output amount. */
+        int wiserAmountOut = tx.outputs[wiserIdx].tokenAmount;
+
+        /* Calculate Wiser (K) input constant. */
+        int wiserConstantIn = wiserValueIn * wiserAmountIn;
+
+        /* Calculate Wiser (K) output constant. */
+        int wiserConstantOut = wiserValueOut * wiserAmountOut;
+
+        require(wiserConstantIn == wiserConstantOut); // FIXME
+
+        /* Initialize (transaction) total swap value. */
         int totalSwapValue = 0;
 
-        /* Calculate (Provider) commission. */
-        int ownerCommission = (totalSwapValue * ownerFee) / 10000;
-
+        /* Validate inputs & outputs. */
+        // NOTE: Test for (change) output, used in fee calculations.
         if (tx.outputs.length > tx.inputs.length) {
             // TODO Subtract (change) output from fee calc.
 
             /* Calculate total swap value. */
-            // NOTE: We used # inputs as the (index) for (change) output.
-            totalSwapValue = tx.amountOut - tx.outputs[tx.inputs.length].value;
+            // NOTE: Assume # of inputs is the (index) for (change) output.
+            totalSwapValue = (tx.amountOut - tx.outputs[tx.inputs.length].value);
         } else {
             /* Set total swap value. */
             // NOTE: Used to calculate the provider fee.
@@ -111,19 +113,33 @@ contract WiserSwap(
         }
 
         /* Calculate (Provider) commission. */
+        int ownerCommission = (totalSwapValue * ownerFee) / 10000;
+
+        /* Set dust value. */
+        int DUST_VALUE = 546;
+
+        // TODO Require a min (DUST) Owner fee
+        //      to discourage denial-of-service (DoS) attack.
+
+        require(ownerCommission == 0);
+
+        if (autoPayout > ownerCommission) {
+            // TODO
+
+            require(payout == 0x0);
+        }
+
+        /* Calculate (Provider) commission. */
         int providerCommission = (totalSwapValue * providerFee) / 10000;
+
+        // TODO Require a min (DUST) Provider fee
+        //      to discourage denial-of-service (DoS) attack.
 
         /* Validate commission. */
         if (providerCommission > DUST_VALUE) {
             // TODO
 
             require(provider == 0x0); // FIXME
-        }
-
-        require(ownerCommission == 0);
-
-        if (autoPayout > ownerCommission) {
-            // TODO
         }
     }
 
