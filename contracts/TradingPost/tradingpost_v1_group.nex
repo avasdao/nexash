@@ -27,7 +27,7 @@ pragma nexscript >= 0.2.0;
  *
  * seller   : (bytes20) The Sellers' public key hash.
  * rate     : (int)     The rate of exchange, charged by the Seller. (measured in <satoshis> per asset)
- * provider : (bytes20) An optional 3rd-party (specified by the Seller) used to facilitate the tranaction.
+ * provider : (bytes20) An optional 3rd-party (specified by the Seller) used to facilitate the transaction.
  * fee      : (int)     An optional amount charged by the Provider. (measured in <basis points> (bp), eg. 5.25% = 525bp)
  *
  * For more information, please visit the following resources:

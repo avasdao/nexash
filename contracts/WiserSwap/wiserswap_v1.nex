@@ -7,12 +7,33 @@ pragma nexscript >= 0.2.0;
  *
  * WiserSwap
  *
- * Empty contract template.
+ * An implemenation of a Constant Product Market Maker (CPMM) "wise" contract
+ * for Nexa, using a micro-pools approach.
  *
- * NOTES
+ * Individual liquidity providers may employ their own CPMM contract and manage
+ * their own micro-pool(s). This design leverages Nexa's UTXO model and its
+ * 100K TPS throughput, allowing for unparalled scalability and efficiency
+ * of any modern-day DEX.
+ *
+ * GENERAL NOTES
  * --------------------
- * Based on the Cauldron contract by Dagur Valberg Johannsson
+ * Based on the (CPMM) Cauldron contract by Dagur Valberg Johannsson
  * (source: https://www.cauldron.quest/_files/ugd/ae85be_b1dc04d2b6b94ab5a200e3d8cd197aa3.pdf)
+ *
+ * Constant Product Property
+ * ----------------------------------------
+ * WiserSwap adheres to the constant product formula:
+ *   K = x * y
+ * where K is the constant value, and x and y represent the quantities of
+ * <Tokens> and <NEXA>, respectively.
+ *
+ * Aggregating Micro-Pools
+ * ----------------------------------------
+ * Notably, this contract *DOES NOT* support aggregation of micro-pools
+ * (to increase liquidity for trades). This feature was dropped from v1,
+ * in order to allow (OP-code space) for an (optional) Provider commission/fee.
+ *
+ * NOTE: This feature will be added back in WiserSwap v2 (MAST Edition).
  *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  *
@@ -20,10 +41,11 @@ pragma nexscript >= 0.2.0;
  * Script Hash : 0x0000000000000000000000000000000000000000
  * Namespace   : WISER01
  *
- * tokenid  : (bytes32) The token id of the asset.
- * seller   : (bytes20) The sellers' public key hash.
- * provider : (bytes20) An optional 3rd-party (specified by the Seller) used to facilitate the tranaction.
- * fee      : (int)     An optional amount charged by the Provider. (measured in <basis points> (bp), eg. 5.25% = 525bp)
+ * tokenid    : (bytes32) The token id of the asset.
+ * seller     : (bytes20) The sellers' public key hash.
+ * autoPayout : (int)     An optional value (in satoshis) that will trigger an auto-payment to the Owner.
+ * provider   : (bytes20) An optional 3rd-party (specified by the Seller) used to facilitate the transaction.
+ * fee        : (int)     An optional amount charged by the Provider. (measured in <basis points> (bp), eg. 5.25% = 525bp)
  *
  * For more information, please visit the following resources:
  *   - https://docs.nexa.exchange/wiserswap
@@ -41,9 +63,15 @@ contract WiserSwap(
      * Swap (Pool Assets)
      *
      * Allows two (2) assets to be swapped with each other, while maintaining
-     * the same constant multiplier.
+     * the same (constant) product.
      */
     function swap() {
+        /* Validate Wiser token id. */
+        require(tx.inputs[activeIdx].tokenGroupId == tokenid);
+
+        /* Validate Wiser token id. */
+        require(tx.outputs[activeIdx].tokenGroupId == tx.inputs[activeIdx].tokenGroupId);
+
         /* Set dust value. */
         int DUST_VALUE = 546;
 
@@ -53,15 +81,14 @@ contract WiserSwap(
         /* Set Wiser (satoshis) value. */
         int wiserValue = tx.inputs[activeIdx].value;
 
-        /* Set Wiser bytecode. */
-        bytes wiserBytes = tx.inputs[activeIdx].lockingBytecode;
-
-        /* Set Wiser token id. */
-        bytes wiserGroupId = tx.inputs[activeIdx].tokenGroupId;
-
         /* Set Wiser (token) amount. */
         int wiserAmount = tx.inputs[activeIdx].tokenAmount;
 
+        /* Calculate Wiser (K) constant. */
+        int wiserConstant = wiserValue * wiserAmount;
+
+        /* Set Wiser bytecode. */
+        bytes wiserBytes = tx.inputs[activeIdx].lockingBytecode;
 
         /* Set total swap value. */
         // NOTE: Used to calculate the provider fee.
