@@ -29,11 +29,9 @@ pragma nexscript >= 0.2.0;
  *
  * Aggregating Micro-Pools
  * ----------------------------------------
- * Notably, this contract *DOES NOT* support aggregation of micro-pools
- * (to increase liquidity for trades). This feature was dropped from v1,
- * in order to allow (OP-code space) for an (optional) Provider commission/fee.
- *
- * NOTE: This feature will be added back in WiserSwap v2 (MAST Edition).
+ * WiserSwap supports aggregation of micro-pools to increase liquidity for
+ * trades. Multiple pools can be included in a single Transaction, to increase
+ * asset liquidity and swap effciency.
  *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  *
@@ -54,10 +52,11 @@ pragma nexscript >= 0.2.0;
  */
 contract WiserSwap(
     bytes32 tokenid,
-    bytes20 owner,
+    pubkey owner,
+    int ownerFee,
     int autoPayout,
     bytes20 provider,
-    int fee
+    int providerFee
 ) {
     /**
      * Swap (Pool Assets)
@@ -66,39 +65,64 @@ contract WiserSwap(
      * the same (constant) product.
      */
     function swap() {
-        /* Validate Wiser token id. */
-        require(tx.inputs[activeIdx].tokenGroupId == tokenid);
+        /* Set Wiser index. */
+        int wiserIdx = this.activeInputIndex;
 
         /* Validate Wiser token id. */
-        require(tx.outputs[activeIdx].tokenGroupId == tx.inputs[activeIdx].tokenGroupId);
+        require(tx.inputs[wiserIdx].tokenGroupId == tokenid);
+
+        /* Validate Wiser token id. */
+        require(tx.outputs[wiserIdx].tokenGroupId == tx.inputs[wiserIdx].tokenGroupId);
 
         /* Set dust value. */
         int DUST_VALUE = 546;
 
-        /* Set Wiser index. */
-        int wiserIdx = this.activeInputIndex;
-
         /* Set Wiser (satoshis) value. */
-        int wiserValue = tx.inputs[activeIdx].value;
+        int wiserValue = tx.inputs[wiserIdx].value;
 
         /* Set Wiser (token) amount. */
-        int wiserAmount = tx.inputs[activeIdx].tokenAmount;
+        int wiserAmount = tx.inputs[wiserIdx].tokenAmount;
 
         /* Calculate Wiser (K) constant. */
         int wiserConstant = wiserValue * wiserAmount;
 
+        require(wiserConstant > 0); // FIXME
+
         /* Set Wiser bytecode. */
-        bytes wiserBytes = tx.inputs[activeIdx].lockingBytecode;
+        bytes wiserBytes = tx.inputs[wiserIdx].lockingBytecode;
 
-        /* Set total swap value. */
-        // NOTE: Used to calculate the provider fee.
-        int totalSwapValue = tx.amountOut;
+        require(wiserBytes == 0x0);
 
-        /* Calculate commission. */
-        int commission = (totalSwapValue * fee) / 10000;
+        int totalSwapValue = 0;
+
+        /* Calculate (Provider) commission. */
+        int ownerCommission = (totalSwapValue * ownerFee) / 10000;
+
+        if (tx.outputs.length > tx.inputs.length) {
+            // TODO Subtract (change) output from fee calc.
+
+            /* Calculate total swap value. */
+            // NOTE: We used # inputs as the (index) for (change) output.
+            totalSwapValue = tx.amountOut - tx.outputs[tx.inputs.length].value;
+        } else {
+            /* Set total swap value. */
+            // NOTE: Used to calculate the provider fee.
+            totalSwapValue = tx.amountOut;
+        }
+
+        /* Calculate (Provider) commission. */
+        int providerCommission = (totalSwapValue * providerFee) / 10000;
 
         /* Validate commission. */
-        if (commission > DUST_VALUE) {
+        if (providerCommission > DUST_VALUE) {
+            // TODO
+
+            require(provider == 0x0); // FIXME
+        }
+
+        require(ownerCommission == 0);
+
+        if (autoPayout > ownerCommission) {
             // TODO
         }
     }
