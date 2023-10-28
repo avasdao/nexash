@@ -54,6 +54,14 @@ const lookupMeta = (_scriptHash) => {
             version: '1',
             type: 'Covenant',
         }
+    case 'CFCBDA2CC2EEEC776BF34AA78EDD5BC0C5DFB1BC':
+        return {
+            title: `Trading Post`,
+            bannerUrl: 'https://bafkreiguztvee5k4zufko5clnrjlvwc3brqyj7hgo3v6lods5mnchwku4m.nexa.garden',
+            iconUrl: 'https://bafkreibstcf72fxubjxglelvgbiulzt6lll6py5547i23tgnnavmpxriuq.nexa.garden',
+            version: '1',
+            type: 'Covenant',
+        }
     default:
         return {
             title: 'Unknown',
