@@ -93,7 +93,14 @@ export default {
         } else {
             after = null
         }
-        console.log('AFTER', after)
+        // console.log('AFTER', after)
+
+        // TODO Add validation for ALL arguments
+
+        /* Validate first (limit). */
+        if (first > 10000) {
+            first = 10000 // TODO Limit to PRO subscribers ONLY.
+        }
 
         // NOTE: We MUST convert height (Int) to a (String).
         transactions = await scriptTxsDb
