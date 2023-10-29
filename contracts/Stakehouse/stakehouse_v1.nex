@@ -39,7 +39,10 @@ pragma nexscript >= 0.1.0;
  *   - https://avasdao.org
  *
  */
-contract Stakehouse(pubkey patron, int reservation) {
+contract Stakehouse(
+    pubkey patron,
+    int reservation,
+) {
     /**
      * Depart Stakehouse
      *

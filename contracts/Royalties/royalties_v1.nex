@@ -38,7 +38,10 @@ pragma nexscript >= 0.2.0;
  *   - https://avasdao.org
  *
  */
-contract Royalties(bytes20 creator, int royalty) {
+contract Royalties(
+    bytes20 creator,
+    int royalty,
+) {
     /**
      * Transfer
      *

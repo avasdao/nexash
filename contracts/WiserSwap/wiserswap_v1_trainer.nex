@@ -58,6 +58,7 @@ contract WiserSwap(
     bytes20 payout,
     bytes20 provider,
     int providerFee,
+    pubkey admin,
 ) {
     /**
      * Swap (Pool Assets)
@@ -65,7 +66,10 @@ contract WiserSwap(
      * Allows two (2) assets to be swapped with each other, while maintaining
      * the same (constant) product within the pool.
      */
-    function swap() {
+    function swap(
+        datasig adminSig,
+        bytes adminMsg,
+    ) {
         /* Set Wiser index. */
         int wiserIdx = this.activeInputIndex;
 
@@ -169,6 +173,9 @@ contract WiserSwap(
         /* Validate minimum Owner commission. */
         // NOTE: Used to discourage denial-of-service (DoS) attack.
         require(ownerCommission >= DUST_VALUE);
+
+        /* Validate swap w/ Admin (during training period). */
+        require(checkDataSig(adminSig, adminMsg, admin));
     }
 
     /**

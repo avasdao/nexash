@@ -41,7 +41,7 @@ contract TradingPost(
     int amountGive,
     bytes20 provider,
     int fee,
-    int expires
+    int expires,
 ) {
     /**
      * Cancel Trade

@@ -43,7 +43,7 @@ contract TradingPost(
     int visible unused amountGive,
     bytes20 visible unused provider,
     int visible unused fee,
-    int visible unused expires
+    int visible unused expires,
 ) {
     /**
      * Cancel

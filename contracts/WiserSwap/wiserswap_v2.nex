@@ -28,7 +28,14 @@ pragma nexscript >= 0.6.0;
  *   - https://avasdao.org
  *
  */
-contract WiserSwap(pubkey owner) {
+contract WiserSwap(
+    pubkey owner,
+    int ownerFee,
+    int autoPayout,
+    bytes20 payout,
+    bytes20 provider,
+    int providerFee,
+) {
     /**
      * Method Name
      *

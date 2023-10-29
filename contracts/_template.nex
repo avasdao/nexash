@@ -27,7 +27,11 @@ pragma nexscript >= 0.2.0;
  *   - https://avasdao.org
  *
  */
-contract Blank(pubkey owner, bytes32 key, int value) {
+contract Blank(
+    pubkey owner,
+    bytes32 key,
+    int value,
+) {
     /**
      * Method Name
      *
