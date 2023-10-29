@@ -142,14 +142,16 @@ export default {
             return transaction
         })
 
-        // NOTE: We MUST convert height (Int) to a (String).
-        metadata = await scriptTemplates
-            .allDocs()
-            .catch(err => console.error(err))
-        console.log('METADATA (all docs):', metadata)
+        if (hash) {
+            // NOTE: We MUST convert height (Int) to a (String).
+            metadata = await scriptTemplates
+                .get(hash)
+                .catch(err => console.error(err))
+            console.log('METADATA', hash, metadata)
 
-        if (metadata) {
-            metadata = JSON.stringify(metadata)
+            if (metadata) {
+                metadata = JSON.stringify(metadata)
+            }
         }
 
         /* Set connection info. */
