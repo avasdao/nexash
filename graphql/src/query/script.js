@@ -3,6 +3,7 @@ import moment from 'moment'
 import PouchDB from 'pouchdb'
 
 /* Initialize databases. */
+const scriptTemplates = new PouchDB(`http://${process.env.COUCHDB_USER}:${process.env.COUCHDB_PASSWORD}@127.0.0.1:5984/script_templates`)
 const scriptTxsDb = new PouchDB(`http://${process.env.COUCHDB_USER}:${process.env.COUCHDB_PASSWORD}@127.0.0.1:5984/script_txs`)
 
 /* Import types. */
@@ -44,9 +45,9 @@ export default {
             type: new GraphQLList(ScriptType),
             description: `Enter the __ScripHash__ for an on-chain Transaction.`,
         },
-        prefix: {
+        nulldata: {
             type: new GraphQLList(ScriptType),
-            description: `Enter the __Nulldata (OP_RETURN) Prefix__ for an on-chain Transaction.`,
+            description: `Enter the __Nulldata (OP_DATA) Prefix__ for an on-chain Transaction.`,
         },
     },
     resolve: async (_root, _args, _ctx) => {
@@ -59,6 +60,7 @@ export default {
         let last
         let hashes
         let transactions
+        let metadata
 
         // if (typeof _args?.txidem === 'string') {
         //     txidems = [_args.txidem]
@@ -95,6 +97,20 @@ export default {
         }
         // console.log('AFTER', after)
 
+        if (typeof _args?.hash === 'string') {
+            hash = _args.hash
+        } else {
+            hash = null
+        }
+        // console.log('(SCRIPT) HASH)', hash)
+
+        if (typeof _args?.nulldata === 'string') {
+            nulldata = _args.nulldata
+        } else {
+            nulldata = null
+        }
+        // console.log('NULL DATA (ie. OP_RETURN)', nulldata)
+
         // TODO Add validation for ALL arguments
 
         /* Validate first (limit). */
@@ -124,6 +140,12 @@ export default {
             return transaction
         })
 
+        // NOTE: We MUST convert height (Int) to a (String).
+        metadata = await scriptTemplates
+            .allDocs()
+            .catch(err => console.error(err))
+        console.log('METADATA (all docs):', metadata)
+
         /* Set connection info. */
         const connInfo = {
             profiles: [],
@@ -148,6 +170,7 @@ export default {
             endCursor: null,
             hasNextPage: false,
             hasPreviousPage: false,
+            metadata,
         }
 
         /* Build connection. */

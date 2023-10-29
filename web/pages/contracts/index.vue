@@ -161,11 +161,9 @@ const displayCards = computed(() => {
 })
 
 const loadScripts = async (_first) => {
-    const MAXIMUM_RESULTS = 1000
-
     const query = `
     {
-      script(first: ${MAXIMUM_RESULTS}) {
+      script(first: ${_first}) {
         totalCount
         pageInfo {
           hasPreviousPage
@@ -215,9 +213,11 @@ const loadScripts = async (_first) => {
 }
 
 const init = async () => {
+    const MAXIMUM_RESULTS = 1000
+
     contracts.value = []
 
-    await loadScripts(1000)
+    await loadScripts(MAXIMUM_RESULTS)
 }
 
 
