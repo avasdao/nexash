@@ -148,6 +148,10 @@ export default {
             .catch(err => console.error(err))
         console.log('METADATA (all docs):', metadata)
 
+        if (metadata) {
+            metadata = JSON.stringify(metadata)
+        }
+
         /* Set connection info. */
         const connInfo = {
             profiles: [],

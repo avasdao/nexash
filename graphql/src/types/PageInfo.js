@@ -33,6 +33,11 @@ export default new GraphQLObjectType({
             description: `Ending dataset position.`,
         },
 
+        metadata: {
+            type: GraphQLString,
+            description: `Additional metadata (typically in JSON format).`,
+        },
+
     }),
     description: `A __PageInfo__ description goes here.`,
 })
