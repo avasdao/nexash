@@ -103,7 +103,7 @@ export default {
             hash = _args.hash
 
             if (hash) {
-                hash = hash[0].hex // FIXME Allow array of hashes.
+                hash = hash[0].hex[0] // FIXME Allow array of hashes.
             }
         } else {
             hash = null
