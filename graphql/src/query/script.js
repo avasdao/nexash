@@ -99,8 +99,12 @@ export default {
         }
         // console.log('AFTER', after)
 
-        if (typeof _args?.hash === 'string') {
+        if (typeof _args?.hash === 'object') {
             hash = _args.hash
+
+            if (hash) {
+                hash = hash[0].hex // FIXME Allow array of hashes.
+            }
         } else {
             hash = null
         }
