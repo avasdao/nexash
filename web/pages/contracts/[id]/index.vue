@@ -52,9 +52,9 @@ onMounted(() => {
     </main>
 
     <main v-else-if="contract" class="max-w-7xl mx-auto py-10">
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <div class="px-3 py-2 grid grid-cols-1 lg:grid-cols-2 gap-4">
             <section>
-                <div class="flex flex-row items-center gap-3">
+                <div class="flex flex-row items-center gap-5">
                     <img :src="contract?.iconUrl" class="w-16 h-auto" />
 
                     <h1 class="text-5xl font-light tracking-widest uppercase">
@@ -62,20 +62,24 @@ onMounted(() => {
                     </h1>
                 </div>
 
-                <h3 class="text-lg font-medium text-gray-500 truncate">
+                <div class="flex flex-row gap-5">
+                    <h3 class="text-sm text-gray-600">
+                        Version: {{contract?.version}}
+                    </h3>
+
+                    <h3 class="text-sm text-gray-600">
+                        Type: {{contract?.type}}
+                    </h3>
+                </div>
+
+                <h3 class="text-sm font-medium text-gray-500 truncate">
                     {{contract?.id}}
                 </h3>
-
-                <div class="flex flex-row gap-5">
-                    <h1>version: {{contract?.version}}</h1>
-
-                    <h1>type: {{contract?.type}}</h1>
-                </div>
 
             </section>
 
             <section>
-                <img :src="contract?.bannerUrl" class="w-full border-4 border-amber-400" />
+                <img :src="contract?.bannerUrl" class="w-full border-4 border-amber-400 rounded-xl shadow-md" />
             </section>
         </div>
 
