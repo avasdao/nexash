@@ -110,7 +110,7 @@ export default {
         } else {
             hash = null
         }
-        console.log('(SCRIPT) HASH)', hash)
+        // console.log('(SCRIPT) HASH)', hash)
 
         if (typeof _args?.nulldata === 'string') {
             nulldata = _args.nulldata
@@ -155,9 +155,9 @@ export default {
         if (hash) {
             // NOTE: We MUST convert height (Int) to a (String).
             metadata = await scriptTemplates
-                .get(hash)
+                .get(hash.toUpperCase())
                 .catch(err => console.error(err))
-            console.log('METADATA', hash, metadata)
+            // console.log('METADATA', hash, metadata)
 
             if (metadata) {
                 metadata = {
