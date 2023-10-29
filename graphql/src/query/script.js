@@ -103,7 +103,6 @@ export default {
 
         if (typeof _args?.hash === 'object') {
             hash = _args.hash
-            console.log('HASH', hash)
 
             if (Array.isArray(hash)) {
                 hash = hash[0] // FIXME Allow array of hashes.

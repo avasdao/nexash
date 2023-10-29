@@ -15,8 +15,6 @@ export default defineEventHandler(async (event) => {
     /* Set Nexa GraphQL endpoint. */
     const ENDPOINT = 'https://nexa.sh/graphql'
 
-    id = {}
-
     const query = `
     {
         script(hash: "${id}") {
@@ -26,6 +24,7 @@ export default defineEventHandler(async (event) => {
         }
       }
     `
+    console.log('QUERY', query)
 
     /* Make query request. */
     result = await $fetch(ENDPOINT,
