@@ -77,7 +77,7 @@ export default defineEventHandler(async (event) => {
     }
     // console.log('TRANSACTION', transaction)
 
-    if (transaction.confirmations === 0) {
+    if (transaction?.confirmations === 0) {
         response = await getTransaction(transaction.txid)
             .catch(err => console.error(err))
         // console.log('RESPONSE', response)
