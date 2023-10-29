@@ -16,54 +16,53 @@ const ENDPOINT = 'https://nexa.sh/graphql'
 
 const contracts = ref(null)
 const scripts = ref(null)
+const uniqueScripts = ref(null)
 
 const isShowingMenu = ref(false)
 // const totalTxCount = ref(0)
 
-const lookupMeta = (_scriptHash) => {
-    switch(_scriptHash.toUpperCase()) {
-    case '0A7399AA06B71F7B97E57FE29D152C6C28A7AD6F':
-        return {
-            title: `NexaJS Unit Test`,
-            bannerUrl: 'https://bafkreigxzephcvkblyba44yrx452qnsjlkr63cigjecbsr7hksndpwifr4.nexa.garden',
-            iconUrl: 'https://bafkreiedmuuonnul5a5k5bwnio4tewe4fshyhmwyjtc56kmvvqv5pgkqhi.nexa.garden',
-            version: '1',
-            type: 'Covenant',
+const lookupMeta = async (_scriptHash) => {
+    let contract
+    let query
+    let result
+
+    query = `
+    {
+        script(hash: "${_scriptHash}") {
+          pageInfo {
+            metadata
+          }
         }
-    case '103012FB192C7DC29FAB0BF1126DFCA42106A574':
-        return {
-            title: `Stakehouse`,
-            bannerUrl: 'https://bafkreigmxsmkxuidebcgtdhmixlp2j5tcktehanvmg5bu54b5ilididniq.nexa.garden',
-            iconUrl: 'https://bafkreifafbsuijfqoqztavkvxoe6uibwghstwe3lqsy4iu2ueuy47obuye.nexa.garden',
-            version: '1',
-            type: 'Covenant',
+      }
+    `
+
+    /* Make query request. */
+    result = await $fetch(ENDPOINT,
+        {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+            },
+            body: JSON.stringify({ query }),
+        })
+        .catch(err => console.error(err))
+    // console.log('RESULT', result)
+
+    if (result?.data?.script?.pageInfo?.metadata) {
+        contract = result.data.script.pageInfo.metadata
+    }
+    // console.log('CONTRACT', contract)
+
+    if (contract) {
+        try {
+            /* Set contract details. */
+            contract = JSON.parse(contract)
+        } catch (err) {
+            console.error(err)
         }
-    case '461AD25081CB0119D034385FF154C8D3AD6BDD76':
-        return {
-            title: `Otoplo HODL`,
-            bannerUrl: 'https://bafkreiakskjusidadx24uknn6xjpplnduj5n43gu3wtudy2ko2fpuibx4m.nexa.garden',
-            iconUrl: 'https://bafkreibm5o7bywo7fsupbv6neqahursz7on3eblzivkvijul5gv7okhzdy.nexa.garden',
-            version: '1',
-            type: 'Covenant',
-        }
-    case 'C4C275084F8869BD09B00FFEA63DF95D5BCEF16C':
-        return {
-            title: `Stakeline`,
-            bannerUrl: 'https://bafkreia2mdw2shlj5zaxczv4lnknmpgu6aeukwsjm4cplx3e4xmsrthvqe.nexa.garden',
-            iconUrl: 'https://bafkreiddl5dctph6ojapucmcuyhf2rcj3fnbic5ijomhdn2xo6vskb2cr4.nexa.garden',
-            version: '1',
-            type: 'Covenant',
-        }
-    case 'CFCBDA2CC2EEEC776BF34AA78EDD5BC0C5DFB1BC':
-        return {
-            title: `Trading Post`,
-            bannerUrl: 'https://bafkreiguztvee5k4zufko5clnrjlvwc3brqyj7hgo3v6lods5mnchwku4m.nexa.garden',
-            iconUrl: 'https://bafkreibstcf72fxubjxglelvgbiulzt6lll6py5547i23tgnnavmpxriuq.nexa.garden',
-            version: '1',
-            type: 'Covenant',
-        }
-    default:
-        return {
+    } else {
+        contract = {
             title: 'Unknown',
             bannerUrl: 'https://bafybeiczbkrgxen6fbwspengdxke4c65tggy2h7uo4dxdf22hnevru5f6e.nexa.garden',
             iconUrl: 'https://bafkreic4porzvnv5xbgqhh7bxiomkhld2zvh5xgd22oxefuda4bvdla5fq.nexa.garden',
@@ -71,9 +70,12 @@ const lookupMeta = (_scriptHash) => {
             type: '',
         }
     }
+
+    /* Return contract. */
+    return contract
 }
 
-const uniqueScripts = computed(() => {
+const loadUnique = async () => {
     if (!scripts.value) {
         return []
     }
@@ -109,12 +111,17 @@ const uniqueScripts = computed(() => {
             const scriptHash = output.scriptPubKey.scriptHash
 
             if (!unique[scriptHash]) {
+                lookupMeta(scriptHash)
+
+                const meta = await lookupMeta(scriptHash)
+                // console.log('META', meta)
+
                 unique[scriptHash] = {
-                    title: lookupMeta(scriptHash).title,
-                    bannerUrl: lookupMeta(scriptHash).bannerUrl,
-                    iconUrl: lookupMeta(scriptHash).iconUrl,
-                    version: lookupMeta(scriptHash).version,
-                    type: lookupMeta(scriptHash).type,
+                    title: meta.title,
+                    bannerUrl: meta.bannerUrl,
+                    iconUrl: meta.iconUrl,
+                    version: meta.version,
+                    type: meta.type,
                     timestamp,
                     count: 1,
                 }
@@ -136,10 +143,14 @@ const uniqueScripts = computed(() => {
     }
 
     /* Return unique (object). */
-    return unique
-})
+    return uniqueScripts.value = unique
+}
 
 const displayCards = computed(() => {
+    if (!uniqueScripts.value) {
+        return []
+    }
+
     const sorted = []
 
     Object.keys(uniqueScripts.value).forEach(_scriptid => {
@@ -208,6 +219,8 @@ const loadScripts = async (_first) => {
 
     if (result?.data.script) {
         scripts.value = result.data.script.edges
+
+        loadUnique()
     }
 
 }
@@ -216,6 +229,7 @@ const init = async () => {
     const MAXIMUM_RESULTS = 1000
 
     contracts.value = []
+    uniqueScripts.value = []
 
     await loadScripts(MAXIMUM_RESULTS)
 }
