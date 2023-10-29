@@ -104,7 +104,7 @@ export default {
         if (typeof _args?.hash === 'object') {
             hash = _args.hash
 
-            if (hash) {
+            if (Array.isArray(hash)) {
                 hash = hash[0] // FIXME Allow array of hashes.
             }
         } else {
@@ -115,7 +115,7 @@ export default {
         if (typeof _args?.nulldata === 'string') {
             nulldata = _args.nulldata
 
-            if (nulldata) {
+            if (Array.isArray(nulldata)) {
                 nulldata = nulldata[0] // FIXME Allow array of (null) data.
             }
         } else {

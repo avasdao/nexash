@@ -15,6 +15,7 @@ const route = useRoute()
 
 /* Set id. */
 const id = route.params.id
+// console.log('CONTRACT ID', id)
 
 const init = async () => {
     /* Initialize locals. */

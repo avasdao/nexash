@@ -40,8 +40,8 @@ export default defineEventHandler(async (event) => {
         .catch(err => console.error(err))
     console.log('RESULT', result)
 
-    if (result?.data?.contract) {
-        contract = result.data.contract[0]
+    if (result?.data?.script?.pageInfo) {
+        contract = result.data.script.pageInfo
     } else {
         contract = {}
     }
