@@ -8,7 +8,7 @@ useHead({
 })
 
 const isLoaded = ref(false)
-const transaction = ref(null)
+const contract = ref(null)
 
 const route = useRoute()
 // console.log('ROUTE PARAMS', route.params)
@@ -20,13 +20,13 @@ const init = async () => {
     /* Initialize locals. */
     let response
 
-    /* Request transaction. */
-    response = await $fetch('/v1/tx/' + id)
+    /* Request contract. */
+    response = await $fetch('/v1/contract/' + id)
         .catch(err => console.error(err))
-    // console.log('RESPONSE', response)
+    console.log('RESPONSE', response)
 
-    /* Set transaction details. */
-    transaction.value = response
+    /* Set contract details. */
+    contract.value = response
 
     /* Set flag. */
     isLoaded.value = true
@@ -50,15 +50,15 @@ onMounted(() => {
         </h2>
     </main>
 
-    <main v-else-if="transaction" class="max-w-7xl mx-auto py-10">
+    <main v-else-if="contract" class="max-w-7xl mx-auto py-10">
         <div class="px-3 flex flex-col gap-4">
             <header class="">
                 <h1 class="text-3xl font-medium truncate">
-                    {{transaction?.txidem}}
+                    {{contract?.txidem}}
                 </h1>
 
                 <span class="text-xs text-gray-400">
-                    txid: {{transaction?.txid}}
+                    txid: {{contract?.txid}}
                 </span>
             </header>
 
@@ -84,14 +84,14 @@ onMounted(() => {
                             <a href="javascript://" class="border-transparent text-gray-500 hover:border-gray-200 hover:text-gray-700 flex whitespace-nowrap border-b-2 py-4 px-1 text-sm font-medium">
                                 Inputs
                                 <span class="bg-gray-100 text-gray-900 ml-3 hidden rounded-full py-0.5 px-2.5 text-xs font-medium md:inline-block">
-                                    {{transaction?.vin.length}}
+                                    {{contract?.vin.length}}
                                 </span>
                             </a>
 
                             <a href="javascript://" class="border-transparent text-gray-500 hover:border-gray-200 hover:text-gray-700 flex whitespace-nowrap border-b-2 py-4 px-1 text-sm font-medium" aria-current="page">
                                 Outputs
                                 <span class="bg-gray-100 text-gray-900 ml-3 hidden rounded-full py-0.5 px-2.5 text-xs font-medium md:inline-block">
-                                    {{transaction?.vout.length}}
+                                    {{contract?.vout.length}}
                                 </span>
                             </a>
 
@@ -117,60 +117,60 @@ onMounted(() => {
                 </div>
             </div>
 
-            <div v-if="transaction" class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div v-if="contract" class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <TransactionItem
                     title="Block Height"
-                    :value="transaction.height"
+                    :value="contract.height"
                 />
 
                 <TransactionItem
                     title="Confirmations"
-                    :value="transaction.confirmations"
+                    :value="contract.confirmations"
                 />
 
                 <TransactionItem
                     title="Fee"
-                    :value="transaction.fee + ' NEXA'"
+                    :value="contract.fee + ' NEXA'"
                 />
 
                 <TransactionItem
                     title="Size"
-                    :value="transaction.size"
+                    :value="contract.size"
                 />
 
                 <TransactionItem
                     title="Version"
-                    :value="transaction.version"
+                    :value="contract.version"
                 />
 
                 <TransactionItem
                     title="Lock Time"
-                    :value="transaction.locktime"
+                    :value="contract.locktime"
                 />
 
                 <TransactionItem
                     title="Block Hash"
-                    :value="transaction.blockhash"
+                    :value="contract.blockhash"
                 />
 
                 <TransactionItem
                     title="Time"
-                    :value="transaction.time"
+                    :value="contract.time"
                 />
 
                 <TransactionItem
                     title="Block Time"
-                    :value="transaction.blocktime"
+                    :value="contract.blocktime"
                 />
 
                 <TransactionItem
                     title="Raw Hex"
-                    :text="transaction.hex.match(/.{1,16}/g).join(' ')"
+                    :text="contract.hex.match(/.{1,16}/g).join(' ')"
                     class="col-span-3"
                 />
             </div>
 
-            <!-- <pre class="block text-xs font-medium">{{ transaction }}</pre> -->
+            <!-- <pre class="block text-xs font-medium">{{ contract }}</pre> -->
         </div>
     </main>
 

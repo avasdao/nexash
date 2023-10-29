@@ -10,7 +10,6 @@ export default defineEventHandler(async (event) => {
     /* Set block id. */
     // NOTE: Either txid or txidem.
     id = event.context.params.id
-    // console.log('ID', id)
 
     /* Set Nexa GraphQL endpoint. */
     const ENDPOINT = 'https://nexa.sh/graphql'

@@ -42,11 +42,13 @@ export default {
             description: `Enter the cursor to proceed.`,
         },
         hash: {
-            type: new GraphQLList(ScriptType),
+            // type: new GraphQLList(ScriptType),
+            type: new GraphQLList(GraphQLString),
             description: `Enter the __ScripHash__ for an on-chain Transaction.`,
         },
         nulldata: {
-            type: new GraphQLList(ScriptType),
+            // type: new GraphQLList(ScriptType),
+            type: new GraphQLList(GraphQLString),
             description: `Enter the __Nulldata (OP_DATA) Prefix__ for an on-chain Transaction.`,
         },
     },
@@ -103,7 +105,7 @@ export default {
             hash = _args.hash
 
             if (hash) {
-                hash = hash[0].hex[0] // FIXME Allow array of hashes.
+                hash = hash[0] // FIXME Allow array of hashes.
             }
         } else {
             hash = null
@@ -112,6 +114,10 @@ export default {
 
         if (typeof _args?.nulldata === 'string') {
             nulldata = _args.nulldata
+
+            if (nulldata) {
+                nulldata = nulldata[0] // FIXME Allow array of (null) data.
+            }
         } else {
             nulldata = null
         }
@@ -161,7 +167,7 @@ export default {
 
                 delete metadata._id
                 delete metadata._rev
-                
+
                 metadata = JSON.stringify(metadata)
             }
         }
