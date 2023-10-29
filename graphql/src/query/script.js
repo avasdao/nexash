@@ -60,6 +60,8 @@ export default {
         let last
         let hashes
         let transactions
+        let hash
+        let nulldata
         let metadata
 
         // if (typeof _args?.txidem === 'string') {
@@ -88,7 +90,7 @@ export default {
         } else {
             before = null
         }
-        console.log('BEFORE', before)
+        // console.log('BEFORE', before)
 
         if (typeof _args?.after === 'boolean') {
             after = _args.after
@@ -102,7 +104,7 @@ export default {
         } else {
             hash = null
         }
-        // console.log('(SCRIPT) HASH)', hash)
+        console.log('(SCRIPT) HASH)', hash)
 
         if (typeof _args?.nulldata === 'string') {
             nulldata = _args.nulldata
