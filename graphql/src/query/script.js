@@ -154,6 +154,14 @@ export default {
             console.log('METADATA', hash, metadata)
 
             if (metadata) {
+                metadata = {
+                    id: metadata._id,
+                    ...metadata,
+                }
+
+                delete metadata._id
+                delete metadata._rev
+                
                 metadata = JSON.stringify(metadata)
             }
         }
