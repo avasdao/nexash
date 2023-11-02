@@ -1,4 +1,21 @@
 <script setup>
+/* Import modules. */
+// import Chart from 'chart.js/auto'
+
+import {
+  Chart as ChartJS,
+  Title,
+  Tooltip,
+  Legend,
+  BarElement,
+  CategoryScale,
+  LinearScale
+} from 'chart.js'
+import { Bar } from 'vue-chartjs'
+
+ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
+
+
 useHead({
     title: 'Contract Details - NexaShell',
     meta: [{
@@ -9,6 +26,9 @@ useHead({
 
 const isLoaded = ref(false)
 const contract = ref(null)
+
+const data = ref(null)
+const options = ref(null)
 
 /* Initialize route. */
 const route = useRoute()
@@ -33,8 +53,22 @@ const init = async () => {
     isLoaded.value = true
 }
 
+const initCharts = async () => {
+    data.value = {
+        labels: ['January', 'February', 'March'],
+        datasets: [{ data: [40, 20, 12] }]
+    }
+
+    options.value = {
+        responsive: true
+    }
+
+}
+
 onMounted(() => {
     init()
+
+    initCharts()
 })
 
 // onBeforeUnmount(() => {
@@ -82,6 +116,8 @@ onMounted(() => {
                 <img :src="contract?.bannerUrl" class="w-full border-4 border-amber-400 rounded-xl shadow-md" />
             </section>
         </div>
+
+        <!-- <Bar :data="data" :options="options" /> -->
 
         <!-- <pre class="block text-xs font-medium">{{ contract }}</pre> -->
     </main>
