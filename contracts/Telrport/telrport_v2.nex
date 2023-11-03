@@ -26,9 +26,9 @@ pragma nexscript >= 0.2.0;
  *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  *
- * Version     : 01
+ * Version     : 02
  * Script Hash : 0x0000000000000000000000000000000000000000
- * Namespace   : TPORT01
+ * Namespace   : TPORT02
  *
  * owner : Party whom will receive the payouts.
  * param : A very useful parameter.
