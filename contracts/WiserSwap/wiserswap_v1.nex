@@ -59,7 +59,6 @@ contract WiserSwap(
     bytes20 provider,
     int providerFee,
     pubkey admin,
-    int foundation,
 ) {
     /**
      * Swap (Pool Assets)
@@ -177,20 +176,17 @@ contract WiserSwap(
 
         /* Validate (optional) admin key. */
         if (bytes(admin) != 0x0) {
-            /* Calculate (foundation) ratio. */
-            int ratio = wiserValueOut / wiserAmountOut;
-
             /* Validate swap w/ Admin (during training period). */
             require(checkDataSig(adminSig, adminMsg, admin));
+
+            /* Calculate (foundation) ratio. */
+            int ratio = wiserValueOut / wiserAmountOut;
 
             /* Validate admin (ratio) message. */
             require(ratio >= int(adminMsg.split(8)[0]));
 
             /* Validate admin (tx idem) message. */
             require(tx.idem == adminMsg.split(8)[1]);
-
-            /* Validate foundation ratio. */
-            require(foundation > ratio);
         }
     }
 
