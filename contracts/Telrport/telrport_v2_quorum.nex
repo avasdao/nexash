@@ -43,10 +43,12 @@ contract TelrportQuorum() {
         /* Tether to input (index) #1. */
         require(tx.inputs[2].outpointTransactionHash == tx.inputs[1].outpointTransactionHash);
 
-        // TODO Add 1st time-lock at 60 minutes (Admin) (Lo Limit).
+        // TODO Add 1st time-lock at 1 block (MetaNet Validators) (No Limit).
 
-        // TODO Add 2nd time-lock at 24 hours (Nexican Council) (Hi Limit).
+        // TODO Add 2nd time-lock at 60 minutes (Admin) (Lo Limit).
 
-        // TODO Add 3rd (final) time-lock at 5,000 blocks (approx 7 days) (Admin) (No Limit).
+        // TODO Add 3rd time-lock at 8 hours (Nexican Council) (Hi Limit).
+
+        // TODO Add 4th (final) time-lock at 5,000 blocks (approx 7 days) (Admin) (No Limit).
     }
 }
