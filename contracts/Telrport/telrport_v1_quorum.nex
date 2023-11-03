@@ -1,0 +1,46 @@
+pragma nexscript >= 0.2.0;
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ *
+ * Copyright (c) 2023 Ava's DAO
+ * Released under the MIT License.
+ *
+ * Telrport Quorum
+ *
+ * An authorization hash for the next Telrport quorum.
+ *
+ * NOTES
+ * --------------------
+ * TBD..
+ *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ *
+ * Version     : 01
+ * Script Hash : 0x0000000000000000000000000000000000000000
+ * Namespace   : TPORTQ01
+ *
+ * owner : Party whom will receive the payouts.
+ * param : A very useful parameter.
+ *
+ * For more information, please visit the following resources:
+ *   - https://domain.tld
+ *   - https://avasdao.org
+ *
+ */
+contract TelrportQuorum() {
+    /**
+     * Authorize (Transaction)
+     *
+     * NOTE: Requires input (index) #1 to be from the same transaction.
+     */
+    function auth() {
+        /* Set (fixed) input position. */
+        require(this.activeInputIndex == 2);
+
+        require(tx.outputs[2].lockingBytecode == tx.inputs[2].lockingBytecode);
+        require(tx.outputs[2].tokenGroupId == tx.inputs[2].tokenGroupId);
+
+        /* Tether to input (index) #1. */
+        require(tx.inputs[2].outpointTransactionHash == tx.inputs[1].outpointTransactionHash);
+    }
+}

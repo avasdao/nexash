@@ -5,7 +5,7 @@ pragma nexscript >= 0.2.0;
  * Copyright (c) 2023 Ava's DAO
  * Released under the MIT License.
  *
- * Freeport
+ * Telrport
  *
  * A cross-chain bridge contract for Nexa assets.
  *
@@ -28,7 +28,7 @@ pragma nexscript >= 0.2.0;
  *
  * Version     : 01
  * Script Hash : 0x0000000000000000000000000000000000000000
- * Namespace   : FPORT01
+ * Namespace   : TPORT01
  *
  * owner : Party whom will receive the payouts.
  * param : A very useful parameter.
@@ -38,7 +38,7 @@ pragma nexscript >= 0.2.0;
  *   - https://avasdao.org
  *
  */
-contract Freeport(pubkey admin) {
+contract Telrport(pubkey admin) {
     /**
      * Teleport
      *
