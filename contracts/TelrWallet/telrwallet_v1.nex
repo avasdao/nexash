@@ -24,7 +24,7 @@ pragma nexscript >= 0.2.0;
  *
  * For more information, please visit the following resources:
  *   - https://domain.tld
- *   - https://avasdao.org
+ *   - https://modenero.com
  *
  */
 contract TelrWallet(bytes20 owner, int param) {

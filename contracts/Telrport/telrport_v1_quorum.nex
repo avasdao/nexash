@@ -2,7 +2,7 @@ pragma nexscript >= 0.2.0;
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  *
- * Copyright (c) 2023 Ava's DAO
+ * Copyright (c) 2023 Modenero DAO
  * Released under the MIT License.
  *
  * Telrport Quorum
@@ -24,7 +24,7 @@ pragma nexscript >= 0.2.0;
  *
  * For more information, please visit the following resources:
  *   - https://domain.tld
- *   - https://avasdao.org
+ *   - https://modenero.com
  *
  */
 contract TelrportQuorum() {
@@ -42,5 +42,11 @@ contract TelrportQuorum() {
 
         /* Tether to input (index) #1. */
         require(tx.inputs[2].outpointTransactionHash == tx.inputs[1].outpointTransactionHash);
+
+        // TODO Add 1st time-lock at 60 minutes (TELR) (Lo Limit).
+
+        // TODO Add 2nd time-lock at 24 hours (Council) (Hi Limit).
+
+        // TODO Add 3rd (final) time-lock at 5,000 blocks (approx 7 days) (TELR) (No Limit).
     }
 }
