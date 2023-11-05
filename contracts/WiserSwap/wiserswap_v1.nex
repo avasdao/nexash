@@ -10,10 +10,10 @@ pragma nexscript >= 0.2.0;
  * A "wise" contract implemenation of a Constant Product Market Maker (CPMM)
  * for Nexa, using a micro-pools approach.
  *
- * Individual liquidity provider(s) may employ their own CPMM contract(s) for
+ * Individual liquidity provider(s) may deploy their own CPMM contract(s) for
  * managing their own micro-pool(s). This design leverages Nexa's UTXO model
- * and its 100K TPS throughput, allowing for unparalled scalability and
- * efficiency as compared to ANY modern-day DEX.
+ * and its 100K+ TPS throughput, allowing for unparalled scalability and
+ * efficiency as compared to ANY other modern-day DEX.
  *
  * GENERAL NOTES
  * --------------------
@@ -45,6 +45,7 @@ pragma nexscript >= 0.2.0;
  * payout      : (bytes20) An optional Payout address (only if auto payout is enabled).
  * provider    : (bytes20) An optional 3rd-party (specified by the Seller) used to facilitate the transaction.
  * providerFee : (int)     An optional amount charged by the Provider. (measured in <basis points> (bp), eg. 5.25% = 525bp)
+ * admin       : (pubkey)  The Administration's FULL public key.
  *
  * For more information, please visit the following resources:
  *   - https://docs.nexa.exchange/wiserswap
@@ -163,18 +164,21 @@ contract WiserSwap(
         /* Set dust value. */
         int DUST_VALUE = 546;
 
-        /* Validate auto-payout value. */
+        /* Validate (Owner-defined) auto-payout value. */
         require(autoPayout == 0 || autoPayout >= DUST_VALUE);
 
         /* Validate minimum Provider commission. */
         // NOTE: Used to discourage denial-of-service (DoS) attack.
-        require(providerCommission >= DUST_VALUE);
+        require(providerCommission == 0 || providerCommission >= DUST_VALUE);
 
         /* Validate minimum Owner commission. */
         // NOTE: Used to discourage denial-of-service (DoS) attack.
-        require(ownerCommission >= DUST_VALUE);
+        require(ownerCommission == 0 || ownerCommission >= DUST_VALUE);
 
         /* Validate (optional) admin key. */
+        // NOTE: Primarily used to guard the Foundation of a "new" asset
+        //       during the beginning of its life-cycle.
+        //       (see also: https://docs.nexa.exchange/create/foundation)
         if (bytes(admin) != 0x0) {
             /* Validate swap w/ Admin (during training period). */
             require(checkDataSig(adminSig, adminMsg, admin));
