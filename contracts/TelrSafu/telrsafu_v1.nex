@@ -17,13 +17,13 @@ pragma nexscript >= 0.2.0;
  *
  * Version     : 01
  * Script Hash : 0x0000000000000000000000000000000000000000
- * Namespace   : TELRWALLET01
+ * Namespace   : TELRSAFU01
  *
  * owner : Party whom will receive the payouts.
  * param : A very useful parameter.
  *
  * For more information, please visit the following resources:
- *   - https://domain.tld
+ *   - https://telrsafu.com
  *   - https://modenero.com
  *
  */

@@ -71,19 +71,46 @@ contract WiserSwap(
         datasig adminSig,
         bytes adminMsg,
     ) {
+        //----------------------------------------------------------------------
+        // BEGIN LOCKING BYTECODE VERIFICATION (WORKAROUND) FOR GROUPS
+        //----------------------------------------------------------------------
+
         /* Set Wiser index. */
         int wiserIdx = this.activeInputIndex;
 
-        /* Set Wiser (input) bytecode. */
-        // NOTE: Used to compare inputs & outputs (excl `tokenAmount`).
-        bytes wiserBytesIn = tx.inputs[wiserIdx].lockingBytecode;
+        /* Parse output (script) prefix, plus 1st holder. */
+        bytes oPrefix, bytes oHolder = tx.outputs[wiserIdx]
+            .lockingBytecode
+            .split(33);
 
-        /* Set Wiser (output) bytecode. */
-        // NOTE: Used to compare inputs & outputs (excl `tokenAmount`).
-        bytes wiserBytesOut = tx.outputs[wiserIdx].lockingBytecode;
+        /* Parse output `tokenAmount` size, plus 2nd holder. */
+        bytes1 oSize, bytes oHolderToo = oHolder.split(1);
 
-        /* Validate input & output bytecodes (excl `tokenAmount`). */
-        require(wiserBytesOut == wiserBytesIn);
+        /* Parse output (script) suffix. */
+        // NOTE: Drop the `tokenAmount` value.
+        bytes oSuffix = oHolderToo.split(int(oSize))[1];
+
+        /* Parse input (script) prefix, plus 1st holder. */
+        bytes iPrefix, bytes iHolder = tx.inputs[wiserIdx]
+            .lockingBytecode
+            .split(33);
+
+        /* Parse input `tokenAmount` size, plus 2nd holder. */
+        bytes1 iSize, bytes iHolderToo = iHolder.split(1);
+
+        /* Parse input (script) suffix. */
+        // NOTE: Drop the `tokenAmount` value.
+        bytes iSuffix = iHolderToo.split(int(iSize))[1];
+
+        /* Validate input/output prefix scripts. */
+        require(oPrefix == iPrefix);
+
+        /* Validate input/output suffix scripts. */
+        require(oSuffix == iSuffix);
+
+        //----------------------------------------------------------------------
+        // END LOCKING BYTECODE VERIFICATION (WORKAROUND) FOR GROUPS
+        //----------------------------------------------------------------------
 
         /* Set Wiser (satoshis) input value. */
         int wiserValueIn = tx.inputs[wiserIdx].value;
@@ -103,15 +130,16 @@ contract WiserSwap(
         /* Calculate Wiser (K) output constant. */
         int wiserConstantOut = wiserValueOut * wiserAmountOut;
 
-        /* Validate constant product (K) is maintained. */
-        require(wiserConstantOut == wiserConstantIn);
+        /* Validate a (minimum) constant product (K) is maintained. */
+        // NOTE: A greater constant product is permitted .. as a BONUS!
+        require(wiserConstantOut >= wiserConstantIn);
 
         /* Initialize (transaction) total swap value. */
         int totalSwapValue = 0;
 
-        /* Initialize (tail) index. */
+        /* Initialize (change) index. */
         // NOTE: Use for calculating (change) outputs. */
-        int tailIdx = 0;
+        int changeIdx = 0;
 
         /* Validate inputs & outputs. */
         // NOTE: Test for (change) output, used in fee calculations.
@@ -120,8 +148,8 @@ contract WiserSwap(
             // NOTE: Assume # of inputs is the (index) for (change) output.
             totalSwapValue = (tx.amountOut - tx.outputs[tx.inputs.length].value);
 
-            /* Set (tail) index. */
-            tailIdx = 1;
+            /* Set (change) index. */
+            changeIdx = 1;
         } else {
             /* Set total swap value. */
             // NOTE: Used to calculate the provider fee.
@@ -148,7 +176,7 @@ contract WiserSwap(
         if (autoPayout >= ownerCommission) {
             /* Verify Provider bytecode. */
             // NOTE: Assume to be the LAST output.
-            require(tx.outputs[tx.outputs.length - tailIdx].lockingBytecode == ownerBytecode);
+            require(tx.outputs[tx.outputs.length - changeIdx].lockingBytecode == ownerBytecode);
 
             // TODO Handle Provider fee (w/ auto-payout).
             require(payout == 0x0);
@@ -158,7 +186,7 @@ contract WiserSwap(
             // NOTE: Subtract owner commission. */
 
             // NOTE: Assumed to be the 2nd to last output.
-            require(tx.outputs[tx.outputs.length - tailIdx - 1].lockingBytecode == ownerBytecode);
+            require(tx.outputs[tx.outputs.length - changeIdx - 1].lockingBytecode == ownerBytecode);
         }
 
         /* Set dust value. */
