@@ -16,7 +16,7 @@
           "unused": false
         },
         {
-          "name": "provider",
+          "name": "admin",
           "type": "bytes20",
           "visible": false,
           "unused": false

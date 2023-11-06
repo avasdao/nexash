@@ -27,7 +27,7 @@ pragma nexscript >= 0.2.0;
  *
  * seller   : (bytes20) The Sellers' public key hash.
  * cost     : (int)     The cost per item (in $NEXA), charged by the Seller. (measured in <satoshis>)
- * provider : (bytes20) An optional 3rd-party (specified by the Seller) used to facilitate the transaction.
+ * admin : (bytes20) An optional 3rd-party (specified by the Seller) used to facilitate the transaction.
  * fee      : (int)     An optional amount charged by the Provider. (measured in <basis points> (bp), eg. 5.25% = 525bp)
  *
  * For more information, please visit the following resources:
@@ -40,7 +40,7 @@ contract TradingPost(
     bytes32 subgroupid,
     bytes20 seller,
     int cost,
-    bytes20 provider,
+    bytes20 admin,
     int fee,
 ) {
     /**
@@ -117,10 +117,10 @@ contract TradingPost(
             require(tx.outputs[3].value >= commission);
 
             /* Create Provider bytecode. */
-            bytes23 providerBytecode = new LockingBytecodeP2PKT(provider);
+            bytes23 adminBytecode = new LockingBytecodeP2PKT(admin);
 
             /* Verify Provider bytecode. */
-            require(tx.outputs[3].lockingBytecode == providerBytecode);
+            require(tx.outputs[3].lockingBytecode == adminBytecode);
         }
 
         /* Set maximum outputs. */

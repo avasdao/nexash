@@ -25,10 +25,10 @@ pragma nexscript >= 0.2.0;
  * Script Hash : 0xCFCBDA2CC2EEEC776BF34AA78EDD5BC0C5DFB1BC
  * Namespace   : TPOSTG01
  *
- * seller   : (bytes20) The Seller's public key hash.
- * rate     : (int)     The rate of exchange, charged by the Seller. (measured in <satoshis> per asset)
- * provider : (bytes20) An optional 3rd-party (specified by the Seller) used to facilitate the transaction.
- * fee      : (int)     An optional amount charged by the Provider. (measured in <basis points> (bp), eg. 5.25% = 525bp)
+ * seller : (bytes20) The Seller's public key hash.
+ * rate   : (int)     The rate of exchange, charged by the Seller. (measured in <satoshis> per asset)
+ * admin  : (bytes20) An optional 3rd-party (specified by the Seller) used to administer the transaction.
+ * fee    : (int)     An optional amount charged by the Provider. (measured in <basis points> (bp), eg. 5.25% = 525bp)
  *
  * For more information, please visit the following resources:
  *   - https://docs.causes.cash/trading-post
@@ -38,7 +38,7 @@ pragma nexscript >= 0.2.0;
 contract TradingPost(
     bytes20 seller,
     int rate,
-    bytes20 provider,
+    bytes20 admin,
     int fee,
 ) {
     /**
@@ -128,10 +128,10 @@ contract TradingPost(
 
             /* Create Provider bytecode. */
             // NOTE: Supports ONLY $NEXA assets.
-            bytes23 providerBytecode = new LockingBytecodeP2PKT(provider);
+            bytes23 adminBytecode = new LockingBytecodeP2PKT(admin);
 
             /* Verify Provider bytecode. */
-            require(tx.outputs[3].lockingBytecode == providerBytecode);
+            require(tx.outputs[3].lockingBytecode == adminBytecode);
         }
 
         /* Set maximum outputs. */

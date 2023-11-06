@@ -24,7 +24,7 @@ pragma nexscript >= 0.6.0;
  * amountGet  : (int)     The amount of NEXA requested by the seller.
  * tokenGive  : (bytes32) The token id of the asset.
  * amountGive : (int)     The amount of NEXA requested by the seller.
- * provider   : (bytes20) An optional 3rd-party (agreed upon by the Buyer and Seller) used to facilitate the transaction.
+ * admin   : (bytes20) An optional 3rd-party (agreed upon by the Buyer and Seller) used to facilitate the transaction.
  * fee        : (int)     An optional amount charged by the Provider. (measured in basis points (bp), eg. 5.25% = 525bp)
  * expires    : (int)     An optional amount charged by the Provider. (measured in basis points (bp), eg. 5.25% = 525bp)
  *
@@ -37,7 +37,7 @@ contract TradingPost(
     bytes32 tokenid,
     bytes20 seller,
     int rate,
-    bytes20 provider,
+    bytes20 admin,
     int fee,
 ) {
     /**
@@ -61,7 +61,7 @@ contract TradingPost(
         bytes20 pubKeyHash = hash160(executor);
 
         /* Verify the executor is an authorized contract participant. */
-        require(pubKeyHash == seller || pubKeyHash == provider);
+        require(pubKeyHash == seller || pubKeyHash == admin);
 
         /* Validate the 1st output is the Seller's `scriptPubKey`. */
         int lockingBytecodeLen = tx.outputs[0].lockingBytecode.length;

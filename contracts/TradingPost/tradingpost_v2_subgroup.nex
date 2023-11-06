@@ -24,7 +24,7 @@ pragma nexscript >= 0.6.0;
  * amountGet  : (int)     The amount of NEXA requested by the seller.
  * tokenGive  : (bytes32) The token id of the asset.
  * amountGive : (int)     The amount of NEXA requested by the seller.
- * provider   : (bytes20) An optional 3rd-party (agreed upon by the Buyer and Seller) used to facilitate the transaction.
+ * admin   : (bytes20) An optional 3rd-party (agreed upon by the Buyer and Seller) used to facilitate the transaction.
  * fee        : (int)     An optional amount charged by the Provider. (measured in basis points (bp), eg. 5.25% = 525bp)
  * expires    : (int)     An optional amount charged by the Provider. (measured in basis points (bp), eg. 5.25% = 525bp)
  *
@@ -39,7 +39,7 @@ contract TradingPost(
     int amountGet,
     bytes32 tokenGive,
     int amountGive,
-    bytes20 provider,
+    bytes20 admin,
     int fee,
     int expires,
 ) {
@@ -63,7 +63,7 @@ contract TradingPost(
         bytes20 pubKeyHash = hash160(executor);
 
         /* Verify the executor is an authorized participant. */
-        require(pubKeyHash == seller || pubKeyHash == provider);
+        require(pubKeyHash == seller || pubKeyHash == admin);
 
         int MAX_OUTPUTS = 2;
 
@@ -185,7 +185,7 @@ contract TradingPost(
         require(tx.outputs[PAYMENT_OUTPUT_IDX].value >= ask);
 
         /* Calculate Provider bytecode. */
-        bytes23 providerBytecode = new LockingBytecodeP2PKT(provider);
+        bytes23 adminBytecode = new LockingBytecodeP2PKT(admin);
 
         int MIN_PARTICIPANTS = 2;
         int FEE_OUTPUT_IDX = 2;
@@ -196,16 +196,16 @@ contract TradingPost(
         // We restrict the outputs to:
         //   - 1st output is the asset transfer.
         //   - 2nd output is the payment to the asset Owner.
-        //   - (optional) additional output(s) may one or more "change" or "provider fee" output(s).
+        //   - (optional) additional output(s) may one or more "change" or "admin fee" output(s).
         //     NOTE: The 3rd output is NOT enforced and can be anything agreed by all parties.
         /* Verify that ANY fee payout goes to the Executor. */
         require(
             tx.outputs.length == MIN_PARTICIPANTS ||
-            tx.outputs[FEE_OUTPUT_IDX].lockingBytecode == providerBytecode
+            tx.outputs[FEE_OUTPUT_IDX].lockingBytecode == adminBytecode
         );
 
         /* Verify that we payout to the Seller. */
-        require(tx.outputs[PROVIDER_OUTPUT_IDX].lockingBytecode == providerBytecode);
+        require(tx.outputs[PROVIDER_OUTPUT_IDX].lockingBytecode == adminBytecode);
 
         /* Validate payout amount. */
         require(tx.outputs[PROVIDER_OUTPUT_IDX].value >= fee);
