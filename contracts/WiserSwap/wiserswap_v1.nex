@@ -112,6 +112,10 @@ contract WiserSwap(
         // END LOCKING BYTECODE VERIFICATION (WORKAROUND) FOR GROUPS
         //----------------------------------------------------------------------
 
+        //----------------------------------------------------------------------
+        // BEGIN CONSTANT PRODUCT VERIFICATION
+        //----------------------------------------------------------------------
+
         /* Set Wiser (satoshis) input value. */
         int wiserValueIn = tx.inputs[wiserIdx].value;
 
@@ -133,6 +137,10 @@ contract WiserSwap(
         /* Validate a (minimum) constant product (K) is maintained. */
         // NOTE: A greater constant product is permitted .. as a BONUS!
         require(wiserConstantOut >= wiserConstantIn);
+
+        //----------------------------------------------------------------------
+        // END CONSTANT PRODUCT VERIFICATION
+        //----------------------------------------------------------------------
 
         /* Initialize (transaction) total swap value. */
         int totalSwapValue = 0;
@@ -156,11 +164,15 @@ contract WiserSwap(
             totalSwapValue = tx.amountOut;
         }
 
-        /* Calculate (Provider) commission. */
+        /* Set dust value. */
+        int DUST_VALUE = 546;
+
+        /* Calculate Owner commission. */
         int ownerCommission = (totalSwapValue * ownerFee) / 10000;
 
-        // FIXME
-        require(ownerCommission == 0);
+        /* Validate minimum Owner commission. */
+        // NOTE: Used to discourage denial-of-service (DoS) attack.
+        require(ownerCommission == 0 || ownerCommission >= DUST_VALUE);
 
         /* Calculate public key hash. */
         bytes20 ownerPkh = hash160(owner);
@@ -169,8 +181,8 @@ contract WiserSwap(
         // NOTE: Supports ONLY $NEXA assets.
         bytes23 ownerBytecode = new LockingBytecodeP2PKT(ownerPkh);
 
-        /* Calculate (Provider) commission. */
-        int providerCommission = (totalSwapValue * providerFee) / 10000;
+        /* Validate (Owner-defined) auto-payout value. */
+        require(autoPayout == 0 || autoPayout >= DUST_VALUE);
 
         /* Validate auto-payout. */
         if (autoPayout >= ownerCommission) {
@@ -189,26 +201,19 @@ contract WiserSwap(
             require(tx.outputs[tx.outputs.length - changeIdx - 1].lockingBytecode == ownerBytecode);
         }
 
-        /* Set dust value. */
-        int DUST_VALUE = 546;
-
-        /* Validate (Owner-defined) auto-payout value. */
-        require(autoPayout == 0 || autoPayout >= DUST_VALUE);
+        /* Calculate Provider commission. */
+        int providerCommission = (totalSwapValue * providerFee) / 10000;
 
         /* Validate minimum Provider commission. */
         // NOTE: Used to discourage denial-of-service (DoS) attack.
         require(providerCommission == 0 || providerCommission >= DUST_VALUE);
-
-        /* Validate minimum Owner commission. */
-        // NOTE: Used to discourage denial-of-service (DoS) attack.
-        require(ownerCommission == 0 || ownerCommission >= DUST_VALUE);
 
         /* Validate (optional) admin key. */
         // NOTE: Primarily used to guard the Foundation of a "new" asset
         //       during the beginning of its life-cycle.
         //       (see also: https://docs.nexa.exchange/create/foundation)
         if (bytes(admin) != 0x0) {
-            /* Validate swap w/ Admin (during training period). */
+            /* Validate swap w/ Admin (during probation period). */
             require(checkDataSig(adminSig, adminMsg, admin));
 
             /* Calculate (foundation) ratio. */
