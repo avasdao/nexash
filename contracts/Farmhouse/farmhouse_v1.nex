@@ -42,10 +42,11 @@ pragma nexscript >= 0.2.0;
  *
  */
 contract Farmhouse(
-    pubkey visible unused farmer,
+    bytes20 plantation,
     pubkey provider,
     pubkey admin,
     int seasons,
+    pubkey visible unused farmer,
 ) {
     /**
      * Harvest
@@ -83,5 +84,13 @@ contract Farmhouse(
             /* Verify transaction is signed by the farmhouse farmer. */
             require(checkSig(signature, provider));
         }
+
+        /* Validate plantation. */
+        // NOTE: This will always be the 1st input & output.
+        require(
+// FIXME Use `.visibleArguments`.
+            tx.inputs[0].lockingBytecode == plantation &&
+            tx.outputs[0].lockingBytecode == plantation
+        )
     }
 }
