@@ -21,8 +21,11 @@ pragma nexscript >= 0.2.0;
  * Script Hash : 0x0000000000000000000000000000000000000000
  * Namespace   : FARMH01
  *
- * farmer  : Party whom will receive the payouts.
- * seasons : The number of (512 second) cycles until expiration.
+ * plantationid : The script hash of the Farmhouse (template) bound to this Plantation.
+ * provider     : TBD
+ * admin        : TBD
+ * seasons      : TBD
+ * farmer       : TBD
  *
  * Seasonal Durations
  *   - 1 HOUR     1 hour         ~7 cycles
@@ -42,14 +45,14 @@ pragma nexscript >= 0.2.0;
  *
  */
 contract Farmhouse(
-    bytes20 plantation,
+    bytes20 plantationid,
     pubkey provider,
     pubkey admin,
     int seasons,
     pubkey visible unused farmer,
 ) {
     /**
-     * Harvest
+     * (Rewards) Payout
      *
      * Allows a Liquidity Provider to "melt" held assets AFTER the
      * growing season(s) have completed; and reward the Farmer with
@@ -65,7 +68,7 @@ contract Farmhouse(
      * @param executor
      * @param signature
      */
-    function harvest(pubkey executor, sig signature) {
+    function payout(pubkey executor, sig signature) {
         if (executor == admin) {
             /* Verify UTXO age is AFTER the growing season(s). */
             require(tx.age >= seasons);

@@ -21,8 +21,7 @@ pragma nexscript >= 0.2.0;
  * Script Hash : 0x0000000000000000000000000000000000000000
  * Namespace   : FARMH01
  *
- * farmer  : Party whom will receive the payouts.
- * seasons : The number of (512 second) cycles until expiration.
+ * farmhouseid : The script hash of the Farmhouse (template) bound to this Plantation.
  *
  * Seasonal Durations
  *   - 1 HOUR     1 hour         ~7 cycles
@@ -42,46 +41,20 @@ pragma nexscript >= 0.2.0;
  *
  */
 contract Plantation(
-    pubkey visible unused farmer,
-    pubkey provider,
-    pubkey admin,
-    int seasons,
+    bytes20 farmhouseid,
 ) {
     /**
      * Harvest
      *
-     * Allows a Liquidity Provider to "melt" held assets AFTER the
-     * growing season(s) have completed; and reward the Farmer with
-     * "locked" assets (eg. $NEXA), at a rate determined by the Provider.
-     *
-     * NOTE: Plantation transactions MUST ALL be approved by the
-     *       "designated" administration (eg. Nexa Exchange DAO).
-     *
-     * NOTE: A fallback is triggered after 5,000 blocks (approx. 7 days),
-     *       which grants the Provider the ability to override
-     *       (and replace) the operational role of the administration.
-     *
-     * @param executor
-     * @param signature
+     * TBD
      */
-    function harvest(pubkey executor, sig signature) {
-        if (executor == admin) {
-            /* Verify UTXO age is AFTER the growing season(s). */
-            require(tx.age >= seasons);
-
-            /* Verify transaction is signed by the farmhouse farmer. */
-            require(checkSig(signature, admin));
-        }
-
-        /* Define length (in cycles) of one (1) week-long season. */
-        int SEASONAL_WEEK = 1181;
-
-        if (executor == provider) {
-            /* Verify UTXO age is AFTER the growing season(s). */
-            require(tx.age >= (seasons + SEASONAL_WEEK));
-
-            /* Verify transaction is signed by the farmhouse farmer. */
-            require(checkSig(signature, provider));
-        }
+    function harvest() {
+        /* Validate plantation. */
+        // NOTE: This will always be the 1st input & output.
+        require(
+// FIXME Use `.visibleArguments`.
+            tx.inputs[1].lockingBytecode == farmhouseid &&
+            tx.outputs[1].lockingBytecode == farmhouseid
+        )
     }
 }
