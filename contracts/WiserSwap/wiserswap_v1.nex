@@ -39,13 +39,12 @@ pragma nexscript >= 0.2.0;
  * Script Hash : 0x0000000000000000000000000000000000000000
  * Namespace   : WISER01
  *
- * owner       : (pubkey)  The Seller's FULL public key.
- * ownerFee    : (int)     An optional amount charged by the Owner. (measured in <basis points> (bp), eg. 5.25% = 525bp)
- * autoPayout  : (int)     An optional (fee) value (in satoshis) that will trigger an auto-payment to the Owner.
+ * provider    : (pubkey)  The Provider's FULL public key.
+ * providerFee : (int)     An optional amount charged by the Owner. (measured in <basis points> (bp), eg. 5.25% = 525bp)
  * payout      : (bytes20) An optional Payout address (only if auto payout is enabled).
- * provider    : (bytes20) An optional 3rd-party (specified by the Seller) used to facilitate the transaction.
- * providerFee : (int)     An optional amount charged by the Provider. (measured in <basis points> (bp), eg. 5.25% = 525bp)
- * admin       : (pubkey)  The Administration's FULL public key.
+ * admin       : (bytes20) An optional 3rd-party (specified by the Provider) used to facilitate the transaction.
+ * adminFee    : (int)     An optional amount charged by the Provider. (measured in <basis points> (bp), eg. 5.25% = 525bp)
+ * floor       : (int)     An optional (foundation) Guardian (specified by the Provider) to enforce the trade boundries.
  *
  * For more information, please visit the following resources:
  *   - https://docs.nexa.exchange/wiserswap
@@ -53,13 +52,12 @@ pragma nexscript >= 0.2.0;
  *
  */
 contract WiserSwap(
-    pubkey owner,
-    int ownerFee,
-    int autoPayout,
-    bytes20 payout,
-    bytes20 provider,
+    pubkey provider,
     int providerFee,
-    pubkey admin,
+    bytes20 payout,
+    bytes20 admin,
+    int adminFee,
+    int floor,
 ) {
     /**
      * Swap (Pool Assets)
@@ -67,10 +65,7 @@ contract WiserSwap(
      * Allows two (2) assets to be swapped with each other, while maintaining
      * the same (constant) product within the pool.
      */
-    function swap(
-        datasig adminSig,
-        bytes adminMsg,
-    ) {
+    function swap() {
         //----------------------------------------------------------------------
         // BEGIN LOCKING BYTECODE VERIFICATION (WORKAROUND) FOR GROUPS
         //----------------------------------------------------------------------
@@ -142,89 +137,72 @@ contract WiserSwap(
         // END CONSTANT PRODUCT VERIFICATION
         //----------------------------------------------------------------------
 
-        /* Initialize (transaction) total swap value. */
-        int totalSwapValue = 0;
-
-        /* Initialize (change) index. */
-        // NOTE: Use for calculating (change) outputs. */
-        int changeIdx = 0;
-
-        /* Validate inputs & outputs. */
-        // NOTE: Test for (change) output, used in fee calculations.
-        if (tx.outputs.length > tx.inputs.length) {
-            /* Calculate total swap value. */
-            // NOTE: Assume # of inputs is the (index) for (change) output.
-            totalSwapValue = (tx.amountOut - tx.outputs[tx.inputs.length].value);
-
-            /* Set (change) index. */
-            changeIdx = 1;
-        } else {
-            /* Set total swap value. */
-            // NOTE: Used to calculate the provider fee.
-            totalSwapValue = tx.amountOut;
-        }
+        /**
+         * Validate (additional) inputs & outputs, beyond the included
+         * WiserSwap contract input(s).
+         *
+         * Additional output indexes:
+         *   #1 (requried) Administration fee (in $NEXA) [min: 546 sats]
+         *   #2 (requried) Provider auto-pay fee (in $NEXA) [min: 546 sats]
+         *   #3 (required) Trader change (in $NEXA) -OR- null data (placeholder)
+         *
+         * NOTE: Test for (Trader change) output, used in fee calculations.
+         */
+        require(tx.outputs.length == tx.inputs.length + 3);
 
         /* Set dust value. */
         int DUST_VALUE = 546;
 
         /* Calculate Owner commission. */
-        int ownerCommission = (totalSwapValue * ownerFee) / 10000;
+        int providerCommission = (wiserValueOut * providerFee) / 10000;
 
-        /* Validate minimum Owner commission. */
+        /* Validate Provider commission (dust) value. */
         // NOTE: Used to discourage denial-of-service (DoS) attack.
-        require(ownerCommission == 0 || ownerCommission >= DUST_VALUE);
+        providerCommission = max(providerCommission, DUST_VALUE);
 
-        /* Calculate public key hash. */
-        bytes20 ownerPkh = hash160(owner);
-
-        /* Create Provider bytecode. */
         // NOTE: Supports ONLY $NEXA assets.
-        bytes23 ownerBytecode = new LockingBytecodeP2PKT(ownerPkh);
+        bytes23 payoutBytecode = new LockingBytecodeP2PKT(payout);
 
-        /* Validate (Owner-defined) auto-payout value. */
-        require(autoPayout == 0 || autoPayout >= DUST_VALUE);
+        /* Verify Provider (payout) bytecode. */
+        // NOTE: Assume to be 2nd from last output.
+        require(tx.outputs[tx.outputs.length - 2].lockingBytecode == payoutBytecode);
+        require(tx.outputs[tx.outputs.length - 2].value == providerCommission);
 
-        /* Validate auto-payout. */
-        if (autoPayout >= ownerCommission) {
-            /* Verify Provider bytecode. */
-            // NOTE: Assume to be the LAST output.
-            require(tx.outputs[tx.outputs.length - changeIdx].lockingBytecode == ownerBytecode);
-
-            // TODO Handle Provider fee (w/ auto-payout).
-            require(payout == 0x0);
-            require(provider == 0x0);
-        } else {
-            /* Re-calculate total swap value. */
-            // NOTE: Subtract owner commission. */
-
-            // NOTE: Assumed to be the 2nd to last output.
-            require(tx.outputs[tx.outputs.length - changeIdx - 1].lockingBytecode == ownerBytecode);
-        }
+        // NOTE: Supports ONLY $NEXA assets.
+        bytes23 adminBytecode = new LockingBytecodeP2PKT(admin);
 
         /* Calculate Provider commission. */
-        int providerCommission = (totalSwapValue * providerFee) / 10000;
+        int adminCommission = (wiserValueOut * adminFee) / 10000;
 
-        /* Validate minimum Provider commission. */
+        /* Validate Admin commission (dust) value. */
         // NOTE: Used to discourage denial-of-service (DoS) attack.
-        require(providerCommission == 0 || providerCommission >= DUST_VALUE);
+        adminCommission = max(adminCommission, DUST_VALUE);
 
-        /* Validate (optional) admin key. */
+        /* Verify Admin (commission) bytecode. */
+        // NOTE: Assume to be 3rd from last output.
+        require(tx.outputs[tx.outputs.length - 2].lockingBytecode == adminBytecode);
+        require(tx.outputs[tx.outputs.length - 2].value == adminCommission);
+
+        //----------------------------------------------------------------------
+        // BEGIN TRADE FLOOR PROTECTION
+        //----------------------------------------------------------------------
+
+        /* Validate (optional) trading floor. */
         // NOTE: Primarily used to guard the Foundation of a "new" asset
         //       during the beginning of its life-cycle.
         //       (see also: https://docs.nexa.exchange/create/foundation)
-        if (bytes(admin) != 0x0) {
-            /* Validate swap w/ Admin (during probation period). */
-            require(checkDataSig(adminSig, adminMsg, admin));
-
-            /* Calculate (foundation) ratio. */
+        if (floor != 0) {
+            /* Calculate swap ($TOKEN/$NEXA) ratio. */
+            // NOTE: $NEXA is the currency used for ALL fee calculations.
             int ratio = wiserValueOut / wiserAmountOut;
 
-            /* Validate admin (ratio) message. */
-            require(ratio >= int(adminMsg.split(8)[0]));
-
-            /* Validate admin (tx idem) message. */
-            require(tx.idem == adminMsg.split(8)[1]);
+            /* Validate floor ratio. */
+            require(ratio >= floor);
         }
+
+        //----------------------------------------------------------------------
+        // END TRADE FLOOR PROTECTION
+        //----------------------------------------------------------------------
     }
 
     /**
@@ -237,7 +215,7 @@ contract WiserSwap(
      * NOTE: ONLY the pool's Owner can perform this action.
      */
     function manage(sig signature) {
-        /* Verify transaction is signed by the owner. */
-        require(checkSig(signature, owner));
+        /* Verify transaction is signed by the provider. */
+        require(checkSig(signature, provider));
     }
 }
