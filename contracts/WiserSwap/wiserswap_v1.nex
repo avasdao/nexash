@@ -36,7 +36,7 @@ pragma nexscript >= 0.2.0;
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  *
  * Version     : 01
- * Script Hash : 0x0000000000000000000000000000000000000000
+ * Script Hash : 0xBF25FECAAEDAA59841E9E4E1584A3E3C36E83ABB
  * Namespace   : WISER01
  *
  * provider    : (pubkey)  Pool owner (aka Provider) full (33-byte) public key.
