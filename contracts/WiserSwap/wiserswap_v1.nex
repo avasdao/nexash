@@ -8,10 +8,10 @@ pragma nexscript >= 0.2.0;
  * WiserSwap
  *
  * A "wise" contract implemenation of a Constant Product Market Maker (CPMM)
- * for Nexa, using a micro-pools approach.
+ * for Nexa, using a micro pools approach.
  *
  * Individual liquidity provider(s) may deploy their own CPMM contract(s) for
- * managing their own micro-pool(s). This design leverages Nexa's UTXO model
+ * managing their own micro pool(s). This design leverages Nexa's UTXO model
  * and its 100K+ TPS throughput, allowing for unparalled scalability and
  * efficiency as compared to ANY other modern-day DEX.
  *
@@ -27,9 +27,9 @@ pragma nexscript >= 0.2.0;
  * where K is the constant value, and x and y represent the quantities of
  * <Tokens> and <NEXA>, respectively.
  *
- * Aggregating Micro-Pools
+ * Aggregating Micro Pools
  * ----------------------------------------
- * WiserSwap supports aggregation of micro-pools to increase liquidity for
+ * WiserSwap supports aggregation of micro pools to increase liquidity for
  * trades. Multiple pools can be included in a single Transaction to increase
  * asset liquidity and swap efficiency.
  *
@@ -39,12 +39,12 @@ pragma nexscript >= 0.2.0;
  * Script Hash : 0x0000000000000000000000000000000000000000
  * Namespace   : WISER01
  *
- * provider    : (pubkey)  The Provider's FULL public key.
- * providerFee : (int)     An optional amount charged by the Owner. (measured in <basis points> (bp), eg. 5.25% = 525bp)
- * payout      : (bytes20) An optional Payout address (only if auto payout is enabled).
- * admin       : (bytes20) An optional 3rd-party (specified by the Provider) used to facilitate the transaction.
- * adminFee    : (int)     An optional amount charged by the Provider. (measured in <basis points> (bp), eg. 5.25% = 525bp)
- * floor       : (int)     An optional (foundation) Guardian (specified by the Provider) to enforce the trade boundries.
+ * provider    : (pubkey)  Pool owner (aka Provider) full (33-byte) public key.
+ * providerFee : (int)     Amount charged by the Provider. (measured in <basis points> (bp), eg. 5.25% = 525bp)
+ * payout      : (bytes20) Payout address for commission payments.
+ * admin       : (bytes20) A 3rd-party Administrator (specified by the Provider) who will host & manage the micro pool.
+ * adminFee    : (int)     Amount charged by the Administrator. (measured in <basis points> (bp), eg. 5.25% = 525bp)
+ * floor       : (int)     An optional trade boundry (specified by the Provider); also used to enforce an asset's Foundation (set by its Creator).
  *
  * For more information, please visit the following resources:
  *   - https://docs.nexa.exchange/wiserswap
@@ -57,7 +57,7 @@ contract WiserSwap(
     bytes20 payout,
     bytes20 admin,
     int adminFee,
-    int floor,
+    int tradeFloor,
 ) {
     /**
      * Swap (Pool Assets)
@@ -145,59 +145,69 @@ contract WiserSwap(
          *   #1 (requried) Administration fee (in $NEXA) [min: 546 sats]
          *   #2 (requried) Provider auto-pay fee (in $NEXA) [min: 546 sats]
          *   #3 (required) Trader change (in $NEXA) -OR- null data (placeholder)
-         *
-         * NOTE: Test for (Trader change) output, used in fee calculations.
          */
         require(tx.outputs.length == tx.inputs.length + 3);
 
         /* Set dust value. */
         int DUST_VALUE = 546;
 
+        /*Set Admin bytecode. */
         // NOTE: Supports ONLY $NEXA assets.
         bytes23 adminBytecode = new LockingBytecodeP2PKT(admin);
 
-        /* Calculate Provider commission. */
+        /* Calculate Admin commission. */
         int adminCommission = (wiserValueOut * adminFee) / 10000;
 
         /* Validate Admin commission (dust) value. */
-        // NOTE: Used to discourage denial-of-service (DoS) attack.
+        // NOTE: Used to discourage denial-of-service (DoS) attacks.
         adminCommission = max(adminCommission, DUST_VALUE);
 
-        /* Verify Admin (commission) bytecode. */
-        // NOTE: Assume to be 3rd from last output.
-        require(tx.outputs[tx.outputs.length - 3].lockingBytecode == adminBytecode);
-        require(tx.outputs[tx.outputs.length - 3].value == adminCommission);
+        /* Set Admin output index. */
+        // NOTE: MUST be 3rd from last output.
+        int adminOutputIdx = tx.outputs.length - 3;
 
+        /* Verify Admin (commission) bytecode. */
+        require(tx.outputs[adminOutputIdx].lockingBytecode == adminBytecode);
+
+        /* Verify Admin (commission) amount. */
+        require(tx.outputs[adminOutputIdx].value >= adminCommission);
+
+        /* Set Provider (payout) bytecode. */
         // NOTE: Supports ONLY $NEXA assets.
         bytes23 payoutBytecode = new LockingBytecodeP2PKT(payout);
 
-        /* Calculate Owner commission. */
+        /* Calculate Provider commission. */
         int providerCommission = (wiserValueOut * providerFee) / 10000;
 
         /* Validate Provider commission (dust) value. */
         // NOTE: Used to discourage denial-of-service (DoS) attack.
         providerCommission = max(providerCommission, DUST_VALUE);
 
+        /* Set provider output index. */
+        // NOTE: MUST be 2nd from last output.
+        int providerOutputIdx = tx.outputs.length - 2;
+
         /* Verify Provider (payout) bytecode. */
-        // NOTE: Assume to be 2nd from last output.
-        require(tx.outputs[tx.outputs.length - 2].lockingBytecode == payoutBytecode);
-        require(tx.outputs[tx.outputs.length - 2].value == providerCommission);
+        require(tx.outputs[providerOutputIdx].lockingBytecode == payoutBytecode);
+
+        /* Verify Provider (payout) amount. */
+        require(tx.outputs[providerOutputIdx].value >= providerCommission);
 
         //----------------------------------------------------------------------
         // BEGIN TRADE FLOOR PROTECTION
         //----------------------------------------------------------------------
 
-        /* Validate (optional) trading floor. */
+        /* Validate (optional) trade floor. */
         // NOTE: Primarily used to guard the Foundation of a "new" asset
         //       during the beginning of its life-cycle.
         //       (see also: https://docs.nexa.exchange/create/foundation)
-        if (floor != 0) {
-            /* Calculate swap ($TOKEN/$NEXA) ratio. */
+        if (tradeFloor != 0) {
+            /* Calculate $TOKEN/$NEXA ratio. */
             // NOTE: $NEXA is the currency used for ALL fee calculations.
-            int swapRatio = wiserValueOut / wiserAmountOut;
+            int assetsRatio = wiserValueOut / wiserAmountOut;
 
-            /* Validate floor (swap) ratio. */
-            require(swapRatio >= floor);
+            /* Validate $TOKEN/$NEXA ratio vs trade floor. */
+            require(assetsRatio >= tradeFloor);
         }
 
         //----------------------------------------------------------------------
@@ -212,7 +222,7 @@ contract WiserSwap(
      *   1. Withdraw all funds
      *   2. Re-balance the pool (aka adjust the price).
      *
-     * NOTE: ONLY the pool's Owner can perform this action.
+     * NOTE: ONLY the pool's (owner) Provider can perform this action.
      */
     function manage(sig signature) {
         /* Verify transaction is signed by the provider. */
