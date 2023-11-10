@@ -153,21 +153,6 @@ contract WiserSwap(
         /* Set dust value. */
         int DUST_VALUE = 546;
 
-        /* Calculate Owner commission. */
-        int providerCommission = (wiserValueOut * providerFee) / 10000;
-
-        /* Validate Provider commission (dust) value. */
-        // NOTE: Used to discourage denial-of-service (DoS) attack.
-        providerCommission = max(providerCommission, DUST_VALUE);
-
-        // NOTE: Supports ONLY $NEXA assets.
-        bytes23 payoutBytecode = new LockingBytecodeP2PKT(payout);
-
-        /* Verify Provider (payout) bytecode. */
-        // NOTE: Assume to be 2nd from last output.
-        require(tx.outputs[tx.outputs.length - 2].lockingBytecode == payoutBytecode);
-        require(tx.outputs[tx.outputs.length - 2].value == providerCommission);
-
         // NOTE: Supports ONLY $NEXA assets.
         bytes23 adminBytecode = new LockingBytecodeP2PKT(admin);
 
@@ -180,8 +165,23 @@ contract WiserSwap(
 
         /* Verify Admin (commission) bytecode. */
         // NOTE: Assume to be 3rd from last output.
-        require(tx.outputs[tx.outputs.length - 2].lockingBytecode == adminBytecode);
-        require(tx.outputs[tx.outputs.length - 2].value == adminCommission);
+        require(tx.outputs[tx.outputs.length - 3].lockingBytecode == adminBytecode);
+        require(tx.outputs[tx.outputs.length - 3].value == adminCommission);
+
+        // NOTE: Supports ONLY $NEXA assets.
+        bytes23 payoutBytecode = new LockingBytecodeP2PKT(payout);
+
+        /* Calculate Owner commission. */
+        int providerCommission = (wiserValueOut * providerFee) / 10000;
+
+        /* Validate Provider commission (dust) value. */
+        // NOTE: Used to discourage denial-of-service (DoS) attack.
+        providerCommission = max(providerCommission, DUST_VALUE);
+
+        /* Verify Provider (payout) bytecode. */
+        // NOTE: Assume to be 2nd from last output.
+        require(tx.outputs[tx.outputs.length - 2].lockingBytecode == payoutBytecode);
+        require(tx.outputs[tx.outputs.length - 2].value == providerCommission);
 
         //----------------------------------------------------------------------
         // BEGIN TRADE FLOOR PROTECTION
@@ -194,10 +194,10 @@ contract WiserSwap(
         if (floor != 0) {
             /* Calculate swap ($TOKEN/$NEXA) ratio. */
             // NOTE: $NEXA is the currency used for ALL fee calculations.
-            int ratio = wiserValueOut / wiserAmountOut;
+            int swapRatio = wiserValueOut / wiserAmountOut;
 
-            /* Validate floor ratio. */
-            require(ratio >= floor);
+            /* Validate floor (swap) ratio. */
+            require(swapRatio >= floor);
         }
 
         //----------------------------------------------------------------------
