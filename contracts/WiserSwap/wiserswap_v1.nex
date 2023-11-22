@@ -39,9 +39,8 @@ pragma nexscript >= 0.2.0;
  * Script Hash : 0xBF25FECAAEDAA59841E9E4E1584A3E3C36E83ABB
  * Namespace   : WISER01
  *
- * provider       : (pubkey)  Pool owner (aka Provider) full (33-byte) public key.
+ * provider       : (bytes20) Pool owner (aka Provider) full (33-byte) public key.
  * providerFee    : (int)     Amount charged by the Provider. (measured in <basis points> (bp), eg. 5.25% = 525bp)
- * providerPayout : (bytes20) Payout address for commission payments.
  * admin          : (bytes20) A 3rd-party Administrator (specified by the Provider) who will host & manage the micro pool.
  * adminFee       : (int)     Amount charged by the Administrator. (measured in <basis points> (bp), eg. 5.25% = 525bp)
  * floor          : (int)     An optional trade boundry (specified by the Provider); also used to enforce an asset's Foundation (set by its Creator).
@@ -52,9 +51,8 @@ pragma nexscript >= 0.2.0;
  *
  */
 contract WiserSwap(
-    pubkey provider,
+    bytes20 provider,
     int providerFee,
-    bytes20 providerPayout,
     bytes20 admin,
     int adminFee,
     int tradeFloor,
@@ -174,7 +172,7 @@ contract WiserSwap(
 
         /* Set Provider (payout) bytecode. */
         // NOTE: Supports ONLY $NEXA assets.
-        bytes23 payoutBytecode = new LockingBytecodeP2PKT(providerPayout);
+        bytes23 providerBytecode = new LockingBytecodeP2PKT(provider);
 
         /* Calculate Provider commission. */
         int providerCommission = (wiserValueOut * providerFee) / 10000;
@@ -188,7 +186,7 @@ contract WiserSwap(
         int providerOutputIdx = tx.outputs.length - 2;
 
         /* Verify Provider (payout) bytecode. */
-        require(tx.outputs[providerOutputIdx].lockingBytecode == payoutBytecode);
+        require(tx.outputs[providerOutputIdx].lockingBytecode == providerBytecode);
 
         /* Verify Provider (payout) amount. */
         require(tx.outputs[providerOutputIdx].value >= providerCommission);
@@ -224,8 +222,14 @@ contract WiserSwap(
      *
      * NOTE: ONLY the pool's (owner) Provider can perform this action.
      */
-    function manage(sig signature) {
-        /* Verify transaction is signed by the provider. */
-        require(checkSig(signature, provider));
+    function manage(pubkey authorized, sig signature) {
+        /* Calculate authorized hash. */
+        bytes20 authorizedHash = hash160(authorized);
+
+        /* Validate authorized provider. */
+        require(authorizedHash == provider);
+
+        /* Validate transaction signature. */
+        require(checkSig(signature, authorized));
     }
 }
