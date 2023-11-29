@@ -1,0 +1,116 @@
+pragma nexscript >= 0.2.0;
+
+/*******************************************************************************
+ *
+ * Copyright (c) 2023 Ava's DAO
+ * Released under the MIT License.
+ *
+ * "Wise" Profile
+ *
+ * An account abstraction protocol to create "Wiser" User Profiles
+ * for Nexa users; offering signaficant UX advantages over standard
+ * wallet addresses.
+ *
+ * NOTES
+ * --------------------
+ * TBD..
+ *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ *
+ * Version     : 01
+ * Script Hash : 0x0000000000000000000000000000000000000000
+ * Namespace   : PROFILE01
+ *
+ * owner : Party whom will receive the payouts.
+ * param : A very useful parameter.
+ *
+ * For more information, please visit the following resources:
+ *   - https://domain.tld
+ *   - https://avasdao.org
+ *
+ * @param ownerHash_1
+ * @param ownerHash_2
+ * @param ownerHash_3
+ * @param threshold
+ *
+ */
+contract Profile(
+    bytes32 ownerHash_1,
+    bytes32 ownerHash_2,
+    bytes32 ownerHash_3,
+    int threshold,
+) {
+    /**
+     * Transfer
+     *
+     * Grants permission by one (or up to three) Owner(s) to
+     * transfer assets managed by this Profile (contract).
+     *
+     * @param owner_1
+     * @param owner_2
+     * @param owner_3
+     * @param signature_1
+     * @param signature_2
+     * @param signature_3
+     */
+    function transfer(
+        pubkey owner_1,
+        pubkey owner_2,
+        pubkey owner_3,
+        sig signature_1,
+        sig signature_2,
+        sig signature_3
+    ) {
+        /* Validate ALL signatures. */
+        if (ownerHash_1 != 0x0) {
+            require(hash160(owner_1) == ownerHash_1);
+            require(checkSig(signature_1, owner_1));
+        }
+
+        if (ownerHash_2 != 0x0) {
+            require(hash160(owner_2) == ownerHash_2);
+            require(checkSig(signature_2, owner_2));
+        }
+
+        if (ownerHash_3 != 0x0) {
+            require(hash160(owner_3) == ownerHash_3);
+            require(checkSig(signature_3, owner_3));
+        }
+
+        /* Set minimum threshold. */
+        int MINIMUM_THRESHOLD = 1;
+
+        /* Set maximum threshold. */
+        int MAXIMUM_THRESHOLD = 3;
+
+        /* Verify threshold. */
+        require(
+            within(threshold, MINIMUM_THRESHOLD, MAXIMUM_THRESHOLD + 1)
+        );
+
+        /* Validate ALL thresholds. */
+        if (threshold == 1) {
+            require(
+                ownerHash_1 != 0x0 ||
+                ownerHash_2 != 0x0 ||
+                ownerHash_3 != 0x0
+            );
+        }
+
+        if (threshold == 2) {
+            require(
+                (ownerHash_1 != 0x0 || ownerHash_2 != 0x0) ||
+                (ownerHash_1 != 0x0 || ownerHash_3 != 0x0) ||
+                (ownerHash_2 != 0x0 || ownerHash_3 != 0x0)
+            );
+        }
+
+        if (threshold == 3) {
+            require(
+                ownerHash_1 != 0x0 &&
+                ownerHash_2 != 0x0 &&
+                ownerHash_3 != 0x0
+            );
+        }
+    }
+}
