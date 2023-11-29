@@ -1,6 +1,6 @@
 pragma nexscript >= 0.2.0;
 
-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+/*******************************************************************************
  *
  * Copyright (c) 2023 Ava's DAO
  * Released under the MIT License.
@@ -33,15 +33,16 @@ pragma nexscript >= 0.2.0;
  *   - https://docs.avas.cash/staking
  *   - https://avasdao.org
  *
- * @param owner
- * @param key
- * @param value
+ * @param expiration
+ * @param patron
+ * @param service
+ * @param stakeid
  *
  */
 contract Stakeline(
     int expiration,
     pubkey patron,
-    bytes visible unused platformid,
+    bytes visible unused serviceid,
     bytes visible unused stakeid,
 ) {
     /**
@@ -49,6 +50,8 @@ contract Stakeline(
      *
      * Allows a stakeline Patron to remove their assets AFTER their
      * subscription time has ended.
+     *
+     * @param signature
      */
     function closeout(sig signature) {
         /* Verify UTXO (transaction) time is AFTER the expiration time. */
