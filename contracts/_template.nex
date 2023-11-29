@@ -1,6 +1,6 @@
 pragma nexscript >= 0.2.0;
 
-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+/*******************************************************************************
  *
  * Copyright (c) 2023 Ava's DAO
  * Released under the MIT License.
@@ -25,6 +25,10 @@ pragma nexscript >= 0.2.0;
  * For more information, please visit the following resources:
  *   - https://domain.tld
  *   - https://avasdao.org
+ *
+ * @param owner
+ * @param key
+ * @param value
  *
  */
 contract Blank(
