@@ -7,13 +7,32 @@ pragma nexscript >= 0.2.0;
  *
  * "Wise" Profile
  *
- * An account abstraction protocol to create "Wiser" User Profiles
+ * An account abstraction protocol to create "wiser" (wallet) Profiles
  * for Nexa users; offering signaficant UX advantages over standard
  * wallet addresses.
  *
  * NOTES
  * --------------------
- * TBD..
+ * A Profile Manager is created (ie. minted) to maintain the access rights
+ * and user roles each Profile.
+ *
+ * Version (1) of the specification is as follows:
+ *
+ * (byte)    num_auth_roles  : TBD
+ * (bytes64) tokenid_X       : TBD
+ * (bytes8)  authority_X   : TBD
+ *
+ * Authority is granted to each tokenid assigned to the Profile,
+ * with the following (bytes) schema:
+ *
+ * byte_1 -> Permissions (Read-Write-Execute)
+ * byte_2 -> Threshold (Write)
+ * byte_3 -> Threshold (Execute)
+ * byte_4 -> (unassigned)
+ * byte_5 -> Transaction (satoshis value) limit
+ * byte_6 -> Transaction (time interval) limit
+ * byte_7 -> (unassigned)
+ * byte_8 -> (unassigned)
  *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  *
@@ -21,60 +40,64 @@ pragma nexscript >= 0.2.0;
  * Script Hash : 0x0000000000000000000000000000000000000000
  * Namespace   : PROFILE01
  *
- * owner : Party whom will receive the payouts.
- * param : A very useful parameter.
+ * manager (bytes64) : A Profile Manager is used to coordinate ALL Profile activities.
  *
  * For more information, please visit the following resources:
  *   - https://domain.tld
  *   - https://avasdao.org
  *
- * @param ownerHash_1
- * @param ownerHash_2
- * @param ownerHash_3
- * @param threshold
+ * @param manager
  *
  */
-contract Profile(
-    bytes32 ownerHash_1,
-    bytes32 ownerHash_2,
-    bytes32 ownerHash_3,
-    int threshold,
-) {
+contract Profile(bytes64 manager) {
     /**
      * Transfer
      *
      * Grants permission by one (or up to three) Owner(s) to
      * transfer assets managed by this Profile (contract).
      *
-     * @param owner_1
-     * @param owner_2
-     * @param owner_3
+     * @param user_1
+     * @param user_2
+     * @param user_3
      * @param signature_1
      * @param signature_2
      * @param signature_3
      */
     function transfer(
-        pubkey owner_1,
-        pubkey owner_2,
-        pubkey owner_3,
+        pubkey user_1,
+        pubkey user_2,
+        pubkey user_3,
         sig signature_1,
         sig signature_2,
         sig signature_3
     ) {
-        /* Validate ALL signatures. */
-        if (ownerHash_1 != 0x0) {
-            require(hash160(owner_1) == ownerHash_1);
-            require(checkSig(signature_1, owner_1));
+        /* Parse (up to 3) token ids. */
+        bytes64 tokenid_1 = bytes64(manager.split(64)[0]);
+        bytes64 tokenid_2 = bytes64(manager.split(128)[0].split(64)[1]);
+        bytes64 tokenid_3 = bytes64(manager.split(192)[0].split(128)[1]);
+
+        // NOTE: `threshold` is 4-byte integer.
+        int threshold = int(manager.split(196)[0].split(192)[1]);
+
+        /* Validate 1st user. */
+        if (tokenid_1 != 0x0) {
+            require(hash160(user_1) == tokenid_1); // FIXME: Retrieve owner pubkey from lockingBytecode.
+
+            require(checkSig(signature_1, user_1));
         }
 
-        if (ownerHash_2 != 0x0) {
-            require(hash160(owner_2) == ownerHash_2);
-            require(checkSig(signature_2, owner_2));
+        /* Validate 2nd user. */
+        if (tokenid_2 != 0x0) {
+            require(hash160(user_2) == tokenid_2); // FIXME: Retrieve owner pubkey from lockingBytecode.
+
+            require(checkSig(signature_2, user_2));
         }
 
-        if (ownerHash_3 != 0x0) {
-            require(hash160(owner_3) == ownerHash_3);
-            require(checkSig(signature_3, owner_3));
+        /* Validate 3rd user. */
+        if (tokenid_3 != 0x0) {
+            require(hash160(user_3) == tokenid_3); // FIXME: Retrieve owner pubkey from lockingBytecode.
+
+            require(checkSig(signature_3, user_3));
         }
 
         /* Set minimum threshold. */
@@ -89,27 +112,29 @@ contract Profile(
         );
 
         /* Validate ALL thresholds. */
+        // TODO Allow for "unlimited" thresholds.
+        // TODO Add support for separate (Write+Execute) thresholds.
         if (threshold == 1) {
             require(
-                ownerHash_1 != 0x0 ||
-                ownerHash_2 != 0x0 ||
-                ownerHash_3 != 0x0
+                tokenid_1 != 0x0 ||
+                tokenid_2 != 0x0 ||
+                tokenid_3 != 0x0
             );
         }
 
         if (threshold == 2) {
             require(
-                (ownerHash_1 != 0x0 || ownerHash_2 != 0x0) ||
-                (ownerHash_1 != 0x0 || ownerHash_3 != 0x0) ||
-                (ownerHash_2 != 0x0 || ownerHash_3 != 0x0)
+                (tokenid_1 != 0x0 || tokenid_2 != 0x0) ||
+                (tokenid_1 != 0x0 || tokenid_3 != 0x0) ||
+                (tokenid_2 != 0x0 || tokenid_3 != 0x0)
             );
         }
 
         if (threshold == 3) {
             require(
-                ownerHash_1 != 0x0 &&
-                ownerHash_2 != 0x0 &&
-                ownerHash_3 != 0x0
+                tokenid_1 != 0x0 &&
+                tokenid_2 != 0x0 &&
+                tokenid_3 != 0x0
             );
         }
     }
