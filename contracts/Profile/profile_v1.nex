@@ -11,6 +11,18 @@ pragma nexscript >= 0.2.0;
  * for Nexa users; offering signaficant UX advantages over standard
  * wallet addresses.
  *
+ * Benefits include (but are not limited to):
+ *   1. Wallet recovery - security does not rely on a seed phrase or
+ *                        private key.
+ *   2. Batch txs       - we can batch multiple transactions together and
+ *                        approve all of them at once.
+ *   3. Shared accounts - share different levels of access to your wallet
+ *                        with multiple users.
+ *   4. Automated txs   - define a range of parameters such as access to
+ *                        specific tokens, spend limits, duration, fee limit,
+ *                        specific actions based on pre-defined triggers,
+ *                        and much more.
+ *
  * NOTES
  * --------------------
  * A Profile Manager is created (ie. minted) to maintain the access rights
@@ -18,21 +30,24 @@ pragma nexscript >= 0.2.0;
  *
  * Version (1) of the specification is as follows:
  *
- * (byte)    num_auth_roles  : TBD
- * (bytes64) tokenid_X       : TBD
- * (bytes8)  authority_X   : TBD
+ * (byte)    num_auth_roles     : The total # of Authority roles assigned to this Profile.
+ * (bytes64) tokenid_X          : The token id of Authority (X).
+ * (bytes8)  rights_X           : The rights granted to this Authority (X).
+ * (byte)    num_limits_X       : The total # of limits placed on this Authority (X).
+ * (bytes8)  limit_satoshis_X_Y : Satoshi limit (Y) placed on Authority (X).
+ * (bytes4)  limit_time_X_Y     : Time limit (Y) placed on Authority (X).
  *
- * Authority is granted to each tokenid assigned to the Profile,
- * with the following (bytes) schema:
+ * Rights are granted to each Authority (ie. tokenid) assigned to the Profile,
+ * with the following (8-byte) schema:
  *
- * byte_1 -> Permissions (Read-Write-Execute)
- * byte_2 -> Threshold (Write)
- * byte_3 -> Threshold (Execute)
- * byte_4 -> (unassigned)
- * byte_5 -> Transaction (satoshis value) limit
- * byte_6 -> Transaction (time interval) limit
- * byte_7 -> (unassigned)
- * byte_8 -> (unassigned)
+ * Byte #1 -> Permissions (Read-Write-Execute)
+ * Byte #2 -> Threshold (Write)
+ * Byte #3 -> Threshold (Execute)
+ * Byte #4 -> (unassigned)
+ * Byte #5 -> (unassigned)
+ * Byte #6 -> (unassigned)
+ * Byte #7 -> (unassigned)
+ * Byte #8 -> (unassigned)
  *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  *
