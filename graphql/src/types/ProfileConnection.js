@@ -11,11 +11,11 @@ import {
 
 /* Import types. */
 import ConnInfoType from '../types/ConnInfo.js'
-import ProfileEdgeType from '../types/ProfileEdgeTypeEdge.js'
+import ProfileEdgeType from '../types/ProfileEdge.js'
 import PageInfoType from '../types/PageInfo.js'
 
 export default new GraphQLObjectType({
-    name: 'ProfileEdgeTypeConnection',
+    name: 'ProfileConnection',
     fields: () => ({
 
         connInfo: {
@@ -30,7 +30,7 @@ export default new GraphQLObjectType({
 
         edges: {
             type: new GraphQLNonNull(new GraphQLList(ProfileEdgeType)),
-            description: `ProfileEdgeType Edge data.`,
+            description: `Profile Edge data.`,
         },
 
         pageInfo: {
@@ -39,5 +39,5 @@ export default new GraphQLObjectType({
         },
 
     }),
-    description: `A __ProfileEdgeType Edge__ description goes here.`,
+    description: `A __Profile Edge__ description goes here.`,
 })
