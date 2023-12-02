@@ -19,7 +19,6 @@ const fields = {
     account,
     address,
     block,
-    id,
     meta,
     profile,
     script,
