@@ -20,9 +20,9 @@ export default {
             description: `Enter one or more __Token(s) or Group ID(s)__ here to retrieve data about.`,
         },
 
-        ownerid: {
+        tokenidHex: {
             type: new GraphQLList(GraphQLString),
-            description: `Enter one or more __Owner Address(es)__ here to retrieve _Token_ data about.`,
+            description: `Enter one or more __Hex-encoded ID(s)__ here to retrieve _Token_ data about.`,
         },
 
     },

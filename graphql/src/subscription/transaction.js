@@ -15,11 +15,11 @@ export default (_pubsub) => ({
             description: `Filter by transaction idem.`,
         },
 
-        owner: {
+        profile: {
             type: new GraphQLList(GraphQLString),
-            description: `Filter by transaction Owner (address) as sender or receiver.`,
+            description: `Filter by transaction Profile (by WPID) as sender or receiver.`,
         },
-        
+
     },
     subscribe: () => _pubsub.asyncIterator(['NEW_TRANSACTION']),
     description: `This subscription will report __every new transaction__ that appears on the blockchain.`,

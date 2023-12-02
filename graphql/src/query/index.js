@@ -5,9 +5,8 @@ import { GraphQLObjectType } from 'graphql'
 import account from './account.js'
 import address from './address.js'
 import block from './block.js'
-import id from './id.js'
 import meta from './meta.js'
-import owner from './owner.js'
+import profile from './profile.js'
 import script from './script.js'
 import token from './token.js'
 import transaction from './transaction.js'
@@ -22,7 +21,7 @@ const fields = {
     block,
     id,
     meta,
-    owner,
+    profile,
     script,
     token,
     transaction,

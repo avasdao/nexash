@@ -1,6 +1,4 @@
-/* Import types. */
-// import BlankType from './Blank.js'
-
+/* Import modules. */
 import {
     GraphQLBoolean,
     GraphQLFloat,
@@ -11,25 +9,28 @@ import {
     GraphQLString,
 } from 'graphql'
 
+/* Import types. */
+import NFTType from '../types/NFT.js'
+
 export default new GraphQLObjectType({
     name: 'Profile',
     fields: () => ({
 
-        field1: {
+        nickname: {
             type: GraphQLString,
             description: `TBD`,
         },
 
-        field2: {
+        balance: {
             type: GraphQLInt,
-            description: `TBD`,
+            description: `The wallet balance (in $NEXA).`,
         },
 
-        field3: {
-            type: GraphQLInt,
-            description: `TBD`,
+        nft: {
+            type: new GraphQLList(NFTType),
+            description: `List of NFTs owned by this wallet.`,
         },
 
     }),
-    description: `A __Profile__ holds details about a specific Nexa ID account.`,
+    description: `A __Profile__ description goes here.`,
 })

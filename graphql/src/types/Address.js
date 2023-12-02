@@ -36,11 +36,6 @@ export default new GraphQLObjectType({
             description: `The __human-readable__ format of the _Address._`,
         },
 
-        owner: {
-            type: GraphQLString,
-            description: `The __human-readable__ format of the _Address._`,
-        },
-
         publicKey: {
             type: GraphQLString,
             description: `The public key for the Address. _(NOTE: Not available until after 1st broadcast)_`,

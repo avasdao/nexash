@@ -18,13 +18,16 @@ export default {
             type: new GraphQLList(GraphQLString),
             description: `Enter a __Base58__-formatted string.`,
         },
+        scriptPubKey: {
+            type: new GraphQLList(GraphQLString),
+            description: `Enter a __Script Public Key__.`,
+        },
     },
     resolve: (_root, _args, _ctx) => {
         console.log('Address (args):', _args)
 
         return [{
             base58: 'nexa:nqsome-random-address',
-            owner: 'nexa:nqsome-random-address',
         }]
     },
     description: `An __Address__ provides a target (or destination) to receive Assets.`,

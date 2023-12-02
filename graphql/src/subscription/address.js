@@ -18,9 +18,9 @@ export default (_pubsub) => ({
             description: `Filter by Address.`,
         },
 
-        owner: {
+        scriptPubKey: {
             type: new GraphQLList(GraphQLString),
-            description: `Filter by transaction Owner (address) as sender or receiver.`,
+            description: `Filter by transaction Script Public Key as sender or receiver.`,
         },
 
     },
@@ -42,7 +42,7 @@ export default (_pubsub) => ({
             let hasMatch = false
             let base58
             let hash
-            let owner
+            let profile
 
             /* Validate base58 arguments. */
             if (_args.base58) {
@@ -68,13 +68,13 @@ export default (_pubsub) => ({
                 })
             }
 
-            /* Validate owner arguments. */
-            if (_args.owner) {
-                owner = Array.isArray(_args.owner) ? _args.owner : [_args.owner]
+            /* Validate profile arguments. */
+            if (_args.profile) {
+                profile = Array.isArray(_args.profile) ? _args.profile : [_args.profile]
 
-                /* Validate owner. */
-                owner.forEach(_owner => {
-                    if (_payload.address.base58 === _owner) {
+                /* Validate profile. */
+                profile.forEach(_profile => {
+                    if (_payload.address.base58 === _profile) {
                         hasMatch = true
                     }
                 })

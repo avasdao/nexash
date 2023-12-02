@@ -15,9 +15,9 @@ export default (_pubsub) => ({
             description: `Filter by transaction idem.`,
         },
 
-        owner: {
+        scriptPubKey: {
             type: new GraphQLList(GraphQLString),
-            description: `Filter by transaction Owner (address) as sender or receiver.`,
+            description: `Filter by transaction Script Public Key as sender or receiver.`,
         },
 
     },
