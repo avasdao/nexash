@@ -12,18 +12,18 @@ import {
 } from 'graphql'
 
 /* Import types. */
-import OwnerConnectionType from '../types/OwnerConnection.js'
+import ProfileConnectionType from '../types/ProfileConnection.js'
 
 export default {
-    type: OwnerConnectionType,
+    type: ProfileConnectionType,
     args: {
         address: {
             type: new GraphQLList(GraphQLString),
-            description: `Provide the __Address__ for an Owner.`,
+            description: `Provide the __Address__ for an Profile.`,
         },
     },
     resolve: (_root, _args, _ctx) => {
-        console.log('Owner (args):', _args)
+        console.log('Profile (args):', _args)
 
         /* Set connection info. */
         const connInfo = {
@@ -69,5 +69,5 @@ export default {
         /* Return transaction details. */
         return connection
     },
-    description: `Request _(strucutred)_ __Owner__ details, aggregated from multiple data sources, for your convenience.`,
+    description: `Request _(strucutred)_ __Profile__ details, aggregated from multiple data sources, for your convenience.`,
 }
