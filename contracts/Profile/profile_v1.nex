@@ -49,6 +49,10 @@ pragma nexscript >= 0.2.0;
  * Byte #7 -> (unassigned)
  * Byte #8 -> (unassigned)
  *
+ * A NEW category request is being made to the "official" NFT specification: 
+ *   "profile"
+ * (see: https://spec.nexa.org/nexa/NFTcategories.md)
+ *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  *
  * Version     : 01
