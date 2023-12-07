@@ -2,12 +2,13 @@ pragma nexscript >= 0.2.0;
 
 /*******************************************************************************
  *
- * Copyright (c) 2023 Ava's DAO
+ * Copyright (c) 2023 Modenero DAO
  * Released under the MIT License.
  *
- * "Wise" Profile
+ * Persona
+ * (a member of the "Wise" Personas suite)
  *
- * An account abstraction protocol to create "wiser" (wallet) Profiles
+ * An account abstraction protocol to create "wiser" (wallet) Personas
  * for Nexa users; offering signaficant UX advantages over standard
  * wallet addresses.
  *
@@ -25,19 +26,18 @@ pragma nexscript >= 0.2.0;
  *
  * NOTES
  * --------------------
- * A Profile Manager is created (ie. minted) to maintain the access rights
- * and user roles each Profile.
+ * Persona Agents are created (ie. minted) to manage on-chain activities.
  *
  * Version (1) of the specification is as follows:
  *
- * (byte)    num_auth_roles     : The total # of Authority roles assigned to this Profile.
+ * (byte)    num_auth_roles     : The total # of Authority roles assigned to this Persona.
  * (bytes64) tokenid_X          : The token id of Authority (X).
  * (bytes8)  rights_X           : The rights granted to this Authority (X).
  * (byte)    num_limits_X       : The total # of limits placed on this Authority (X).
  * (bytes8)  limit_satoshis_X_Y : Satoshi limit (Y) placed on Authority (X).
  * (bytes4)  limit_time_X_Y     : Time limit (Y) placed on Authority (X).
  *
- * Rights are granted to each Authority (ie. tokenid) assigned to the Profile,
+ * Rights are granted to each Authority (ie. tokenid) assigned to the Persona,
  * with the following (8-byte) schema:
  *
  * Byte #1 -> Permissions (Read-Write-Execute)
@@ -49,31 +49,31 @@ pragma nexscript >= 0.2.0;
  * Byte #7 -> (unassigned)
  * Byte #8 -> (unassigned)
  *
- * A NEW category request is being made to the "official" NFT specification: 
- *   "profile"
+ * A NEW category request is being made to the "official" NFT specification:
+ *   "persona"
  * (see: https://spec.nexa.org/nexa/NFTcategories.md)
  *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  *
  * Version     : 01
  * Script Hash : 0x0000000000000000000000000000000000000000
- * Namespace   : PROFILE01
+ * Namespace   : PERSONA01
  *
- * manager (bytes64) : A Profile Manager is used to coordinate ALL Profile activities.
+ * concierge (bytes64) : A Concierge is used to coordinate ALL Persona activities.
  *
  * For more information, please visit the following resources:
  *   - https://domain.tld
- *   - https://avasdao.org
+ *   - https://modenero.com
  *
- * @param manager
+ * @param concierge
  *
  */
-contract Profile(bytes64 manager) {
+contract Persona(bytes64 concierge) {
     /**
      * Transfer
      *
      * Grants permission by one (or up to three) Owner(s) to
-     * transfer assets managed by this Profile (contract).
+     * transfer assets managed by this Persona (contract).
      *
      * @param user_1
      * @param user_2
@@ -91,12 +91,12 @@ contract Profile(bytes64 manager) {
         sig signature_3
     ) {
         /* Parse (up to 3) token ids. */
-        bytes64 tokenid_1 = bytes64(manager.split(64)[0]);
-        bytes64 tokenid_2 = bytes64(manager.split(128)[0].split(64)[1]);
-        bytes64 tokenid_3 = bytes64(manager.split(192)[0].split(128)[1]);
+        bytes64 tokenid_1 = bytes64(concierge.split(64)[0]);
+        bytes64 tokenid_2 = bytes64(concierge.split(128)[0].split(64)[1]);
+        bytes64 tokenid_3 = bytes64(concierge.split(192)[0].split(128)[1]);
 
         // NOTE: `threshold` is 4-byte integer.
-        int threshold = int(manager.split(196)[0].split(192)[1]);
+        int threshold = int(concierge.split(196)[0].split(192)[1]);
 
         /* Validate 1st user. */
         if (tokenid_1 != 0x0) {
