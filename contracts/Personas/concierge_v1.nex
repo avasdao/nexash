@@ -8,16 +8,16 @@ pragma nexscript >= 0.2.0;
  * Concierge
  * (a member of the "Wise" Personas suite)
  *
- * Manages access permissions for one (or more) Persona(s). The Concierge
- * receives and executes (in an automated fashion) ANY request made by an
- * authorized Signator.
+ * Manages the capabilities (i.e. access permissions) for one (or more)
+ * Persona(s). The Concierge receives and executes (in an automated fashion)
+ * ANY request made by an authorized Signator.
  * (NOTE: The Persona limit has not been determined as yet)
  *
  * NOTES
  * --------------------
- * A Concierge is created (ie. minted) by a Hotel to maintain the access rights
- * and user roles each Persona. The latest UTXO of a Concierge serves to HOLD
- * the permissions of the Personas it's tasked with handling.
+ * A Concierge is created (ie. minted as an NFT) by a Hotel to manage the
+ * capabilities and user roles each Persona. The latest UTXO of a Concierge
+ * serves to HOLD the permissions of the Personas it's tasked with handling.
  *
  * Version (1) of the specification is as follows:
  *

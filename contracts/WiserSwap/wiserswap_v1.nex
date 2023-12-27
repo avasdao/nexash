@@ -36,13 +36,13 @@ pragma nexscript >= 0.2.0;
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  *
  * Version     : 01
- * Script Hash : 0xBF25FECAAEDAA59841E9E4E1584A3E3C36E83ABB
+ * Script Hash : 0xFC1D3ECE221C710E88C6DEF215BE155D3623B280
  * Namespace   : WISER01
  *
  * provider       : (bytes20) Pool owner (aka Provider) full (33-byte) public key.
- * providerFee    : (int)     Amount charged by the Provider. (measured in <basis points> (bp), eg. 5.25% = 525bp)
+ * providerRate   : (int)     Rate charged by the Provider. (measured in <basis points> (bp), eg. 5.25% = 525bp)
  * admin          : (bytes20) A 3rd-party Administrator (specified by the Provider) who will host & manage the micro pool.
- * adminFee       : (int)     Amount charged by the Administrator. (measured in <basis points> (bp), eg. 5.25% = 525bp)
+ * adminFee       : (int)     Fee charged by the Administrator. (measured in <basis points> (bp), eg. 5.25% = 525bp)
  * floor          : (int)     An optional trade boundry (specified by the Provider); also used to enforce an asset's Foundation (set by its Creator).
  *
  * For more information, please visit the following resources:
@@ -52,7 +52,7 @@ pragma nexscript >= 0.2.0;
  */
 contract WiserSwap(
     bytes20 provider,
-    int providerFee,
+    int providerRate,
     bytes20 admin,
     int adminFee,
     int tradeFloor,
@@ -175,7 +175,7 @@ contract WiserSwap(
         bytes23 providerBytecode = new LockingBytecodeP2PKT(provider);
 
         /* Calculate Provider commission. */
-        int providerCommission = (wiserValueOut * providerFee) / 10000;
+        int providerCommission = (wiserValueOut * providerRate) / 10000;
 
         /* Validate Provider commission (dust) value. */
         // NOTE: Used to discourage denial-of-service (DoS) attack.
