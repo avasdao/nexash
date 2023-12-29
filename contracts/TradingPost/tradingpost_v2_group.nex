@@ -34,14 +34,14 @@ pragma nexscript >= 0.6.0;
  *
  */
 contract TradingPost(
-    bytes20 owner,
-    bytes32 tokenGet,
-    int amountGet,
-    bytes32 tokenGive,
-    int amountGive,
-    bytes20 admin,
-    int fee,
-    int expires,
+    bytes20 visible owner,
+    bytes32 visible tokenGet,
+    int visible amountGet,
+    bytes32 visible tokenGive,
+    int visible amountGive,
+    bytes20 visible admin,
+    int visible fee,
+    int visible expires,
 ) {
     /**
      * Cancel Trade

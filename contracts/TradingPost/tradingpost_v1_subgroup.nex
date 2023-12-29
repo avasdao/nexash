@@ -36,12 +36,12 @@ pragma nexscript >= 0.2.0;
  *
  */
 contract TradingPost(
-    bytes32 groupid,
-    bytes32 subgroupid,
-    bytes20 seller,
-    int cost,
-    bytes20 admin,
-    int fee,
+    bytes32 visible groupid,
+    bytes32 visible subgroupid,
+    bytes20 visible seller,
+    int visible cost,
+    bytes20 visible admin,
+    int visible fee,
 ) {
     /**
      * Trade (Token) Asset

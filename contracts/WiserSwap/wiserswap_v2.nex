@@ -31,13 +31,13 @@ pragma nexscript >= 0.6.0;
  *
  */
 contract WiserSwap(
-    pubkey owner,
-    int ownerFee,
-    int autoPayout,
-    bytes20 payout,
-    bytes20 provider,
-    int providerFee,
-    pubkey guardian,
+    pubkey visible owner,
+    int visible ownerFee,
+    int visible autoPayout,
+    bytes20 visible payout,
+    bytes20 visible provider,
+    int visible providerFee,
+    pubkey visible guardian,
 ) {
     /**
      * Method Name

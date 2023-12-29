@@ -34,9 +34,9 @@ pragma nexscript >= 0.2.0;
  *   - https://avasdao.org
  */
 contract Stakeline(
-    pubkey patron,
-    pubkey platform,
-    int expiration,
+    pubkey visible patron,
+    pubkey visible platform,
+    int visible expiration,
     bytes visible unused platformid,
     bytes visible unused stakeid,
 ) {

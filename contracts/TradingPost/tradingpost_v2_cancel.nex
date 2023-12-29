@@ -34,11 +34,11 @@ pragma nexscript >= 0.6.0;
  *
  */
 contract TradingPost(
-    bytes32 tokenid,
-    bytes20 seller,
-    int rate,
-    bytes20 admin,
-    int fee,
+    bytes32 visible tokenid,
+    bytes20 visible seller,
+    int visible rate,
+    bytes20 visible admin,
+    int visible fee,
 ) {
     /**
      * Cancel (Trade) Posting

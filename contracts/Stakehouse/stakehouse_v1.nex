@@ -44,8 +44,8 @@ pragma nexscript >= 0.1.0;
  *
  */
 contract Stakehouse(
-    pubkey patron,
-    int reservation,
+    pubkey visible patron,
+    int visible reservation,
 ) {
     /**
      * Depart Stakehouse

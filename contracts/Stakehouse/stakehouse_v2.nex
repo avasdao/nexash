@@ -45,9 +45,9 @@ pragma nexscript >= 0.2.0;
  *
  */
 contract Stakehouse(
-    int reservation,
-    bytes20 chef,
-    pubkey patron,
+    int visible reservation,
+    bytes20 visible chef,
+    pubkey visible patron,
 ) {
     /**
      * Cancel Reservation

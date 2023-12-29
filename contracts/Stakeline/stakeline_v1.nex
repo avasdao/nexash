@@ -40,8 +40,8 @@ pragma nexscript >= 0.2.0;
  *
  */
 contract Stakeline(
-    int expiration,
-    pubkey patron,
+    int visible expiration,
+    pubkey visible patron,
     bytes visible unused serviceid,
     bytes visible unused stakeid,
 ) {

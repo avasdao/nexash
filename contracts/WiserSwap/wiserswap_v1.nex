@@ -217,14 +217,17 @@ contract WiserSwap(
      * Manage (Pool)
      *
      * Liquidity providers can manage assets held in the pool contract, eg.
-     *   1. Withdraw all funds
+     *   1. Withdraw all funds.
      *   2. Re-balance the pool (aka adjust the price).
      *
      * NOTE: ONLY the pool's (owner) Provider can perform this action.
      */
     function manage(pubkey authorized, sig signature) {
-        /* Calculate authorized hash. */
-        bytes20 authorizedHash = hash160(authorized);
+        /* Calculate authorized (public key) hash. */
+        // NOTE: Must match `PUSH AsData(PUSH pubkey)` specification found at
+        //       https://spec.nexa.org/nexa/scriptTemplates.
+        bytes20 authorizedHash = hash160(
+            bytes(authorized.length) + authorized);
 
         /* Validate authorized provider. */
         require(authorizedHash == provider);

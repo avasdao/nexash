@@ -6,25 +6,25 @@
         {
           "name": "seller",
           "type": "bytes20",
-          "visible": false,
+          "visible": true,
           "unused": false
         },
         {
           "name": "cost",
           "type": "int",
-          "visible": false,
+          "visible": true,
           "unused": false
         },
         {
           "name": "admin",
           "type": "bytes20",
-          "visible": false,
+          "visible": true,
           "unused": false
         },
         {
           "name": "fee",
           "type": "int",
-          "visible": false,
+          "visible": true,
           "unused": false
         }
       ],
