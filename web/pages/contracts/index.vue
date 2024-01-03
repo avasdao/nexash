@@ -13,6 +13,7 @@ useHead({
 
 /* Set Nexa GraphQL endpoint. */
 const ENDPOINT = 'https://nexa.sh/graphql'
+const META_QUERY_COUNT_MIN = 5
 
 const contracts = ref(null)
 const scripts = ref(null)
@@ -107,25 +108,42 @@ const loadUnique = async () => {
                 continue
             }
 
+            let meta
+            let scriptHash
+
             /* Set script hash. */
-            const scriptHash = output.scriptPubKey.scriptHash
+            scriptHash = output.scriptPubKey.scriptHash
 
             if (!unique[scriptHash]) {
-                lookupMeta(scriptHash)
+                // lookupMeta(scriptHash)
 
-                const meta = await lookupMeta(scriptHash)
+                // if (unique[scriptHash].count > 10) {
+                //     meta = await lookupMeta(scriptHash)
+                // }
                 // console.log('META', meta)
 
                 unique[scriptHash] = {
-                    title: meta.title,
-                    bannerUrl: meta.bannerUrl,
-                    iconUrl: meta.iconUrl,
-                    version: meta.version,
-                    type: meta.type,
+                    // title: meta.title,
+                    // bannerUrl: meta.bannerUrl,
+                    // iconUrl: meta.iconUrl,
+                    // version: meta.version,
+                    // type: meta.type,
                     timestamp,
                     count: 1,
                 }
             } else {
+                /* Restrict metadata request to contracts with at least 10 activities. */
+                if (!unique[scriptHash].title && unique[scriptHash].count >= META_QUERY_COUNT_MIN) {
+                    meta = await lookupMeta(scriptHash)
+
+                    unique[scriptHash].title = meta.title
+                    unique[scriptHash].bannerUrl = meta.bannerUrl
+                    unique[scriptHash].iconUrl = meta.iconUrl
+                    unique[scriptHash].version = meta.version
+                    unique[scriptHash].type = meta.type
+                }
+                // console.log('META', meta)
+
                 if (!unique[scriptHash][txidem]) {
                     /* Set flag. */
                     unique[scriptHash][txidem] = true
@@ -226,7 +244,7 @@ const loadScripts = async (_first) => {
 }
 
 const init = async () => {
-    const MAXIMUM_RESULTS = 1000
+    const MAXIMUM_RESULTS = 10000
 
     contracts.value = []
     uniqueScripts.value = []
@@ -359,6 +377,10 @@ onMounted(() => {
                 </div>
 
                 <ul role="list" class="mt-5 mb-10 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 xl:gap-x-8">
+
+                    <div v-if="displayCards.length === 0">
+                        <SkeletonContract />
+                    </div>
 
                     <NuxtLink :to="'/contracts/' + contract.id" v-for="contract of displayCards" :key="contract.id" class="overflow-hidden rounded-xl border border-gray-200">
                         <div class="relative flex items-center gap-x-4 border-b border-gray-900/5 bg-gray-50 p-6">
