@@ -422,7 +422,7 @@ onMounted(() => {
                         <dl class="-my-3 divide-y divide-gray-100 px-6 py-4 text-sm leading-6">
                             <div class="flex justify-between gap-x-4 py-3">
                                 <dt class="text-gray-500 font-medium">
-                                    Total Transactions
+                                    Total transactions
                                 </dt>
 
                                 <dd class="text-fuchsia-600 text-lg font-medium">
