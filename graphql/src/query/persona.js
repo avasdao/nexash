@@ -12,18 +12,18 @@ import {
 } from 'graphql'
 
 /* Import types. */
-import ProfileConnectionType from '../types/ProfileConnection.js'
+import PersonaConnectionType from '../types/PersonaConnection.js'
 
 export default {
-    type: ProfileConnectionType,
+    type: PersonaConnectionType,
     args: {
         address: {
             type: new GraphQLList(GraphQLString),
-            description: `Provide the __Address__ for an Profile.`,
+            description: `Provide the __Address__ for an Persona.`,
         },
     },
     resolve: (_root, _args, _ctx) => {
-        console.log('Profile (args):', _args)
+        console.log('Persona (args):', _args)
 
         /* Set connection info. */
         const connInfo = {
@@ -69,5 +69,5 @@ export default {
         /* Return transaction details. */
         return connection
     },
-    description: `Request _(strucutred)_ __Profile__ details, aggregated from multiple data sources, for your convenience.`,
+    description: `Request _(strucutred)_ __Persona__ details, aggregated from multiple data sources, for your convenience.`,
 }

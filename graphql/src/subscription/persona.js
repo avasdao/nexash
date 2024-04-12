@@ -1,5 +1,5 @@
 /* Import types. */
-import ProfileType from '../types/Profile.js'
+import PersonaType from '../types/Persona.js'
 
 import {
     GraphQLList,
@@ -7,7 +7,7 @@ import {
 } from 'graphql'
 
 export default (_pubsub) => ({
-    type: ProfileType,
+    type: PersonaType,
     args: {
 
         base58: {
@@ -22,5 +22,5 @@ export default (_pubsub) => ({
 
     },
     subscribe: () => _pubsub.asyncIterator(['PROFILE_UPDATE']),
-    description: `This subscription will report __every Profile action__ that appears on the blockchain.`,
+    description: `This subscription will report __every Persona action__ that appears on the blockchain.`,
 })

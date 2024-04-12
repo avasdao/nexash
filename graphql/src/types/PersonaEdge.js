@@ -10,14 +10,14 @@ import {
 } from 'graphql'
 
 /* Import types. */
-import ProfileType from '../types/Profile.js'
+import PersonaType from '../types/Persona.js'
 
 export default new GraphQLObjectType({
-    name: 'ProfileEdge',
+    name: 'PersonaEdge',
     fields: () => ({
 
         node: {
-            type: new GraphQLNonNull(ProfileType),
+            type: new GraphQLNonNull(PersonaType),
             description: `TBD`,
         },
 
@@ -27,5 +27,5 @@ export default new GraphQLObjectType({
         },
 
     }),
-    description: `A __Profile Edge__ description goes here.`,
+    description: `A __Persona Edge__ description goes here.`,
 })

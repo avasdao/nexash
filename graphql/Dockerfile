@@ -14,5 +14,5 @@ COPY . .
 
 EXPOSE 6000
 
-# CMD ["node", "/app/server.js"]
+# CMD ["node", "/server.js"]
 CMD ["node", "./cluster.js"]

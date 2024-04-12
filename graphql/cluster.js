@@ -3,19 +3,20 @@ import cluster from 'cluster'
 import os from 'os'
 
 if (cluster.isPrimary) {
-    // Count the machine's CPUs
+    /* Count the machine's CPUs. */
     const cpuCount = os.cpus().length
 
-    // Create a worker for each CPU
+    /* Create a worker for each CPU. */
     for (var i = 0; i < cpuCount; i += 1) {
         cluster.fork()
     }
 
-    // Listen for dying workers
+    /* Listen for dying workers. */
     cluster.on('exit', function () {
         cluster.fork()
     })
 } else {
-    // NOTE: Dynamic import of ES module.
+    /* Import server ES module. */
+    // NOTE: This is a dynamic import.
     import('/app/server.js')
 }

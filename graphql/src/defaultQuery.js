@@ -21,8 +21,8 @@ export default `################################################################
 #           Meta:   Request information from Meta (extended)
 #                   on-chain data.
 #
-#        Profile:   Request all available on-chain details for
-#                   a specific "Wise" Profile ID.
+#        Persona:   Request all available on-chain details for
+#                   a specific Persona (aka "wise" profile).
 #
 #         Script:   Request on-chain metadata details stored
 #                   in a transaction's 'OP_RETURN' script area.

@@ -12,14 +12,14 @@ import {
 } from 'graphql'
 
 /* Import types. */
-import ProfileType from '../types/Profile.js'
+import PersonaType from '../types/Persona.js'
 
 export default new GraphQLObjectType({
     name: 'ConnInfo',
     fields: () => ({
 
         profiles: {
-            type: new GraphQLList(ProfileType),
+            type: new GraphQLList(PersonaType),
             description: `TBD`,
         },
 

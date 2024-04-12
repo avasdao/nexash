@@ -2,11 +2,10 @@
 import { GraphQLObjectType } from 'graphql'
 
 /* Import mutations. */
-import account from './account.js'
 import address from './address.js'
 import block from './block.js'
 import meta from './meta.js'
-import profile from './profile.js'
+import persona from './persona.js'
 import script from './script.js'
 import token from './token.js'
 import transaction from './transaction.js'
@@ -16,11 +15,10 @@ const name = 'Query'
 
 /* Set (Mutation) fields. */
 const fields = {
-    account,
     address,
     block,
     meta,
-    profile,
+    persona,
     script,
     token,
     transaction,

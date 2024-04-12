@@ -13,7 +13,7 @@ import {
 import NFTType from '../types/NFT.js'
 
 export default new GraphQLObjectType({
-    name: 'Profile',
+    name: 'Persona',
     fields: () => ({
 
         nickname: {
@@ -32,5 +32,5 @@ export default new GraphQLObjectType({
         },
 
     }),
-    description: `A __Profile__ description goes here.`,
+    description: `A __Persona__ description goes here.`,
 })
