@@ -11,6 +11,12 @@ import {
 
 export default {
     type: GraphQLString,
+    args: {
+        hexstring: {
+            type: GraphQLString,
+            description: `Provide a hex-encoded (raw) transaction.`,
+        },
+    },
     resolve: (_root, args, ctx) => {
         console.log('BROADCAST ARGS:', args)
         return 'Transaction Broadcast was successfully!'
