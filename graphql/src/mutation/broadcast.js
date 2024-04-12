@@ -12,8 +12,8 @@ import {
 export default {
     type: GraphQLString,
     resolve: (_root, args, ctx) => {
-        console.log('BLANK ARGS:', args)
-        return 'Blank created successfully!'
+        console.log('BROADCAST ARGS:', args)
+        return 'Transaction Broadcast was successfully!'
     },
-    description: `Blank description goes here.`,
+    description: `Broadcast a Nexa transaction to the network.`,
 }
