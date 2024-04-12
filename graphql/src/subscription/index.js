@@ -15,7 +15,7 @@ const transactionsDb = new PouchDB(`http://${process.env.COUCHDB_USER}:${process
 /* Import subscriptions. */
 import address from './address.js'
 import block from './block.js'
-import profile from './profile.js'
+import persona from './persona.js'
 import transaction from './transaction.js'
 
 /* Initialize PubSub. */
@@ -28,7 +28,7 @@ const name = 'Subscription'
 const fields = {
     address: address(pubsub),
     block: block(pubsub),
-    profile: profile(pubsub),
+    persona: persona(pubsub),
     transaction: transaction(pubsub),
 }
 
