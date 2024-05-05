@@ -162,7 +162,7 @@ const displayPlatformRate = computed(() => {
                             </div>
 
                             <div class="px-6 pt-6 pb-8">
-                                <h3 class="text-lg font-medium text-gray-900">
+                                <h3 class="text-base font-medium text-gray-900">
                                     What's included
                                 </h3>
 
@@ -173,7 +173,7 @@ const displayPlatformRate = computed(() => {
                                             <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
                                         </svg>
                                         <span class="text-sm text-gray-500">
-                                            All resources provided in the <strong>dApp</strong> Plan are provided in this exclusive package for ALL <strong>Nexican</strong> builders.
+                                            All resources provided in the <strong>dApp</strong> Plan are provided in this exclusive package for ALL <strong>Nexican Builders</strong>.
                                         </span>
                                     </li>
                                 </ul>
@@ -207,26 +207,26 @@ const displayPlatformRate = computed(() => {
                                 </div>
 
                                 <div class="px-6 pt-6 pb-8">
-                                    <h3 class="text-lg font-medium text-gray-900">
+                                    <h3 class="text-base font-medium text-gray-900">
                                         What's included
                                     </h3>
 
                                     <ul role="list" class="mt-6 space-y-4">
-                                        <li class="flex space-x-3">
+                                        <!-- <li class="flex space-x-3">
                                             <svg class="h-5 w-5 flex-shrink-0 text-green-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                                 <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
                                             </svg>
                                             <span class="text-sm text-gray-500">
                                                 <strong class="text-rose-500">50,000<sup>*</sup></strong> REST requests/day
                                             </span>
-                                        </li>
+                                        </li> -->
 
                                         <li class="flex space-x-3">
                                             <svg class="h-5 w-5 flex-shrink-0 text-green-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                                 <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
                                             </svg>
                                             <span class="text-sm text-gray-500">
-                                                <strong class="text-rose-500">50,000<sup>*</sup></strong> Compute Units
+                                                <strong class="text-rose-500">50,000<sup>*</sup></strong> Compute Units per day
                                             </span>
                                         </li>
 
@@ -235,7 +235,7 @@ const displayPlatformRate = computed(() => {
                                                 <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
                                             </svg>
                                             <span class="text-sm text-gray-500">
-                                                <strong class="text-rose-500">60<sup>**</sup></strong> build minutes/month
+                                                <strong class="text-rose-500">60<sup>**</sup></strong> build minutes per month
                                             </span>
                                         </li>
 
@@ -294,27 +294,26 @@ const displayPlatformRate = computed(() => {
                                 </div>
 
                                 <div class="px-6 pt-6 pb-8">
-                                    <h3 class="text-lg font-medium text-gray-900">
-                                        What's included
+                                    <h3 class="text-base font-medium text-gray-900">
+                                        Everything in dApp, plus:
                                     </h3>
 
                                     <ul role="list" class="mt-6 space-y-4">
-                                        <li class="flex space-x-3">
-                                            <!-- Heroicon name: mini/check -->
+                                        <!-- <li class="flex space-x-3">
                                             <svg class="h-5 w-5 flex-shrink-0 text-green-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                                 <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
                                             </svg>
                                             <span class="text-sm text-gray-500">
                                                 <strong class="text-rose-500">500,000<sup>*</sup></strong> REST requests/day
                                             </span>
-                                        </li>
+                                        </li> -->
 
                                         <li class="flex space-x-3">
                                             <svg class="h-5 w-5 flex-shrink-0 text-green-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                                 <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
                                             </svg>
                                             <span class="text-sm text-gray-500">
-                                                <strong class="text-rose-500">500,000<sup>*</sup></strong> Compute Units
+                                                <strong class="text-rose-500">15 million<sup>*</sup></strong> Compute Units per month
                                             </span>
                                         </li>
 
@@ -323,7 +322,7 @@ const displayPlatformRate = computed(() => {
                                                 <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
                                             </svg>
                                             <span class="text-sm text-gray-500">
-                                                <strong class="text-rose-500">10<sup>**</sup></strong> build hours/month
+                                                <strong class="text-rose-500">10<sup>**</sup></strong> build hours per month
                                             </span>
                                         </li>
 
@@ -364,27 +363,26 @@ const displayPlatformRate = computed(() => {
                                 </div>
 
                                 <div class="px-6 pt-6 pb-8">
-                                    <h3 class="text-lg font-medium text-gray-900">
-                                        What's included
+                                    <h3 class="text-base font-medium text-gray-900">
+                                        Everything in Platform, plus:
                                     </h3>
 
                                     <ul role="list" class="mt-6 space-y-4">
-                                        <li class="flex space-x-3">
-                                            <!-- Heroicon name: mini/check -->
+                                        <!-- <li class="flex space-x-3">
                                             <svg class="h-5 w-5 flex-shrink-0 text-green-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                                 <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
                                             </svg>
                                             <span class="text-sm text-gray-500">
                                                 <strong class="text-rose-500">Unlimited</strong> REST requests
                                             </span>
-                                        </li>
+                                        </li> -->
 
                                         <li class="flex space-x-3">
                                             <svg class="h-5 w-5 flex-shrink-0 text-green-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                                 <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
                                             </svg>
                                             <span class="text-sm text-gray-500">
-                                                <strong class="text-rose-500">Unlimited<sup>*</sup></strong> Compute Units
+                                                <strong class="text-rose-500">Unlimited<sup>*</sup></strong> Compute Units per month
                                             </span>
                                         </li>
 
@@ -393,7 +391,7 @@ const displayPlatformRate = computed(() => {
                                                 <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
                                             </svg>
                                             <span class="text-sm text-gray-500">
-                                                <strong class="text-rose-500">Unlimited<sup>**</sup></strong> build time
+                                                <strong class="text-rose-500">Unlimited<sup>**</sup></strong> build time per month
                                             </span>
                                         </li>
 
