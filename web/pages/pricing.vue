@@ -226,7 +226,7 @@ const displayPlatformRate = computed(() => {
                                                 <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
                                             </svg>
                                             <span class="text-sm text-gray-500">
-                                                <strong class="text-rose-500">50,000<sup>*</sup></strong> GraphQL queries/day
+                                                <strong class="text-rose-500">50,000<sup>*</sup></strong> Compute Units
                                             </span>
                                         </li>
 
@@ -238,15 +238,6 @@ const displayPlatformRate = computed(() => {
                                                 <strong class="text-rose-500">60<sup>**</sup></strong> build minutes/month
                                             </span>
                                         </li>
-<!--
-                                        <li class="flex space-x-3">
-                                            <svg class="h-5 w-5 flex-shrink-0 text-green-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                                <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
-                                            </svg>
-                                            <span class="text-sm text-gray-500">
-                                                <strong class="text-rose-500">5GB</strong> data storage
-                                            </span>
-                                        </li> -->
 
                                         <li class="flex space-x-3">
                                             <svg class="h-5 w-5 flex-shrink-0 text-green-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
@@ -265,6 +256,7 @@ const displayPlatformRate = computed(() => {
                                                 Customer Support response within <strong class="text-rose-500">24</strong> hours
                                             </span>
                                         </li>
+
                                     </ul>
                                 </div>
                             </div>
@@ -318,28 +310,23 @@ const displayPlatformRate = computed(() => {
                                         </li>
 
                                         <li class="flex space-x-3">
-                                            <!-- Heroicon name: mini/check -->
                                             <svg class="h-5 w-5 flex-shrink-0 text-green-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                                 <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
                                             </svg>
-                                            <span class="text-sm text-gray-500">Orci neque eget pellentesque.</span>
+                                            <span class="text-sm text-gray-500">
+                                                <strong class="text-rose-500">500,000<sup>*</sup></strong> Compute Units
+                                            </span>
                                         </li>
 
                                         <li class="flex space-x-3">
-                                            <!-- Heroicon name: mini/check -->
                                             <svg class="h-5 w-5 flex-shrink-0 text-green-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                                 <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
                                             </svg>
-                                            <span class="text-sm text-gray-500">Donec mauris sit in eu tincidunt etiam.</span>
+                                            <span class="text-sm text-gray-500">
+                                                <strong class="text-rose-500">10<sup>**</sup></strong> build hours/month
+                                            </span>
                                         </li>
 
-                                        <li class="flex space-x-3">
-                                            <!-- Heroicon name: mini/check -->
-                                            <svg class="h-5 w-5 flex-shrink-0 text-green-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                                <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
-                                            </svg>
-                                            <span class="text-sm text-gray-500">Faucibus volutpat magna.</span>
-                                        </li>
                                     </ul>
                                 </div>
                             </div>
@@ -393,52 +380,23 @@ const displayPlatformRate = computed(() => {
                                         </li>
 
                                         <li class="flex space-x-3">
-                                            <!-- Heroicon name: mini/check -->
                                             <svg class="h-5 w-5 flex-shrink-0 text-green-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                                 <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
                                             </svg>
-                                            <span class="text-sm text-gray-500">Orci neque eget pellentesque.</span>
+                                            <span class="text-sm text-gray-500">
+                                                <strong class="text-rose-500">Unlimited<sup>*</sup></strong> Compute Units
+                                            </span>
                                         </li>
 
                                         <li class="flex space-x-3">
-                                            <!-- Heroicon name: mini/check -->
                                             <svg class="h-5 w-5 flex-shrink-0 text-green-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                                 <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
                                             </svg>
-                                            <span class="text-sm text-gray-500">Donec mauris sit in eu tincidunt etiam.</span>
+                                            <span class="text-sm text-gray-500">
+                                                <strong class="text-rose-500">Unlimited<sup>**</sup></strong> build time
+                                            </span>
                                         </li>
 
-                                        <li class="flex space-x-3">
-                                            <!-- Heroicon name: mini/check -->
-                                            <svg class="h-5 w-5 flex-shrink-0 text-green-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                                <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
-                                            </svg>
-                                            <span class="text-sm text-gray-500">Faucibus volutpat magna.</span>
-                                        </li>
-
-                                        <li class="flex space-x-3">
-                                            <!-- Heroicon name: mini/check -->
-                                            <svg class="h-5 w-5 flex-shrink-0 text-green-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                                <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
-                                            </svg>
-                                            <span class="text-sm text-gray-500">Id sed tellus in varius quisque.</span>
-                                        </li>
-
-                                        <li class="flex space-x-3">
-                                            <!-- Heroicon name: mini/check -->
-                                            <svg class="h-5 w-5 flex-shrink-0 text-green-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                                <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
-                                            </svg>
-                                            <span class="text-sm text-gray-500">Risus egestas faucibus.</span>
-                                        </li>
-
-                                        <li class="flex space-x-3">
-                                            <!-- Heroicon name: mini/check -->
-                                            <svg class="h-5 w-5 flex-shrink-0 text-green-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                                <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
-                                            </svg>
-                                            <span class="text-sm text-gray-500">Risus cursus ullamcorper.</span>
-                                        </li>
                                     </ul>
                                 </div>
                             </div>

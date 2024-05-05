@@ -36,43 +36,26 @@ const props = defineProps({
                 <dl class="space-y-12">
                     <div>
                         <dt class="text-lg font-medium leading-6 text-gray-900">
-                            How do you make holy water?
+                            What is a Compute Unit (CU)?
                         </dt>
 
                         <dd class="mt-2 text-base text-gray-500">
-                            You boil the hell out of it. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas cupiditate laboriosam fugiat.
+                            A compute unit is a measure of the requests needed to query computationally expensive API endpoints.
+                            Each request has both CU Weight and Archive CU Weight that are measured in terms of compute units.
                         </dd>
                     </div>
 
                     <div>
                         <dt class="text-lg font-medium leading-6 text-gray-900">
-                            What&#039;s the best thing about Switzerland?
+                            Why do I need Compute Units (CUs)?
                         </dt>
 
                         <dd class="mt-2 text-base text-gray-500">
-                            I don&#039;t know, but the flag is a big plus. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas cupiditate laboriosam fugiat.
+                            Some requests are more expensive than others.
+                            By giving some heavy requests higher weight, we ensure that you only pay for what you use and not a cent more.
                         </dd>
                     </div>
 
-                    <div>
-                        <dt class="text-lg font-medium leading-6 text-gray-900">
-                            What do you call someone with no body and no nose?
-                        </dt>
-
-                        <dd class="mt-2 text-base text-gray-500">
-                            Nobody knows. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas cupiditate laboriosam fugiat.
-                        </dd>
-                    </div>
-
-                    <div>
-                        <dt class="text-lg font-medium leading-6 text-gray-900">
-                            Why do you never see elephants hiding in trees?
-                        </dt>
-
-                        <dd class="mt-2 text-base text-gray-500">
-                            Because they&#039;re so good at it. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas cupiditate laboriosam fugiat.
-                        </dd>
-                    </div>
                 </dl>
             </div>
         </div>
