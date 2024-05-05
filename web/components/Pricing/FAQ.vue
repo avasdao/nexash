@@ -52,7 +52,7 @@ const props = defineProps({
 
                         <dd class="mt-2 text-base text-gray-500">
                             Some requests are more expensive than others.
-                            By giving some heavy requests higher weight, we ensure that you only pay for what you use and not a cent more.
+                            By giving some heavy requests higher weight, we ensure that you only pay for what you use and not a satoshi more.
                         </dd>
                     </div>
 
