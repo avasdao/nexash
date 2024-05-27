@@ -19,6 +19,9 @@ const id = route.params.id
 const letterWidth = 216
 const a4Width = 0
 
+const defaultTxtColor = 30
+const lightTxtColor = 120
+
 const openDoc = () => {
     /* Initialize locals. */
     let lMargin, tMargin, rMargin, bMargin
@@ -55,27 +58,61 @@ const openDoc = () => {
     // TITLE
     doc.setFontSize(20)
     doc.setFont('helvetica', 'bold')
+    doc.setTextColor(150)
     doc.text(`NexaShell`, lMargin, tMargin)
+
+    // reset txt color
+    doc.setTextColor(defaultTxtColor)
 
     // TITLE BORDER
     doc.setLineWidth(0.8)
+    doc.setDrawColor(210)
     doc.line(lMargin, tMargin + 3, rMargin, tMargin + 3)
 
     doc.setFontSize(12)
-    doc.setFont('helvetica', 'normal')
+    // doc.setFont('helvetica', 'bold')
+    doc.setTextColor(210, 30, 30)
     doc.text(`https://NEXA.sh`, rMargin, tMargin, null, null, 'right');
 
     doc.setFontSize(24)
     doc.setFont('helvetica', 'bold')
+    doc.setTextColor(defaultTxtColor)
     doc.text(`Transaction Receipt`, lMargin, tMargin + 15)
 
     doc.setFontSize(16)
     doc.setFont('helvetica', 'normal')
     doc.text(`Wallet Address:`, lMargin, tMargin + 30)
 
+    // DISCLAIMER
+    doc.setFontSize(12)
+    doc.setFont('helvetica', 'bold')
+    doc.setTextColor(lightTxtColor)
+    doc.text(`DISCLAIMER`, lMargin, tMargin + 120)
+
+    doc.setFontSize(10)
+    doc.setFont('helvetica', 'normal')
+    doc.text(`Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
+anim id est laborum.`, lMargin, tMargin + 125)
+
+    doc.setFontSize(9)
+    doc.setFont('helvetica', 'normal')
+    doc.setTextColor(lightTxtColor)
+    doc.text(`GET A FULL REPORT FOR ANY ADDRESS OR XPUB AT:`, lMargin, tMargin + 170)
+
+    doc.setFontSize(12)
+    doc.setFont('helvetica', 'bold')
+    doc.setTextColor(210, 30, 30)
+    doc.text(`https://NEXA.sh`, lMargin, tMargin + 175)
+
     // QR CODE (placeholder)
-    const qrWinSize = 40
-    doc.rect(rMargin - qrWinSize, tMargin + 60, qrWinSize, qrWinSize, 'F')
+    const qrWinSize = 50
+    doc.setFillColor(150, 150, 255)
+    doc.setDrawColor(90, 90, 255)
+    doc.rect(rMargin - qrWinSize, tMargin + 110, qrWinSize, qrWinSize, 'FD')
 
     window.open(URL.createObjectURL(doc.output('blob', 'tx-receipt.pdf')))
 
@@ -112,9 +149,9 @@ onMounted(() => {
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel reprehenderit at omnis alias minima ut quaerat tempore velit deserunt quia quisquam maxime, ipsam sequi? Vero animi explicabo obcaecati voluptatem alias.
         </p>
 
-        <Button @click="openDoc" target="_blank" class="w-fit px-3 py-1 text-xl font-medium text-blue-500 bg-blue-100 border-2 border-blue-300 rounded-lg shadow hover:bg-blue-200">
+        <button @click="openDoc" target="_blank" class="w-fit px-3 py-1 text-xl font-medium text-blue-500 bg-blue-100 border-2 border-blue-300 rounded-lg shadow hover:bg-blue-200">
             Open PDF Receipt
-        </Button>
+        </button>
 
         <div class="w-1/2 p-3 text-sm">
             Please choose your preferred format:
