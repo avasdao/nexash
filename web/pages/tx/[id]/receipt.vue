@@ -16,7 +16,13 @@ console.log('ROUTE PARAMS', route.params)
 
 const id = route.params.id
 
+const letterWidth = 216
+const a4Width = 0
+
 const openDoc = () => {
+    /* Initialize locals. */
+    let lMargin, tMargin, rMargin, bMargin
+
     // Default export is a4 paper, portrait, using millimeters for units
     const doc = new jsPDF({
         orientation: 'portrait',
@@ -37,7 +43,39 @@ const openDoc = () => {
         creator: "NEXA.sh",
     })
 
-    doc.text(`Transaction Receipt`, 10, 10)
+    /* Set left margin. */
+    lMargin = 10
+
+    /* Set right margin. */
+    rMargin = letterWidth - 10
+
+    /* Set top margin. */
+    tMargin = 15
+
+    // TITLE
+    doc.setFontSize(20)
+    doc.setFont('helvetica', 'bold')
+    doc.text(`NexaShell`, lMargin, tMargin)
+
+    // TITLE BORDER
+    doc.setLineWidth(0.8)
+    doc.line(lMargin, tMargin + 3, rMargin, tMargin + 3)
+
+    doc.setFontSize(12)
+    doc.setFont('helvetica', 'normal')
+    doc.text(`https://NEXA.sh`, rMargin, tMargin, null, null, 'right');
+
+    doc.setFontSize(24)
+    doc.setFont('helvetica', 'bold')
+    doc.text(`Transaction Receipt`, lMargin, tMargin + 15)
+
+    doc.setFontSize(16)
+    doc.setFont('helvetica', 'normal')
+    doc.text(`Wallet Address:`, lMargin, tMargin + 30)
+
+    // QR CODE (placeholder)
+    const qrWinSize = 40
+    doc.rect(rMargin - qrWinSize, tMargin + 60, qrWinSize, qrWinSize, 'F')
 
     window.open(URL.createObjectURL(doc.output('blob', 'tx-receipt.pdf')))
 
