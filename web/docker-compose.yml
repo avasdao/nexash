@@ -12,7 +12,8 @@ services:
     # volumes:
     #   - './:/webapp/'
     environment:
-      HOST: 0.0.0.0
+      # HOST: 0.0.0.0
+      HOST: 127.0.0.1
       PORT: 3000
       COUCHDB_USER: ${COUCHDB_USER} # change this to match your system's ENV
       COUCHDB_PASSWORD: ${COUCHDB_PASSWORD} # change this to match your system's ENV
