@@ -12,6 +12,7 @@ services:
     environment:
       - COUCHDB_USER=${COUCHDB_USER} # change this to match your system's ENV
       - COUCHDB_PASSWORD=${COUCHDB_PASSWORD} # change this to match your system's ENV
+      - RPC_PORT=${RPC_PORT} # change this to match your system's ENV
     logging: # apply better controls to Docker overlay folder
       driver: 'json-file'
       options:
