@@ -3,16 +3,16 @@ import { callNode } from '@nexajs/rpc'
 
 /* Set node options. */
 const RPC_OPTIONS = {
-    username: 'user', // required
-    password: 'password', // required
-    host: '127.0.0.1', // (optional) default is localhost (127.0.0.1)
+    username: process.env.RPC_USERNAME || 'user', // required
+    password: process.env.RPC_PASSWORD || 'password', // required
+    host: process.env.RPC_HOST || '127.0.0.1', // (optional) default is localhost (127.0.0.1)
     port: process.env.RPC_PORT || '7227', // (optional) default is 7227
 }
 
 /**
- * Get Block
+ * Get Transaction
  *
- * Retrieves the block information from the local node.
+ * Retrieves the transaction information from the local node.
  */
 export default async (_txidem) => {
     let method

@@ -19,21 +19,24 @@ import getTransaction from '../utils/getTransaction.js'
  * latest block height.
  */
 export default async (_curHeight = 0) => {
-    console.info('\n  Checking SCRIPTS database sync...\n')
+    console.info('\n  Checking NULL DATA database sync...\n')
 
+    /* Initialize locals. */
     let block
     let systemIdx
     let tx
     let txidem
     let updatedSystem
 
+    /* Request null data index. */
     systemIdx = await systemDb
         .get('idxNulldataTxs')
         .catch(err => console.error(err))
     // console.log('SYSTEM', systemIdx)
 
+    /* Validate (last) block height. */
     if (_curHeight > systemIdx?.last) {
-        console.info('\n  Starting SCRIPTS database sync...\n')
+        console.info('\n  Starting NULL DATA database sync...\n')
 
         /* Handle new blocks. */
         for (let i = systemIdx.last + 1; i <= _curHeight; i++) {

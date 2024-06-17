@@ -28,11 +28,13 @@ export default async (_curHeight = 0) => {
     let txidem
     let updatedSystem
 
+    /* Request transactions index. */
     systemIdx = await systemDb
         .get('idxTransactions')
         .catch(err => console.error(err))
     // console.log('SYSTEM', systemIdx)
 
+    /* Validate (last) block height. */
     if (_curHeight > systemIdx?.last) {
         console.info('\n  Starting TRANSACTIONS database sync...\n')
 

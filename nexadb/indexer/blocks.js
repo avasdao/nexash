@@ -18,17 +18,20 @@ import getBlock from '../utils/getBlock.js'
 export default async (_curHeight = 0) => {
     console.info('\n  Checking BLOCKS database sync...\n')
 
+    /* Initialize locals. */
     let block
     let systemIdx
     let tx
     let txidem
     let updatedSystem
 
+    /* Request blocks index. */
     systemIdx = await systemDb
         .get('idxBlocks')
         .catch(err => console.error(err))
     // console.log('SYSTEM', systemIdx)
 
+    /* Validate (last) block height. */
     if (_curHeight > systemIdx?.last) {
         console.info('\n  Starting BLOCKS database sync...\n')
 

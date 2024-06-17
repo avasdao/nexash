@@ -21,17 +21,20 @@ import getTransaction from '../utils/getTransaction.js'
 export default async (_curHeight = 0) => {
     console.info('\n  Checking SCRIPTS database sync...\n')
 
+    /* Initialize locals. */
     let block
     let systemIdx
     let tx
     let txidem
     let updatedSystem
 
+    /* Request scripts index. */
     systemIdx = await systemDb
         .get('idxScriptTxs')
         .catch(err => console.error(err))
     // console.log('SYSTEM', systemIdx)
 
+    /* Validate (last) block height. */
     if (_curHeight > systemIdx?.last) {
         console.info('\n  Starting SCRIPTS database sync...\n')
 

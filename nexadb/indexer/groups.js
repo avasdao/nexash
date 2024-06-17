@@ -21,17 +21,20 @@ import getTransaction from '../utils/getTransaction.js'
 export default async (_curHeight = 0) => {
     console.info('\n  Checking GROUPS database sync...\n')
 
+    /* Initialize locals. */
     let block
     let systemIdx
     let tx
     let txidem
     let updatedSystem
 
+    /* Request groups index. */
     systemIdx = await systemDb
         .get('idxGroupTxs')
         .catch(err => console.error(err))
     // console.log('SYSTEM', systemIdx)
 
+    /* Validate (last) block height. */
     if (_curHeight > systemIdx?.last) {
         console.info('\n  Starting GROUPS database sync...\n')
 

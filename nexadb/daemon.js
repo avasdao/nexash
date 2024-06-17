@@ -18,6 +18,7 @@ import getBlockchainInfo from './utils/getBlockchainInfo.js'
 import blocksIndexer from './indexer/blocks.js'
 import groupsIndexer from './indexer/groups.js'
 import nulldataIndexer from './indexer/nulldata.js'
+import outputsIndexer from './indexer/outputs.js'
 import scriptsIndexer from './indexer/scripts.js'
 import transactionsIndexer from './indexer/transactions.js'
 
@@ -32,9 +33,9 @@ const transactionsDb = new PouchDB(`http://${process.env.COUCHDB_USER}:${process
 
 /* Set node options. */
 const RPC_OPTIONS = {
-    username: 'user', // required
-    password: 'password', // required
-    host: '127.0.0.1', // (optional) default is localhost (127.0.0.1)
+    username: process.env.RPC_USERNAME || 'user', // required
+    password: process.env.RPC_PASSWORD || 'password', // required
+    host: process.env.RPC_HOST || '127.0.0.1', // (optional) default is localhost (127.0.0.1)
     port: process.env.RPC_PORT || '7227', // (optional) default is 7227
 }
 
@@ -94,6 +95,11 @@ const manageNulldata = async () => {
     setTimeout(manageNulldata, 1000)
 }
 
+const manageOutputs = async () => {
+    await outputsIndexer(blockchainInfo.blocks)
+    setTimeout(manageOutputs, 1000)
+}
+
 const manageScripts = async () => {
     await scriptsIndexer(blockchainInfo.blocks)
     setTimeout(manageScripts, 1000)
@@ -124,7 +130,7 @@ const manageTransactions = async () => {
     manageBlocks()
     manageGroups()
     // manageNulldata()
-    // manageOutputs()
+    manageOutputs()
     manageScripts()
     manageTransactions()
 
