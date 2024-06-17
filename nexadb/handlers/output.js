@@ -36,7 +36,7 @@ export default async (_transaction) => {
         output.isSpent = false
 
         /* Set outpoint. */
-        outpoint = input?.outpoint
+        outpoint = output?.outpoint
         // console.log('OUTPOINT', outpoint)
 
         // NOTE: Attepmt to (1st) retrieve "existing" transaction data.
