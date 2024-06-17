@@ -67,13 +67,6 @@ export default async (_transaction) => {
             .catch(err => {
                 console.error(err)
             })
-
-// FIXME: THIS IS LEGACY -- REMOVE
-        // result = await groupDb
-        //     .put(newUpdatedTx)
-        //     .catch(err => {
-        //         console.error(err)
-        //     })
     }
 
     /* Return result. */
