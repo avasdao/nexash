@@ -77,7 +77,7 @@ export default async (_transaction) => {
 
         /* Set outpoint. */
         outpoint = input?.outpoint
-        // console.log('OUTPOINT', outpoint)
+        console.log('OUTPOINT', outpoint)
 
         // NOTE: Attepmt to (1st) retrieve "existing" output data.
         existingOutput = await outputsDb
@@ -86,6 +86,7 @@ export default async (_transaction) => {
 
         /* Validate output. */
         if (existingOutput) {
+console.log('\n\n***FOUND OUTPUT***\n');
             /* Set spent flag. */
             existingOutput.isSpent = true
             existingOutput.updatedAt = moment().unix()
