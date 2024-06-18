@@ -10,6 +10,7 @@ export default async (_transaction) => {
     let existingOutput
     let group
     let newUpdatedOutput
+    let input
     let inputs
     let outpoint
     let output
