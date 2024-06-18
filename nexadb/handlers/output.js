@@ -79,27 +79,20 @@ export default async (_transaction) => {
         outpoint = input?.outpoint
         // console.log('OUTPOINT', outpoint)
 
-        // NOTE: Attepmt to (1st) retrieve "existing" transaction data.
+        // NOTE: Attepmt to (1st) retrieve "existing" output data.
         existingOutput = await outputsDb
             .get(outpoint)
             .catch(err => console.error(err))
 
-        /* Validate transaction. */
+        /* Validate output. */
         if (existingOutput) {
             /* Set spent flag. */
             existingOutput.isSpent = true
-
-            /* Update existingOutput entry. */
-            newUpdatedOutput = {
-                _id: existingOutput._id,
-                _rev: existingOutput._rev,
-                ...existingOutput,
-                updatedAt: moment().unix(),
-            }
+            existingOutput.updatedAt = moment().unix()
 
             /* Update entry, with new flag set. */
             result = await outputsDb
-                .put(newUpdatedOutput)
+                .put(existingOutput)
                 .catch(err => {
                     console.error(err)
                 })
