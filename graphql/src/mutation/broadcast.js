@@ -39,6 +39,7 @@ export default {
             port: process.env.RPC_PORT || 7227,
         })
         .catch(err => console.error(err))
+        console.log('NODE RESULT', result)
 
         /* Return (RPC request) result. */
         return result
