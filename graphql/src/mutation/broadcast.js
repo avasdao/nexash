@@ -33,7 +33,7 @@ export default {
         // TODO Perform error-handling.
 
         /* Send raw transaction. */
-        result = await callNode('sendrawtransaction', bytecode, {
+        result = await callNode('sendrawtransaction', [bytecode], {
             username: process.env.RPC_USERNAME || 'user',
             password: process.env.RPC_PASSWORD || 'password',
             port: process.env.RPC_PORT || 7227,
