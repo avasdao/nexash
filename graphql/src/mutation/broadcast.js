@@ -20,7 +20,7 @@ export default {
             description: `Provide a hex-encoded (raw) transaction.`,
         },
     },
-    resolve: (_root, args, ctx) => {
+    resolve: async (_root, args, ctx) => {
         console.log('BROADCAST ARGS:', args)
 
         /* Initialize locals. */
