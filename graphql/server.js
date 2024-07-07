@@ -23,7 +23,7 @@ import schema from './src/schema.js'
 import defaultQuery from './src/defaultQuery.js'
 
 /* Set (GraphQL) port. */
-const PORT = process.env.GRAPHQL_PORT || 6000
+const PORT = process.env.GRAPHQL_PORT || 3000
 
 /* Initialize Express application. */
 const app = express()

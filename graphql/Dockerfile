@@ -1,4 +1,4 @@
-FROM node:18-alpine
+FROM node:18-slim
 
 ENV HOST='0.0.0.0'
 ENV PORT='6000'
