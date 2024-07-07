@@ -47,7 +47,7 @@ export default {
             /* Return (RPC request) error. */
             // TODO Handle error. `code` and `message`.
             // { code: -27, message: 'transaction already in block chain' }
-            return response?.result?.error?.message || 'Unknown node error'
+            return response?.error?.message || 'Unknown node error'
             // return JSON.stringify(response?.result)
         } else {
             /* Return (RPC request) result. */
