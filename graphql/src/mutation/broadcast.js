@@ -1,3 +1,6 @@
+/* Import modules. */
+import { callNode } from '@nexajs/rpc'
+
 import {
     GraphQLBoolean,
     GraphQLFloat,
@@ -19,7 +22,26 @@ export default {
     },
     resolve: (_root, args, ctx) => {
         console.log('BROADCAST ARGS:', args)
-        return 'Transaction Broadcast was successfully!'
+
+        /* Initialize locals. */
+        let bytecode
+        let result
+
+        /* Set bytecode. */
+        bytecode = args?.hexstring
+
+        // TODO Perform error-handling.
+
+        /* Send raw transaction. */
+        result = await callNode('sendrawtransaction', bytecode, {
+            username: process.env.RPC_USERNAME,
+            password: process.env.RPC_PASSWORD,
+            port: process.env.RPC_PORT,
+        })
+        .catch(err => console.error(err))
+
+        /* Return (RPC request) result. */
+        return result
     },
     description: `Broadcast a Nexa transaction to the network.`,
 }

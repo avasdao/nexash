@@ -3,15 +3,23 @@ services:
     build: .
     image: graphql
     container_name: graphql
-    restart: always
+    restart: unless-stopped
     network_mode: 'host'
     # ports:
     #   - '127.0.0.1:6000:3000'
     # volumes:
     #   - './:/webapp/'
+    logging: # apply better controls to Docker overlay folder
+      driver: 'json-file'
+      options:
+        max-file: '5'
+        max-size: '10m'
     environment:
-      COUCHDB_USER: ${COUCHDB_USER} # change this to match your system's ENV
-      COUCHDB_PASSWORD: ${COUCHDB_PASSWORD} # change this to match your system's ENV
-      GRAPHQL_PORT: ${GRAPHQL_PORT} # change this to match your system's ENV
+      COUCHDB_USER: ${COUCHDB_USER}
+      COUCHDB_PASSWORD: ${COUCHDB_PASSWORD}
+      GRAPHQL_PORT: ${GRAPHQL_PORT}
+      RPC_USERNAME: ${RPC_USERNAME}
+      RPC_PASSWORD: ${RPC_PASSWORD}
+      RPC_PORT: ${RPC_PORT}
       HOST: 0.0.0.0
-      PORT: 6000
+      PORT: ${RPC_PORT}
