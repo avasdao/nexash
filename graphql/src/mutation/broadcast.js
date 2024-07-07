@@ -45,10 +45,14 @@ export default {
         /* Handle response. */
         if (response?.result) {
             /* Return (RPC request) result. */
-            return response?.result
+            return JSON.stringify(response?.result)
+
+            // TODO Handle `???`.
         } else {
             /* Return (RPC request) error. */
-            return response.error
+            return JSON.stringify(response.error)
+
+            // TODO Handle `code` and `message`.
         }
     },
     description: `Broadcast a Nexa transaction to the network.`,
