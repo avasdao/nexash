@@ -45,10 +45,10 @@ export default {
         /* Handle response. */
         if (response?.error) {
             /* Return (RPC request) error. */
-            return JSON.stringify(response?.result)
-
             // TODO Handle `code` and `message`.
             // { code: -27, message: 'transaction already in block chain' }
+            return response?.result?.message || 'Unknown node error'
+            // return JSON.stringify(response?.result)
         } else {
             /* Return (RPC request) result. */
             // NOTE: This will return a 32-byte txidem.
