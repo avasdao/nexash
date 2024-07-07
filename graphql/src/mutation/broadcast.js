@@ -43,16 +43,16 @@ export default {
         console.log('NODE RESPONSE', response)
 
         /* Handle response. */
-        if (response?.result) {
-            /* Return (RPC request) result. */
+        if (response?.error) {
+            /* Return (RPC request) error. */
             return JSON.stringify(response?.result)
 
-            // TODO Handle `???`.
-        } else {
-            /* Return (RPC request) error. */
-            return JSON.stringify(response.error)
-
             // TODO Handle `code` and `message`.
+            // { code: -27, message: 'transaction already in block chain' }
+        } else {
+            /* Return (RPC request) result. */
+            // NOTE: This will return a 32-byte txidem.
+            return response
         }
     },
     description: `Broadcast a Nexa transaction to the network.`,
