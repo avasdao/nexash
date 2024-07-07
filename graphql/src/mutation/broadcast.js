@@ -34,9 +34,9 @@ export default {
 
         /* Send raw transaction. */
         result = await callNode('sendrawtransaction', bytecode, {
-            username: process.env.RPC_USERNAME,
-            password: process.env.RPC_PASSWORD,
-            port: process.env.RPC_PORT,
+            username: process.env.RPC_USERNAME || 'user',
+            password: process.env.RPC_PASSWORD || 'password',
+            port: process.env.RPC_PORT || 7227,
         })
         .catch(err => console.error(err))
 
