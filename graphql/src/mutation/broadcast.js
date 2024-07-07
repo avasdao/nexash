@@ -25,6 +25,7 @@ export default {
 
         /* Initialize locals. */
         let bytecode
+        let response
         let result
 
         /* Set bytecode. */
@@ -33,16 +34,22 @@ export default {
         // TODO Perform error-handling.
 
         /* Send raw transaction. */
-        result = await callNode('sendrawtransaction', [bytecode], {
+        response = await callNode('sendrawtransaction', [bytecode], {
             username: process.env.RPC_USERNAME || 'user',
             password: process.env.RPC_PASSWORD || 'password',
             port: process.env.RPC_PORT || 7227,
         })
         .catch(err => console.error(err))
-        console.log('NODE RESULT', result)
+        console.log('NODE RESPONSE', response)
 
-        /* Return (RPC request) result. */
-        return result
+        /* Handle response. */
+        if (response?.result) {
+            /* Return (RPC request) result. */
+            return response?.result
+        } else {
+            /* Return (RPC request) error. */
+            return response.error
+        }
     },
     description: `Broadcast a Nexa transaction to the network.`,
 }
