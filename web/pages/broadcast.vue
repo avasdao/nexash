@@ -79,7 +79,7 @@ onMounted(() => {
                     class="px-5 py-3 text-xl bg-amber-100 border-2 border-amber-300 rounded-xl shadow-md placeholder:text-amber-700"
                 ></textarea>
 
-                <NuxtLink :to="'https://explorer.nexa.org/tx/' + txidem" target="_blank" v-if="txidem" class="text-sm text-blue-500 font-medium italic">
+                <NuxtLink :to="'tx/' + txidem" v-if="txidem" class="text-sm text-blue-500 font-medium italic">
                     {{txidem}}
                 </NuxtLink>
 
