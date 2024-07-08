@@ -34,7 +34,7 @@ watch(System.$state, (_state) => {
 </script>
 
 <template>
-    <main class="max-w-7xl mx-auto py-5">
+    <main class="max-w-7xl mx-auto py-5 px-3">
         <h1 class="text-5xl font-medium">
             Blank
         </h1>
