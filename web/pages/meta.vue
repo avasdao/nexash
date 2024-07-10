@@ -23,10 +23,29 @@ watch(System.$state, (_state) => {
 // watch additional states here...
 
 
-const addMainnet = () => {
-    if(confirm(`We're sorry, MetaNet has not yet been deployed. Do you want to learn more?`)) {
-        window.open('https://causes.cash/c/f900d1b8-1ae0-4e18-8a2f-212631b62562')
+const addMainnet = async () => {
+    const _provider = {
+        chainId: '0x7227',
+        rpcUrls: [
+            'https://nexa.sh/metanet',
+        ],
+        chainName: 'Nexa (MetaNet)',
+        nativeCurrency: {
+            name: 'Nexa',
+            symbol: 'NEXA',
+            decimals: 18,
+        },
+        blockExplorerUrls: [ 'https://nexa.sh' ],
+        iconUrls: [ 'https://nexa.sh/nexa.png' ],
     }
+
+    const success = await window.ethereum
+        .request({
+            method: 'wallet_addEthereumChain',
+            params: [ _provider ],
+        })
+        .catch(err => console.error(err))
+    console.log('SUCCESS', success)
 }
 
 const addTestnet = async () => {
@@ -41,9 +60,8 @@ const addTestnet = async () => {
             symbol: 'NEXA',
             decimals: 18,
         },
-        // blockExplorerUrls: [ 'https://test-nexa.sh' ],
-        blockExplorerUrls: [ 'https://nexa.sh' ],
-        iconUrls: [ 'https://assets.nexa.sh/nexa.png' ],
+        blockExplorerUrls: [ 'https://test-nexa.sh' ],
+        iconUrls: [ 'https://nexa.sh/nexa.png' ],
     }
 
     const success = await window.ethereum
