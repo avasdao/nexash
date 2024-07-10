@@ -41,7 +41,7 @@ const addTestnet = async () => {
             symbol: 'NEXA',
             decimals: 18,
         },
-        // blockExplorerUrls: [ 'https://nexa-test.sh' ],
+        // blockExplorerUrls: [ 'https://test-nexa.sh' ],
         blockExplorerUrls: [ 'https://nexa.sh' ],
         iconUrls: [ 'https://assets.nexa.sh/nexa.png' ],
     }
@@ -169,8 +169,8 @@ const addTestnet = async () => {
                 <h3 class="col-span-2 sm:col-span-1 text-gray-700 text-center sm:text-right">
                     Block explorer URL
                 </h3>
-                <NuxtLink to="https://nexa-test.sh" target="_blank" class="col-span-2 sm:col-span-1 text-blue-500 text-lg font-medium text-center sm:text-left hover:underline">
-                    https://nexa-test.sh
+                <NuxtLink to="https://test-nexa.sh" target="_blank" class="col-span-2 sm:col-span-1 text-blue-500 text-lg font-medium text-center sm:text-left hover:underline">
+                    https://test-nexa.sh
                 </NuxtLink>
 
                 <div class="col-span-2 flex flex-col lg:flex-row justify-center gap-4">
