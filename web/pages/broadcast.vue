@@ -22,6 +22,9 @@ const ENDPOINT = 'https://nexa.sh/graphql'
  * Broadcasts the (raw) bytecode of a transaction to the Mainnet.
  */
 const makeBroadcast = async () => {
+    /* Reset txidem. */
+    txidem.value = null
+
     /* Validate bytecode. */
     if (!bytecode.value || bytecode.value === '') {
         throw new Error('Oops! You MUST provide a valid bytecode.')
