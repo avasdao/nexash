@@ -49,6 +49,9 @@ const makeBroadcast = async () => {
     /* Validate response. */
     if (response?.data?.broadcast) {
         txidem.value = response.data.broadcast
+
+        /* Reset input. */
+        bytecode.value = null
     }
 }
 
