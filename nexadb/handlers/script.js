@@ -4,7 +4,6 @@ import PouchDB from 'pouchdb'
 
 /* Initialize databases. */
 const scriptTxsDb = new PouchDB(`http://${process.env.COUCHDB_USER}:${process.env.COUCHDB_PASSWORD}@127.0.0.1:5984/script_txs`)
-const transactionsDb = new PouchDB(`http://${process.env.COUCHDB_USER}:${process.env.COUCHDB_PASSWORD}@127.0.0.1:5984/transactions`)
 
 export default async (_transaction) => {
     /* Initialize locals. */

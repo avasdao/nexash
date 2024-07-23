@@ -15,12 +15,12 @@ import getBlock from './utils/getBlock.js'
 import getBlockchainInfo from './utils/getBlockchainInfo.js'
 
 /* Import indexers. */
-import blocksIndexer from './indexer/blocks.js'
-import groupsIndexer from './indexer/groups.js'
-import nulldataIndexer from './indexer/nulldata.js'
-import outputsIndexer from './indexer/outputs.js'
-import scriptsIndexer from './indexer/scripts.js'
-import transactionsIndexer from './indexer/transactions.js'
+import blocksIndexer from './indexers/blocks.js'
+import groupsIndexer from './indexers/groups.js'
+import nulldataIndexer from './indexers/nulldata.js'
+import outputsIndexer from './indexers/outputs.js'
+import scriptsIndexer from './indexers/scripts.js'
+import transactionsIndexer from './indexers/transactions.js'
 
 /* Import handlers. */
 import handleAddress from './handlers/address.js'
