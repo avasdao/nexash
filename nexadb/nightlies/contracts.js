@@ -3,7 +3,7 @@ import moment from 'moment'
 import PouchDB from 'pouchdb'
 
 /* Initialize databases. */
-const contractsDb = new PouchDB(`http://${process.env.COUCHDB_USER}:${process.env.COUCHDB_PASSWORD}@127.0.0.1:5984/contracts`)
+const contractsDb = new PouchDB(`http://${process.env.COUCHDB_USER}:${process.env.COUCHDB_PASSWORD}@127.0.0.1:5984/nightly_contracts`)
 const scriptTxsDb = new PouchDB(`http://${process.env.COUCHDB_USER}:${process.env.COUCHDB_PASSWORD}@127.0.0.1:5984/script_txs`)
 const systemDb = new PouchDB(`http://${process.env.COUCHDB_USER}:${process.env.COUCHDB_PASSWORD}@127.0.0.1:5984/system`)
 
@@ -21,7 +21,6 @@ const ENDPOINT = 'https://nexa.sh/graphql'
  * Lookup Metadata
  */
 const lookupMeta = async (_scriptHash) => {
-console.log('SCRIPT HASH', _scriptHash);
     /* Initialize locals. */
     let contract
     let query
@@ -37,7 +36,7 @@ console.log('SCRIPT HASH', _scriptHash);
         }
       }
     `
-console.log('SCRIPT HASH (query):', query)
+// console.log('SCRIPT HASH (query):', query)
 
     /* Make query request. */
     result = await fetch(ENDPOINT,
@@ -53,7 +52,7 @@ console.log('SCRIPT HASH (query):', query)
 
     /* Decode JSON. */
     result = await result.json()
-    console.log('SCRIPT HASH (result):', result)
+    // console.log('SCRIPT HASH (result):', result)
 
     if (result?.data?.script?.pageInfo?.metadata) {
         contract = result.data.script.pageInfo.metadata
@@ -137,7 +136,7 @@ const loadUnique = async (_scripts) => {
                 // if (unique[scriptHash].count > 10) {
                     meta = await lookupMeta(scriptHash)
                 // }
-                console.log('META', meta)
+                // console.log('META', meta)
 
                 unique[scriptHash] = {
                     title: meta.title,
@@ -149,9 +148,15 @@ const loadUnique = async (_scripts) => {
                     count: 1,
                 }
             } else {
-                if (!unique[scriptHash][txidem]) {
+                /* Validate txs handler. */
+                if (!unique[scriptHash].txs) {
+                    unique[scriptHash].txs = {}
+                }
+
+                /* Validate (duplicate) tx. */
+                if (!unique[scriptHash].txs[txidem]) {
                     /* Set flag. */
-                    unique[scriptHash][txidem] = true
+                    unique[scriptHash].txs[txidem] = true
 
                     /* Increment (unique transaction) count. */
                     unique[scriptHash].count++
@@ -181,9 +186,11 @@ const loadUnique = async (_scripts) => {
 
     /* Initialize locals. */
     let block
+    let nightlyid
     let limit
     let nightlySummary
     let nightlyTxs
+    let response
     let scriptTxs
     let startkey
     let totalNightly
@@ -192,37 +199,41 @@ const loadUnique = async (_scripts) => {
     let updatedSystem
 
     // startkey = moment().subtract(1, 'days').unix()
-    startkey = moment().subtract(9, 'hours').unix()
-    console.log('START KEY', startkey)
+    startkey = moment().subtract(24, 'hours').unix()
+    // console.log('START KEY', startkey)
 
     const yr = moment().year()
-    const mo = moment().month()
-    const dy = moment().day()
+    const mo = moment().month() // NOTE: Months are zero indexed.
+    const dy = moment().date()
+
+    /* Set nightly id. */
+    nightlyid = `${yr.toString()}_${(mo + 1).toString().padStart(2, '0')}_${dy.toString().padStart(2, '0')}`
+    console.log('NIGHTLY ID', nightlyid)
 
     const today = moment()
         .utc()
         .year(yr)
         .month(mo)
-        .day(dy)
+        .date(dy)
         .hour(0)
         .minute(0)
         .second(0)
         .unix()
     console.log('TODAY', today)
 
-    // startkey = today
+    startkey = today
 
-    limit = 2
+    // limit = 200
 
     /* Request null data index. */
     nightlyTxs = await scriptTxsDb
         .query('api/byBlocktime', {
             startkey,
-            limit,
+            // limit,
             include_docs: true,
         })
         .catch(err => console.error(err))
-    console.log('NIGHTLY TXS', nightlyTxs)
+    // console.log('NIGHTLY TXS', nightlyTxs)
 
     if (nightlyTxs && nightlyTxs.total_rows && nightlyTxs.offset) {
         totalNightly = nightlyTxs.total_rows - nightlyTxs.offset
@@ -248,24 +259,41 @@ const loadUnique = async (_scripts) => {
             return _tx.doc
         })
     }
-    console.log('NIGHTLY TXS', nightlyTxs)
+    // console.log('NIGHTLY TXS', nightlyTxs)
 
     nightlyTxs = await loadUnique(nightlyTxs)
-    console.log('LOAD UNIQUE', nightlyTxs)
+    // console.log('LOAD UNIQUE', nightlyTxs)
 
-return
     /* Retrieve (latest) System status. */
     nightlySummary = await contractsDb
-        .get('2024_07_24')
+        .get(nightlyid)
         .catch(err => console.error(err))
     console.log('NIGHTLY SUMMARY', nightlySummary)
 
-    /* Set new indexed height. */
-    // updatedSystem.last = i
-    nightlySummary.updatedAt = moment().unix()
+    if (nightlySummary) {
+        /* Set updated timestamp. */
+        // nightlySummary.updatedAt = moment().unix()
+
+        /* Build package. */
+        nightlySummary = {
+            _id: nightlyid,
+            _rev: nightlySummary._rev,
+            ...nightlyTxs,
+            createdAt: nightlySummary.createdAt,
+            updatedAt: moment().unix(),
+        }
+    } else {
+        /* Build package. */
+        nightlySummary = {
+            _id: nightlyid,
+            ...nightlyTxs,
+            createdAt: moment().unix(),
+        }
+    }
 
     /* Save (updated) System status to storage. */
-    await contractsDb
-        .put(updatedSystem)
+    response = await contractsDb
+        .put(nightlySummary)
         .catch(err => console.error(err))
+    // console.log('RESPONSE', response)
 })()
