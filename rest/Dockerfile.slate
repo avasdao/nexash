@@ -1,0 +1,14 @@
+FROM ruby:2.5.5
+
+# We usually only need to run this once
+RUN apt update && \
+  apt install -y nginx
+
+# Application dependencies
+COPY Gemfile Gemfile.lock ./
+RUN bundle install
+
+# Source code
+COPY my-source-code /srv/
+
+CMD ruby -e "puts 1 + 2"
