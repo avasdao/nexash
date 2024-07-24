@@ -7,7 +7,7 @@ useHead({
     title: 'Contracts - NexaShell',
     meta: [{
         name: 'description',
-        content: 'Contracts'
+        content: 'Wise Contracts are the MOST efficient smart contracts available in the blockchain ecosystem.'
     }]
 })
 
@@ -261,7 +261,6 @@ onMounted(() => {
 //     console.log('Before Unmount!')
 //     // Now is the time to perform all cleanup operations.
 // })
-
 </script>
 
 <template>

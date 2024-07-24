@@ -1,4 +1,4 @@
-FROM node:18-slim
+FROM node:20-slim
 
 # Create app directory
 WORKDIR /usr/src/app
@@ -13,5 +13,6 @@ RUN yarn
 # Bundle app source
 COPY . .
 
-EXPOSE 4000
+EXPOSE 3000
+
 CMD [ "node", "server.js" ]
