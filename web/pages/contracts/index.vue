@@ -22,147 +22,9 @@ const uniqueScripts = ref(null)
 const isShowingMenu = ref(false)
 // const totalTxCount = ref(0)
 
-const lookupMeta = async (_scriptHash) => {
-    let contract
-    let query
-    let result
 
-    query = `
-    {
-        script(hash: "${_scriptHash}") {
-          pageInfo {
-            metadata
-          }
-        }
-      }
-    `
 
-    /* Make query request. */
-    result = await $fetch(ENDPOINT,
-        {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-            },
-            body: JSON.stringify({ query }),
-        })
-        .catch(err => console.error(err))
-    // console.log('RESULT', result)
 
-    if (result?.data?.script?.pageInfo?.metadata) {
-        contract = result.data.script.pageInfo.metadata
-    }
-    // console.log('CONTRACT', contract)
-
-    if (contract) {
-        try {
-            /* Set contract details. */
-            contract = JSON.parse(contract)
-        } catch (err) {
-            console.error(err)
-        }
-    } else {
-        contract = {
-            title: 'Unknown',
-            bannerUrl: 'https://bafybeiczbkrgxen6fbwspengdxke4c65tggy2h7uo4dxdf22hnevru5f6e.nexa.garden',
-            iconUrl: 'https://bafkreic4porzvnv5xbgqhh7bxiomkhld2zvh5xgd22oxefuda4bvdla5fq.nexa.garden',
-            version: '',
-            type: '',
-        }
-    }
-
-    /* Return contract. */
-    return contract
-}
-
-const loadUnique = async () => {
-    if (!scripts.value) {
-        return []
-    }
-
-    // const contracts = {}
-    let unique = {}
-
-    for (let i = 0; i < scripts.value.length; i++) {
-        const script = scripts.value[i]
-
-        const txidem = script.node.txidem
-
-        const timestamp = script.node?.time
-
-        const outputs = script.node.vout
-
-        for (let j = 0; j < scripts.value.length; j++) {
-            const output = outputs[j]
-
-            if (!output || output === null || typeof output === 'undefined') {
-                continue
-            }
-
-            if (output?.scriptPubKey.scriptHash === null) {
-                continue
-            }
-
-            if (output?.scriptPubKey.scriptHash === 'pay2pubkeytemplate') {
-                continue
-            }
-
-            let meta
-            let scriptHash
-
-            /* Set script hash. */
-            scriptHash = output.scriptPubKey.scriptHash
-
-            if (!unique[scriptHash]) {
-                // lookupMeta(scriptHash)
-
-                // if (unique[scriptHash].count > 10) {
-                //     meta = await lookupMeta(scriptHash)
-                // }
-                // console.log('META', meta)
-
-                unique[scriptHash] = {
-                    // title: meta.title,
-                    // bannerUrl: meta.bannerUrl,
-                    // iconUrl: meta.iconUrl,
-                    // version: meta.version,
-                    // type: meta.type,
-                    timestamp,
-                    count: 1,
-                }
-            } else {
-                /* Restrict metadata request to contracts with at least 10 activities. */
-                if (!unique[scriptHash].title && unique[scriptHash].count >= META_QUERY_COUNT_MIN) {
-                    meta = await lookupMeta(scriptHash)
-
-                    unique[scriptHash].title = meta.title
-                    unique[scriptHash].bannerUrl = meta.bannerUrl
-                    unique[scriptHash].iconUrl = meta.iconUrl
-                    unique[scriptHash].version = meta.version
-                    unique[scriptHash].type = meta.type
-                }
-                // console.log('META', meta)
-
-                if (!unique[scriptHash][txidem]) {
-                    /* Set flag. */
-                    unique[scriptHash][txidem] = true
-
-                    /* Increment (unique transaction) count. */
-                    unique[scriptHash].count++
-                }
-
-                if ((unique[scriptHash].timestamp === null && timestamp) || (timestamp && timestamp > unique[scriptHash].timestamp)) {
-                    unique[scriptHash].timestamp = timestamp
-                    // console.log('setting', scriptHash, timestamp)
-                }
-            }
-        }
-    }
-
-    /* Return unique (object). */
-    return uniqueScripts.value = unique
-}
 
 const displayCards = computed(() => {
     if (!uniqueScripts.value) {
@@ -249,7 +111,7 @@ const init = async () => {
     contracts.value = []
     uniqueScripts.value = []
 
-    await loadScripts(MAXIMUM_RESULTS)
+    // await loadScripts()
 }
 
 

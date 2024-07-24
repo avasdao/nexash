@@ -3,7 +3,7 @@ services:
     build: .
     image: rest
     container_name: rest
-    restart: always
+    restart: unless-stopeed
     network_mode: 'host'
     ports:
       - '127.0.0.1:3000:3000'
