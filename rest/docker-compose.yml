@@ -5,11 +5,10 @@ services:
     container_name: rest
     restart: always
     network_mode: 'host'
-    # ports:
-      # - '127.0.0.1:4000:4000'
-      # - '127.0.0.1:7227:7227'
-    # volumes:
-    #   - './:/webapp/'
-    environment:
-      HOST: 127.0.0.1
-      PORT: 4000
+    ports:
+      - '127.0.0.1:3000:3000'
+    logging: # apply better controls to Docker overlay folder
+      driver: 'json-file'
+      options:
+        max-file: '5'
+        max-size: '10m'
