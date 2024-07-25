@@ -7,13 +7,6 @@ const contractsDb = new PouchDB(`http://${process.env.COUCHDB_USER}:${process.en
 const scriptTxsDb = new PouchDB(`http://${process.env.COUCHDB_USER}:${process.env.COUCHDB_PASSWORD}@127.0.0.1:5984/script_txs`)
 const systemDb = new PouchDB(`http://${process.env.COUCHDB_USER}:${process.env.COUCHDB_PASSWORD}@127.0.0.1:5984/system`)
 
-/* Import handlers. */
-// import handleNulldata from '../handlers/nulldata.js'
-
-/* Import helpers. */
-// import getBlock from '../utils/getBlock.js'
-// import getTransaction from '../utils/getTransaction.js'
-
 const ENDPOINT = 'https://nexa.sh/graphql'
 
 
