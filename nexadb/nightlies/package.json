@@ -4,5 +4,9 @@
   "description": "Nightly batch processes.",
   "main": "index.js",
   "license": "MIT",
-  "type": "module"
+  "type": "module",
+  "dependencies": {
+    "moment": "2.30.1",
+    "pouchdb": "9.0.0"
+  }
 }
