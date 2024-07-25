@@ -7,7 +7,7 @@ import blockRoute from './routes/block.js'
 import coreRoute from './routes/core.js'
 
 /* Set constants. */
-const HOST = '127.0.0.1'
+const HOST = process.env.HOST || '0.0.0.0'
 const PORT = process.env.PORT || 3000
 
 /* Initialize application. */
