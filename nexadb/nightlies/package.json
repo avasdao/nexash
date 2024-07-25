@@ -1,0 +1,7 @@
+{
+  "name": "nightlies",
+  "version": "24.7.24",
+  "description": "Nightly batch processes.",
+  "main": "index.js",
+  "license": "MIT"
+}
