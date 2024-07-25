@@ -166,8 +166,8 @@ const addTestnet = async () => {
                 <h3 class="col-span-2 sm:col-span-1 text-gray-700 text-center sm:text-right">
                     New RPC URL
                 </h3>
-                <NuxtLink to="https://nexa.sh/metatest" target="_blank" class="col-span-2 sm:col-span-1 text-blue-500 text-lg font-medium text-center sm:text-left hover:underline">
-                    https://nexa.sh/metatest
+                <NuxtLink to="https://test-nexa.sh/metatest" target="_blank" class="col-span-2 sm:col-span-1 text-blue-500 text-lg font-medium text-center sm:text-left hover:underline">
+                    https://test-nexa.sh/metatest
                 </NuxtLink>
 
                 <h3 class="col-span-2 sm:col-span-1 text-gray-700 text-center sm:text-right">
