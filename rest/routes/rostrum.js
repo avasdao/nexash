@@ -130,7 +130,7 @@ const reconnect = () => {
 
 /* Handle connection data. */
 client.on('data', async function (_data) {
-	console.log('Received: ' + _data.length)
+	// console.log('Received: ' + _data.length)
 
     /* Initialize locals. */
     let data
@@ -138,25 +138,24 @@ client.on('data', async function (_data) {
     let result
 
     // if (!_data.toString().includes('"jsonrpc":"2.0"')) {
-    if (dataBuffer && _data.length === MAX_DATA_BUFFER_SIZE) {
+    // if (dataBuffer && _data.length === MAX_DATA_BUFFER_SIZE) {
+    if (dataBuffer) {
         /* Concatenate (raw) data. */
         dataBuffer = Buffer.concat([ dataBuffer, _data ])
-        console.log('BUFFER-2', dataBuffer.length)
+        // console.log('BUFFER-2', dataBuffer.length)
 
-        return // skip remaining processing
-    }
-
-    if (_data.length === MAX_DATA_BUFFER_SIZE) {
-        return {
-            error: 'Exceeds MAX data request limit.'
+        if (_data.length === MAX_DATA_BUFFER_SIZE) {
+            return // skip remaining processing
         }
     }
 
-    // if (_data.length === MAX_DATA_BUFFER_SIZE) {
-    //     /* Save NEW (raw) data buffer. */
-    //     dataBuffer = _data
-    //     console.log('BUFFER-1', dataBuffer.length)
-    // }
+    if (!dataBuffer && _data.length === MAX_DATA_BUFFER_SIZE) {
+        /* Save NEW (raw) data buffer. */
+        dataBuffer = _data
+        // console.log('BUFFER-1', dataBuffer.length)
+
+        return // skip remaining processing
+    }
 
     try {
         if (dataBuffer) {
@@ -274,6 +273,12 @@ export default async (req, res) => {
             'blockchain.address.get_balance',
             'blockchain.address.get_first_use',
             'blockchain.address.get_history',
+            'blockchain.address.get_mempool',
+            'blockchain.address.get_scripthash',
+            'token.address.get_balance',
+            'token.address.get_history',
+            'token.address.get_mempool',
+            'token.address.listunspent',
             'server.version',
         ]
 
