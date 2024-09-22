@@ -1,7 +1,6 @@
 /* Import modules. */
 import moment from 'moment'
 import Net from 'net'
-import { binToUtf8 } from '@nexajs/utils'
 import { v4 as uuidv4 } from 'uuid'
 
 /* Initialize constants. */
@@ -199,7 +198,6 @@ client.on('data', async function (_data) {
             delete requests[id]
         }
     } else {
-        // console.error('DATA ERROR!', data, binToUtf8(_data))
         console.error('DATA ERROR!', data, _data.toString())
         // console.error('DATA ERROR!', dataBuffer.toString())
     }
