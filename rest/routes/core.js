@@ -1,6 +1,6 @@
 /* Import modules. */
 import Client from 'bitcoin-core'
-import { callNode } from 'nexajs'
+import { callNode } from '@nexajs/rpc'
 
 /* Initialize new Bitcoin client. */
 const client = new Client({
