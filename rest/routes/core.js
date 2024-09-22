@@ -1,10 +1,6 @@
 /* Import modules. */
 import Client from 'bitcoin-core'
-import ethers from 'ethers'
-import moment from 'moment'
 import { callNode } from 'nexajs'
-import superagent from 'superagent'
-import { v4 as uuidv4 } from 'uuid'
 
 /* Initialize new Bitcoin client. */
 const client = new Client({

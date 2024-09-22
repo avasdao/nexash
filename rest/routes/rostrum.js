@@ -1,18 +1,119 @@
 /* Import modules. */
-import Client from 'bitcoin-core'
-import ethers from 'ethers'
-import moment from 'moment'
-import { callNode } from 'nexajs'
-import superagent from 'superagent'
+import Net from 'net'
 import { v4 as uuidv4 } from 'uuid'
 
-/* Initialize new Bitcoin client. */
-const client = new Client({
-    port: process.env.NEXA_RPC_PORT || 7227, // Testnet RPC port is 7229
-    host: process.env.NEXA_RPC_HOST || '127.0.0.1',
-    username: process.env.NEXA_RPC_USER || 'user',
-    password: process.env.NEXA_RPC_PASS || 'password',
+/* Initialize constants. */
+const RECONNECTION_DELAY = 100
+const ROSTRUM_HOST = '127.0.0.1'
+const ROSTRUM_PORT = 20001
+
+/* Initialize requests handler. */
+const requests = {}
+
+/* Initialize client. */
+const client = new Net.Socket()
+
+/**
+ * Make Request
+ *
+ * Make a data request to a local Rostrum server.
+ */
+const makeRequest = (_method, _params) => {
+    const id = uuidv4()
+    console.log('REQUEST ID', id)
+
+    /* Initialize handlers. */
+    let resolve
+    let reject
+
+    /* Return promise (to caller). */
+    const request = new Promise((_resolve, _reject) => {
+        resolve = _resolve
+        reject = _reject
+    })
+
+    /* Add request to handler. */
+    requests[id] = { resolve, reject }
+
+    /* Build JSON. */
+    const json = {
+        id,
+        method: _method,
+        params: _params,
+    }
+    console.log('JSON', json)
+
+    try {
+        /* Write to client. */
+        client.write(`${JSON.stringify(json)}\n`)
+    } catch (err) {
+        console.error(err)
+    }
+
+    /* Return request. */
+    return request
+}
+
+const reconnect = () => {
+    /* Open client connection. */
+    client.connect(ROSTRUM_PORT, ROSTRUM_HOST, async function() {
+        console.log('Connected!')
+        let result
+        result = await makeRequest("server.version", ["AtomicDEX", ["1.4", "2.0"]])
+        // console.log('Connection TESTED!!', result)
+    })
+}
+
+/* Handle connection data. */
+client.on('data', async function (_data) {
+	// console.log('Received: ' + _data)
+
+    /* Initialize locals. */
+    let data
+    let id
+    let result
+
+    try {
+        data = JSON.parse(_data)
+    } catch (err) {
+        console.error(err)
+    }
+
+    /* Validate data. */
+    if (data && data.id) {
+        /* Set (request) id. */
+        id = data.id
+
+        /* Validate request id. */
+        if (requests[id]) {
+            // console.log('REQUEST', requests[id])
+            /* Set results. */
+            result = data.result
+
+// TODO Filter results.
+
+            /* Resolve request. */
+            requests[id].resolve(result)
+        }
+    } else {
+        console.error('DATA ERROR!', data)
+
+        /* Reject request. */
+        requests[id].reject(data)
+    }
 })
+
+/* Close connection. */
+client.on('close', function() {
+	console.log('Connection closed')
+
+    /* Reconnect to client. */
+    // FIXME Add a back-off for failed connection
+    setTimeout(reconnect, RECONNECTION_DELAY)
+})
+
+/* Make initial (re-)connection. */
+reconnect()
 
 /**
  * Core (Node) Module
@@ -38,13 +139,6 @@ export default async (req, res) => {
         address = body.address
         params = body.params
 
-        const options = {
-            username: process.env.RPC_USERNAME || 'user', // required
-            password: process.env.RPC_PASSWORD || 'password', // required
-            host: process.env.RPC_HOST || '127.0.0.1', // (optional) default is localhost (127.0.0.1)
-            port: process.env.RPC_PORT || '7227', // (optional) default is 7227
-        }
-
         /* Validate body. */
         if (!body) {
             /* Set status. */
@@ -56,38 +150,17 @@ export default async (req, res) => {
             })
         }
 
-        if (action === 'getbalance') {
-            const balance = await client
-                .getBalance('*', 0)
-                .catch(err => {
-                    console.error('ERROR (getbalance):', err)
-                })
-            // console.log('BALANCE', balance)
-            return res.json(balance)
-        }
+        const validActions = [
+            'blockchain.address.get_balance',
+            'server.version',
+        ]
 
-        /* Handle mining candidate. */
-        if (action === 'getminingcandidate') {
-            /* Make core request. */
-            response = await callNode(action, params, options)
-            // console.log('RPC RESPONSE', response)
-
-            /* Return response. */
+        if (validActions.includes(action)) {
+            response = await makeRequest(action, params)
+            console.log('RESPONSE', response)
             return res.json(response)
-        }
-
-        if (action === 'getmininginfo') {
-            const miningInfo = await callNode(action, params, options)
-            // console.log('MINING INFO', miningInfo)
-
-            return res.json(miningInfo)
-        }
-
-        if (action === 'validateaddress') {
-            const validateAddress = await callNode(action, params, options)
-            // console.log('VALIDATE ADDRESS', validateAddress)
-
-            return res.json(validateAddress)
+        } else {
+            console.error('ERROR! Invalid action', action)
         }
 
         if (!pkg) {

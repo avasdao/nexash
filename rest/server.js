@@ -37,11 +37,6 @@ app.use(express.json())
 /* Initialize URL parser. */
 app.use(express.urlencoded({ extended: true }))
 
-/* Initialize main endpoint (redirect). */
-app.get('/', (req, res) => {
-	res.redirect(301, '/v1')
-})
-
 /* Initialize public folder. */
 app.use('/v1', express.static('public'))
 
