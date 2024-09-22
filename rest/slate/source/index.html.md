@@ -24,7 +24,7 @@ code_clipboard: true
 
 meta:
   - name: description
-    content: Documentation for the NexaShell API
+    content: API Docs for NexaShell
 ---
 
 # Introduction
@@ -40,39 +40,39 @@ This example API documentation page was created with [Slate](https://github.com/
 > To authorize, use this code:
 
 ```ruby
-require 'kittn'
+require 'nexa'
 
-api = NexaShell::APIClient.authorize!('meowmeowmeow')
+api = NexaShell::APIClient.authorize!('satoshisghost')
 ```
 
 ```python
 import pynexa
 
-api = kittn.authorize('meowmeowmeow')
+api = pynexa.authorize('satoshisghost')
 ```
 
 ```shell
 # With shell, you can just pass the correct header with each request
 curl "api_endpoint_here" \
-  -H "Authorization: meowmeowmeow"
+  -H "Authorization: satoshisghost"
 ```
 
 ```javascript
 import Nexa as 'nexajs'
 
-let token = Nexa.getToken('meowmeowmeow')
+let token = Nexa.getToken('satoshisghost')
 ```
 
-> Make sure to replace `meowmeowmeow` with your API key.
+> Make sure to replace `satoshisghost` with your API key.
 
-NexaShell uses API keys to allow access to the API. You can register a new NexaShell API key at our [developer portal](http://example.com/developers).
+NexaShell uses API keys to allow access to the API. You can register a new NexaShell API key at our [developer portal](https://nexa.sh/pro).
 
 NexaShell expects for the API key to be included in all API requests to the server in a header that looks like the following:
 
-`Authorization: meowmeowmeow`
+`Authorization: satoshisghost`
 
 <aside class="notice">
-You must replace <code>meowmeowmeow</code> with your personal API key.
+You must replace <code>satoshisghost</code> with your personal API key.
 </aside>
 
 # Stratum v1
@@ -82,27 +82,27 @@ You must replace <code>meowmeowmeow</code> with your personal API key.
 ```ruby
 require 'kittn'
 
-api = NexaShell::APIClient.authorize!('meowmeowmeow')
+api = NexaShell::APIClient.authorize!('satoshisghost')
 api.kittens.get
 ```
 
 ```python
-import kittn
+import pynexa
 
-api = kittn.authorize('meowmeowmeow')
+api = pynexa.authorize('satoshisghost')
 api.kittens.get()
 ```
 
 ```shell
 curl "http://example.com/api/kittens" \
-  -H "Authorization: meowmeowmeow"
+  -H "Authorization: satoshisghost"
 ```
 
 ```javascript
-const kittn = require('kittn');
+const Nexa = require('nexajs');
 
-let api = kittn.authorize('meowmeowmeow');
-let kittens = api.kittens.get();
+let api = Nexa.authorize('satoshisghost');
+let profiles = api.profiles.get();
 ```
 
 > The above command returns JSON structured like this:
@@ -111,15 +111,15 @@ let kittens = api.kittens.get();
 [
   {
     "id": 1,
-    "name": "Fluffums",
-    "breed": "calico",
+    "name": "Satoshi Nakamoto",
+    "breed": "creator",
     "fluffiness": 6,
     "cuteness": 7
   },
   {
     "id": 2,
-    "name": "Max",
-    "breed": "unknown",
+    "name": "Hal Finney",
+    "breed": "tester",
     "fluffiness": 5,
     "cuteness": 10
   }
@@ -128,9 +128,9 @@ let kittens = api.kittens.get();
 
 This endpoint retrieves all kittens.
 
-### HTTP Request
+### HTTPS Request
 
-`GET http://example.com/api/kittens`
+`GET https://nexa.sh/v1/profiles`
 
 ### Query Parameters
 
@@ -148,26 +148,26 @@ Remember — a happy kitten is an authenticated kitten!
 ```ruby
 require 'kittn'
 
-api = NexaShell::APIClient.authorize!('meowmeowmeow')
+api = NexaShell::APIClient.authorize!('satoshisghost')
 api.kittens.get(2)
 ```
 
 ```python
 import kittn
 
-api = kittn.authorize('meowmeowmeow')
+api = kittn.authorize('satoshisghost')
 api.kittens.get(2)
 ```
 
 ```shell
 curl "http://example.com/api/kittens/2" \
-  -H "Authorization: meowmeowmeow"
+  -H "Authorization: satoshisghost"
 ```
 
 ```javascript
 const kittn = require('kittn');
 
-let api = kittn.authorize('meowmeowmeow');
+let api = kittn.authorize('satoshisghost');
 let max = api.kittens.get(2);
 ```
 
@@ -202,27 +202,27 @@ ID | The ID of the kitten to retrieve
 ```ruby
 require 'kittn'
 
-api = NexaShell::APIClient.authorize!('meowmeowmeow')
+api = NexaShell::APIClient.authorize!('satoshisghost')
 api.kittens.delete(2)
 ```
 
 ```python
 import kittn
 
-api = kittn.authorize('meowmeowmeow')
+api = kittn.authorize('satoshisghost')
 api.kittens.delete(2)
 ```
 
 ```shell
 curl "http://example.com/api/kittens/2" \
   -X DELETE \
-  -H "Authorization: meowmeowmeow"
+  -H "Authorization: satoshisghost"
 ```
 
 ```javascript
 const kittn = require('kittn');
 
-let api = kittn.authorize('meowmeowmeow');
+let api = kittn.authorize('satoshisghost');
 let max = api.kittens.delete(2);
 ```
 

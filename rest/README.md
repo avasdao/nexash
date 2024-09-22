@@ -1,6 +1,6 @@
-# Nexa Shell API
+# NexaShell (REST) API
 
-### https://api.nexa.sh (v1)
+### https://rest.nexa.sh (v1)
 
 ## Endpoints
 
@@ -8,4 +8,4 @@
 
 `/v1/notifs`
 
-eg. https://api.nexa.sh/v1/notifs
+eg. https://rest.nexa.sh/v1/notifs
