@@ -7,6 +7,11 @@ services:
     network_mode: 'host'
     # ports:
     #   - '127.0.0.1:3000:3000'
+    environment:
+      - COUCHDB_USER=${COUCHDB_USER}
+      - COUCHDB_PASSWORD=${COUCHDB_PASSWORD}
+      - REST_HOST=${REST_HOST}
+      - REST_PORT=${REST_PORT}
     logging: # apply better controls to Docker overlay folder
       driver: 'json-file'
       options:
