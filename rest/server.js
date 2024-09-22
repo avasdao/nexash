@@ -8,8 +8,8 @@ import coreRoute from './routes/core.js'
 import rostrumRoute from './routes/rostrum.js'
 
 /* Set constants. */
-const HOST = process.env.HOST || '127.0.0.1'
-const PORT = process.env.PORT || 3000
+const HOST = process.env.REST_HOST || '127.0.0.1'
+const PORT = process.env.REST_PORT || 3000
 
 /* Initialize application. */
 const app = express()
