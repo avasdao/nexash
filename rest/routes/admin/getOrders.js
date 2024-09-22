@@ -3,7 +3,7 @@ const util = require('util')
 const PouchDB = require('pouchdb')
 
 /* Initialize databases. */
-const ordersDb = new PouchDB(`http://${process.env.COUCHDB_AUTH}@localhost:5984/orders`)
+const ordersDb = new PouchDB(`http://${process.env.COUCHDB_USER}:${process.env.COUCHDB_PASSWORD}@127.0.0.1:5984/orders`)
 
 /**
  * Get Orders

@@ -5,8 +5,8 @@ services:
     container_name: rest
     restart: unless-stopeed
     network_mode: 'host'
-    ports:
-      - '127.0.0.1:3000:3000'
+    # ports:
+    #   - '127.0.0.1:3000:3000'
     logging: # apply better controls to Docker overlay folder
       driver: 'json-file'
       options:

@@ -5,9 +5,10 @@ import rateLimit from 'express-rate-limit'
 import adminRoute from './routes/admin.js'
 import blockRoute from './routes/block.js'
 import coreRoute from './routes/core.js'
+import rostrumRoute from './routes/rostrum.js'
 
 /* Set constants. */
-const HOST = process.env.HOST || '0.0.0.0'
+const HOST = process.env.HOST || '127.0.0.1'
 const PORT = process.env.PORT || 3000
 
 /* Initialize application. */
@@ -36,6 +37,11 @@ app.use(express.json())
 /* Initialize URL parser. */
 app.use(express.urlencoded({ extended: true }))
 
+/* Initialize main endpoint (redirect). */
+app.get('/', (req, res) => {
+	res.redirect(301, '/v1')
+})
+
 /* Initialize public folder. */
 app.use('/v1', express.static('public'))
 
@@ -48,6 +54,9 @@ app.get('/v1/block/:height', blockRoute)
 
 /* Initialize Core (Node) route. */
 app.post('/v1/core', coreRoute)
+
+/* Initialize Rostrum (Node) route. */
+app.post('/v1/rostrum', rostrumRoute)
 
 /* Set Oops! */
 const OOPS = `
@@ -81,9 +90,10 @@ console.log(`Running on http://${HOST}:${PORT}`)
 console.info()
 console.info('Current Environment Variables')
 console.info('-----------------------------')
-console.info('  - NODE_ENV       :', process.env.NODE_ENV)
-console.info('  - COUCHDB_AUTH   :', process.env.COUCHDB_AUTH)
-console.info('  - SMTP_HOST      :', process.env.SMTP_HOST)
-console.info('  - SMTP_USER      :', process.env.SMTP_USER)
-console.info('  - SMTP_PASS      :', process.env.SMTP_PASS)
+console.info('  - NODE_ENV         :', process.env.NODE_ENV)
+console.info('  - COUCHDB_USER     :', process.env.COUCHDB_USER)
+console.info('  - COUCHDB_PASSWORD :', process.env.COUCHDB_PASSWORD)
+console.info('  - SMTP_HOST        :', process.env.SMTP_HOST)
+console.info('  - SMTP_USER        :', process.env.SMTP_USER)
+console.info('  - SMTP_PASS        :', process.env.SMTP_PASS)
 console.info()

@@ -4,7 +4,7 @@ const PouchDB = require('pouchdb')
 const util = require('util')
 
 /* Initialize databases. */
-const minersDb = new PouchDB(`http://${process.env.COUCHDB_AUTH}@localhost:5984/miners`)
+const minersDb = new PouchDB(`http://${process.env.COUCHDB_USER}:${process.env.COUCHDB_PASSWORD}@127.0.0.1:5984/miners`)
 
 /**
  * Update Miner
