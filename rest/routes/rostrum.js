@@ -275,10 +275,18 @@ export default async (req, res) => {
             'blockchain.address.get_history',
             'blockchain.address.get_mempool',
             'blockchain.address.get_scripthash',
+            'blockchain.address.listunspent',
+            'blockchain.block.get',
+            'blockchain.headers.tip',
+            'blockchain.transaction.get',
+            'blockchain.utxo.get',
             'token.address.get_balance',
             'token.address.get_history',
             'token.address.get_mempool',
             'token.address.listunspent',
+            'token.genesis.info',
+            'token.nft.list',
+            'token.transaction.get_history',
             'server.version',
         ]
 
