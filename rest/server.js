@@ -5,7 +5,7 @@ import rateLimit from 'express-rate-limit'
 import adminRoute from './routes/admin.js'
 import blockRoute from './routes/block.js'
 import coreRoute from './routes/core.js'
-import rostrumRoute from './routes/rostrum.js'
+import rostrumRoute from './routes/rostrum-socket.js'
 
 /* Set constants. */
 const HOST = process.env.REST_HOST || '127.0.0.1'

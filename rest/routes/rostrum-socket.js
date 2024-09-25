@@ -12,19 +12,16 @@ const ROSTRUM_HOST = '127.0.0.1'
 const ROSTRUM_PORT = 20001
 const TIMEOUT_CHECK_INTERVAL = 2500 // 0.5 seconds
 
+/* Initialize clients handler. */
+const clients = {}
+
 /* Initialize requests handler. */
 const requests = {}
 
-/* Initialize request buffer. */
-let dataBuffer
-
-/* Initialize client. */
-const client = new Net.Socket()
-
-const keepAlive = () => {
-    makeRequest('server.ping')
-        .catch(err => console.error(err))
-}
+// const keepAlive = () => {
+//     makeRequest('server.ping')
+//         .catch(err => console.error(err))
+// }
 
 const timeout = () => {
     console.log('REQUESTS', requests)
@@ -61,10 +58,6 @@ const timeout = () => {
  * Make a data request to a local Rostrum server.
  */
 const makeRequest = (_method, _params) => {
-    /* Generate (request) id. */
-    const id = uuidv4()
-    // console.log('REQUEST ID', id)
-
     /* Initialize handlers. */
     let method
     let params
@@ -72,14 +65,22 @@ const makeRequest = (_method, _params) => {
     let reject
     let timeout
 
+    /* Generate (request) id. */
+    const id = uuidv4()
+    // console.log('REQUEST ID', id)
+
+    /* Initialize client. */
+    clients[id] = {}
+    clients[id].socket = new Net.Socket()
+
     /* Return promise (to caller). */
-    const request = new Promise((_resolve, _reject) => {
+    clients[id].request = new Promise((_resolve, _reject) => {
         resolve = _resolve
         reject = _reject
     })
 
     /* Set timeout. */
-    timeout = moment().add(REQUEST_TIMEOUT_DELAY, 'seconds').unix()
+    clients[id].timeout = moment().add(REQUEST_TIMEOUT_DELAY, 'seconds').unix()
 
     /* Add request to handler. */
     requests[id] = { resolve, reject, timeout }
@@ -104,121 +105,113 @@ const makeRequest = (_method, _params) => {
     // console.log('JSON', json)
 
     try {
-        /* Write to client. */
-        client.write(`${JSON.stringify(json)}\n`)
+        /* Open client connection. */
+        clients[id].socket.connect(ROSTRUM_PORT, ROSTRUM_HOST, function () {
+            console.log('Connected!')
+
+            /* Write to client. */
+            clients[id].socket.write(`${JSON.stringify(json)}\n`)
+        })
+
+        /* Handle connection data. */
+        clients[id].socket.on('data', async function (_data) {
+        	// console.log('Received: ' + _data.length)
+
+            /* Initialize locals. */
+            let data
+            let dataId
+            let result
+
+            // if (!_data.toString().includes('"jsonrpc":"2.0"')) {
+            if (clients[id].buffer) {
+                /* Concatenate (raw) data. */
+                clients[id].buffer = Buffer.concat([ clients[id].buffer, _data ])
+                // console.log('BUFFER-2', clients[id].buffer.length)
+
+                if (_data.length === MAX_DATA_BUFFER_SIZE) {
+                    return // skip remaining processing
+                }
+            }
+
+            if (!clients[id].buffer && _data.length === MAX_DATA_BUFFER_SIZE) {
+                /* Save NEW (raw) data buffer. */
+                clients[id].buffer = _data
+                // console.log('BUFFER-1', clients[id].buffer.length)
+
+                return // skip remaining processing
+            }
+
+            try {
+                if (clients[id].buffer) {
+                    /* Parse JSON data. */
+                    data = JSON.parse(clients[id].buffer)
+
+                    /* Clear data buffer. */
+                    clients[id].buffer = null
+                } else {
+                    /* Parse JSON data. */
+                    data = JSON.parse(_data)
+                }
+            } catch (err) {
+                console.error(err)
+            }
+
+            /* Validate data. */
+            if (data && data.id) {
+                /* Set (request) id. */
+                dataId = data.id
+
+                /* Validate request id. */
+                if (requests[dataId]) {
+                    // console.log('REQUEST', requests[id])
+                    /* Validate data error. */
+                    if (data.error) {
+                        return requests[dataId].reject(data.error)
+                    }
+
+                    /* Set results. */
+                    result = data.result
+
+        // TODO Filter results.
+
+                    /* Resolve request. */
+                    requests[dataId].resolve(result)
+
+                    /* Delete request. */
+                    delete requests[dataId]
+                }
+            } else {
+                console.error('DATA ERROR!', data, _data.toString())
+                // console.error('DATA ERROR!', clients[id].buffer.toString())
+            }
+        })
+
+        /* Close connection. */
+        clients[id].socket.on('close', function() {
+        	console.log('Connection closed')
+
+            /* Reconnect to client. */
+            // FIXME Add a back-off for failed connection
+            setTimeout(reconnect, RECONNECTION_DELAY)
+        })
     } catch (err) {
         console.error(err)
     }
 
     /* Return request. */
-    return request
+    return clients[id].request
 }
 
-/**
- * (Re-)Connect
- */
-const reconnect = () => {
-    /* Open client connection. */
-    client.connect(ROSTRUM_PORT, ROSTRUM_HOST, async function() {
-        console.log('Connected!')
-        let result
-        result = await makeRequest("server.version", ["AtomicDEX", ["1.4", "2.0"]])
-            .catch(err => console.error(err))
-        // console.log('Connection TESTED!!', result)
-    })
-}
 
-/* Handle connection data. */
-client.on('data', async function (_data) {
-	// console.log('Received: ' + _data.length)
-
-    /* Initialize locals. */
-    let data
-    let id
-    let result
-
-    // if (!_data.toString().includes('"jsonrpc":"2.0"')) {
-    // if (dataBuffer && _data.length === MAX_DATA_BUFFER_SIZE) {
-    if (dataBuffer) {
-        /* Concatenate (raw) data. */
-        dataBuffer = Buffer.concat([ dataBuffer, _data ])
-        // console.log('BUFFER-2', dataBuffer.length)
-
-        if (_data.length === MAX_DATA_BUFFER_SIZE) {
-            return // skip remaining processing
-        }
-    }
-
-    if (!dataBuffer && _data.length === MAX_DATA_BUFFER_SIZE) {
-        /* Save NEW (raw) data buffer. */
-        dataBuffer = _data
-        // console.log('BUFFER-1', dataBuffer.length)
-
-        return // skip remaining processing
-    }
-
-    try {
-        if (dataBuffer) {
-            /* Parse JSON data. */
-            data = JSON.parse(dataBuffer)
-
-            /* Clear data buffer. */
-            dataBuffer = null
-        } else {
-            /* Parse JSON data. */
-            data = JSON.parse(_data)
-        }
-    } catch (err) {
-        console.error(err)
-    }
-
-    /* Validate data. */
-    if (data && data.id) {
-        /* Set (request) id. */
-        id = data.id
-
-        /* Validate request id. */
-        if (requests[id]) {
-            // console.log('REQUEST', requests[id])
-            /* Validate data error. */
-            if (data.error) {
-                return requests[id].reject(data.error)
-            }
-
-            /* Set results. */
-            result = data.result
-
-// TODO Filter results.
-
-            /* Resolve request. */
-            requests[id].resolve(result)
-
-            /* Delete request. */
-            delete requests[id]
-        }
-    } else {
-        console.error('DATA ERROR!', data, _data.toString())
-        // console.error('DATA ERROR!', dataBuffer.toString())
-    }
-})
-
-/* Close connection. */
-client.on('close', function() {
-	console.log('Connection closed')
-
-    /* Reconnect to client. */
-    // FIXME Add a back-off for failed connection
-    setTimeout(reconnect, RECONNECTION_DELAY)
-})
 
 /* Make initial (re-)connection. */
-reconnect()
+// reconnect()
 
 /* Setup (keep-alive) interval. */
-setInterval(keepAlive, KEEP_ALIVE_INTERVAL)
+// setInterval(keepAlive, KEEP_ALIVE_INTERVAL)
 // setTimeout(keepAlive, 3000) // FOR DEV PURPOSES ONLY
 
-setInterval(timeout, TIMEOUT_CHECK_INTERVAL)
+// setInterval(timeout, TIMEOUT_CHECK_INTERVAL)
 
 /**
  * Rostrum Module
@@ -237,7 +230,7 @@ export default async (req, res) => {
     try {
         /* Set body. */
         body = req.body
-        // console.log('BODY', body)
+        console.log('BODY', body)
 
         /* Validate body. */
         if (!body) {
