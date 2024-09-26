@@ -192,7 +192,7 @@ const makeRequest = (_method, _params) => {
 
             /* Reconnect to client. */
             // FIXME Add a back-off for failed connection
-            setTimeout(reconnect, RECONNECTION_DELAY)
+            // setTimeout(reconnect, RECONNECTION_DELAY)
         })
     } catch (err) {
         console.error(err)
