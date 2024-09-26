@@ -230,7 +230,7 @@ export default async (req, res) => {
     try {
         /* Set body. */
         body = req.body
-        console.log('BODY', body)
+        // console.log('BODY', body)
 
         /* Validate body. */
         if (!body) {
@@ -293,7 +293,7 @@ export default async (req, res) => {
                     /* Set error. */
                     error = err
                 })
-            console.log('RESPONSE', response)
+            // console.log('RESPONSE', response)
 
             // TODO Validate response.
             if (error) {
