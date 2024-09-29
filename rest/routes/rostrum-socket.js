@@ -7,7 +7,7 @@ import { v4 as uuidv4 } from 'uuid'
 const KEEP_ALIVE_INTERVAL = 60000 // 60 seconds
 const MAX_DATA_BUFFER_SIZE = 65536
 const RECONNECTION_DELAY = 100 // 0.1 seconds
-const REQUEST_TIMEOUT_DELAY = 10 // 10 seconds
+const REQUEST_TIMEOUT_DELAY = 30 // 30 seconds
 const ROSTRUM_HOST = '127.0.0.1'
 const ROSTRUM_PORT = 20001
 const TIMEOUT_CHECK_INTERVAL = 2500 // 0.5 seconds
