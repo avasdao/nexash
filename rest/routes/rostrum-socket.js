@@ -220,9 +220,9 @@ const makeRequest = (_method, _params) => {
  */
 export default async (req, res) => {
     /* Initialize locals. */
-    let request
     let error
     let body
+    let method
     let msg
     let params
     let response
@@ -243,25 +243,25 @@ export default async (req, res) => {
             })
         }
 
-        /* Set request. */
-        request = body.request
+        /* Set method. */
+        method = body.method || body.request
 
-        /* Validate request. */
-        if (!request) {
+        /* Validate method. */
+        if (!method) {
             /* Set status. */
             res.status(400)
 
             /* Return error. */
             return res.json({
-                error: 'Missing request parameter.'
+                error: 'Missing method parameter.'
             })
         }
 
         /* Set parameters. */
         params = body.params || []
 
-        /* Set ALL valid requests. */
-        const validRequests = [
+        /* Set ALL valid methods. */
+        const validMethods = [
             'blockchain.address.decode',
             'blockchain.address.get_balance',
             'blockchain.address.get_first_use',
@@ -283,10 +283,10 @@ export default async (req, res) => {
             'server.version',
         ]
 
-        /* Validate request. */
-        if (validRequests.includes(request)) {
+        /* Validate method. */
+        if (validMethods.includes(method)) {
             /* Make request. */
-            response = await makeRequest(request, params)
+            response = await makeRequest(method, params)
                 .catch(err => {
                     console.error(err)
 
@@ -308,7 +308,7 @@ export default async (req, res) => {
             res.status(400)
 
             /* Set message. */
-            msg = `[ ${request} ] is an INVALID request.`
+            msg = `[ ${method} ] is an INVALID method.`
 
             /* Return (error) message. */
             return res.end(msg)
