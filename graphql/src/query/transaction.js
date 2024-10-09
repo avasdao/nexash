@@ -80,6 +80,18 @@ export default {
             const transaction = _row.doc
             console.log('TRANSACTION', transaction)
             console.log('TX OUTS', transaction.vout)
+
+            transaction.vout.forEach(_output => {
+                /* Validate group quantity. */
+                if (_output.scriptPubKey?.groupQuantity) {
+                    _output.scriptPubKey.groupQuantity = BigInt(_output.scriptPubKey.groupQuantity)
+                }
+
+                /* Validate group authority. */
+                if (_output.scriptPubKey?.groupAuthority) {
+                    _output.scriptPubKey.groupAuthority = BigInt(_output.scriptPubKey.groupAuthority)
+                }
+            })
             console.log('PUBKEY', transaction.vout[0].scriptPubKey)
 
             return transaction
