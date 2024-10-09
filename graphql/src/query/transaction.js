@@ -82,12 +82,12 @@ export default {
 
             transaction.vout.forEach(_output => {
                 /* Validate group quantity. */
-                if (_output.scriptPubKey?.groupQuantity) {
+                if (typeof _output.scriptPubKey.groupQuantity !== 'undefined') {
                     _output.scriptPubKey.groupQuantity = BigInt(_output.scriptPubKey.groupQuantity)
                 }
 
                 /* Validate group authority. */
-                if (_output.scriptPubKey?.groupAuthority) {
+                if (typeof _output.scriptPubKey.groupAuthority !== 'undefined') {
                     _output.scriptPubKey.groupAuthority = BigInt(_output.scriptPubKey.groupAuthority)
                 }
             })
