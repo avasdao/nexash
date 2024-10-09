@@ -79,6 +79,8 @@ export default {
         transactions = transactions.rows.map(_row => {
             const transaction = _row.doc
             console.log('TRANSACTION', transaction)
+            console.log('TX OUTS', transaction.vout)
+            console.log('PUBKEY', transaction.vout[0].scriptPubKey)
 
             return transaction
         })
