@@ -40,17 +40,17 @@ export default new GraphQLObjectType({
 
         group: {
             type: GraphQLString,
-            description: `TBD`,
+            description: `The group ID of the token.`,
         },
 
         groupQuantity: {
             type: GraphQLString,
-            description: `Tracks the number of tokens.`,
+            description: `The number of tokens.`,
         },
 
         groupAuthority: {
             type: GraphQLString,
-            description: `Tracks the (optional) authority.`,
+            description: `The (optional) authority.`,
         },
 
         addresses: {
