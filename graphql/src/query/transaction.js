@@ -78,7 +78,7 @@ export default {
         /* Map block details. */
         transactions = transactions.rows.map(_row => {
             const transaction = _row.doc
-            // console.log('TRANSACTION', transaction)
+            console.log('TRANSACTION', transaction)
 
             return transaction
         })
