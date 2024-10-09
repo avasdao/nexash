@@ -78,8 +78,7 @@ export default {
         /* Map block details. */
         transactions = transactions.rows.map(_row => {
             const transaction = _row.doc
-            console.log('TRANSACTION', transaction)
-            console.log('TX OUTS', transaction.vout)
+            console.log('\nTRANSACTION', transaction)
 
             transaction.vout.forEach(_output => {
                 /* Validate group quantity. */
@@ -92,8 +91,10 @@ export default {
                     _output.scriptPubKey.groupAuthority = BigInt(_output.scriptPubKey.groupAuthority)
                 }
             })
-            console.log('PUBKEY', transaction.vout[0].scriptPubKey)
+            console.log('\nTX OUTS', transaction.vout)
+            console.log('\nPUBKEY', transaction.vout[0].scriptPubKey)
 
+            /* Return transaction. */
             return transaction
         })
 
