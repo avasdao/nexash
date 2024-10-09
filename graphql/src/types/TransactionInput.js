@@ -1,6 +1,3 @@
-/* Import modules. */
-import BigInt from 'graphql-bigint'
-
 /* Import types. */
 import ScriptSigType from './ScriptSig.js'
 
@@ -34,7 +31,7 @@ export default new GraphQLObjectType({
         },
 
         sequence: {
-            type: BigInt,
+            type: GraphQLInt,
             description: `TBD`,
         },
 

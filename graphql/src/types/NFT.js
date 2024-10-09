@@ -1,6 +1,3 @@
-/* Import modules. */
-import BigInt from 'graphql-bigint'
-
 /* Import types. */
 // import BlankType from './Blank.js'
 

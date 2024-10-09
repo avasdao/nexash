@@ -78,17 +78,17 @@ export default {
         /* Map block details. */
         transactions = transactions.rows.map(_row => {
             const transaction = _row.doc
-            console.log('\nTRANSACTION', transaction)
+            // console.log('\nTRANSACTION', transaction)
 
             transaction.vout.forEach(_output => {
                 /* Validate group quantity. */
                 if (typeof _output.scriptPubKey.groupQuantity !== 'undefined') {
-                    _output.scriptPubKey.groupQuantity = BigInt(_output.scriptPubKey.groupQuantity)
+                    _output.scriptPubKey.groupQuantity = String(_output.scriptPubKey.groupQuantity)
                 }
 
                 /* Validate group authority. */
                 if (typeof _output.scriptPubKey.groupAuthority !== 'undefined') {
-                    _output.scriptPubKey.groupAuthority = BigInt(_output.scriptPubKey.groupAuthority)
+                    _output.scriptPubKey.groupAuthority = String(_output.scriptPubKey.groupAuthority)
                 }
             })
             console.log('\nTX OUTS', transaction.vout)

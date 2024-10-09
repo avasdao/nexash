@@ -1,6 +1,3 @@
-/* Import modules. */
-import BigInt from 'graphql-bigint'
-
 /* Import types. */
 // import Type from '../types/Type.js'
 
@@ -47,12 +44,12 @@ export default new GraphQLObjectType({
         },
 
         groupQuantity: {
-            type: BigInt,
+            type: GraphQLString,
             description: `TBD`,
         },
 
         groupAuthority: {
-            type: BigInt,
+            type: GraphQLString,
             description: `TBD`,
         },
 

@@ -1,6 +1,3 @@
-/* Import modules. */
-import BigInt from 'graphql-bigint'
-
 /* Import types. */
 // import BlankType from './Blank.js'
 
@@ -34,7 +31,7 @@ export default new GraphQLObjectType({
         },
 
         balance: {
-            type: new GraphQLNonNull(BigInt),
+            type: new GraphQLNonNull(GraphQLString),
             description: `The oustanding balance of tokens in circulation.`,
         },
 
