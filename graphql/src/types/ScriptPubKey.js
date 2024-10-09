@@ -45,12 +45,12 @@ export default new GraphQLObjectType({
 
         groupQuantity: {
             type: GraphQLString,
-            description: `TBD`,
+            description: `Tracks the number of tokens.`,
         },
 
         groupAuthority: {
             type: GraphQLString,
-            description: `TBD`,
+            description: `Tracks the (optional) authority.`,
         },
 
         addresses: {
