@@ -89,17 +89,18 @@ const callNode = async (_method, _params, _options) => {
 
         /* Decode response. */
         response = await response.json()
-        console.log('RESONSE', response)
 
         /* Validate response. */
         if (!response) {
             return null
         }
-        // console.log('\nRPC CALL (response):', response)
+        console.log('\nRPC CALL (response):', response)
 
         /* Validate response. */
         if (response && response.result) {
             return response.result
+        } else if (response && response.error) {
+            return response.error.message || JSON.stringify(response.error)
         } else {
             return null
         }
