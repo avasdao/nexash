@@ -525,6 +525,13 @@
     uuid "9.0.0"
     ws "8.12.1"
 
+"@nexajs/rpc@24.10.10":
+  version "24.10.10"
+  resolved "https://registry.yarnpkg.com/@nexajs/rpc/-/rpc-24.10.10.tgz#ed3ac1354cef7cf627a787677a70ba06cd37f7e6"
+  integrity sha512-eesuQoJ/2GDryVWCEn/nU4TdzESJyi7W8CYkBUuBM3aTOaKwCyyqw+mCZf2SbDDHBPtBRK5VhhMcTyf/q+M3Gg==
+  dependencies:
+    events "3.3.0"
+
 "@nexajs/rpc@24.9.22":
   version "24.9.22"
   resolved "https://registry.yarnpkg.com/@nexajs/rpc/-/rpc-24.9.22.tgz#d4aa0a96febc01db833aae0417e12d9216f3a159"
