@@ -12,6 +12,14 @@ import {
     GraphQLString,
 } from 'graphql'
 
+/* Initialize (global) package constants. */
+let host = '127.0.0.1'
+let port = '7227'
+
+/* Initialize (global) package variables. */
+let username
+let password
+
 const callNode = async (_method, _params, _options) => {
     /* Verify authentication. */
     if (!username && !password && !_options) {
