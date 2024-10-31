@@ -29,7 +29,7 @@ const addMainnet = async () => {
         rpcUrls: [
             'https://nexa.sh/metanet',
         ],
-        chainName: 'Nexa (MetaNet)',
+        chainName: 'Nexa MetaNet',
         nativeCurrency: {
             name: 'Nexa',
             symbol: 'NEXA',
@@ -54,7 +54,7 @@ const addTestnet = async () => {
         rpcUrls: [
             'https://nexa.sh/metatest',
         ],
-        chainName: 'Nexa (MetaTest)',
+        chainName: 'Nexa MetaTest',
         nativeCurrency: {
             name: 'Nexa',
             symbol: 'NEXA',
