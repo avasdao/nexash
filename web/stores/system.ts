@@ -14,7 +14,7 @@ export const useSystemStore = defineStore('system', {
         ONE_MEX: BigInt('100000000'),
         ONE_META: BigInt('1000000000000000000'),
 
-        EXCHANGE_ENDPOINT: 'https://nexa.exchange',
+        EXCHANGE_ENDPOINT: 'https://api.telr.io/v1',
         TICKER_UPDATE_INTERVAL: 30000, // default: 30 seconds
 
         /* Initialize notifications. */
@@ -103,7 +103,7 @@ export const useSystemStore = defineStore('system', {
         },
 
         async updateTicker () {
-            this._ticker = await $fetch(this.EXCHANGE_ENDPOINT + '/ticker')
+            this._ticker = await $fetch(this.EXCHANGE_ENDPOINT + '/ticker/quote/NEXA')
                 .catch(err => console.error)
             // console.log('TICKER', this.ticker)
         },
