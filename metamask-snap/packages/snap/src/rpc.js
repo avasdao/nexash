@@ -13,7 +13,6 @@ import {
 } from './rpc/account.js'
 // import { CashAddressNetworkPrefix, CashAddressType, TransactionCommon } from "./lib/libauth"
 import { unPack } from './utils/serialize.js'
-// import { SignTransactionParams } from "./rpc-types";
 import {
     extractOutputs,
     makeSignedTx,

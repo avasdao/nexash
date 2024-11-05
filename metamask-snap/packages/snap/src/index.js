@@ -7,12 +7,12 @@ import {
     signTransaction,
     signTransactionForArg,
     switchAddress,
-} from './rpc'
+} from './rpc.js'
 import {
     assertIsGetAddressParams,
     assertIsSignTransactionParams,
-} from './rpc-types'
-export * from './rpc-types'
+} from './utils.js'
+export * from './utils.js'
 
 
 /**
