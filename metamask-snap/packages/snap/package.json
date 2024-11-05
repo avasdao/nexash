@@ -3,7 +3,7 @@
   "version": "24.11.4",
   "description": "A MetaMask Snap for Nexa, fully-supporting both $TOKENS and NFTs.",
   "license": "MIT",
-  "main": "src/index.ts",
+  "main": "src/index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/fex-cash/bch-snap.git"
@@ -33,7 +33,7 @@
     "lint:misc": "prettier '**/*.json' '**/*.md' '!CHANGELOG.md' --ignore-path .gitignore",
     "serve": "mm-snap serve",
     "start": "mm-snap watch",
-    "test": "sudo jest index.test.ts"
+    "test": "sudo jest index.test.js"
   },
   "dependencies": {
     "@metamask/key-tree": "7.0.0",
