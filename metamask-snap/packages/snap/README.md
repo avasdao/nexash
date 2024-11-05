@@ -8,7 +8,7 @@
 
 ## RPC Methods
 
-### `getAddress`
+### `nexa_getAddress`
 
 Get current NEXA cash address.
 
@@ -20,7 +20,7 @@ Get current NEXA cash address.
 }
 ```
 
-### `switchAddress`
+### `nexa_switchAddress`
 
 Switch bch address (based on BIP32) and cache index to browser (based on snap manage state).
 
@@ -34,7 +34,7 @@ The current address used by each dApp are stored independently of each other.
 }
 ```
 
-### `getPublicKey`
+### `nexa_getPublicKey`
 
 Get current NEXA cash address’s public key.
 
@@ -46,7 +46,7 @@ Get current NEXA cash address’s public key.
 }
 ```
 
-### `signTransaction`
+### `nexa_signTransaction`
 > NOTE: Requires a properly constructed `Transaction` _(i.e. provided with
 >       valid Inputs and Outputs)_.
 
@@ -58,7 +58,7 @@ Get current NEXA cash address’s public key.
 }
 ```
 
-### `signRawTransaction`
+### `nexa_signRawTransaction`
 > NOTE: This method is intended to solve the problem of passing `SignatureTemplate` parameter.
 
 #### Parameters
@@ -70,7 +70,7 @@ Get current NEXA cash address’s public key.
 }
 ```
 
-### `showWif`
+### `nexa_showWif`
 > NOTE: This method DOES NOT return the user's private key to the dApp.
 >       It is for MetaMask’s display only.
 

@@ -1,17 +1,25 @@
-import {BIP44Node, getBIP44AddressKeyDeriver} from '@metamask/key-tree';
-import wif from 'wif';
-import {CashAddressNetworkPrefix, CashAddressType, encodeCashAddress, hash160} from '../lib/libauth';
+import {
+    BIP44Node,
+    getBIP44AddressKeyDeriver,
+} from '@metamask/key-tree'
+import wif from 'wif'
+import {
+    CashAddressNetworkPrefix,
+    CashAddressType,
+    encodeCashAddress,
+    hash160,
+} from '../lib/libauth'
 
 
-export async function getAccount(network: CashAddressNetworkPrefix, index:number): Promise<BIP44Node> {
-  // https://github.com/satoshilabs/slips/blob/master/slip-0044.md
-  const coinType = network === CashAddressNetworkPrefix.mainnet ? 145 : 1;
-  const bip44Node = await snap.request({
-    method: 'snap_getBip44Entropy',
-    params: {
-      coinType: coinType
-    },
-  });
+export async function getAccount(network, index) {
+    // https://github.com/satoshilabs/slips/blob/master/slip-0044.md
+    const coinType = network === CashAddressNetworkPrefix.mainnet ? 145 : 1
+    const bip44Node = await snap.request({
+        method: 'snap_getBip44Entropy',
+        params: {
+            coinType: coinType
+        },
+    })
 
   const derivePrivateKey = await getBIP44AddressKeyDeriver(
     bip44Node,
