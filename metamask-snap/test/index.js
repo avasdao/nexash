@@ -1,7 +1,7 @@
 import { expect } from '@jest/globals'
 import { installSnap } from '@metamask/snaps-jest'
 import { panel, text } from '@metamask/snaps-sdk'
-import { getAccount } from './rpc/account'
+import { getAccount } from './packages/snap/src/rpc/account.js'
 // import { CashAddressNetworkPrefix } from './lib/libauth'
 
 describe('onRpcRequest', () => {

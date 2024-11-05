@@ -12,7 +12,8 @@
     "lint:fix": "yarn lint:eslint --fix && yarn lint:misc --write",
     "lint:misc": "prettier '**/*.json' '**/*.md' '!**/CHANGELOG.md' '**/*.yml' --ignore-path .gitignore",
     "start": "yarn workspaces foreach --parallel --interlaced --verbose run start",
-    "test": "yarn workspaces foreach run test"
+    "test": "sudo jest index.js",
+    "test:all": "yarn workspaces foreach run test"
   },
   "dependencies": {
     "object-assign-polyfill": "0.1.0"

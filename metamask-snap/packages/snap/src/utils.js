@@ -1,6 +1,8 @@
-/* Import modules. */
-// import * as rpcMethods from './rpc'
-
+/**
+ * ASSERTION: Get Address Parameters
+ *
+ * TBD...
+ */
 export function assertIsGetAddressParams(_params) {
     if (!(
         typeof params === 'object' &&
@@ -12,6 +14,11 @@ export function assertIsGetAddressParams(_params) {
     }
 }
 
+/**
+ * ASSERTION: Sign Transaction Parameters
+ *
+ * TBD...
+ */
 export function assertIsSignTransactionParams(_params) {
     if (!(
         typeof _params === 'object' &&

@@ -32,8 +32,7 @@
     "lint:fix": "yarn lint:eslint --fix && yarn lint:misc --write",
     "lint:misc": "prettier '**/*.json' '**/*.md' '!CHANGELOG.md' --ignore-path .gitignore",
     "serve": "mm-snap serve",
-    "start": "mm-snap watch",
-    "test": "sudo jest index.test.js"
+    "start": "mm-snap watch"
   },
   "dependencies": {
     "@metamask/key-tree": "7.0.0",
