@@ -10,19 +10,19 @@ import {
     bip44NodeToCashaddr,
     bip44NodeToWif,
     getAccount,
-} from './rpc/account'
+} from './rpc/account.js'
 // import { CashAddressNetworkPrefix, CashAddressType, TransactionCommon } from "./lib/libauth"
-import { unPack } from './utils/serialize'
+import { unPack } from './utils/serialize.js'
 // import { SignTransactionParams } from "./rpc-types";
 import {
     extractOutputs,
     makeSignedTx,
-    signRawTransaction as signRawTransaction_ } from './rpc/transaction'
-import { formatUnits } from './utils/unit'
+    signRawTransaction as signRawTransaction_ } from './rpc/transaction.js'
+import { formatUnits } from './utils/unit.js'
 import {
     getAddressIndex,
     updateAddressIndex,
-} from './rpc/address-index'
+} from './rpc/addressIdx.js'
 
 /**
  * Get Address
