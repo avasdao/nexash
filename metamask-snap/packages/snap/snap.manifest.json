@@ -1,0 +1,34 @@
+{
+  "version": "24.11.4",
+  "description": "A MetaMask Snap for Nexa, fully-supporting both $TOKENS and NFTs.",
+  "proposedName": "Nexa Connect",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/avasdao/nexash.git"
+  },
+  "source": {
+    "shasum": "pyRkBzZcJWx8LywORfnkh6PyhgCuqb6sC9xLX35yyK0=",
+    "location": {
+      "npm": {
+        "filePath": "dist/bundle.js",
+        "iconPath": "images/icon.svg",
+        "packageName": "@avasdao/metamask-snap",
+        "registry": "https://registry.npmjs.org/"
+      }
+    }
+  },
+  "initialPermissions": {
+    "snap_dialog": {},
+    "endowment:rpc": {
+      "dapps": true,
+      "snaps": false
+    },
+    "snap_manageState": {},
+    "snap_getBip44Entropy": [
+      {
+        "coinType": 29223
+      }
+    ]
+  },
+  "manifestVersion": "0.1"
+}
