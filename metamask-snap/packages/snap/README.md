@@ -16,7 +16,7 @@ Get current NEXA cash address.
 
 ```js
 {
-  network: 'mainnet' | 'testnet'
+  network: 'mainnet' | 'testnet' | '<supernet-id>',
 }
 ```
 
@@ -30,7 +30,7 @@ The current address used by each dApp are stored independently of each other.
 
 ```js
 {
-  network: 'mainnet' | 'testnet'
+  network: 'mainnet' | 'testnet' | '<supernet-id>',
 }
 ```
 
@@ -42,7 +42,7 @@ Get current NEXA cash address’s public key.
 
 ```js
 {
-  network: 'mainnet' | 'testnet'
+  network: 'mainnet' | 'testnet' | '<supernet-id>',
 }
 ```
 
@@ -54,7 +54,7 @@ Get current NEXA cash address’s public key.
 
 ```js
 {
-  network: 'mainnet' | 'testnet',
+  network: 'mainnet' | 'testnet' | '<supernet-id>',
 }
 ```
 
@@ -65,7 +65,7 @@ Get current NEXA cash address’s public key.
 
 ```js
 {
-  network: 'mainnet' | 'testnet',
+  network: 'mainnet' | 'testnet' | '<supernet-id>',
   rawTx: string,
 }
 ```
@@ -80,7 +80,7 @@ Show WIF private key in snap window.
 
 ```js
 {
-  network: 'mainnet' | 'testnet'
+  network: 'mainnet' | 'testnet' | '<supernet-id>',
 }
 ```
 

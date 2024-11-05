@@ -4,7 +4,7 @@ import {
     divider,
     heading,
     panel,
-    text
+    text,
 } from '@metamask/snaps-ui'
 import {
     bip44NodeToCashaddr,
