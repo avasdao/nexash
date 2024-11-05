@@ -9,16 +9,14 @@
     "url": "https://github.com/fex-cash/bch-snap.git"
   },
   "keywords": [
-    "Bitcoin Cash",
-    "BCH",
-    "Cashtokens",
-    "CRC20",
-    "CRC721",
+    "Nexa",
+    "Group Tokens",
+    "NFT",
     "MetaMask Snap"
   ],
-  "homepage": "https://github.com/fex-cash/bch-snap#readme",
+  "homepage": "https://github.com/avasdao/nexash#readme",
   "bugs": {
-    "url": "https://github.com/fex-cash/bch-snap/issues"
+    "url": "https://github.com/avasdao/nexash/issues"
   },
   "files": [
     "dist/",

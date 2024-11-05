@@ -1,6 +1,6 @@
 {
   "version": "24.11.4",
-  "description": "A MetaMask Snap for Nexa, fully-supporting both $TOKENS and NFTs.",
+  "description": "A MetaMask Snap for Nexa with full support for both $TOKENS and NFTs.",
   "proposedName": "Nexa Connect",
   "repository": {
     "type": "git",

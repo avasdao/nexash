@@ -1,16 +1,18 @@
-import { resolve } from 'path';
-import type { SnapConfig } from '@metamask/snaps-cli';
+/* Import modules. */
+import { resolve } from 'path'
 
-const config: SnapConfig = {
-  bundler: 'webpack',
-  input: resolve(__dirname, 'src/index.ts'),
-  server: {
-    port: 8080,
-  },
-  polyfills: true,
-  experimental: {
-    wasm: true
-  },
-};
+/* Build configuration. */
+const config = {
+    bundler: 'webpack',
+    input: resolve(__dirname, 'src/index.js'),
+    server: {
+        port: 8080,
+    },
+    polyfills: true,
+    // experimental: {
+    //     wasm: true
+    // },
+}
 
-export default config;
+/* Export configuration. */
+export default config

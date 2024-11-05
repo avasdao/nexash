@@ -2,7 +2,7 @@ import { expect } from '@jest/globals'
 import { installSnap } from '@metamask/snaps-jest'
 import { panel, text } from '@metamask/snaps-sdk'
 import { getAccount } from './rpc/account'
-import { CashAddressNetworkPrefix } from './lib/libauth'
+// import { CashAddressNetworkPrefix } from './lib/libauth'
 
 describe('onRpcRequest', () => {
     describe('nexa_getAddress', () => {
@@ -18,7 +18,7 @@ describe('onRpcRequest', () => {
             })
 
             expect((response as any).result)
-                .toEqual('bitcoincash:qzy4uffd2444u4hxyxjlp2uwexxzz5zcxgpd5g9yux')
+                .toEqual('nexa:qzy4uffd2444u4hxyxjlp2uwexxzz5zcxgpd5g9yux')
         })
 
         it('testnet', async () => {

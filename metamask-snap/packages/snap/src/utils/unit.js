@@ -1,8 +1,16 @@
-import BigNumber from "bignumber.js";
+/* Import modules. */
+import BigNumber from 'bignumber.js'
 
-export function formatUnits(value: string | number, unitName: string | number) {
-  if (!unitName) {
-    return value.toString()
-  }
-  return new BigNumber(value).div(10 ** Number(unitName)).toFixed()
+
+/**
+ * Format Units
+ *
+ * TBD
+ */
+export function formatUnits(_value, _unitName) {
+    if (!_unitName) {
+        return _value.toString()
+    }
+
+    return new BigNumber(_value).div(10 ** Number(_unitName)).toFixed()
 }
