@@ -1,3 +1,5 @@
+# ⚠️ THIS REPOSITORY HAS BEEN DEPRECATED ⚠️
+
 # NexaShell
 
 ### https://nexa.sh
